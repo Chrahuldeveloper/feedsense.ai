@@ -1,5 +1,5 @@
 "use client";
-import React  from "react";
+import React from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 const Table = () => {
@@ -41,7 +41,6 @@ const Table = () => {
     },
   ];
 
-
   return (
     <>
       <div className="px-8 py-8">
@@ -61,7 +60,7 @@ const Table = () => {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="text-white w-full table-auto mt-6">
+            <table className="text-white w-full table-auto mt-6 border-[1px] border-neutral-900 ">
               <thead className="bg-[#0f0d15]">
                 <tr className="text-center text-xs">
                   <th className="py-2 px-4">Name</th>
@@ -102,9 +101,7 @@ const Table = () => {
                       {site.feedbackRating}/5
                     </td>
                     <td className="py-2 px-4 cursor-pointer">
-                      <button
-                        className="bg-blue-500 text-white px-5 rounded-full text-sm py-1 cursor-pointer hover:bg-blue-600"
-                      >
+                      <button className="bg-blue-500 text-white px-5 rounded-full text-sm py-1 cursor-pointer hover:bg-blue-600">
                         View
                       </button>
                     </td>
