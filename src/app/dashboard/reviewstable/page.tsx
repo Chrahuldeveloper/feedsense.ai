@@ -1,45 +1,51 @@
+"use client";
 import SideBar from "@/components/SideBar";
-import React from "react";
+import React, { useState } from "react";
 
 const ReviewsTable = () => {
-  const reviews = [
+  const [reviews, setReviews] = useState([
     {
-      name: "Website A",
-      feedbackCount: "5",
-      taskGenerated: "Yes",
-      feedbackRating: 4,
+      taskName: "Fix UI issues",
+      taskStatus: "In Progress",
     },
     {
-      name: "Website B",
-      feedbackCount: "3",
-      taskGenerated: "No",
-      feedbackRating: 2,
+      taskName: "Add new feature",
+      taskStatus: "Pending",
     },
     {
-      name: "Website C",
-      feedbackCount: "10",
-      taskGenerated: "Yes",
-      feedbackRating: 5,
+      taskName: "Optimize loading speed",
+      taskStatus: "Completed",
     },
     {
-      name: "Website D",
-      feedbackCount: "7",
-      taskGenerated: "No",
-      feedbackRating: 3,
+      taskName: "Improve SEO",
+      taskStatus: "Pending",
     },
-  ];
+  ]);
+
+  interface Review {
+    taskName: string;
+    taskStatus: "Pending" | "In Progress" | "Completed";
+  }
+
+  const handleStatusChange = (
+    index: number,
+    newStatus: Review["taskStatus"]
+  ) => {
+    const updatedReviews = [...reviews];
+    updatedReviews[index].taskStatus = newStatus;
+    setReviews(updatedReviews);
+  };
 
   return (
     <div className="bg-[#000000] w-full h-screen flex gap-5 overflow-x-clip">
       <SideBar />
-      <div className="w-full md:w-[85vw] mx-auto mt-10">
+      <div className="w-[88vw] md:w-[80vw] mx-auto mt-16">
         <table className="text-white w-full table-auto py-6">
           <thead className="bg-[#0f0d15]">
             <tr className="text-center text-xs">
-              <th className="py-2 px-4 text-xs">Name</th>
-              <th className="py-2 px-4 text-xs">Feedback Count</th>
-              <th className="py-2 px-4 text-xs">Task Generated</th>
-              <th className="py-2 px-4 text-xs">Feedback Rating</th>
+              <th className="py-2 px-4 text-xs">S.No</th>
+              <th className="py-2 px-4 text-xs">Task Name</th>
+              <th className="py-2 px-4 text-xs">Task Status</th>
             </tr>
           </thead>
           <tbody>
@@ -51,16 +57,26 @@ const ReviewsTable = () => {
                 }`}
               >
                 <td className="py-2 px-4 text-[11px] md:text-sm ">
-                  {review.name}
+                  {index + 1}
                 </td>
                 <td className="py-2 px-4 text-[11px] md:text-sm ">
-                  {review.feedbackCount}
+                  {review.taskName}
                 </td>
                 <td className="py-2 px-4 text-[11px] md:text-sm ">
-                  {review.taskGenerated}
-                </td>
-                <td className="py-2 px-4 text-[11px] md:text-sm ">
-                  {review.feedbackRating}/5
+                  <select
+                    onChange={(e) =>
+                      handleStatusChange(
+                        index,
+                        e.target.value as Review["taskStatus"]
+                      )
+                    }
+                    value={review.taskStatus}
+                    className="bg-[#0f0d15] text-white  rounded-lg px-3 py-2 outline-none cursor-pointer"
+                  >
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                  </select>
                 </td>
               </tr>
             ))}
