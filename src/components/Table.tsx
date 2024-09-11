@@ -76,12 +76,30 @@ const Navbar = () => {
                     idx % 2 !== 0 ? "bg-[#0f0d15]" : ""
                   }`}
                 >
-                  <td className="py-2 px-4">{site.name}</td>
-                  <td className="py-2 px-4">{site.feedbackCount}</td>
-                  <td className="py-2 px-4">{site.taskStatus}</td>
-                  <td className="py-2 px-4">{site.feedbackRating}/5</td>
-                  <td className="py-2 px-4">
-                    <button className="bg-blue-500 text-white  px-5 rounded-full text-sm py-1">
+                  <td className="py-2 px-4 cursor-pointer text-sm">
+                    {site.name}
+                  </td>
+                  <td className="py-2 px-4 cursor-pointer text-sm">
+                    {site.feedbackCount}
+                  </td>
+                  <td
+                    className={`py-2 px-4 cursor-pointer text-sm ${
+                      site.taskStatus === "Pending"
+                        ? "text-red-500"
+                        : site.taskStatus === "Completed"
+                        ? "text-green-500"
+                        : site.taskStatus === "In Progress"
+                        ? "text-blue-500"
+                        : null
+                    }`}
+                  >
+                    • {site.taskStatus}
+                  </td>
+                  <td className="py-2 px-4 cursor-pointer text-xs">
+                    {site.feedbackRating}/5
+                  </td>
+                  <td className="py-2 px-4 cursor-pointer ">
+                    <button className="bg-blue-500 text-white  px-5 rounded-full text-sm py-1 cursor-pointer">
                       View Task
                     </button>
                   </td>
