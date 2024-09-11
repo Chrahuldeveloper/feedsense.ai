@@ -47,7 +47,7 @@ const Navbar = () => {
         <h1 className="text-2xl font-semibold text-white mb-4">
           Your Websites
         </h1>
-        <div className="w-[80vw] mx-auto mt-7">
+        <div className="w-[85vw] mx-auto mt-7">
           <div className="flex gap-5 justify-center items-center mb-6">
             <FaAngleLeft size={20} color="white" cursor={"pointer"} />
             {[1, 2, 4, 5, 6, 7, 8, 9, 10].map((i, idx) => (
@@ -58,7 +58,7 @@ const Navbar = () => {
             <FaAngleRight size={20} color="white" cursor={"pointer"} />
           </div>
 
-          <table className="text-white w-[80vw] mx-auto table-auto mt-10">
+          <table className="text-white w-[85vw] mx-auto table-auto mt-10">
             <thead className="bg-[#0f0d15] py-2">
               <tr className="text-center">
                 <th className="py-2 px-4">Name</th>
