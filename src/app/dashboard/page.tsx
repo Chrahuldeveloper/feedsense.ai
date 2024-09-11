@@ -1,13 +1,14 @@
 import React from "react";
 import Table from "@/components/Table";
-import SideBar from "@/components/SideBar";
-const page = () => {
+import SideBar from "@/components/SideBar"; 
+
+const Page = () => {
   return (
-    <div className="bg-[#000000] w-screen h-screen flex gap-10">
+    <div className="bg-[#000000] w-full h-screen flex gap-5 overflow-x-clip">
       <SideBar />
-      <Table />
+      <Table /> 
     </div>
   );
 };
 
-export default page;
+export default Page;
