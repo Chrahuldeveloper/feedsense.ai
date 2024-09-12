@@ -1,18 +1,19 @@
 "use client";
 import React from "react";
-import { CiHome } from "react-icons/ci";
+import { MdDashboard } from "react-icons/md";
+import { IoIosNotifications } from "react-icons/io";
+import { IoIosCall } from "react-icons/io";
+import { IoLogOut } from "react-icons/io5";
+import { MdOutlineAttachMoney } from "react-icons/md";
 
 const SideBar = () => {
   return (
-    <aside className="bg-[#0f0d15] w-28 h-screen space-y-8 px-10 py-6 hidden md:block fixed left-0 top-0">
-      <CiHome size={20} color="white" cursor={"pointer"} />
-      <CiHome size={20} color="white" cursor={"pointer"} />
-      <CiHome size={20} color="white" cursor={"pointer"} />
-      <CiHome size={20} color="white" cursor={"pointer"} />
-      <CiHome size={20} color="white" cursor={"pointer"} />
-      <CiHome size={20} color="white" cursor={"pointer"} />
-      <CiHome size={20} color="white" cursor={"pointer"} />
-      <CiHome size={20} color="white" cursor={"pointer"} />
+    <aside className="bg-[#0f0d15] w-36 h-screen space-y-10 px-14 py-6 hidden md:block fixed left-0 top-0">
+      <MdDashboard size={23} color="white" cursor={"pointer"} />
+      <IoIosNotifications size={23} color="white" cursor={"pointer"} />
+      <IoIosCall size={23} color="white" cursor={"pointer"} />
+      <MdOutlineAttachMoney size={23} color="white" cursor={"pointer"} />
+      <IoLogOut size={23} color="white" cursor={"pointer"} />
     </aside>
   );
 };
