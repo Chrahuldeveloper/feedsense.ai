@@ -4,7 +4,7 @@ import SideBar from "@/components/SideBar";
 
 const Page = () => {
   return (
-    <div className="bg-[#000000] w-full h-screen flex gap-5 overflow-x-clip">
+    <div className="bg-[#000000] w-full h-[100vh] flex  overflow-x-clip">
       <SideBar />
       <Table /> 
     </div>

@@ -41,26 +41,51 @@ const Table = () => {
     },
   ];
 
+  const data = [
+    {
+      label: "Total website",
+      number: "20",
+    },
+    {
+      label: "Total website",
+      number: "20",
+    },
+    {
+      label: "Total website",
+      number: "20",
+    },
+    {
+      label: "Total website",
+      number: "20",
+    },
+  ];
+
   return (
     <>
-      <div className="px-8 py-8">
+      <div className="px-8 py-8 md:ml-36">
         <h1 className="text-2xl font-semibold text-white mb-4">
           Your Websites
         </h1>
 
-        <div className="w-full md:w-[85vw] mx-auto mt-5">
-          <div className="flex gap-5 justify-center items-center mb-6">
-            <FaAngleLeft size={20} color="white" cursor={"pointer"} />
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
-              <div className="flex items-center" key={i}>
-                <h1 className="text-white cursor-pointer">{i}</h1>
+        <div className="flex flex-col md:flex-row gap-6 justify-center items-center mt-10">
+          {data.map((itm, idx) => {
+            return (
+              <div
+                key={idx}
+                className="bg-[#0f0d15] p-4 rounded-lg w-[13vw] cursor-pointer"
+              >
+                <div className="text-white space-y-3">
+                  <h1>{itm.label}</h1>
+                  <p>{itm.number}</p>
+                </div>
               </div>
-            ))}
-            <FaAngleRight size={20} color="white" cursor={"pointer"} />
-          </div>
+            );
+          })}
+        </div>
 
+        <div className="w-full md:w-[85vw] mx-auto mt-12">
           <div className="overflow-x-auto">
-            <table className="text-white w-full table-auto mt-6 border-[1px] border-neutral-900 ">
+            <table className="text-white w-full table-auto  border-[1px] border-neutral-900 ">
               <thead className="bg-[#0f0d15]">
                 <tr className="text-center text-xs">
                   <th className="py-2 px-4">Name</th>
@@ -109,6 +134,16 @@ const Table = () => {
                 ))}
               </tbody>
             </table>
+
+            <div className="flex gap-5 justify-center items-center mt-14">
+              <FaAngleLeft size={20} color="white" cursor={"pointer"} />
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+                <div className="flex items-center" key={i}>
+                  <h1 className="text-white cursor-pointer">{i}</h1>
+                </div>
+              ))}
+              <FaAngleRight size={20} color="white" cursor={"pointer"} />
+            </div>
           </div>
         </div>
       </div>
