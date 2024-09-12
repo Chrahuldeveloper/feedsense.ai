@@ -20,6 +20,38 @@ const ReviewsTable = () => {
       taskName: "Improve SEO",
       taskStatus: "Pending",
     },
+    {
+      taskName: "Fix UI issues",
+      taskStatus: "In Progress",
+    },
+    {
+      taskName: "Add new feature",
+      taskStatus: "Pending",
+    },
+    {
+      taskName: "Optimize loading speed",
+      taskStatus: "Completed",
+    },
+    {
+      taskName: "Improve SEO",
+      taskStatus: "Pending",
+    },
+    {
+      taskName: "Fix UI issues",
+      taskStatus: "In Progress",
+    },
+    {
+      taskName: "Add new feature",
+      taskStatus: "Pending",
+    },
+    {
+      taskName: "Optimize loading speed",
+      taskStatus: "Completed",
+    },
+    {
+      taskName: "Improve SEO",
+      taskStatus: "Pending",
+    },
   ]);
 
   interface Review {
@@ -37,9 +69,9 @@ const ReviewsTable = () => {
   };
 
   return (
-    <div className="bg-[#000000] w-full h-screen flex gap-5 overflow-x-clip">
+    <div className="bg-[#000000] w-full  flex gap-5 overflow-x-clip ">
       <SideBar />
-      <div className="w-[88vw] md:w-[80vw] mx-auto mt-16">
+      <div className="w-[88vw] md:w-[80vw] mx-auto my-12 md:ml-48">
         <table className="text-white w-full table-auto py-6 border-[1px] border-neutral-900">
           <thead className="bg-[#0f0d15]">
             <tr className="text-center text-xs">

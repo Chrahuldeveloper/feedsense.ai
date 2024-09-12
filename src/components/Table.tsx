@@ -39,6 +39,90 @@ const Table = () => {
       taskStatus: "Pending",
       feedbackRating: 2,
     },
+    {
+      name: "Website 3",
+      feedbackCount: "22",
+      taskGenerated: "Yes",
+      taskStatus: "Completed",
+      feedbackRating: 5,
+    },
+    {
+      name: "Website 4",
+      feedbackCount: "30",
+      taskGenerated: "Yes",
+      taskStatus: "In Progress",
+      feedbackRating: 4,
+    },
+    {
+      name: "Website 5",
+      feedbackCount: "10",
+      taskGenerated: "No",
+      taskStatus: "Pending",
+      feedbackRating: 2,
+    },
+    {
+      name: "Website 3",
+      feedbackCount: "22",
+      taskGenerated: "Yes",
+      taskStatus: "Completed",
+      feedbackRating: 5,
+    },
+    {
+      name: "Website 4",
+      feedbackCount: "30",
+      taskGenerated: "Yes",
+      taskStatus: "In Progress",
+      feedbackRating: 4,
+    },
+    {
+      name: "Website 5",
+      feedbackCount: "10",
+      taskGenerated: "No",
+      taskStatus: "Pending",
+      feedbackRating: 2,
+    },
+    {
+      name: "Website 3",
+      feedbackCount: "22",
+      taskGenerated: "Yes",
+      taskStatus: "Completed",
+      feedbackRating: 5,
+    },
+    {
+      name: "Website 4",
+      feedbackCount: "30",
+      taskGenerated: "Yes",
+      taskStatus: "In Progress",
+      feedbackRating: 4,
+    },
+    {
+      name: "Website 5",
+      feedbackCount: "10",
+      taskGenerated: "No",
+      taskStatus: "Pending",
+      feedbackRating: 2,
+    },
+    {
+      name: "Website 3",
+      feedbackCount: "22",
+      taskGenerated: "Yes",
+      taskStatus: "Completed",
+      feedbackRating: 5,
+    },
+    {
+      name: "Website 4",
+      feedbackCount: "30",
+      taskGenerated: "Yes",
+      taskStatus: "In Progress",
+      feedbackRating: 4,
+    },
+    {
+      name: "Website 5",
+      feedbackCount: "10",
+      taskGenerated: "No",
+      taskStatus: "Pending",
+      feedbackRating: 2,
+    },
   ];
 
   const data = [
@@ -64,17 +148,17 @@ const Table = () => {
     <>
       <div className="px-8 py-8 md:ml-36">
         <h1 className="text-2xl font-semibold text-white mb-4">
-          Your Websites
+          Your DashBoard
         </h1>
 
-        <div className="flex flex-col md:flex-row gap-6 justify-center items-center mt-10">
+        <div className="flex flex-col md:flex-row gap-5 justify-center items-center mt-10">
           {data.map((itm, idx) => {
             return (
               <div
                 key={idx}
-                className="bg-[#0f0d15] p-4 rounded-lg w-[13vw] cursor-pointer"
+                className="bg-[#0f0d15] p-4 rounded-lg md:w-[15vw] w-[50vw]  cursor-pointer border-[1px] border-neutral-900"
               >
-                <div className="text-white space-y-3">
+                <div className="text-white space-y-3 text-center">
                   <h1>{itm.label}</h1>
                   <p>{itm.number}</p>
                 </div>
@@ -126,7 +210,7 @@ const Table = () => {
                       {site.feedbackRating}/5
                     </td>
                     <td className="py-2 px-4 cursor-pointer">
-                      <button className="bg-blue-500 text-white px-5 rounded-full text-sm py-1 cursor-pointer hover:bg-blue-600">
+                      <button className="bg-blue-500 text-white px-5 rounded-full text-xs py-1 cursor-pointer hover:bg-blue-600">
                         View
                       </button>
                     </td>

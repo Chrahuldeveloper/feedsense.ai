@@ -1,12 +1,12 @@
 import React from "react";
 import Table from "@/components/Table";
-import SideBar from "@/components/SideBar"; 
+import SideBar from "@/components/SideBar";
 
 const Page = () => {
   return (
-    <div className="bg-[#000000] w-full h-[100vh] flex  overflow-x-clip">
+    <div className="bg-[#000000] w-full   flex  overflow-x-clip">
       <SideBar />
-      <Table /> 
+      <Table />
     </div>
   );
 };
