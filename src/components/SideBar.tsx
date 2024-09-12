@@ -5,6 +5,7 @@ import { IoIosNotifications } from "react-icons/io";
 import { IoIosCall } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
 import { MdOutlineAttachMoney } from "react-icons/md";
+import { IoIosSettings } from "react-icons/io";
 
 const SideBar = () => {
   return (
@@ -14,6 +15,7 @@ const SideBar = () => {
       <IoIosCall size={23} color="white" cursor={"pointer"} />
       <MdOutlineAttachMoney size={23} color="white" cursor={"pointer"} />
       <IoLogOut size={23} color="white" cursor={"pointer"} />
+      <IoIosSettings size={23} color="white" cursor={"pointer"} />
     </aside>
   );
 };
