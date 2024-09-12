@@ -8,10 +8,13 @@ const Page = () => {
   const [section, setsection] = useState();
 
   return (
-    <div className="bg-[#000000] w-full h-screen  flex  overflow-x-clip">
-      <SideBar />
-      <Notifications />
-      {/* <Table /> */}
+    <div className="bg-[#000000] w-full   flex  overflow-x-clip">
+      <SideBar setsection={setsection} />
+      {section === "dashboard" ? (
+        <Table />
+      ) : section === "notifications" ? (
+        <Notifications />
+      ) : <Table />}
     </div>
   );
 };

@@ -14,6 +14,30 @@ const Notifications = () => {
       tittle: "welcome to TaskFeed",
       Para: "TaskFeed is a AI pwoered Platform TaskFeed is a AI pwoered Platform",
     },
+    {
+      tittle: "welcome to TaskFeed",
+      Para: "TaskFeed is a AI pwoered Platform TaskFeed is a AI pwoered Platform",
+    },
+    {
+      tittle: "welcome to TaskFeed",
+      Para: "TaskFeed is a AI pwoered Platform TaskFeed is a AI pwoered Platform",
+    },
+    {
+      tittle: "welcome to TaskFeed",
+      Para: "TaskFeed is a AI pwoered Platform TaskFeed is a AI pwoered Platform",
+    },
+    {
+      tittle: "welcome to TaskFeed",
+      Para: "TaskFeed is a AI pwoered Platform TaskFeed is a AI pwoered Platform",
+    },
+    {
+      tittle: "welcome to TaskFeed",
+      Para: "TaskFeed is a AI pwoered Platform TaskFeed is a AI pwoered Platform",
+    },
+    {
+      tittle: "welcome to TaskFeed",
+      Para: "TaskFeed is a AI pwoered Platform TaskFeed is a AI pwoered Platform",
+    },
   ];
 
   return (
