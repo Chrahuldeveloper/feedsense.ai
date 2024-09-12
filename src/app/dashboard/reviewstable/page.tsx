@@ -7,50 +7,62 @@ const ReviewsTable = () => {
     {
       taskName: "Fix UI issues",
       taskStatus: "In Progress",
+      Priority: "Low",
     },
     {
       taskName: "Add new feature",
       taskStatus: "Pending",
+      Priority: "Low",
     },
     {
       taskName: "Optimize loading speed",
       taskStatus: "Completed",
+      Priority: "Low",
     },
     {
       taskName: "Improve SEO",
       taskStatus: "Pending",
+      Priority: "Low",
     },
     {
       taskName: "Fix UI issues",
       taskStatus: "In Progress",
+      Priority: "Low",
     },
     {
       taskName: "Add new feature",
       taskStatus: "Pending",
+      Priority: "Medium",
     },
     {
       taskName: "Optimize loading speed",
       taskStatus: "Completed",
+      Priority: "Medium",
     },
     {
       taskName: "Improve SEO",
       taskStatus: "Pending",
+      Priority: "Medium",
     },
     {
       taskName: "Fix UI issues",
       taskStatus: "In Progress",
+      Priority: "High",
     },
     {
       taskName: "Add new feature",
       taskStatus: "Pending",
+      Priority: "High",
     },
     {
       taskName: "Optimize loading speed",
       taskStatus: "Completed",
+      Priority: "High",
     },
     {
       taskName: "Improve SEO",
       taskStatus: "Pending",
+      Priority: "High",
     },
   ]);
 
@@ -63,6 +75,7 @@ const ReviewsTable = () => {
             <tr className="text-center text-xs">
               <th className="py-2 px-4 text-xs">S.No</th>
               <th className="py-2 px-4 text-xs">Task Name</th>
+              <th className="py-2 px-4 text-xs">Priority</th>
             </tr>
           </thead>
           <tbody>
@@ -78,6 +91,19 @@ const ReviewsTable = () => {
                 </td>
                 <td className="py-2 px-4 text-[11px] md:text-sm ">
                   {review.taskName}
+                </td>
+                <td
+                  className={`py-2 px-4 text-[11px] md:text-sm  ${
+                    review.Priority === "High"
+                      ? "text-red-500"
+                      : review.Priority === "Medium"
+                      ? "text-yellow-500"
+                      : review.Priority === "Low"
+                      ? "text-blue-500"
+                      : null
+                  }`}
+                >
+                  {review.Priority}
                 </td>
               </tr>
             ))}
