@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import React from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
@@ -210,9 +211,11 @@ const Table = () => {
                       {site.feedbackRating}/5
                     </td>
                     <td className="py-2 px-4 cursor-pointer">
-                      <button className="bg-blue-500 text-white px-5 rounded-full text-xs py-1 cursor-pointer hover:bg-blue-600">
-                        View
-                      </button>
+                      <Link href="/dashboard/reviewstable">
+                        <button className="bg-blue-500 text-white px-5 rounded-full text-xs py-1 cursor-pointer hover:bg-blue-600">
+                          View
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ))}
