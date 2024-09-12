@@ -1,11 +1,10 @@
 "use client";
-import React, { FC } from "react";
+import React from "react";
 import { MdDashboard } from "react-icons/md";
 import { IoIosNotifications } from "react-icons/io";
 import { IoIosCall } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
 import { MdOutlineAttachMoney } from "react-icons/md";
-import { IoIosSettings } from "react-icons/io";
 
 interface SideBarProps {
   setsection: Function;
@@ -33,7 +32,9 @@ const SideBar: React.FC<SideBarProps> = ({ setsection }) => {
       <IoIosCall size={23} color="white" cursor={"pointer"} />
       <MdOutlineAttachMoney size={23} color="white" cursor={"pointer"} />
       <IoLogOut size={23} color="white" cursor={"pointer"} />
-      <IoIosSettings size={23} color="white" cursor={"pointer"} />
+
+   
+
     </aside>
   );
 };

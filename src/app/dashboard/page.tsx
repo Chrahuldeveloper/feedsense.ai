@@ -14,7 +14,9 @@ const Page = () => {
         <Table />
       ) : section === "notifications" ? (
         <Notifications />
-      ) : <Table />}
+      ) : (
+        <Table />
+      )}
     </div>
   );
 };
