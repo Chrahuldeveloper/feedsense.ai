@@ -43,6 +43,7 @@ const ReviewsTable = () => {
         <table className="text-white w-full table-auto py-6 border-[1px] border-neutral-900">
           <thead className="bg-[#0f0d15]">
             <tr className="text-center text-xs">
+              <th className="py-2 px-4 text-xs">S.No</th>
               <th className="py-2 px-4 text-xs">Task Name</th>
               <th className="py-2 px-4 text-xs">Task Status</th>
             </tr>
@@ -55,7 +56,9 @@ const ReviewsTable = () => {
                   index % 2 !== 0 ? "bg-[#0f0d15]" : ""
                 }`}
               >
-               
+                <td className="py-2 px-4 text-[11px] md:text-sm ">
+                  {index + 1}
+                </td>
                 <td className="py-2 px-4 text-[11px] md:text-sm ">
                   {review.taskName}
                 </td>
