@@ -41,7 +41,7 @@ const Notifications = () => {
   ];
 
   return (
-    <div className="bg-[#0f0d15] p-5 rounded-xl w-[70vw] md:ml-80  my-10">
+    <div className="bg-[#0f0d15] p-5 rounded-xl w-[89vw] md:w-[70vw] mx-auto md:ml-80  my-10">
       <div>
         <h1 className="text-2xl font-semibold text-white px-5 py-4">
           Your Notifications

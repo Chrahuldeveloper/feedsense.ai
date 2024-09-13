@@ -54,7 +54,7 @@ const SideBar: React.FC<SideBarProps> = ({ setsection }) => {
           />
         </div>
       </aside>
-      {toggle ? <ModelLogout settoggle={settoggle}/> : null}
+      {toggle ? <ModelLogout settoggle={settoggle} /> : null}
     </>
   );
 };
