@@ -8,7 +8,7 @@ const Page = () => {
   const [section, setsection] = useState();
 
   return (
-    <div className="bg-[#000000] w-full   flex  overflow-x-clip">
+    <div className="bg-[#000000] w-full  flex overflow-x-clip">
       <SideBar setsection={setsection} />
       {section === "dashboard" ? (
         <Table />
@@ -18,7 +18,6 @@ const Page = () => {
         <Table />
       )}
     </div>
-
   );
 };
 

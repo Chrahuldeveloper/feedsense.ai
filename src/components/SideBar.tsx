@@ -8,7 +8,7 @@ import { MdOutlineAttachMoney } from "react-icons/md";
 import ModelLogout from "./ModelLogout";
 
 interface SideBarProps {
-  setsection: Function;
+  setsection: any;
 }
 
 const SideBar: React.FC<SideBarProps> = ({ setsection }) => {

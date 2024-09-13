@@ -169,7 +169,7 @@ const Table = () => {
           })}
         </div>
 
-        <div className="w-full md:w-[90vw]  mt-12 px-12 py-6">
+        <div className="w-full md:w-[90vw]   mt-12 px-12 py-6">
           <div className="overflow-x-auto">
             <table className="text-white w-full table-auto  border-[1px] border-neutral-900 ">
               <thead className="bg-[#0f0d15]">
@@ -209,7 +209,7 @@ const Table = () => {
                     </td>
 
                     <td className="py-2 px-4 cursor-pointer">
-                      <Link href="/dashboard/reviewstable">
+                      <Link href="/dashboard/tasks">
                         <button className="bg-blue-500 text-white px-5 rounded-full text-xs py-1 cursor-pointer hover:bg-blue-600">
                           View
                         </button>
