@@ -147,7 +147,7 @@ const Table = () => {
 
   return (
     <>
-      <div className="px-8 py-8 md:ml-36">
+      <div className="px-8 py-8 md:ml-40">
         <h1 className="text-2xl font-semibold text-white mb-4">
           Your DashBoard
         </h1>
