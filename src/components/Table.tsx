@@ -1,7 +1,9 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import { CiMenuFries } from "react-icons/ci";
+import MobileSideBar from "./MobileSideBar";
 
 const Table = () => {
   const websites = [
@@ -10,119 +12,102 @@ const Table = () => {
       feedbackCount: "19",
       taskGenerated: "Yes",
       taskStatus: "In Progress",
-      feedbackRating: 4,
     },
     {
       name: "Website 2",
       feedbackCount: "15",
       taskGenerated: "No",
       taskStatus: "Pending",
-      feedbackRating: 3,
     },
     {
       name: "Website 3",
       feedbackCount: "22",
       taskGenerated: "Yes",
       taskStatus: "Completed",
-      feedbackRating: 5,
     },
     {
       name: "Website 4",
       feedbackCount: "30",
       taskGenerated: "Yes",
       taskStatus: "In Progress",
-      feedbackRating: 4,
     },
     {
       name: "Website 5",
       feedbackCount: "10",
       taskGenerated: "No",
       taskStatus: "Pending",
-      feedbackRating: 2,
     },
     {
       name: "Website 3",
       feedbackCount: "22",
       taskGenerated: "Yes",
       taskStatus: "Completed",
-      feedbackRating: 5,
     },
     {
       name: "Website 4",
       feedbackCount: "30",
       taskGenerated: "Yes",
       taskStatus: "In Progress",
-      feedbackRating: 4,
     },
     {
       name: "Website 5",
       feedbackCount: "10",
       taskGenerated: "No",
       taskStatus: "Pending",
-      feedbackRating: 2,
     },
     {
       name: "Website 3",
       feedbackCount: "22",
       taskGenerated: "Yes",
       taskStatus: "Completed",
-      feedbackRating: 5,
     },
     {
       name: "Website 4",
       feedbackCount: "30",
       taskGenerated: "Yes",
       taskStatus: "In Progress",
-      feedbackRating: 4,
     },
     {
       name: "Website 5",
       feedbackCount: "10",
       taskGenerated: "No",
       taskStatus: "Pending",
-      feedbackRating: 2,
     },
     {
       name: "Website 3",
       feedbackCount: "22",
       taskGenerated: "Yes",
       taskStatus: "Completed",
-      feedbackRating: 5,
     },
     {
       name: "Website 4",
       feedbackCount: "30",
       taskGenerated: "Yes",
       taskStatus: "In Progress",
-      feedbackRating: 4,
     },
     {
       name: "Website 5",
       feedbackCount: "10",
       taskGenerated: "No",
       taskStatus: "Pending",
-      feedbackRating: 2,
     },
     {
       name: "Website 3",
       feedbackCount: "22",
       taskGenerated: "Yes",
       taskStatus: "Completed",
-      feedbackRating: 5,
     },
     {
       name: "Website 4",
       feedbackCount: "30",
       taskGenerated: "Yes",
       taskStatus: "In Progress",
-      feedbackRating: 4,
     },
     {
       name: "Website 5",
       feedbackCount: "10",
       taskGenerated: "No",
       taskStatus: "Pending",
-      feedbackRating: 2,
     },
   ];
 
@@ -145,14 +130,30 @@ const Table = () => {
     },
   ];
 
+  const [toogle, settoogle] = useState(false);
+
   return (
     <>
-      <div className="px-8 py-8 md:ml-40">
-        <h1 className="text-2xl font-semibold text-white mb-4">
+      <div className=" md:ml-40">
+        <nav className="md:hidden bg-[#0f0d15] p-7 w-screen border-b-[1px] border-neutral-900 flex justify-between items-center">
+          <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
+          <CiMenuFries
+            size={26}
+            color="white"
+            className="cursor-pointer"
+            onClick={() => {
+              settoogle(true);
+            }}
+          />
+        </nav>
+
+        <h1 className="text-2xl font-semibold text-white mb-4 px-8 py-6">
           Your DashBoard
         </h1>
 
-        <div className="flex flex-col md:flex-row gap-5 justify-center items-center mt-10">
+        {toogle ? <MobileSideBar settoogle={settoogle} /> : null}
+
+        <div className="flex flex-col md:flex-row gap-5 justify-center items-center mt-7 px-8">
           {data.map((itm, idx) => {
             return (
               <div
@@ -168,7 +169,7 @@ const Table = () => {
           })}
         </div>
 
-        <div className="w-full md:w-[85vw] mx-auto mt-12">
+        <div className="w-full md:w-[90vw]  mt-12 px-12 py-6">
           <div className="overflow-x-auto">
             <table className="text-white w-full table-auto  border-[1px] border-neutral-900 ">
               <thead className="bg-[#0f0d15]">
@@ -176,7 +177,6 @@ const Table = () => {
                   <th className="py-2 px-4">Name</th>
                   <th className="py-2 px-4">Feedback Count</th>
                   <th className="py-2 px-4">Task Generated</th>
-                  <th className="py-2 px-4">Feedback Rating</th>
                   <th className="py-2 px-4">Action</th>
                 </tr>
               </thead>
@@ -207,9 +207,7 @@ const Table = () => {
                     >
                       • {site.taskStatus}
                     </td>
-                    <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
-                      {site.feedbackRating}/5
-                    </td>
+
                     <td className="py-2 px-4 cursor-pointer">
                       <Link href="/dashboard/reviewstable">
                         <button className="bg-blue-500 text-white px-5 rounded-full text-xs py-1 cursor-pointer hover:bg-blue-600">
@@ -222,7 +220,7 @@ const Table = () => {
               </tbody>
             </table>
 
-            <div className="flex gap-5 justify-center items-center mt-14">
+            <div className="flex gap-5 justify-center items-center mt-14 px-8 py-8">
               <FaAngleLeft size={20} color="white" cursor={"pointer"} />
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
                 <div className="flex items-center" key={i}>

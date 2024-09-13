@@ -18,6 +18,7 @@ const Page = () => {
         <Table />
       )}
     </div>
+
   );
 };
 
