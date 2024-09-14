@@ -11,10 +11,12 @@ const page = () => {
             className="h-[100vh] hidden md:block w-[50vw] object-cover brightness-90"
           />
         </div>
-
         <div className="text-slate-300 border-[1px] border-neutral-900 p-7 rounded-lg w-[90vw] md:w-[30vw] mx-auto  md:my-0">
-          <div>
+          <div className="space-y-3">
             <h1 className="text-2xl font-semibold text-center">TaskFeed</h1>
+            <p className="text-sm text-center">
+              Lorem ipsum dolor sit amet consectetur.
+            </p>
           </div>
 
           <div className="space-y-2 mt-4">
