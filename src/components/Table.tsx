@@ -17,7 +17,7 @@ const Table = () => {
       name: "Website 2",
       feedbackCount: "15",
       taskGenerated: "No",
-      taskStatus: "Pending",
+      taskStatus: "In Progress",
     },
     {
       name: "Website 3",
@@ -35,7 +35,7 @@ const Table = () => {
       name: "Website 5",
       feedbackCount: "10",
       taskGenerated: "No",
-      taskStatus: "Pending",
+      taskStatus: "In Progress",
     },
     {
       name: "Website 3",
@@ -53,7 +53,7 @@ const Table = () => {
       name: "Website 5",
       feedbackCount: "10",
       taskGenerated: "No",
-      taskStatus: "Pending",
+      taskStatus: "In Progress",
     },
     {
       name: "Website 3",
@@ -71,7 +71,7 @@ const Table = () => {
       name: "Website 5",
       feedbackCount: "10",
       taskGenerated: "No",
-      taskStatus: "Pending",
+      taskStatus: "In Progress",
     },
     {
       name: "Website 3",
@@ -89,7 +89,7 @@ const Table = () => {
       name: "Website 5",
       feedbackCount: "10",
       taskGenerated: "No",
-      taskStatus: "Pending",
+      taskStatus: "In Progress",
     },
     {
       name: "Website 3",
@@ -107,7 +107,7 @@ const Table = () => {
       name: "Website 5",
       feedbackCount: "10",
       taskGenerated: "No",
-      taskStatus: "Pending",
+      taskStatus: "In Progress",
     },
   ];
 
@@ -196,9 +196,7 @@ const Table = () => {
                     </td>
                     <td
                       className={`py-2 px-4 cursor-pointer text-[11px] md:text-sm ${
-                        site.taskStatus === "Pending"
-                          ? "text-red-500"
-                          : site.taskStatus === "Completed"
+                        site.taskStatus === "Completed"
                           ? "text-green-500"
                           : site.taskStatus === "In Progress"
                           ? "text-blue-500"
