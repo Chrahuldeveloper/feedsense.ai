@@ -10,34 +10,42 @@ const page = () => {
     {
       name: "Website 5",
       task: "Make good U",
+      Piority: "Low",
     },
     {
       name: "Website 5",
       task: "Make good U",
+      Piority: "Low",
     },
     {
       name: "Website 5",
       task: "Make good U",
+      Piority: "Low",
     },
     {
       name: "Website 5",
       task: "Make good U",
+      Piority: "Medium",
     },
     {
       name: "Website 5",
       task: "Make good U",
+      Piority: "High",
     },
     {
       name: "Website 5",
       task: "Make good U",
+      Piority: "High",
     },
     {
       name: "Website 5",
       task: "Make good U",
+      Piority: "High",
     },
     {
       name: "Website 5",
       task: "Make good U",
+      Piority: "Low",
     },
   ];
 
@@ -66,6 +74,7 @@ const page = () => {
                 <tr className="text-center text-xs">
                   <th className="py-2 px-4">S.No</th>
                   <th className="py-2 px-4">Task Generated</th>
+                  <th className="py-2 px-4">Piority</th>
                 </tr>
               </thead>
               <tbody>
@@ -81,6 +90,19 @@ const page = () => {
                     </td>
                     <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
                       {site.task}
+                    </td>
+                    <td
+                      className={`py-2 px-4 cursor-pointer text-[11px] md:text-sm ${
+                        site.Piority === "Low"
+                          ? "text-blue-600"
+                          : site.Piority === "High"
+                          ? "text-red-600"
+                          : site.Piority === "Medium"
+                          ? "text-yellow-600"
+                          : null
+                      }`}
+                    >
+                      {site.Piority}
                     </td>
                   </tr>
                 ))}
