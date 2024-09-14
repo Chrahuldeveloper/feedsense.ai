@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { MdDashboard } from "react-icons/md";
-import { IoIosNotifications } from "react-icons/io";
 import { IoIosCall } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
 import { MdOutlineAttachMoney } from "react-icons/md";
@@ -29,16 +28,6 @@ const SideBar: React.FC<SideBarProps> = ({ setsection }) => {
         </div>
         <div className="flex items-center space-x-2.5 w-32 justify-between">
           <IoIosCall size={22} color="white" cursor={"pointer"} />
-        </div>
-        <div className="flex items-center space-x-2.5 w-32 justify-between">
-          <IoIosNotifications
-            onClick={() => {
-              setsection("notifications");
-            }}
-            size={22}
-            color="white"
-            cursor={"pointer"}
-          />
         </div>
         <div className="flex items-center space-x-2.5 w-32 justify-between">
           <MdOutlineAttachMoney size={22} color="white" cursor={"pointer"} />

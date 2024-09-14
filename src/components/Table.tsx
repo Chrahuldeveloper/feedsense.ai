@@ -111,7 +111,12 @@ const Table = () => {
     },
   ];
 
-  const data = [
+  type dataItem = {
+    label: String;
+    number: String;
+  };
+
+  const data: dataItem[] = [
     {
       label: "Total website",
       number: "20",
