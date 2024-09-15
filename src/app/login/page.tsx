@@ -12,7 +12,7 @@ const page = () => {
           />
         </div>
         {/* border-[1px] border-red-500 */}
-        <div className="text-slate-300 bg-[#10161c76] p-7 rounded-lg w-[90vw] md:w-[30vw] mx-auto md:my-0 ">
+        <div className="text-slate-300 bg-[#131b2376] p-7 rounded-lg w-[90vw] md:w-[30vw] mx-auto md:my-0 ">
           <div className="space-y-3.5">
             <h1 className="text-2xl font-bold ">Welcome back</h1>
             <p className="text-sm font-semibold">Sign in to your account</p>
@@ -23,7 +23,7 @@ const page = () => {
             <input
               type="text"
               autoComplete="false"
-              className="border-[1px] border-neutral-900 bg-[#0f0d15] px-2 py-2 outline-none md:w-[25vw] w-[85vw] rounded-lg"
+              className="bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[25vw] w-[85vw] rounded-lg"
             />
           </div>
           <div className="space-y-2 mt-4">
@@ -31,7 +31,7 @@ const page = () => {
             <input
               type="text"
               autoComplete="false"
-              className="border-[1px] border-neutral-900  bg-[#0f0d15] px-2 py-2 outline-none md:w-[25vw] w-[85vw] rounded-lg"
+              className=" bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[25vw] w-[85vw] rounded-lg"
             />
           </div>
           <div className="space-y-2 mt-4">
@@ -39,7 +39,7 @@ const page = () => {
             <input
               type="password"
               autoComplete="false"
-              className="border-[1px] border-neutral-900  bg-[#0f0d15] px-2 py-2 outline-none md:w-[25vw] w-[85vw] rounded-lg"
+              className="bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[25vw] w-[85vw] rounded-lg"
             />
           </div>
 

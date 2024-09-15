@@ -1,9 +1,21 @@
 import React, { useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
+import { FaRegCopy } from "react-icons/fa";
 
 const Addintegration = () => {
   const [toogle, settoogle] = useState(false);
+
+  const codeToCopy = `
+  <!-- Add this snippet to your website's HTML -->
+  <script>
+    (function() {
+      var feedbackWidget = document.createElement('script');
+      feedbackWidget.src = 'https://yourwebsite.com/widget.js';
+      feedbackWidget.async = true;
+      document.head.appendChild(feedbackWidget);
+    })();
+  </script>`;
 
   return (
     <>
@@ -33,13 +45,13 @@ const Addintegration = () => {
         {/* add the process to integrate the websites */}
 
         <div className="lg:ml-60">
-          <div className=" w-[85vw] md:w-[33vw] p-6 space-y-6 mt-20 mx-auto bg-[#10161c76]">
+          {/* <div className=" w-[85vw] md:w-[33vw] p-6 space-y-6 mt-20 mx-auto bg-[#131b2376]">
             <div className="space-y-4 text-slate-300">
               <h1 className="font-semibold text-sm">Website Name*</h1>
               <input
                 type="text"
                 autoComplete="false"
-                className="border-[1px] border-neutral-900 bg-[#0f0d15] px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
+                className=" bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
               />
             </div>
             <div className="space-y-4 text-slate-300">
@@ -47,19 +59,36 @@ const Addintegration = () => {
               <input
                 type="text"
                 autoComplete="false"
-                className="border-[1px] border-neutral-900 bg-[#0f0d15] px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
+                className=" bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
               />
             </div>
             <div className="space-y-4 text-slate-300">
               <h1 className="font-semibold text-sm">Website Type*</h1>
               <select
                 name="websiteType"
-                className="border-[1px] border-neutral-900 bg-[#0f0d15] px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
+                className=" bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
               >
                 <option value="Custom">Custom</option>
                 <option value="WordPress">WordPress</option>
                 <option value="Shopify">Shopify</option>
               </select>
+            </div>
+          </div> */}
+
+          {/* Code for integration */}
+
+          <div className="p-6 space-y-6 mt-20 mx-auto bg-[#131b2376]">
+            <div className=" bg-[#0d0d13] border-[1px] border-neutral-900">
+              <pre className="text-white p-3">
+                <div className="flex justify-end">
+                  <FaRegCopy
+                    size={19}
+                    color="white"
+                    className="cursor-pointer"
+                  />
+                </div>
+                <code>{codeToCopy}</code>
+              </pre>
             </div>
           </div>
         </div>
