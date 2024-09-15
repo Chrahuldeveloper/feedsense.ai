@@ -4,12 +4,12 @@ import Table from "@/components/Table";
 import SideBar from "@/components/SideBar";
 
 const Page = () => {
-  const [section, setsection] = useState();
+  const [section, setsection] = useState("dashboard");
 
   return (
     <div className="bg-[#000000] w-full  flex overflow-x-clip">
       <SideBar setsection={setsection} />
-      {section === "dashboard" ? <Table /> : <Table />}
+      {section === "dashboard" ? <Table /> : null}
     </div>
   );
 };

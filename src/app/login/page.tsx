@@ -11,7 +11,7 @@ const page = () => {
             className="h-[100vh] hidden md:block w-[50vw] object-cover brightness-75"
           />
         </div>
-        <div className="text-slate-300 border-[1px] border-neutral-900 p-7 rounded-lg w-[90vw] md:w-[30vw] mx-auto md:my-0">
+        <div className="text-slate-300  p-7 rounded-lg w-[90vw] md:w-[30vw] mx-auto md:my-0">
           <div className="space-y-3.5">
             <h1 className="text-2xl font-bold ">Welcome back</h1>
             <p className="text-sm font-semibold">Sign in to your account</p>
