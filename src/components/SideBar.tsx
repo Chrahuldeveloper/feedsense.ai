@@ -6,12 +6,9 @@ import { IoLogOut } from "react-icons/io5";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import ModelLogout from "./ModelLogout";
 import Link from "next/link";
+import { CgWebsite } from "react-icons/cg";
 
-interface SideBarProps {
-  setsection: any;
-}
-
-const SideBar: React.FC<SideBarProps> = ({ setsection }) => {
+const SideBar = () => {
   const [toggle, settoggle] = useState(false);
 
   return (
@@ -27,6 +24,9 @@ const SideBar: React.FC<SideBarProps> = ({ setsection }) => {
         </div>
         <div className="flex items-center space-x-2.5 w-32 justify-between">
           <MdOutlineAttachMoney size={22} color="white" cursor={"pointer"} />
+        </div>
+        <div className="flex items-center space-x-2.5 w-32 justify-between">
+          <CgWebsite size={22} color="white" cursor={"pointer"} />
         </div>
         <div className="flex items-center space-x-2.5 w-32 justify-between">
           <IoLogOut
