@@ -8,7 +8,7 @@ import ModelLogout from "./ModelLogout";
 import Link from "next/link";
 
 interface SideBarProps {
-  setsection: (section: string) => void;
+  setsection: any;
 }
 
 const SideBar: React.FC<SideBarProps> = ({ setsection }) => {
