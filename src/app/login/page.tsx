@@ -11,34 +11,39 @@ const page = () => {
             className="h-[100vh] hidden md:block w-[50vw] object-cover brightness-75"
           />
         </div>
-        <div className="text-slate-300  p-7 rounded-lg w-[90vw] md:w-[30vw] mx-auto md:my-0">
+        {/* border-[1px] border-red-500 */}
+        <div className="text-slate-300  p-7 rounded-lg w-[90vw] md:w-[30vw] mx-auto md:my-0 ">
           <div className="space-y-3.5">
             <h1 className="text-2xl font-bold ">Welcome back</h1>
             <p className="text-sm font-semibold">Sign in to your account</p>
           </div>
 
           <div className="space-y-2 mt-6">
-            <h1 className="font-semibold ">Name</h1>
+            <h1 className="font-semibold ">Name*</h1>
             <input
               type="text"
+              autoComplete="false"
               className="border-[1px] border-neutral-900 bg-[#0f0d15] px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
             />
           </div>
           <div className="space-y-2 mt-4">
-            <h1 className="font-semibold ">Email</h1>
+            <h1 className="font-semibold ">Email*</h1>
             <input
               type="text"
+              autoComplete="false"
               className="border-[1px] border-neutral-900  bg-[#0f0d15] px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
             />
           </div>
           <div className="space-y-2 mt-4">
-            <h1 className="font-semibold ">Password</h1>
+            <h1 className="font-semibold ">Password*</h1>
             <input
               type="password"
+              autoComplete="false"
               className="border-[1px] border-neutral-900  bg-[#0f0d15] px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
             />
           </div>
-          <button className="bg-blue-600 mt-6  text-white  py-2 md:w-[25vw]  w-[80vw]  font-semibold rounded-lg">
+
+          <button className="bg-blue-500 mt-6  text-white  py-2 md:w-[25vw]  w-[80vw]  font-semibold rounded-lg hover:bg-blue-600 ease-in-out duration-500">
             Login
           </button>
           <div className="text-center my-3.5 text-slate-300">

@@ -213,7 +213,7 @@ const Table = () => {
 
                     <td className="py-2 px-4 cursor-pointer">
                       <Link href="/dashboard/tasks">
-                        <button className="bg-blue-500 text-white px-5 rounded-full text-xs py-1 cursor-pointer hover:bg-blue-600">
+                        <button className="bg-blue-500 text-white px-5 rounded-full text-sm py-1 cursor-pointer hover:bg-blue-600 ease-in-out duration-500">
                           View
                         </button>
                       </Link>
