@@ -2,9 +2,11 @@ import React from 'react'
 
 const Addintegration = () => {
   return (
-    <div>
-      
-    </div>
+    <>
+      <div className=" md:ml-40">
+
+      </div>
+    </>
   )
 }
 

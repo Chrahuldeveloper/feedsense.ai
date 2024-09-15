@@ -20,13 +20,15 @@ const SideBar = () => {
           </Link>
         </div>
         <div className="flex items-center space-x-2.5 w-32 justify-between">
+          <Link href="/dashboard/integrate">
+            <CgWebsite size={22} color="white" cursor={"pointer"} />
+          </Link>
+        </div>
+        <div className="flex items-center space-x-2.5 w-32 justify-between">
           <IoIosCall size={22} color="white" cursor={"pointer"} />
         </div>
         <div className="flex items-center space-x-2.5 w-32 justify-between">
           <MdOutlineAttachMoney size={22} color="white" cursor={"pointer"} />
-        </div>
-        <div className="flex items-center space-x-2.5 w-32 justify-between">
-          <CgWebsite size={22} color="white" cursor={"pointer"} />
         </div>
         <div className="flex items-center space-x-2.5 w-32 justify-between">
           <IoLogOut

@@ -83,7 +83,7 @@ const page = () => {
         />
       </nav>
       <div className="bg-[#000000] w-full h-screen flex overflow-x-clip">
-        <SideBar setsection={""} />
+        <SideBar  />
         <div className="w-full md:w-[90vw]  mt-12 px-4 md:px-12 py-6 md:ml-40 space-y-16">
 
 
