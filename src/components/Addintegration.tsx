@@ -44,7 +44,7 @@ const Addintegration = () => {
         </div>  */}
         {/* add the process to integrate the websites */}
 
-        <div className="lg:ml-60">
+        <div className="lg:ml-48">
           {/* <div className=" w-[85vw] md:w-[33vw] p-6 space-y-6 mt-20 mx-auto bg-[#131b2376]">
             <div className="space-y-4 text-slate-300">
               <h1 className="font-semibold text-sm">Website Name*</h1>
