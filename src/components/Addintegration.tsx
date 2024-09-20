@@ -17,9 +17,11 @@ const Addintegration = () => {
     })();
   </script>`;
 
+  const [section, setsection] = useState<string | undefined>();
+
   return (
     <>
-      <div className="md:ml-80">
+      <div className="md:ml-80 ">
         <nav className="md:hidden bg-[#0f0d15] p-7 w-screen border-b-[1px] border-neutral-900 flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
           <CiMenuFries
@@ -32,20 +34,41 @@ const Addintegration = () => {
           />
         </nav>
         {toogle ? <MobileSideBar settoogle={settoogle} /> : null}
-        {/* <div className="space-y-5 lg:space-y-8 text-slate-300 mt-14 p-8">
-          <h1 className="text-3xl font-bold  lg:text-5xl">Add your website</h1>
-          <p className="max-w-sm md:text-lg md:max-w-md">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
-            consectetur enim praesentium.
-          </p>
-          <button className="bg-blue-500 text-white px-5 rounded-lg text-sm py-2 cursor-pointer hover:bg-blue-600 ease-in-out duration-500 font-semibold">
-            Start Integration
-          </button>
-        </div>  */}
+        <div
+          className={`text-slate-300 mt-10 p-8 flex flex-col md:flex-row items-center gap-8 md:gap-12
+        md:mt-28 justify-center ${
+          section === "showinput" ? "hidden" : "block"
+        }`}
+        >
+          <div className="lg:space-y-8 space-y-5 order-2 ">
+            <h1 className="text-3xl font-bold lg:text-5xl">Add your website</h1>
+            <p className="max-w-sm md:text-lg md:max-w-md">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              Laboriosam consectetur enim praesentium.
+            </p>
+            <button
+              onClick={() => {
+                setsection("showinput");
+              }}
+              className="bg-blue-500 text-white px-5 rounded-lg text-sm py-2 cursor-pointer hover:bg-blue-600 ease-in-out duration-500 font-semibold"
+            >
+              Start Integration
+            </button>
+          </div>
+          <div className="md:order-2 ">
+            <img
+              src="https://images.pexels.com/photos/943096/pexels-photo-943096.jpeg?auto=compress&cs=tinysrgb&w=600"
+              alt=""
+              className="max-w-sm md:max-w-md rounded-lg "
+            />
+          </div>
+        </div>
         {/* add the process to integrate the websites */}
 
-        <div className="lg:ml-48">
-          {/* <div className=" w-[85vw] md:w-[33vw] p-6 space-y-6 mt-20 mx-auto bg-[#131b2376]">
+        <div
+          className={`lg:ml-52 ${section === "showinput" ? "block" : "hidden"}`}
+        >
+          <div className=" w-[85vw] md:w-[33vw] p-6 space-y-6 mt-20 mx-auto bg-[#131b2376]">
             <div className="space-y-4 text-slate-300">
               <h1 className="font-semibold text-sm">Website Name*</h1>
               <input
@@ -73,11 +96,11 @@ const Addintegration = () => {
                 <option value="Shopify">Shopify</option>
               </select>
             </div>
-          </div> */}
+          </div>
 
           {/* Code for integration */}
 
-          <div className="p-6 space-y-6 mt-20 mx-auto bg-[#131b2376]">
+          {/* <div className="p-6 space-y-6 mt-20 mx-auto bg-[#131b2376]">
             <div className=" bg-[#0d0d13] border-[1px] border-neutral-900">
               <pre className="text-white p-3">
                 <div className="flex justify-end">
@@ -90,7 +113,7 @@ const Addintegration = () => {
                 <code>{codeToCopy}</code>
               </pre>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
