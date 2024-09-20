@@ -37,7 +37,11 @@ const Addintegration = () => {
         <div
           className={`text-slate-300 mt-10 p-8 flex flex-col md:flex-row items-center gap-8 md:gap-12
         md:mt-28 justify-center ${
-          section === "showinput" ? "hidden" : "block"
+          section === "showinput"
+            ? "hidden"
+            : section === "showcode"
+            ? "hidden"
+            : "block"
         }`}
         >
           <div className="lg:space-y-8 space-y-5 order-2 ">
@@ -64,11 +68,20 @@ const Addintegration = () => {
           </div>
         </div>
         {/* add the process to integrate the websites */}
-
         <div
-          className={`lg:ml-52 ${section === "showinput" ? "block" : "hidden"}`}
+          className={`lg:ml-52 ${
+            section === "showinput"
+              ? "block"
+              : section === "showcode"
+              ? "block"
+              : "hidden"
+          }`}
         >
-          <div className=" w-[85vw] md:w-[33vw] p-6 space-y-6 mt-20 mx-auto bg-[#131b2376]">
+          <div
+            className={` w-[85vw] md:w-[33vw] p-6 space-y-6 mt-20 mx-auto bg-[#131b2376] ${
+              section === "showcode" ? "hidden" : "block"
+            } `}
+          >
             <div className="space-y-4 text-slate-300">
               <h1 className="font-semibold text-sm">Website Name*</h1>
               <input
@@ -96,11 +109,24 @@ const Addintegration = () => {
                 <option value="Shopify">Shopify</option>
               </select>
             </div>
+            <div>
+              <button
+                onClick={() => {
+                  setsection("showcode");
+                }}
+                className="bg-blue-500 text-white px-5 mt-2.5 text-sm py-2  hover:bg-blue-600 ease-in-out duration-500 font-semibold md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
+              >
+                Get Code
+              </button>
+            </div>
           </div>
 
           {/* Code for integration */}
-
-          {/* <div className="p-6 space-y-6 mt-20 mx-auto bg-[#131b2376]">
+          <div
+            className={`p-6 space-y-6 mt-20 mx-auto bg-[#131b2376] ${
+              section === "showcode" ? "block" : "hidden"
+            }`}
+          >
             <div className=" bg-[#0d0d13] border-[1px] border-neutral-900">
               <pre className="text-white p-3">
                 <div className="flex justify-end">
@@ -113,7 +139,7 @@ const Addintegration = () => {
                 <code>{codeToCopy}</code>
               </pre>
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </>
