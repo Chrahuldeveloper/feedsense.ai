@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
 import { FaRegCopy } from "react-icons/fa";
+import hljs from "highlight.js/lib/core";
+import javascript from "highlight.js/lib/languages/javascript";
+import "highlight.js/styles/github.css";
 
 const Addintegration = () => {
   const [toogle, settoogle] = useState(false);
 
-  const codeToCopy = `
+  hljs.registerLanguage("javascript", javascript);
+
+  const codeToCopy = hljs.highlight(
+    `
   <!-- Add this snippet to your website's HTML -->
   <script>
     (function() {
@@ -15,13 +21,15 @@ const Addintegration = () => {
       feedbackWidget.async = true;
       document.head.appendChild(feedbackWidget);
     })();
-  </script>`;
+  </script>`,
+    { language: "javascript" }
+  ).value;
 
   const [section, setsection] = useState<string | undefined>();
 
   return (
     <>
-      <div className="md:ml-80 ">
+      <div className="md:ml-80">
         <nav className="md:hidden bg-[#0f0d15] p-7 w-screen border-b-[1px] border-neutral-900 flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
           <CiMenuFries
@@ -36,13 +44,9 @@ const Addintegration = () => {
         {toogle ? <MobileSideBar settoogle={settoogle} /> : null}
         <div
           className={`text-slate-300 mt-10 p-8 flex flex-col md:flex-row items-center gap-8 md:gap-12
-        md:mt-28 justify-center ${
-          section === "showinput"
-            ? "hidden"
-            : section === "showcode"
-            ? "hidden"
-            : "block"
-        }`}
+          md:mt-28 justify-center ${
+            section === "showinput" || section === "showcode" ? "hidden" : "block"
+          }`}
         >
           <div className="lg:space-y-8 space-y-5 order-2 ">
             <h1 className="text-3xl font-bold lg:text-5xl">Add your website</h1>
@@ -67,27 +71,23 @@ const Addintegration = () => {
             />
           </div>
         </div>
-        {/* add the process to integrate the websites */}
+        {/* Add the process to integrate the websites */}
         <div
           className={`lg:ml-52 ${
-            section === "showinput"
-              ? "block"
-              : section === "showcode"
-              ? "block"
-              : "hidden"
+            section === "showinput" || section === "showcode" ? "block" : "hidden"
           }`}
         >
           <div
-            className={` w-[85vw] md:w-[33vw] p-6 space-y-6 mt-20 mx-auto bg-[#131b2376] ${
+            className={`w-[85vw] md:w-[33vw] p-6 space-y-6 mt-20 mx-auto bg-[#131b2376] ${
               section === "showcode" ? "hidden" : "block"
-            } `}
+            }`}
           >
             <div className="space-y-4 text-slate-300">
               <h1 className="font-semibold text-sm">Website Name*</h1>
               <input
                 type="text"
                 autoComplete="false"
-                className=" bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
+                className="bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
               />
             </div>
             <div className="space-y-4 text-slate-300">
@@ -95,14 +95,14 @@ const Addintegration = () => {
               <input
                 type="text"
                 autoComplete="false"
-                className=" bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
+                className="bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
               />
             </div>
             <div className="space-y-4 text-slate-300">
               <h1 className="font-semibold text-sm">Website Type*</h1>
               <select
                 name="websiteType"
-                className=" bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
+                className="bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
               >
                 <option value="Custom">Custom</option>
                 <option value="WordPress">WordPress</option>
@@ -114,7 +114,7 @@ const Addintegration = () => {
                 onClick={() => {
                   setsection("showcode");
                 }}
-                className="bg-blue-500 text-white px-5 mt-2.5 text-sm py-2  hover:bg-blue-600 ease-in-out duration-500 font-semibold md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
+                className="bg-blue-500 text-white px-5 mt-2.5 text-sm py-2 hover:bg-blue-600 ease-in-out duration-500 font-semibold md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
               >
                 Get Code
               </button>
@@ -127,16 +127,12 @@ const Addintegration = () => {
               section === "showcode" ? "block" : "hidden"
             }`}
           >
-            <div className=" bg-[#0d0d13] border-[1px] border-neutral-900">
+            <div className="bg-[#080808] border-[1px] border-neutral-900 overflow-auto">
               <pre className="text-white p-3">
                 <div className="flex justify-end">
-                  <FaRegCopy
-                    size={19}
-                    color="white"
-                    className="cursor-pointer"
-                  />
+                  <FaRegCopy size={19} color="white" className="cursor-pointer" />
                 </div>
-                <code>{codeToCopy}</code>
+                <code className="whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: codeToCopy }}></code>
               </pre>
             </div>
           </div>
