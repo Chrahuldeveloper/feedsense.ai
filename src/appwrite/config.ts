@@ -23,7 +23,21 @@ class AppWriteService {
     return account.createEmailPasswordSession(email, password);
   }
 
-  async currentUser() {}
+  async logOut() {
+    try {
+      return await account.deleteSession("current");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async currentUser() {
+    try {
+      return account.get();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async isLogin(): Promise<boolean> {
     try {
@@ -53,3 +67,5 @@ class AppWriteService {
     }
   }
 }
+
+export default AppWriteService;
