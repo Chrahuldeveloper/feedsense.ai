@@ -36,16 +36,18 @@ const Addintegration = () => {
             size={26}
             color="white"
             className="cursor-pointer"
-            onClick={() => {
+            onClick={() => {  
               settoogle(true);
             }}
           />
         </nav>
         {toogle ? <MobileSideBar settoogle={settoogle} /> : null}
         <div
-          className={`text-slate-300 mt-10 p-8 flex flex-col md:flex-row items-center gap-8 md:gap-12
+          className={`text-slate-300  p-8 flex flex-col md:flex-row items-center gap-8 md:gap-12 mt-10
           md:mt-28 justify-center ${
-            section === "showinput" || section === "showcode" ? "hidden" : "block"
+            section === "showinput" || section === "showcode"
+              ? "hidden"
+              : "block"
           }`}
         >
           <div className="lg:space-y-8 space-y-5 order-2 ">
@@ -74,7 +76,9 @@ const Addintegration = () => {
         {/* Add the process to integrate the websites */}
         <div
           className={`lg:ml-52 ${
-            section === "showinput" || section === "showcode" ? "block" : "hidden"
+            section === "showinput" || section === "showcode"
+              ? "block"
+              : "hidden"
           }`}
         >
           <div
@@ -130,9 +134,16 @@ const Addintegration = () => {
             <div className="bg-[#080808] border-[1px] border-neutral-900 overflow-auto">
               <pre className="text-white p-3">
                 <div className="flex justify-end">
-                  <FaRegCopy size={19} color="white" className="cursor-pointer" />
+                  <FaRegCopy
+                    size={19}
+                    color="white"
+                    className="cursor-pointer"
+                  />
                 </div>
-                <code className="whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: codeToCopy }}></code>
+                <code
+                  className="whitespace-pre-wrap"
+                  dangerouslySetInnerHTML={{ __html: codeToCopy }}
+                ></code>
               </pre>
             </div>
           </div>
