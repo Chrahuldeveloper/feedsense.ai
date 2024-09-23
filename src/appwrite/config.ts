@@ -23,6 +23,19 @@ class AppWriteService {
     return account.createEmailPasswordSession(email, password);
   }
 
+  async currentUser() {}
+
+  async isLogin(): Promise<boolean> {
+    try {
+      const data = await this.currentUser();
+      return Boolean(data);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return false;
+  }
+
   async creatUserAccount({ email, password, name }: creatUserAccountType) {
     try {
       const userAccount = await account.create(
