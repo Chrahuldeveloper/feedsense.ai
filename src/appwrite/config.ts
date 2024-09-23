@@ -13,10 +13,28 @@ type creatUserAccountType = {
   name: string;
 };
 
+type userLoginType = {
+  email: string;
+  password: string;
+};
+
 class AppWriteService {
+  async login({ email, password }: userLoginType) {
+    return account.createEmailPasswordSession(email, password);
+  }
+
   async creatUserAccount({ email, password, name }: creatUserAccountType) {
     try {
-      await account.create(ID.unique(), email, password, name);
+      const userAccount = await account.create(
+        ID.unique(),
+        email,
+        password,
+        name
+      );
+
+      if (userAccount) {
+        this.login({ email, password });
+      }
     } catch (error) {
       console.log(error);
     }
