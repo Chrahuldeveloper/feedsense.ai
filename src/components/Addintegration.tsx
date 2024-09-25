@@ -5,7 +5,6 @@ import { FaRegCopy } from "react-icons/fa";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
 import "highlight.js/styles/github.css";
-import Form from "./Form";
 
 const Addintegration = () => {
   const [toogle, settoogle] = useState(false);
@@ -13,10 +12,8 @@ const Addintegration = () => {
   hljs.registerLanguage("javascript", javascript);
 
   const codeToCopy = hljs.highlight(
-    `
-  <!-- Add this snippet to your website's HTML -->
-      <iframe src="http://localhost:3000/integrate" ></iframe>
-`,
+    `<!-- Add this snippet to your website's HTML -->
+      <iframe src="http://localhost:3000/integrate" ></iframe>`,
     { language: "javascript" }
   ).value;
 
