@@ -15,14 +15,8 @@ const Addintegration = () => {
   const codeToCopy = hljs.highlight(
     `
   <!-- Add this snippet to your website's HTML -->
- <iframe
-        src="http://localhost:3000/integrate"
-        width="100%"
-        height="500px"
-        frameBorder="0"
-        scrolling="no"
-        style={{ overflow: 'hidden' }}
-      ></iframe>`,
+      <iframe src="http://localhost:3000/integrate" ></iframe>
+`,
     { language: "javascript" }
   ).value;
 

@@ -13,16 +13,15 @@ const Form = () => {
     <>
       <div className="">
         <button
-          className={`fixed right-[-1.5rem] text-lg top-1/2 p-3 rotate-90 transform translate-y-[-50%] bg-[#0d0d13] text-slate-300   focus:outline-none z-50 ${
+          className={`fixed right-[-1.5rem] text-lg top-1/2 p-3 -rotate-90 transform translate-y-[-50%] bg-[#0d0d13] text-slate-300  focus:outline-none z-[1000]  ${
             isOpen ? "hidden" : "block"
           }`}
           onClick={toggleForm}
         >
           Feedback
         </button>
-
         <div
-          className={`fixed right-0   w-[85vw] md:w-[30vw] top-16 p-5 bg-[#131b2376] rounded-lg shadow-lg z-50 transform transition-transform duration-500 ${
+          className={`fixed right-0  w-[85vw] md:w-[35vw] top-16 p-5 bg-[#131b2376] rounded-lg shadow-lg z-50 transform transition-transform duration-500 ${
             isOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
