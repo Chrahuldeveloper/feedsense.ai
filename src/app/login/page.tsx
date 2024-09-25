@@ -1,8 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import AppWriteService from "../../appwrite/config";
+import { useRouter } from "next/navigation";
 const page = () => {
   const auth = new AppWriteService();
+
+  const navigate = useRouter();
 
   const [data, setdata] = useState({
     email: "",
@@ -10,16 +13,17 @@ const page = () => {
     name: "",
   });
 
-  const handleSubmit = () => {
-    auth.creatUserAccount({
-      email: data.email,
-      password: data.password,
-      name: data.name,
-    });
-  };
-
-  const handleChange = (e: any) => {
-    setdata({ ...data, [e.target.name]: e.target.value });
+  const handleSubmit = async () => {
+    try {
+      await auth.creatUserAccount({
+        email: data.email,
+        password: data.password,
+        name: data.name,
+      });
+      navigate.push("/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -43,7 +47,9 @@ const page = () => {
             <input
               type="text"
               value={data.name}
-              onChange={handleChange}
+              onChange={(e) => {
+                setdata({ ...data, name: e.target.value });
+              }}
               autoComplete="false"
               className="bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
             />
@@ -53,7 +59,9 @@ const page = () => {
             <input
               type="text"
               value={data.email}
-              onChange={handleChange}
+              onChange={(e) => {
+                setdata({ ...data, email: e.target.value });
+              }}
               autoComplete="false"
               className=" bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
             />
@@ -63,7 +71,9 @@ const page = () => {
             <input
               type="password"
               value={data.password}
-              onChange={handleChange}
+              onChange={(e) => {
+                setdata({ ...data, password: e.target.value });
+              }}
               autoComplete="false"
               className="bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
             />

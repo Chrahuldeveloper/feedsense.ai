@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
 import { FaRegCopy } from "react-icons/fa";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
 import "highlight.js/styles/github.css";
+import Form from "./Form";
 
 const Addintegration = () => {
   const [toogle, settoogle] = useState(false);
@@ -14,14 +15,14 @@ const Addintegration = () => {
   const codeToCopy = hljs.highlight(
     `
   <!-- Add this snippet to your website's HTML -->
-  <script>
-    (function() {
-      var feedbackWidget = document.createElement('script');
-      feedbackWidget.src = 'https://yourwebsite.com/widget.js';
-      feedbackWidget.async = true;
-      document.head.appendChild(feedbackWidget);
-    })();
-  </script>`,
+ <iframe
+        src="http://localhost:3000/integrate"
+        width="100%"
+        height="500px"
+        frameBorder="0"
+        scrolling="no"
+        style={{ overflow: 'hidden' }}
+      ></iframe>`,
     { language: "javascript" }
   ).value;
 
@@ -36,7 +37,7 @@ const Addintegration = () => {
             size={26}
             color="white"
             className="cursor-pointer"
-            onClick={() => {  
+            onClick={() => {
               settoogle(true);
             }}
           />
@@ -50,7 +51,7 @@ const Addintegration = () => {
               : "block"
           }`}
         >
-          <div className="lg:space-y-8 space-y-5 order-2 ">
+          <div className="lg:space-y-8 space-y-5 order-2">
             <h1 className="text-3xl font-bold lg:text-5xl">Add your website</h1>
             <p className="max-w-sm md:text-lg md:max-w-md">
               Lorem, ipsum dolor sit amet consectetur adipisicing elit.
@@ -65,11 +66,12 @@ const Addintegration = () => {
               Start Integration
             </button>
           </div>
+
           <div className="md:order-2 ">
             <img
               src="https://images.pexels.com/photos/943096/pexels-photo-943096.jpeg?auto=compress&cs=tinysrgb&w=600"
               alt=""
-              className="max-w-sm md:max-w-md rounded-lg "
+              className="max-w-sm md:max-w-md rounded-lg hover:brightness-75 ease-in-out duration-500 cursor-pointer"
             />
           </div>
         </div>
