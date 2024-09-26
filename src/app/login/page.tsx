@@ -1,9 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import AppWriteService from "../../appwrite/config";
+import AppWriteService from "../../appwrite/authconfig";
+import DatabasesService from "../../appwrite/dbconfig";
 import { useRouter } from "next/navigation";
 const page = () => {
   const auth = new AppWriteService();
+  const db = new DatabasesService();
 
   const navigate = useRouter();
 
@@ -16,6 +18,11 @@ const page = () => {
   const handleSubmit = async () => {
     try {
       await auth.creatUserAccount({
+        email: data.email,
+        password: data.password,
+        name: data.name,
+      });
+      await db.saveUser({
         email: data.email,
         password: data.password,
         name: data.name,
