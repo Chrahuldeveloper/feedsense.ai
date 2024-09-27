@@ -13,11 +13,37 @@ type userdata = {
 };
 
 class DatabasesService {
+  async saveWebsite(userId: string, websiteData: object) {
+    try {
+      const userDoc = await databases.getDocument(
+        "users",
+        "66f6d054000e132d6845",
+        userId
+      );
+
+      const updateDoc = {
+        ...userDoc,
+        websites: userDoc.websites
+          ? [...userDoc.websites, websiteData]
+          : [websiteData],
+      };
+
+      return databases.updateDocument(
+        "users",
+        "66f6d054000e132d6845",
+        userId,
+        updateDoc
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async saveUser({ email, password, name }: userdata) {
     try {
       return databases.createDocument(
         "users",
-        "66f56afc00221626c5ed",
+        "66f6d054000e132d6845",
         ID.unique(),
         {
           email,

@@ -17,7 +17,7 @@ const page = () => {
 
   const handleSubmit = async () => {
     try {
-      await auth.creatUserAccount({
+  await auth.creatUserAccount({
         email: data.email,
         password: data.password,
         name: data.name,

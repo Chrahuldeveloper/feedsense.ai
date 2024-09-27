@@ -5,9 +5,12 @@ import { FaRegCopy } from "react-icons/fa";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
 import "highlight.js/styles/github.css";
+import DatabasesService from "../appwrite/dbconfig";
 
 const Addintegration = () => {
   const [toogle, settoogle] = useState(false);
+
+  const db = new DatabasesService();
 
   hljs.registerLanguage("javascript", javascript);
 
@@ -18,6 +21,23 @@ const Addintegration = () => {
   ).value;
 
   const [section, setsection] = useState<string | undefined>();
+
+  const [websiteData, setwebsiteData] = useState({
+    name: "",
+    url: "",
+    type: "",
+  });
+
+  const saveData = async () => {
+    try {
+
+      
+
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -84,6 +104,10 @@ const Addintegration = () => {
               <input
                 type="text"
                 autoComplete="false"
+                value={websiteData.name}
+                onChange={(e) => {
+                  setwebsiteData({ ...websiteData, name: e.target.value });
+                }}
                 className="bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
               />
             </div>
@@ -92,6 +116,10 @@ const Addintegration = () => {
               <input
                 type="text"
                 autoComplete="false"
+                value={websiteData.url}
+                onChange={(e) => {
+                  setwebsiteData({ ...websiteData, url: e.target.value });
+                }}
                 className="bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
               />
             </div>
@@ -99,11 +127,16 @@ const Addintegration = () => {
               <h1 className="font-semibold text-sm">Website Type*</h1>
               <select
                 name="websiteType"
+                value={websiteData.type}
+                onChange={(e) => {
+                  setwebsiteData({ ...websiteData, type: e.target.value });
+                }}
                 className="bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
               >
-                <option value="Custom">Custom</option>
-                <option value="WordPress">WordPress</option>
-                <option value="Shopify">Shopify</option>
+                <option value="WebApp">WebApp</option>
+                <option value="E-commerce">E-commerce</option>
+                <option value="LandingPage">LandingPage</option>
+                <option value="Other">Other</option>
               </select>
             </div>
             <div>

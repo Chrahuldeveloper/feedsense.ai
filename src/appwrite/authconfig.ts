@@ -3,7 +3,7 @@ import { Client, Account, ID } from "appwrite";
 
 const client = new Client();
 
-client.setEndpoint(conf.appWriteUrl).setProject(conf.appWriteProjectId);
+client.setEndpoint(conf.appWriteUrl).setProject(conf.appWriteProjectId)
 
 export const account = new Account(client);
 
@@ -33,7 +33,7 @@ class AppWriteService {
 
   async currentUser() {
     try {
-      return account.get();
+      return await account.get();
     } catch (error) {
       console.log(error);
     }
