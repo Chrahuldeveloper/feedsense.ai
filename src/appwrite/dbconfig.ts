@@ -39,6 +39,39 @@ class DatabasesService {
     }
   }
 
+  async feedBack(userId: string, websiteIndex: number, feedback: string) {
+    try {
+      const userDoc = await databases.getDocument(
+        "users",
+        "66f6d054000e132d6845",
+        userId
+      );
+
+      if (userDoc.websites && userDoc.websites[websiteIndex]) {
+        const updatedWebsites = [...userDoc.websites];
+        updatedWebsites[websiteIndex].feedback =
+        updatedWebsites[websiteIndex].feedback || [];
+        updatedWebsites[websiteIndex].feedback.push(feedback);
+
+        const updateDoc = {
+          ...userDoc,
+          websites: updatedWebsites,
+        };
+
+        return databases.updateDocument(
+          "users",
+          "66f6d054000e132d6845",
+          userId,
+          updateDoc
+        );
+      } else {
+        throw new Error("Website index is out of bounds or no websites found.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async saveUser({ email, password, name }: userdata) {
     try {
       return databases.createDocument(
