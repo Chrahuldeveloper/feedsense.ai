@@ -1,12 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import AppWriteService from "../../appwrite/authconfig";
-import DatabasesService from "../../appwrite/dbconfig";
 import { useRouter } from "next/navigation";
 const page = () => {
-  const auth = new AppWriteService();
-  const db = new DatabasesService();
-
   const navigate = useRouter();
 
   const [data, setdata] = useState({
@@ -15,23 +10,7 @@ const page = () => {
     name: "",
   });
 
-  const handleSubmit = async () => {
-    try {
-  await auth.creatUserAccount({
-        email: data.email,
-        password: data.password,
-        name: data.name,
-      });
-      await db.saveUser({
-        email: data.email,
-        password: data.password,
-        name: data.name,
-      });
-      navigate.push("/dashboard");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const handleSubmit = async () => {};
 
   return (
     <div className="bg-[rgb(0,0,0)] w-full overflow-y-clip h-screen md:h-auto ">

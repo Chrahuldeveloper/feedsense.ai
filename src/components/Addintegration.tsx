@@ -5,20 +5,11 @@ import { FaRegCopy } from "react-icons/fa";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
 import "highlight.js/styles/github.css";
-import DatabasesService from "../appwrite/dbconfig";
 
 const Addintegration = () => {
   const [toogle, settoogle] = useState(false);
 
-  const db = new DatabasesService();
-
-  hljs.registerLanguage("javascript", javascript);
-
-  const codeToCopy = hljs.highlight(
-    `<!-- Add this snippet to your website's HTML -->
-      <iframe src="http://localhost:3000/integrate" ></iframe>`,
-    { language: "javascript" }
-  ).value;
+  const [userId, setuserId] = useState("");
 
   const [section, setsection] = useState<string | undefined>();
 
@@ -28,16 +19,15 @@ const Addintegration = () => {
     type: "",
   });
 
-  const saveData = async () => {
-    try {
+  hljs.registerLanguage("javascript", javascript);
 
-      
+  const codeToCopy = hljs.highlight(
+    `<!-- Add this snippet to your website's HTML -->
+      <iframe src="http://localhost:3000/integrate" ></iframe>`,
+    { language: "javascript" }
+  ).value;
 
-
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const saveData = async () => {};
 
   return (
     <>
@@ -141,8 +131,9 @@ const Addintegration = () => {
             </div>
             <div>
               <button
-                onClick={() => {
-                  setsection("showcode");
+                onClick={async () => {
+                  await saveData();
+                  // setsection("showcode");
                 }}
                 className="bg-blue-500 text-white px-5 mt-2.5 text-sm py-2 hover:bg-blue-600 ease-in-out duration-500 font-semibold md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
               >

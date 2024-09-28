@@ -1,13 +1,9 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Table from "@/components/Table";
 import SideBar from "@/components/SideBar";
-import AppWriteService from "../../appwrite/authconfig";
 
 const Page = () => {
-  const auth = new AppWriteService();
-
-  console.log(auth.currentUser());
 
   return (
     <div className="bg-[#000000] w-full flex overflow-x-clip">
