@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "../../firebase/Firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { GoogleAuthProvider } from "firebase/auth/web-extension";
+import { GoogleAuthProvider } from "firebase/auth";
 const page = () => {
   const navigate = useRouter();
 
@@ -17,18 +17,26 @@ const page = () => {
   const handleSubmit = async () => {
     if (Object.values(data).every((i) => i !== "")) {
       try {
-        await signInWithEmailAndPassword(auth, data.email, data.password);
+        const user = await signInWithEmailAndPassword(
+          auth,
+          data.email,
+          data.password
+        );
+        console.log(user.user);
         alert("Login successful!");
         navigate.push("/dashboard");
       } catch (error) {
         console.log(error);
       }
+    } else {
+      alert("Enter all the details");
     }
   };
 
   const googleSignIn = async () => {
     try {
-      await signInWithPopup(auth, provider);
+      const user = await signInWithPopup(auth, provider);
+      console.log(user.user);
       navigate.push("/dashboard");
       alert("Login successful!");
     } catch (error) {
