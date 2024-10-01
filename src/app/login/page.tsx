@@ -1,16 +1,40 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { auth } from "../../firebase/Firebase";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth/web-extension";
 const page = () => {
   const navigate = useRouter();
+
+  const provider = new GoogleAuthProvider();
 
   const [data, setdata] = useState({
     email: "",
     password: "",
-    name: "",
   });
 
-  const handleSubmit = async () => {};
+  const handleSubmit = async () => {
+    if (Object.values(data).every((i) => i !== "")) {
+      try {
+        await signInWithEmailAndPassword(auth, data.email, data.password);
+        alert("Login successful!");
+        navigate.push("/dashboard");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const googleSignIn = async () => {
+    try {
+      await signInWithPopup(auth, provider);
+      navigate.push("/dashboard");
+      alert("Login successful!");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="bg-[rgb(0,0,0)] w-full overflow-y-clip h-screen md:h-auto ">
@@ -28,18 +52,6 @@ const page = () => {
             <p className="text-sm font-semibold">Sign in to your account</p>
           </div>
 
-          <div className="space-y-2 mt-6">
-            <h1 className="font-semibold ">Name*</h1>
-            <input
-              type="text"
-              value={data.name}
-              onChange={(e) => {
-                setdata({ ...data, name: e.target.value });
-              }}
-              autoComplete="false"
-              className="bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
-            />
-          </div>
           <div className="space-y-2 mt-4">
             <h1 className="font-semibold ">Email*</h1>
             <input
@@ -75,7 +87,10 @@ const page = () => {
             ---------------------OR---------------------
           </div>
           <div className="mt-5">
-            <button className="bg-white text-black  md:w-[25vw]  w-[80vw]  font-semibold flex items-center gap-1 justify-center rounded-lg">
+            <button
+              onClick={googleSignIn}
+              className="bg-white text-black  md:w-[25vw]  w-[80vw]  font-semibold flex items-center gap-1 justify-center rounded-lg"
+            >
               <img
                 className="w-10 h-12 object-cover"
                 src="https://cdn.dribbble.com/users/904380/screenshots/2230701/attachments/415076/google-logo-revised.png"
