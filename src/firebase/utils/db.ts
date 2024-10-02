@@ -31,4 +31,26 @@ export default class dbService {
       console.log(error);
     }
   }
+
+  async saveFeedBack(
+    user: User,
+    data: { name: string; email: string; feedback: string }
+  ) {
+    try {
+      const userDocRef = doc(db, "USERS", user.uid);
+      const docSnap = await getDoc(userDocRef);
+
+      const website = docSnap.data()?.websites;
+
+      const updatedWebsiteFeedBack = [...website.feedback, data.feedback];
+
+      await updateDoc(userDocRef, {
+        updatedWebsiteFeedBack,
+      });
+
+      console.log("done");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

@@ -1,12 +1,24 @@
 "use client";
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
-
 const Form = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const { userID ,websiteID} = useParams();
+
   const toggleForm = () => {
     setIsOpen(!isOpen);
+  };
+
+  const saveFeedBack = async () => {
+    try {
+       
+
+  
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -34,7 +46,7 @@ const Form = () => {
             />
           </div>
           <div className="text-center">
-            <h1 className="text-slate-300 text-xl font-bold">Feedback</h1>
+            <h1 className="text-slate-300 text-xl font-bold">Feedback {websiteID}</h1>
           </div>
           <div className="space-y-2 mt-6">
             <h1 className="font-semibold text-slate-300">Name*</h1>
