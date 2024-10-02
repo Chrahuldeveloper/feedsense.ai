@@ -1,5 +1,5 @@
 import { db } from "../Firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 interface User {
   uid: string;
@@ -7,11 +7,26 @@ interface User {
 }
 
 export default class dbService {
-  async savewebsite(user: User, data: any) {
+  async savewebsite(
+    user: User,
+    data: { name: string; url: string; type: string }
+  ) {
     try {
-      await setDoc(doc(db, "USERS", user.uid), {
-        data,
-      });
+      const userDocRef = doc(db, "USERS", user.uid);
+
+      const docSnap = await getDoc(userDocRef);
+
+      if (docSnap.exists()) {
+        await updateDoc(userDocRef, {
+          websites: arrayUnion(data),
+        });
+      } else {
+        await setDoc(userDocRef, {
+          websites: [data],
+        });
+      }
+
+      console.log("data saved");
     } catch (error) {
       console.log(error);
     }

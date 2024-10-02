@@ -29,11 +29,13 @@ const Addintegration = () => {
     type: "",
   });
 
+  const url = new URL(window.location.href);
+
   hljs.registerLanguage("javascript", javascript);
 
   const codeToCopy = hljs.highlight(
     `<!-- Add this snippet to your website's HTML -->
-      <iframe src="http://localhost:3000/integrate" ></iframe>`,
+      <iframe src="http://${url.hostname}:3000/integrate/${user?.uid}"} ></iframe>`,
     { language: "javascript" }
   ).value;
 
