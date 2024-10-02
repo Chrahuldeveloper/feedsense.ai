@@ -5,13 +5,23 @@ import { FaRegCopy } from "react-icons/fa";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
 import "highlight.js/styles/github.css";
+import dbService from "../firebase/utils/db";
+import useAuth from "@/hooks/CurrentUser";
 
 const Addintegration = () => {
   const [toogle, settoogle] = useState(false);
 
-  const [userId, setuserId] = useState("");
-
   const [section, setsection] = useState<string | undefined>();
+
+  interface User {
+    uid: string;
+    email: string;
+  }
+
+  const { user, loading } = useAuth() as {
+    user: User | null;
+    loading?: boolean;
+  };
 
   const [websiteData, setwebsiteData] = useState({
     name: "",
@@ -27,7 +37,30 @@ const Addintegration = () => {
     { language: "javascript" }
   ).value;
 
-  const saveData = async () => {};
+  const db = new dbService();
+
+  const saveData = async () => {
+    try {
+      if (loading) {
+        console.log("Loading...");
+        return;
+      }
+
+      if (!user) {
+        console.log("User is not logged in.");
+        return;
+      }
+
+      const data = {
+        uid: user.uid,
+        email: user.email,
+      };
+
+      await db.savewebsite(data, websiteData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
