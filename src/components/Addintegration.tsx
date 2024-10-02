@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
 import { FaRegCopy } from "react-icons/fa";
@@ -43,22 +43,37 @@ const Addintegration = () => {
 
   const saveData = async () => {
     try {
-      if (loading) {
-        console.log("Loading...");
-        return;
+      if (Object.values(websiteData).every((i) => i !== "")) {
+        if (loading) {
+          console.log("Loading...");
+          return;
+        }
+
+        if (!user) {
+          console.log("User is not logged in.");
+          return;
+        }
+
+        const data = {
+          uid: user.uid,
+          email: user.email,
+        };
+
+        await db.savewebsite(data, websiteData);
+        setsection("showcode");
+      } else {
+        alert("fill the details");
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-      if (!user) {
-        console.log("User is not logged in.");
-        return;
-      }
-
-      const data = {
-        uid: user.uid,
-        email: user.email,
-      };
-
-      await db.savewebsite(data, websiteData);
+  const copyCode = async () => {
+    try {
+      await navigator.clipboard.writeText(`
+      <iframe src="http://${url.hostname}:3000/integrate/${user?.uid}"} ></iframe>`);
+      console.log("dn");
     } catch (error) {
       console.log(error);
     }
@@ -168,7 +183,6 @@ const Addintegration = () => {
               <button
                 onClick={async () => {
                   await saveData();
-                  setsection("showcode");
                 }}
                 className="bg-blue-500 text-white px-5 mt-2.5 text-sm py-2 hover:bg-blue-600 ease-in-out duration-500 font-semibold md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
               >
@@ -190,6 +204,7 @@ const Addintegration = () => {
                     size={19}
                     color="white"
                     className="cursor-pointer"
+                    onClick={copyCode}
                   />
                 </div>
                 <code
