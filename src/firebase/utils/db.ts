@@ -33,22 +33,38 @@ export default class dbService {
   }
 
   async saveFeedBack(
-    user: User,
+    userID: any,
+    websiteIndex: any,
     data: { name: string; email: string; feedback: string }
   ) {
     try {
-      const userDocRef = doc(db, "USERS", user.uid);
+      const userDocRef = doc(db, "USERS", userID);
       const docSnap = await getDoc(userDocRef);
 
-      const website = docSnap.data()?.websites;
+      if (docSnap.exists()) {
+        const websites = docSnap.data()?.websites;
 
-      const updatedWebsiteFeedBack = [...website.feedback, data.feedback];
+        if (websites && websites[websiteIndex]) {
+          const currentFeedback = websites[websiteIndex].feedback || [];
 
-      await updateDoc(userDocRef, {
-        updatedWebsiteFeedBack,
-      });
+          const updatedWebsite = {
+            ...websites[websiteIndex],
+            feedback: [...currentFeedback, data],
+          };
 
-      console.log("done");
+          websites[websiteIndex] = updatedWebsite;
+
+          await updateDoc(userDocRef, {
+            websites,
+          });
+
+          console.log("Feedback saved successfully");
+        } else {
+          console.log("Website not found");
+        }
+      } else {
+        console.log("User not found");
+      }
     } catch (error) {
       console.log(error);
     }
