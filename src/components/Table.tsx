@@ -141,15 +141,7 @@ const Table = () => {
               </tbody>
             </table>
 
-            <div className="flex gap-5 justify-center items-center mt-14 px-8 py-8">
-              <FaAngleLeft size={20} color="white" cursor={"pointer"} />
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
-                <div className="flex items-center" key={i}>
-                  <h1 className="text-white cursor-pointer">{i}</h1>
-                </div>
-              ))}
-              <FaAngleRight size={20} color="white" cursor={"pointer"} />
-            </div>
+           
           </div>
         </div>
       </div>

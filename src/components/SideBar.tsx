@@ -28,7 +28,9 @@ const SideBar = () => {
           <IoIosCall size={22} color="white" cursor={"pointer"} />
         </div>
         <div className="flex items-center space-x-2.5 w-32 justify-between">
-          <MdOutlineAttachMoney size={22} color="white" cursor={"pointer"} />
+          <Link href="/dashboard/subscription">
+            <MdOutlineAttachMoney size={22} color="white" cursor={"pointer"} />
+          </Link>
         </div>
         <div className="flex items-center space-x-2.5 w-32 justify-between">
           <IoLogOut
