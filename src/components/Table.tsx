@@ -1,115 +1,30 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
+import dbService from "@/firebase/utils/db";
+import useAuth from "@/hooks/CurrentUser";
+import Loader from "./Loader";
 
 const Table = () => {
-  const websites = [
-    {
-      name: "Website 1",
-      feedbackCount: "19",
-      taskGenerated: "Yes",
-      taskStatus: "In Progress",
-    },
-    {
-      name: "Website 2",
-      feedbackCount: "15",
-      taskGenerated: "No",
-      taskStatus: "In Progress",
-    },
-    {
-      name: "Website 3",
-      feedbackCount: "22",
-      taskGenerated: "Yes",
-      taskStatus: "Completed",
-    },
-    {
-      name: "Website 4",
-      feedbackCount: "30",
-      taskGenerated: "Yes",
-      taskStatus: "In Progress",
-    },
-    {
-      name: "Website 5",
-      feedbackCount: "10",
-      taskGenerated: "No",
-      taskStatus: "In Progress",
-    },
-    {
-      name: "Website 3",
-      feedbackCount: "22",
-      taskGenerated: "Yes",
-      taskStatus: "Completed",
-    },
-    {
-      name: "Website 4",
-      feedbackCount: "30",
-      taskGenerated: "Yes",
-      taskStatus: "In Progress",
-    },
-    {
-      name: "Website 5",
-      feedbackCount: "10",
-      taskGenerated: "No",
-      taskStatus: "In Progress",
-    },
-    {
-      name: "Website 3",
-      feedbackCount: "22",
-      taskGenerated: "Yes",
-      taskStatus: "Completed",
-    },
-    {
-      name: "Website 4",
-      feedbackCount: "30",
-      taskGenerated: "Yes",
-      taskStatus: "In Progress",
-    },
-    {
-      name: "Website 5",
-      feedbackCount: "10",
-      taskGenerated: "No",
-      taskStatus: "In Progress",
-    },
-    {
-      name: "Website 3",
-      feedbackCount: "22",
-      taskGenerated: "Yes",
-      taskStatus: "Completed",
-    },
-    {
-      name: "Website 4",
-      feedbackCount: "30",
-      taskGenerated: "Yes",
-      taskStatus: "In Progress",
-    },
-    {
-      name: "Website 5",
-      feedbackCount: "10",
-      taskGenerated: "No",
-      taskStatus: "In Progress",
-    },
-    {
-      name: "Website 3",
-      feedbackCount: "22",
-      taskGenerated: "Yes",
-      taskStatus: "Completed",
-    },
-    {
-      name: "Website 4",
-      feedbackCount: "30",
-      taskGenerated: "Yes",
-      taskStatus: "In Progress",
-    },
-    {
-      name: "Website 5",
-      feedbackCount: "10",
-      taskGenerated: "No",
-      taskStatus: "In Progress",
-    },
-  ];
+  const [websitedata, setwebsitedata] = useState([]);
+
+  const db = new dbService();
+
+  const { user, loading } = useAuth();
+
+  useEffect(() => {
+    const fetchWebsites = async () => {
+      if (!loading && user) {
+        const data = await db.fetchWebsites(user?.uid);
+        console.log(data);
+        setwebsitedata(data);
+      }
+    };
+    fetchWebsites();
+  }, [loading, user]);
 
   type dataItem = {
     label: String;
@@ -139,6 +54,9 @@ const Table = () => {
 
   return (
     <>
+    {
+      loading ? <Loader/> : null
+    }
       <div className=" md:ml-40">
         <nav className="md:hidden bg-[#0f0d15] p-7 w-screen border-b-[1px] border-neutral-900 flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
@@ -181,12 +99,12 @@ const Table = () => {
                 <tr className="text-center text-xs">
                   <th className="py-2 px-4">Name</th>
                   <th className="py-2 px-4">Feedback Count</th>
-                  <th className="py-2 px-4">Task Generated</th>
+                  {/* <th className="py-2 px-4">Task Generated</th> */}
                   <th className="py-2 px-4">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {websites.map((site, idx) => (
+                {websitedata.map((site, idx) => (
                   <tr
                     key={idx}
                     className={`text-center transition duration-300 ease-in-out  ${
@@ -194,12 +112,12 @@ const Table = () => {
                     }`}
                   >
                     <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
-                      {site.name}
+                      {site?.name}
                     </td>
                     <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
-                      {site.feedbackCount}
+                      {site.feedback.length}
                     </td>
-                    <td
+                    {/* <td
                       className={`py-2 px-4 cursor-pointer text-[11px] md:text-sm ${
                         site.taskStatus === "Completed"
                           ? "text-green-500"
@@ -209,7 +127,7 @@ const Table = () => {
                       }`}
                     >
                       • {site.taskStatus}
-                    </td>
+                    </td> */}
 
                     <td className="py-2 px-4 cursor-pointer">
                       <Link href="/dashboard/tasks">

@@ -69,4 +69,17 @@ export default class dbService {
       console.log(error);
     }
   }
+
+  async fetchWebsites(user: any) {
+    const userDocRef = doc(db, "USERS", user);
+
+    const docSnap = await getDoc(userDocRef);
+
+    if (docSnap.exists()) {
+      const usertWebsites = docSnap.data()?.websites;
+      return usertWebsites;
+    } else {
+      return "user not exitsts";
+    }
+  }
 }
