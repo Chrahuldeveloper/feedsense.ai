@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
 import dbService from "@/firebase/utils/db";
@@ -10,6 +9,16 @@ import Loader from "./Loader";
 
 const Table = () => {
   const [websitedata, setwebsitedata] = useState([]);
+
+  interface InfoData {
+    totalWebsites: any;
+    totalFeedback: any;
+  }
+
+  const [infodata, setinfodata] = useState<InfoData>({
+    totalWebsites: "",
+    totalFeedback: "",
+  });
 
   const db = new dbService();
 
@@ -26,6 +35,26 @@ const Table = () => {
     fetchWebsites();
   }, [loading, user]);
 
+  useEffect(() => {
+    const fetchdetails = async () => {
+      try {
+        const websiteinfodata = await db.fetchDashBoardDetails(user?.uid);
+        if (websiteinfodata) {
+          console.log("Fetched Dashboard Details:", websiteinfodata);
+          setinfodata({
+            totalWebsites: websiteinfodata?.totalWebsites || "0",
+            totalFeedback: websiteinfodata?.totalFeedback || "0",
+          });
+        } else {
+          console.error("No data returned for dashboard details.");
+        }
+      } catch (error) {
+        console.error("Error fetching dashboard details:", error);
+      }
+    };
+    fetchdetails();
+  }, [loading, user]);
+
   type dataItem = {
     label: String;
     number: String;
@@ -34,29 +63,21 @@ const Table = () => {
   const data: dataItem[] = [
     {
       label: "Total website",
-      number: "20",
+      number: infodata.totalWebsites,
     },
     {
-      label: "Total website",
-      number: "20",
-    },
-    {
-      label: "Total website",
-      number: "20",
-    },
-    {
-      label: "Total website",
-      number: "20",
+      label: "Total Feedback",
+      number: infodata.totalFeedback,
     },
   ];
 
   const [toogle, settoogle] = useState(false);
 
+  console.log(infodata);
+
   return (
     <>
-    {
-      loading ? <Loader/> : null
-    }
+      {loading ? <Loader /> : null}
       <div className=" md:ml-40">
         <nav className="md:hidden bg-[#0f0d15] p-7 w-screen border-b-[1px] border-neutral-900 flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
@@ -128,7 +149,6 @@ const Table = () => {
                     >
                       • {site.taskStatus}
                     </td> */}
-
                     <td className="py-2 px-4 cursor-pointer">
                       <Link href="/dashboard/tasks">
                         <button className="bg-blue-500 text-white px-5 rounded-full text-sm py-1 cursor-pointer hover:bg-blue-600 ease-in-out duration-500">
@@ -140,8 +160,6 @@ const Table = () => {
                 ))}
               </tbody>
             </table>
-
-           
           </div>
         </div>
       </div>

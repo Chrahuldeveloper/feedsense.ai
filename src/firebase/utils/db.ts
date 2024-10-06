@@ -42,7 +42,7 @@ export default class dbService {
       const docSnap = await getDoc(userDocRef);
 
       if (docSnap.exists()) {
-        const websites = docSnap.data()?.websites;
+        const websites = await docSnap.data()?.websites;
 
         if (websites && websites[websiteIndex]) {
           const currentFeedback = websites[websiteIndex].feedback || [];
@@ -76,10 +76,35 @@ export default class dbService {
     const docSnap = await getDoc(userDocRef);
 
     if (docSnap.exists()) {
-      const usertWebsites = docSnap.data()?.websites;
+      const usertWebsites = await docSnap.data()?.websites;
       return usertWebsites;
     } else {
       return "user not exitsts";
+    }
+  }
+
+  async fetchDashBoardDetails(user: any) {
+    try {
+      const userDocRef = doc(db, "USERS", user);
+
+      const docSnap = await getDoc(userDocRef);
+
+      if (docSnap.exists()) {
+        const websites = await docSnap.data()?.websites;
+
+        const totalFeedback = websites.reduce(
+          (total: any, user: any) => total + user.feedback.length,
+          0
+        );
+
+        const totalWebsites = await docSnap.data()?.websites.length;
+
+        return { totalWebsites, totalFeedback };
+      } else {
+        return "user not exitsts";
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 }
