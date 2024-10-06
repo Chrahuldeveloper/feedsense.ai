@@ -29,7 +29,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
   totalFeedback,
 }) => {
   const analytics = {
-    labels: ["Total ", "Cancelled "],
+    labels: ["totalWebsites ", "totalFeedback "],
     datasets: [
       {
         label: "Your Appointments",
