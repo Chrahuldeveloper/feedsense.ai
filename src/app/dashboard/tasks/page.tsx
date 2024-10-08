@@ -1,38 +1,28 @@
 "use client";
-
 import MobileSideBar from "@/components/MobileSideBar";
 import SideBar from "@/components/SideBar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
+import { useSearchParams } from "next/navigation";
 
 const page = () => {
-  const [websites, setWebsites] = useState([
-    {
-      name: "Website 1",
-      task: "Make good U",
-      status: "Pending",
-    },
-    {
-      name: "Website 2",
-      task: "Make good U",
-      status: "Pending",
-    },
-    {
-      name: "Website 3",
-      task: "Make good U",
-      status: "Pending",
-    },
-    {
-      name: "Website 4",
-      task: "Make good U",
-      status: "Pending",
-    },
-    {
-      name: "Website 5",
-      task: "Make good U",
-      status: "Pending",
-    },
-  ]);
+  const searchParams = useSearchParams();
+
+  interface Feedback {
+    name: string;
+    email: string;
+    feedback: string;
+  }
+
+  const [websites, setWebsites] = useState<Feedback[]>([]);
+  const getdata = searchParams.get("feedback");
+
+  useEffect(() => {
+    const data: Feedback[] = JSON.parse(getdata);
+
+    console.log(data);
+    setWebsites(data);
+  }, [getdata]);
 
   const [toggle, setToggle] = useState(false);
 
@@ -69,8 +59,9 @@ const page = () => {
               <thead className="bg-[#0f0d15]">
                 <tr className="text-center text-xs">
                   <th className="py-2 px-4">S.No</th>
-                  <th className="py-2 px-4">Task Generated</th>
-                  <th className="py-2 px-4">Status</th>
+                  <th className="py-2 px-4">Name</th>
+                  <th className="py-2 px-4">email</th>
+                  <th className="py-2 px-4">Task</th>
                   <th className="py-2 px-4">Action</th>
                 </tr>
               </thead>
@@ -86,16 +77,13 @@ const page = () => {
                       {idx + 1}
                     </td>
                     <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
-                      {site.task}
+                      {site.name}
                     </td>
-                    <td
-                      className={`py-2 px-4 cursor-pointer text-[11px] md:text-sm ${
-                        site.status === "Done"
-                          ? "text-green-500"
-                          : "text-red-500"
-                      }`}
-                    >
-                      {site.status}
+                    <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
+                      {site.email}
+                    </td>
+                    <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
+                      {site.feedback}
                     </td>
                     <td className="py-2 px-4">
                       <select

@@ -32,7 +32,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
     labels: ["totalWebsites ", "totalFeedback "],
     datasets: [
       {
-        label: "Your Appointments",
+        label: "Dashboard",
         data: [totalWebsites, totalFeedback],
         borderColor: "#6746ed",
         pointBackgroundColor: "#6746ed",

@@ -80,7 +80,10 @@ const Table = () => {
 
         {toogle ? <MobileSideBar settoogle={settoogle} /> : null}
 
-        <Analytics totalWebsites={infodata.totalWebsites} totalFeedback={infodata.totalFeedback} />
+        <Analytics
+          totalWebsites={infodata.totalWebsites}
+          totalFeedback={infodata.totalFeedback}
+        />
 
         <div className="w-full md:w-[90vw]   mt-12 px-12 py-6">
           <div className="overflow-x-auto">
@@ -89,7 +92,6 @@ const Table = () => {
                 <tr className="text-center text-xs">
                   <th className="py-2 px-4">Name</th>
                   <th className="py-2 px-4">Feedback Count</th>
-                  {/* <th className="py-2 px-4">Task Generated</th> */}
                   <th className="py-2 px-4">Action</th>
                 </tr>
               </thead>
@@ -105,26 +107,21 @@ const Table = () => {
                       {site?.name}
                     </td>
                     <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
-                      {site.feedback.length}
+                      {site?.feedback.length}
                     </td>
-                    {/* <td
-                      className={`py-2 px-4 cursor-pointer text-[11px] md:text-sm ${
-                        site.taskStatus === "Completed"
-                          ? "text-green-500"
-                          : site.taskStatus === "In Progress"
-                          ? "text-blue-500"
-                          : ""
-                      }`}
-                    >
-                      • {site.taskStatus}
-                    </td> */}
                     <td className="py-2 px-4 cursor-pointer">
-                      <Link href="/dashboard/tasks">
+                      {/* "/dashboard6y/tasks */}
+                      <Link
+                        href={{
+                          pathname: "/dashboard/tasks",
+                          query: { feedback: JSON.stringify(site.feedback) },
+                        }}
+                      >
                         <button className="bg-blue-500 text-white px-5 rounded-full text-sm py-1 cursor-pointer hover:bg-blue-600 ease-in-out duration-500">
                           View
                         </button>
                       </Link>
-                    </td>  
+                    </td>
                   </tr>
                 ))}
               </tbody>
