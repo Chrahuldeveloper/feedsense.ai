@@ -55,10 +55,9 @@ const page = () => {
         <SideBar />
         <div className="w-full md:w-[90vw] mt-12 px-4 md:px-12 py-6 md:ml-40 space-y-16">
           <div className="overflow-x-auto">
-            <table className="text-white w-full table-auto border-[1px] border-neutral-900">
-              <thead className="bg-[#0f0d15]">
+            <table className="text-white w-full table-auto border-[1px] border-stone-800">
+              <thead className="">
                 <tr className="text-center text-xs">
-                  <th className="py-2 px-4">S.No</th>
                   <th className="py-2 px-4">Name</th>
                   <th className="py-2 px-4">email</th>
                   <th className="py-2 px-4">Task</th>
@@ -66,16 +65,12 @@ const page = () => {
                 </tr>
               </thead>
               <tbody>
-                {websites.map((site, idx) => (
+                {websites?.map((site, idx) => (
                   <tr
                     key={idx}
-                    className={`text-center transition duration-300 ease-in-out ${
-                      idx % 2 !== 0 ? "bg-[#0f0d15]" : ""
-                    }`}
+                    className={`text-center transition duration-300 ease-in-out border-[1px] border-stone-800`}
                   >
-                    <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
-                      {idx + 1}
-                    </td>
+                  
                     <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
                       {site.name}
                     </td>
@@ -87,7 +82,7 @@ const page = () => {
                     </td>
                     <td className="py-2 px-4">
                       <select
-                        className="bg-[#0f0d15] text-white text-sm px-2 py-1 border-[1px] border-neutral-800 rounded-md outline-none"
+                        className="bg-[#0f0d15] text-white text-sm px-2 py-1 border-[1px] border-stone-800 rounded-md outline-none"
                         defaultValue="Select Action"
                         onChange={(e) => handleAction(idx, e.target.value)}
                       >

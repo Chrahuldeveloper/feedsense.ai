@@ -61,7 +61,8 @@ const Table = () => {
   return (
     <>
       {loading ? <Loader /> : null}
-      <div className=" md:ml-40">
+
+      <div className=" md:ml-36">
         <nav className="md:hidden bg-[#0f0d15] p-7 w-screen border-b-[1px] border-neutral-900 flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
           <CiMenuFries
@@ -74,22 +75,21 @@ const Table = () => {
           />
         </nav>
 
+        <div className="bg-[#0a0a0a] w-screen p-8  md:-ml-40 hidden md:block"></div>
         <h1 className="text-2xl font-semibold text-white mb-4 px-8 py-6">
           Your DashBoard
         </h1>
-
         {toogle ? <MobileSideBar settoogle={settoogle} /> : null}
-
         <Analytics
           totalWebsites={infodata.totalWebsites}
           totalFeedback={infodata.totalFeedback}
         />
-
-        <div className="w-full md:w-[90vw]   mt-12 px-12 py-6">
+        <div className="w-full md:w-[90vw] mt-12 px-12 py-6">
           <div className="overflow-x-auto">
-            <table className="text-white w-full table-auto  border-[1px] border-neutral-900 ">
-              <thead className="bg-[#0f0d15]">
+            <table className="text-white w-full table-auto   border-[1px] border-stone-800 ">
+              <thead className="border-[1px] border-stone-800">
                 <tr className="text-center text-xs">
+                  <th className="py-2 px-4">S.No</th>
                   <th className="py-2 px-4">Name</th>
                   <th className="py-2 px-4">Feedback Count</th>
                   <th className="py-2 px-4">Action</th>
@@ -99,10 +99,11 @@ const Table = () => {
                 {websitedata.map((site, idx) => (
                   <tr
                     key={idx}
-                    className={`text-center transition duration-300 ease-in-out  ${
-                      idx % 2 !== 0 ? "bg-[#0f0d15]" : ""
-                    }`}
+                    className={`text-center transition duration-300 ease-in-out  border-[1px] border-stone-800`}
                   >
+                    <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
+                      {idx + 1}
+                    </td>
                     <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
                       {site?.name}
                     </td>

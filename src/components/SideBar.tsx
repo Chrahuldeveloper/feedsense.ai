@@ -13,7 +13,7 @@ const SideBar = () => {
 
   return (
     <>
-      <aside className="bg-[#0f0d15] w-32 h-screen space-y-10 px-12 py-6 hidden md:block fixed left-0 top-0">
+      <aside className="bg-[#0a0a0a] w-32 h-screen space-y-10 px-12 py-6 hidden md:block fixed left-0 top-0">
         <div className="flex items-center space-x-2.5 w-32 justify-between">
           <Link href="/dashboard">
             <MdDashboard size={22} color="white" cursor={"pointer"} />
