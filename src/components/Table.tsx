@@ -75,7 +75,7 @@ const Table = () => {
           />
         </nav>
 
-        <div className="bg-[#0a0a0a] w-screen p-8  md:-ml-40 hidden md:block"></div>
+        <div className="bg-[#0a0a0a] w-screen p-9  md:-ml-36 hidden md:block"></div>
         <h1 className="text-2xl font-semibold text-white mb-4 px-8 py-6">
           Your DashBoard
         </h1>
