@@ -62,7 +62,7 @@ const Table = () => {
     <>
       {loading ? <Loader /> : null}
 
-      <div className=" md:ml-36">
+      <div className=" md:ml-48 ">
         <nav className="md:hidden bg-[#0f0d15] p-7 w-screen border-b-[1px] border-neutral-900 flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
           <CiMenuFries
