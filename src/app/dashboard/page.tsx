@@ -5,7 +5,7 @@ import SideBar from "@/components/SideBar";
 
 const Page = () => {
   return (
-    <div className="bg-[#050505] w-full flex min-h-screen overflow-x-clip">
+    <div className="bg-[#131315] w-full flex min-h-screen overflow-x-clip">
       <SideBar />
       <Table />
     </div>

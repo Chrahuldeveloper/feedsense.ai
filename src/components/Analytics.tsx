@@ -29,14 +29,14 @@ const Analytics: React.FC<AnalyticsProps> = ({
   totalFeedback,
 }) => {
   const analytics = {
-    labels: ["totalWebsites", "totalFeedback"],
+    labels: ["totalWebsites", "totalFeedback","totalWebsites", "totalFeedback"],
     datasets: [
       {
         label: "Dashboard",
-        data: [totalWebsites, totalFeedback],
-        borderColor: "#04a7e5",
-        pointBackgroundColor: "#04a7e5",
-        pointBorderColor: "#04a7e5",
+        data: [20,50,40,80],
+        borderColor: "#432e6f",
+        pointBackgroundColor: "#432e6f",
+        pointBorderColor: "#ffffff",
         tension: 0.3,
         fill: true,
       },
@@ -53,8 +53,11 @@ const Analytics: React.FC<AnalyticsProps> = ({
   // ) 1 1`,
   // boxShadow: "0 0 15px rgba(5, 188, 255, 0.5)",
   return (
-    <div className="md:max-w-6xl mx-auto p-5">
-      <div className="p-4 border-[0.1px] rounded-lg border-stone-800 ">
+    <div className="md:max-w-6xl mx-auto p-5 mt-5">
+      <div className="p-4  rounded-lg bg-[#131315] border-[#272b2f] border-[1px]">
+        <h1 className="text-2xl font-semibold text-white  px-8 pt-3 mb-2">
+          Your DashBoard
+        </h1>
         <Line data={analytics} />
       </div>
     </div>

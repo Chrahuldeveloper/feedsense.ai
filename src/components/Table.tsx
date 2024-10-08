@@ -62,8 +62,8 @@ const Table = () => {
     <>
       {loading ? <Loader /> : null}
 
-      <div className=" md:ml-48 ">
-        <nav className="md:hidden bg-[#0f0d15] p-7 w-screen border-b-[1px] border-neutral-900 flex justify-between items-center">
+      <div className=" md:ml-44 ">
+        <nav className="md:hidden bg-[#1b1d1e] p-7 w-screen border-b-[1px] border-[#272b2f]  flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
           <CiMenuFries
             size={26}
@@ -75,10 +75,7 @@ const Table = () => {
           />
         </nav>
 
-        <div className="bg-[#0a0a0a] w-screen p-9  md:-ml-36 hidden md:block"></div>
-        <h1 className="text-2xl font-semibold text-white mb-4 px-8 py-6">
-          Your DashBoard
-        </h1>
+        <div className="bg-[#18181b] w-screen p-9  md:-ml-36 hidden md:block border-b-[1px] border-[#272b2f]"></div>
         {toogle ? <MobileSideBar settoogle={settoogle} /> : null}
         <Analytics
           totalWebsites={infodata.totalWebsites}
@@ -86,8 +83,8 @@ const Table = () => {
         />
         <div className="w-full md:w-[90vw] mt-12 px-12 py-6">
           <div className="overflow-x-auto">
-            <table className="text-white w-full table-auto   border-[1px] border-stone-800 ">
-              <thead className="border-[1px] border-stone-800">
+            <table className="text-white w-full table-auto bg-[#1c1c21]  border-[#272b2f] border-[1px] rounded-lg">
+              <thead className="border-[#272b2f] border-[1px] ">
                 <tr className="text-center text-xs">
                   <th className="py-2 px-4">S.No</th>
                   <th className="py-2 px-4">Name</th>
@@ -99,7 +96,7 @@ const Table = () => {
                 {websitedata.map((site, idx) => (
                   <tr
                     key={idx}
-                    className={`text-center transition duration-300 ease-in-out  border-[1px] border-stone-800`}
+                    className={`text-center transition duration-300 ease-in-out border-[#272b2f] border-[1px]  rounded-lg`}
                   >
                     <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
                       {idx + 1}
@@ -118,7 +115,7 @@ const Table = () => {
                           query: { feedback: JSON.stringify(site.feedback) },
                         }}
                       >
-                        <button className="bg-blue-500 text-white px-5 rounded-full text-sm py-1 cursor-pointer hover:bg-blue-600 ease-in-out duration-500">
+                        <button className="bg-[#272c2e] text-white px-8 rounded-lg text-sm py-1.5 cursor-pointer  ease-in-out duration-500">
                           View
                         </button>
                       </Link>

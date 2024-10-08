@@ -19,7 +19,6 @@ const page = () => {
 
   useEffect(() => {
     const data: Feedback[] = JSON.parse(getdata);
-
     console.log(data);
     setWebsites(data);
   }, [getdata]);
@@ -51,11 +50,13 @@ const page = () => {
           className="cursor-pointer"
         />
       </nav>
-      <div className="bg-[#000000] w-full h-screen flex overflow-x-clip">
+
+      <div className="bg-[#131315] w-full h-screen flex overflow-x-clip">
         <SideBar />
-        <div className="w-full md:w-[90vw] mt-12 px-4 md:px-12 py-6 md:ml-40 space-y-16">
-          <div className="overflow-x-auto">
-            <table className="text-white w-full table-auto border-[1px] border-stone-800">
+        <div className="w-full md:w-[90vw]  px-4 md:px-12  md:ml-40 space-y-16">
+      <div className="bg-[#18181b] w-screen p-9 md:-ml-36 hidden md:block border-b-[1px] border-[#272b2f]"></div>
+          <div className="overflow-x-auto ">
+            <table className="text-white w-full table-auto bg-[#1c1c21]  border-[#272b2f] border-[1px]">
               <thead className="">
                 <tr className="text-center text-xs">
                   <th className="py-2 px-4">Name</th>
@@ -68,9 +69,8 @@ const page = () => {
                 {websites?.map((site, idx) => (
                   <tr
                     key={idx}
-                    className={`text-center transition duration-300 ease-in-out border-[1px] border-stone-800`}
+                    className={`text-center transition duration-300 ease-in-out bg-[#1c1c21]  border-[#272b2f] border-[1px] rounded-lg`}
                   >
-                  
                     <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
                       {site.name}
                     </td>
@@ -82,7 +82,7 @@ const page = () => {
                     </td>
                     <td className="py-2 px-4">
                       <select
-                        className="bg-[#0f0d15] text-white text-sm px-2 py-1 border-[1px] border-stone-800 rounded-md outline-none"
+                        className="bg-[#272c2e] text-white text-sm px-2 py-1 border-[1px] border-stone-800 rounded-md outline-none"
                         defaultValue="Select Action"
                         onChange={(e) => handleAction(idx, e.target.value)}
                       >

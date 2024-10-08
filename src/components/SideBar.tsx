@@ -15,33 +15,33 @@ const SideBar = () => {
 
   return (
     <>
-      <aside className="bg-[#0a0a0a] w-42 h-screen space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0">
+      <aside className="bg-[#131315] w-42 h-screen space-y-10 pr-5 pl-1 py-6 hidden md:block fixed left-0 top-0 border-[#272b2f] border-r-[1px]">
         <div className="flex flex-col space-y-10 pt-7">
           {/* Home */}
           <Link href="/dashboard">
-            <div className="flex items-center space-x-3 py-2  rounded-lg border-[1px] border-[#0a0a0a] hover:border-blue-500   bg-gradient-to-r  from-blue-400 via-blue-600 to-blue-700  pr-8 pl-2 transition duration-200 ease-in-out">
+            <div className="flex items-center space-x-4 py-3   border-[1px] border-[#272c2e]  bg-[#272c2e]  pr-12 pl-4 transition duration-200 ease-in-out  border-l-[4px] text-white rounded-lg">
               <MdDashboard color="white" size={iconSize} />
-              <h1 className="text-white text-sm font-semibold">Home</h1>
+              <h1 className=" text-sm font-semibold">Home</h1>
             </div>
           </Link>
 
           {/* Integrate */}
           <Link href="/dashboard/integrate">
-            <div className="flex items-center space-x-3 py-2 rounded-lg  pr-8 pl-2 border-[#0a0a0a] hover:border-blue-500 border-b-[1px] shadow-lg">
+            <div className="flex items-center space-x-3 py-2 rounded-lg  pr-8 pl-4   ">
               <CgWebsite color="white" size={iconSize} />
               <h1 className="text-white text-sm font-semibold">Integrate</h1>
             </div>
           </Link>
 
           {/* Contact */}
-          <div className="flex items-center space-x-3 py-2 rounded-lg border-b-[1px] border-[#0a0a0a] hover:border-blue-500 pr-8  pl-2 transition duration-200 ease-in-out">
+          <div className="flex items-center space-x-3 py-2 rounded-lg  pr-8  pl-4 transition duration-200 ease-in-out">
             <IoIosCall color="white" size={iconSize} />
             <h1 className="text-white text-sm font-semibold">Contact</h1>
           </div>
 
           {/* Subscription */}
           <Link href="/dashboard/subscription">
-            <div className="flex items-center space-x-3 py-2 rounded-lg border-b-[1px] border-[#0a0a0a] hover:border-blue-500 pr-8  pl-2  transition duration-200 ease-in-out">
+            <div className="flex items-center space-x-3 py-2 rounded-lg  pr-8  pl-4  transition duration-200 ease-in-out">
               <MdOutlineAttachMoney color="white" size={iconSize} />
               <h1 className="text-white text-sm font-semibold">Subscription</h1>
             </div>
@@ -49,7 +49,7 @@ const SideBar = () => {
 
           {/* Logout */}
           <div
-            className="flex items-center space-x-3 py-2 rounded-lg border-b-[1px] border-[#0a0a0a] hover:border-blue-500  pr-8 transition  pl-2  duration-200 ease-in-out"
+            className="flex items-center space-x-3 py-2 rounded-lg   pr-8 transition  pl-4  duration-200 ease-in-out"
             onClick={() => settoggle(true)}
           >
             <IoLogOut size={iconSize} color="white" />
