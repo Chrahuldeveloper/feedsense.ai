@@ -53,8 +53,8 @@ const page = () => {
 
       <div className="bg-[#131315] w-full h-screen flex overflow-x-clip">
         <SideBar />
-        <div className="w-full md:w-[90vw]  px-4 md:px-12  md:ml-40 space-y-16">
-      <div className="bg-[#18181b] w-screen p-9 md:-ml-36 hidden md:block border-b-[1px] border-[#272b2f]"></div>
+        <div className="w-full md:w-[90vw]  px-4 md:px-12  md:ml-44 space-y-16">
+          <div className="bg-[#18181b] w-screen p-9 md:-ml-36 hidden md:block border-b-[1px] border-[#272b2f]"></div>
           <div className="overflow-x-auto ">
             <table className="text-white w-full table-auto bg-[#1c1c21]  border-[#272b2f] border-[1px]">
               <thead className="">

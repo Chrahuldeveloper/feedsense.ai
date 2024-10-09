@@ -83,7 +83,7 @@ const Table = () => {
         />
         <div className="w-full md:w-[90vw] mt-12 px-12 py-6">
           <div className="overflow-x-auto">
-            <table className="text-white w-full table-auto bg-[#1c1c21]  border-[#272b2f] border-[1px] rounded-lg">
+            <table className="text-white w-full table-auto bg-[#18181b]  border-[#272b2f] border-[1px] rounded-lg">
               <thead className="border-[#272b2f] border-[1px] ">
                 <tr className="text-center text-xs">
                   <th className="py-2 px-4">S.No</th>
@@ -105,14 +105,14 @@ const Table = () => {
                       {site?.name}
                     </td>
                     <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
-                      {site?.feedback.length}
+                      {site?.feedback?.length || 0}
                     </td>
                     <td className="py-2 px-4 cursor-pointer">
                       {/* "/dashboard6y/tasks */}
                       <Link
                         href={{
                           pathname: "/dashboard/tasks",
-                          query: { feedback: JSON.stringify(site.feedback) },
+                          query: { feedback: JSON.stringify(site?.feedback) },
                         }}
                       >
                         <button className="bg-[#272c2e] text-white px-8 rounded-lg text-sm py-1.5 cursor-pointer  ease-in-out duration-500">

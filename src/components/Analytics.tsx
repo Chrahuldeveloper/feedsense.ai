@@ -29,13 +29,13 @@ const Analytics: React.FC<AnalyticsProps> = ({
   totalFeedback,
 }) => {
   const analytics = {
-    labels: ["totalWebsites", "totalFeedback","totalWebsites", "totalFeedback"],
+    labels: ["totalWebsites", "totalFeedback"],
     datasets: [
       {
         label: "Dashboard",
-        data: [20,50,40,80],
-        borderColor: "#432e6f",
-        pointBackgroundColor: "#432e6f",
+        data: [totalWebsites, totalFeedback],
+        borderColor: "#db1a5a",
+        pointBackgroundColor: "#db1a5a",
         pointBorderColor: "#ffffff",
         tension: 0.3,
         fill: true,
