@@ -45,7 +45,7 @@ const page = () => {
   };
 
   return (
-    <div className="bg-[rgb(0,0,0)] w-full overflow-y-clip h-screen md:h-auto ">
+    <div className="bg-[#131315] w-full overflow-y-clip h-screen md:h-auto ">
       <div className="md:flex gap-8 items-center pt-20 md:pt-0">
         <div>
           <img
@@ -54,7 +54,7 @@ const page = () => {
             className="h-[100vh] hidden md:block w-[50vw] object-cover brightness-75"
           />
         </div>
-        <div className="text-slate-300 bg-[#131b2376] p-7 rounded-lg w-[90vw] md:w-[30vw] mx-auto md:my-0 ">
+        <div className="text-slate-300 bg-[#18181b] p-7 rounded-lg w-[90vw] md:w-[30vw] mx-auto md:my-0 border-[#272b2f] border-[1px]">
           <div className="space-y-3.5">
             <h1 className="text-2xl font-bold ">Welcome back</h1>
             <p className="text-sm font-semibold">Sign in to your account</p>
@@ -69,7 +69,7 @@ const page = () => {
                 setdata({ ...data, email: e.target.value });
               }}
               autoComplete="false"
-              className=" bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
+              className=" bg-[#1c1c21] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
             />
           </div>
           <div className="space-y-2 mt-4">
@@ -81,13 +81,13 @@ const page = () => {
                 setdata({ ...data, password: e.target.value });
               }}
               autoComplete="false"
-              className="bg-[#0d0d13] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
+              className="bg-[#1c1c21] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
             />
           </div>
 
           <button
             onClick={handleSubmit}
-            className="bg-blue-500 mt-6  text-white  py-2 md:w-[25vw]  w-[80vw]  font-semibold rounded-lg hover:bg-blue-600 ease-in-out duration-500"
+            className="bg-[#db1a5a] mt-6  text-white  py-2 md:w-[25vw]  w-[80vw]  font-semibold rounded-lg  "
           >
             Login
           </button>

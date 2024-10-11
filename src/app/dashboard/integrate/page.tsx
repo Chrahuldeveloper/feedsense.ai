@@ -7,7 +7,7 @@ const page = () => {
   return (
     <>
       <div className="bg-[#131315] w-screen min-h-screen flex overflow-x-clip ">
-        <SideBar />
+        <SideBar page="Integrate"/>
         <Addintegration />
       </div>
     </>

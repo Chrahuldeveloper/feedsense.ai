@@ -8,7 +8,11 @@ import ModelLogout from "./ModelLogout";
 import Link from "next/link";
 import { CgWebsite } from "react-icons/cg";
 
-const SideBar = () => {
+interface props {
+  page: string;
+}
+
+const SideBar: React.FC<props> = ({ page }) => {
   const [toggle, settoggle] = useState(false);
 
   const iconSize = 24;
@@ -19,7 +23,13 @@ const SideBar = () => {
         <div className="flex flex-col space-y-10 pt-7">
           {/* Home */}
           <Link href="/dashboard">
-            <div className="flex items-center space-x-4 py-3 border-[1px] border-[#272c2e] bg-[#272c2e] pr-12 pl-4 transition duration-200 ease-in-out  border-l-[4px] text-white rounded-lg">
+            <div
+              className={`flex items-center space-x-4 py-3   pr-12 pl-4 transition duration-200 ease-in-out   text-white rounded-lg ${
+                page === "Home"
+                  ? "bg-[#272c2e] border-[1px] border-[#272c2e]"
+                  : ""
+              }`}
+            >
               <MdDashboard color="white" size={iconSize} />
               <h1 className=" text-sm font-semibold">Home</h1>
             </div>
@@ -27,21 +37,39 @@ const SideBar = () => {
 
           {/* Integrate */}
           <Link href="/dashboard/integrate">
-            <div className="flex items-center space-x-3 py-2 rounded-lg pr-8 pl-4">
+            <div
+              className={`flex items-center space-x-4 py-3   pr-12 pl-4 transition duration-200 ease-in-out   text-white rounded-lg ${
+                page === "Integrate"
+                  ? "bg-[#272c2e] border-[1px] border-[#272c2e]"
+                  : ""
+              }`}
+            >
               <CgWebsite color="white" size={iconSize} />
               <h1 className="text-white text-sm font-semibold">Integrate</h1>
             </div>
           </Link>
 
           {/* Contact */}
-          <div className="flex items-center space-x-3 py-2 rounded-lg pr-8 pl-4 transition duration-200 ease-in-out">
+          <div
+            className={`flex items-center space-x-4 py-3   pr-12 pl-4 transition duration-200 ease-in-out   text-white rounded-lg ${
+              page === "Contact"
+                ? "bg-[#272c2e] border-[1px] border-[#272c2e]"
+                : ""
+            }`}
+          >
             <IoIosCall color="white" size={iconSize} />
             <h1 className="text-white text-sm font-semibold">Contact</h1>
           </div>
 
           {/* Subscription */}
           <Link href="/dashboard/subscription">
-            <div className="flex items-center space-x-3 py-2 rounded-lg pr-8 pl-4 transition duration-200 ease-in-out">
+            <div
+              className={`flex items-center space-x-4 py-3   pr-12 pl-4 transition duration-200 ease-in-out   text-white rounded-lg ${
+                page === "Subscription"
+                  ? "bg-[#272c2e] border-[1px] border-[#272c2e]"
+                  : ""
+              }`}
+            >
               <MdOutlineAttachMoney color="white" size={iconSize} />
               <h1 className="text-white text-sm font-semibold">Subscription</h1>
             </div>
@@ -49,7 +77,11 @@ const SideBar = () => {
 
           {/* Logout */}
           <div
-            className="flex items-center space-x-3 py-2 rounded-lg pr-8 transition pl-4 duration-200 ease-in-out"
+            className={`flex items-center space-x-4 py-3   pr-12 pl-4 transition duration-200 ease-in-out   text-white rounded-lg ${
+              page === "Logout"
+                ? "bg-[#272c2e] border-[1px] border-[#272c2e]"
+                : ""
+            }`}
             onClick={() => settoggle(true)}
           >
             <IoLogOut size={iconSize} color="white" />
