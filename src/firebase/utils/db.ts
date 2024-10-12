@@ -107,4 +107,31 @@ export default class dbService {
       console.log(error);
     }
   }
+
+  async fetchFeedbacks(user: any) {
+    try {
+      const userDocRef = doc(db, "USERS", user);
+
+      const docSnap = await getDoc(userDocRef);
+
+      if (docSnap.exists()) {
+        const websites = await docSnap.data()?.websites;
+        if (websites && websites.length > 0) {
+          const allFeedbacks = [];
+
+          for (let i = 0; i < websites.length; i++) {
+            const feedbackArray = websites[i].feedback || [];
+
+            for (let j = 0; j < feedbackArray.length; j++) {
+              allFeedbacks.push(feedbackArray[j].feedback);
+            }
+          }
+
+          return allFeedbacks;
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

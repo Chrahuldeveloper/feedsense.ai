@@ -24,7 +24,7 @@ const SideBar: React.FC<props> = ({ page }) => {
           {/* Home */}
           <Link href="/dashboard">
             <div
-              className={`flex items-center space-x-4 py-3   pr-12 pl-4 transition duration-200 ease-in-out   text-white rounded-lg ${
+              className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out   text-white rounded-lg ${
                 page === "Home"
                   ? "bg-[#272c2e] border-[1px] border-[#272c2e]"
                   : ""
