@@ -43,37 +43,40 @@ export default class dbService {
     try {
       const userDocRef = doc(db, "USERS", userID);
       const docSnap = await getDoc(userDocRef);
-
+  
+      // Initialize Genkit AI configuration
       configureGenkit({ plugins: [googleAI()] });
-
-      const feedback: any = [];
+  
       const result = await generate({
         model: gemini15Flash,
         prompt: `
-            Here is a feedback of the website 
-            ${feedback}
-            Convert this feedback into a Task to improve the website
-          `,
+          Here is feedback for the website: ${data.feedback}.
+          Convert this feedback into a Task to improve the website.
+        `,
       });
-
+  
+      const generatedTask = result || "Task not generated";
+  
       if (docSnap.exists()) {
-        const websites = await docSnap.data()?.websites;
-
+        const websites = docSnap.data()?.websites;
+  
         if (websites && websites[websiteIndex]) {
           const currentFeedback = websites[websiteIndex].feedback || [];
-
+          const currentTasks = websites[websiteIndex].tasks || [];
+  
           const updatedWebsite = {
             ...websites[websiteIndex],
             feedback: [...currentFeedback, data],
+            tasks: [...currentTasks, { task: generatedTask}],
           };
-
+  
           websites[websiteIndex] = updatedWebsite;
-
+  
           await updateDoc(userDocRef, {
             websites,
           });
-
-          console.log("Feedback saved successfully");
+  
+          console.log("Feedback and task saved successfully");
         } else {
           console.log("Website not found");
         }
@@ -84,6 +87,7 @@ export default class dbService {
       console.log(error);
     }
   }
+  
 
   async fetchWebsites(user: any) {
     const userDocRef = doc(db, "USERS", user);
