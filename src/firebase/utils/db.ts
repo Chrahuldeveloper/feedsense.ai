@@ -1,5 +1,8 @@
 import { db } from "../Firebase";
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { generate } from "@genkit-ai/ai";
+import { configureGenkit } from "@genkit-ai/core";
+import { googleAI, gemini15Flash } from "@genkit-ai/googleai";
 
 interface User {
   uid: string;
@@ -40,6 +43,18 @@ export default class dbService {
     try {
       const userDocRef = doc(db, "USERS", userID);
       const docSnap = await getDoc(userDocRef);
+
+      configureGenkit({ plugins: [googleAI()] });
+
+      const feedback: any = [];
+      const result = await generate({
+        model: gemini15Flash,
+        prompt: `
+            Here is a feedback of the website 
+            ${feedback}
+            Convert this feedback into a Task to improve the website
+          `,
+      });
 
       if (docSnap.exists()) {
         const websites = await docSnap.data()?.websites;
