@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@genkit-ai/ai": "^0.5.16",
-    "@genkit-ai/core": "^0.5.16",
     "@genkit-ai/googleai": "^0.5.16",
     "axios": "^1.7.7",
     "chart.js": "^4.4.4",

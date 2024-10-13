@@ -9,7 +9,6 @@ import axios from "axios";
 const Page = () => {
   const db = new dbService();
   const { user, loading } = useAuth();
-  const [tasks, setTasks] = useState([]);
 
   const fetchFeedbackTasks = async () => {
     try {
