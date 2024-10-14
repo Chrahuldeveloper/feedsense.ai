@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Table from "@/components/Table";
 import SideBar from "@/components/SideBar";
 import dbService from "@/firebase/utils/db";

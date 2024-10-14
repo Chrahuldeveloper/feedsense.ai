@@ -9,13 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@genkit-ai/ai": "^0.5.16",
-    "@genkit-ai/googleai": "^0.5.16",
     "axios": "^1.7.7",
     "chart.js": "^4.4.4",
     "firebase": "^10.14.0",
     "highlight.js": "^11.10.0",
-    "next": "14.2.8",
+    "next": "^14.2.15",
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
