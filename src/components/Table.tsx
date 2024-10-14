@@ -84,12 +84,11 @@ const Table = () => {
         <div className="w-full md:w-[90vw] mt-12 px-12 py-6">
           <div className="overflow-x-auto">
             <table className="text-white w-full table-auto bg-[#18181b]  border-[#272b2f] border-[1px] rounded-lg">
-              <thead className="border-[#272b2f] border-[1px] ">
+              <thead className="border-[#272b2f] border-[1px]">
                 <tr className="text-center text-xs">
-                  <th className="py-2 px-4">S.No</th>
-                  <th className="py-2 px-4">Name</th>
-                  <th className="py-2 px-4">Feedback Count</th>
-                  <th className="py-2 px-4">Action</th>
+                  <th className="py-1 px-2">Name</th>
+                  <th className="py-1 px-2">Feedback Count</th>
+                  <th className="py-1 px-2">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -98,24 +97,20 @@ const Table = () => {
                     key={idx}
                     className={`text-center transition duration-300 ease-in-out border-[#272b2f] border-[1px]  rounded-lg`}
                   >
-                    <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
-                      {idx + 1}
-                    </td>
-                    <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
+                    <td className="py-1  cursor-pointer text-[11px] md:text-sm">
                       {site?.name}
                     </td>
-                    <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
+                    <td className="py-1 cursor-pointer text-[11px] md:text-sm">
                       {site?.feedback?.length || 0}
                     </td>
-                    <td className="py-2 px-4 cursor-pointer">
-                      {/* "/dashboard6y/tasks */}
+                    <td className="py-1  cursor-pointer">
                       <Link
                         href={{
                           pathname: "/dashboard/tasks",
                           query: { feedback: JSON.stringify(site?.feedback) },
                         }}
                       >
-                        <button className="bg-[#272c2e] text-white px-8 rounded-lg text-sm py-1.5 cursor-pointer  ease-in-out duration-500">
+                        <button className="bg-[#272c2e] text-white px-6 rounded-lg text-sm py-1 cursor-pointer ease-in-out duration-500">
                           View
                         </button>
                       </Link>
