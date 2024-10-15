@@ -15,7 +15,7 @@ const page = () => {
   }
 
   const [websites, setWebsites] = useState<Feedback[]>([]);
-  const getdata = searchParams.get("feedback");
+  const getdata = searchParams!.get("feedback")!;
 
   useEffect(() => {
     const data: Feedback[] = JSON.parse(getdata);
@@ -39,7 +39,7 @@ const page = () => {
 
   return (
     <>
-      <nav className="md:hidden bg-[#0f0d15] p-7 w-screen border-b-[1px] border-neutral-900 flex justify-between items-center">
+      <nav className="md:hidden bg-[#1c1d1c] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
         <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
         <CiMenuFries
           onClick={() => {
@@ -51,16 +51,16 @@ const page = () => {
         />
       </nav>
 
-      <div className="bg-[#131315] w-full h-screen flex overflow-x-clip">
-        <SideBar />
-        <div className="w-full md:w-[90vw]  px-4 md:px-12  md:ml-44 space-y-16">
-          <div className="bg-[#18181b] w-screen p-9 md:-ml-36 hidden md:block border-b-[1px] border-[#272b2f]"></div>
-          <div className="overflow-x-auto ">
-            <table className="text-white w-full table-auto bg-[#1c1c21]  border-[#272b2f] border-[1px]">
-              <thead className="">
-                <tr className="text-center text-xs">
+      <div className="bg-[#1c1d1c] w-full h-screen flex overflow-x-clip">
+        <SideBar page="Home" />
+        <div className="md:w-[90vw] mx-auto px-4 md:px-12 md:ml-44 space-y-16">
+          <div className="bg-[#1c1d1c] w-screen p-9 md:-ml-36 hidden md:block "></div>
+          <div className="overflow-x-auto">
+            <table className="text-white w-full max-w-4xl mx-auto table-auto bg-[#2a2a2a] ">
+              <thead>
+                <tr className="text-center text-xs ">
                   <th className="py-2 px-4">Name</th>
-                  <th className="py-2 px-4">email</th>
+                  <th className="py-2 px-4">Email</th>
                   <th className="py-2 px-4">Task</th>
                   <th className="py-2 px-4">Action</th>
                 </tr>
@@ -69,7 +69,7 @@ const page = () => {
                 {websites?.map((site, idx) => (
                   <tr
                     key={idx}
-                    className={`text-center transition duration-300 ease-in-out bg-[#1c1c21]  border-[#272b2f] border-[1px] rounded-lg`}
+                    className={`text-center transition duration-300 ease-in-out bg-[#2a2a2a]  rounded-lg`}
                   >
                     <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
                       {site.name}
@@ -100,6 +100,7 @@ const page = () => {
           </div>
         </div>
       </div>
+
       {toggle ? <MobileSideBar setToggle={setToggle} /> : null}
     </>
   );

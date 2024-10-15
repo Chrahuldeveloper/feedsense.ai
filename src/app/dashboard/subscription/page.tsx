@@ -87,17 +87,17 @@ const page = () => {
   const [currentPlan, setcurrentPlan] = useState("Basic");
 
   return (
-    <div className="bg-[#131315] w-screen min-h-screen overflow-x-clip">
+    <div className="bg-[#1c1d1c] w-screen min-h-screen overflow-x-clip">
       <div className="flex justify-between w-[80vw] mx-auto pt-5 pb-10">
-        <h1 className="text-white text-lg">Change Plan</h1>
+        <h1 className="text-slate-300 text-lg">Change Plan</h1>
         <Link href={"/dashboard"}>
           <RxCross2 size={24} color="white" />
         </Link>
       </div>
 
-      <div className=" flex flex-col md:flex-row justify-between w-[90vw] md:w-[75vw] mx-auto pt-8 gap-6 items-center border-[1px] border-[#272b2f] p-6">
+      <div className=" flex flex-col md:flex-row justify-between  w-[90vw] md:w-[75vw] mx-auto pt-8 gap-6 items-center border-[1px] border-[#272b2f] p-6">
         <div className="space-y-4">
-          <h1 className="text-white text-sm">Select Plan</h1>
+          <h1 className="text-slate-300 text-sm font-bold">Select Plan</h1>
           <p className="text-slate-300">
             For more details on our plans, visit our pricing page.
           </p>
@@ -107,11 +107,11 @@ const page = () => {
                 <>
                   <div
                     key={idx}
-                    className={`bg-[#131315] p-5 rounded-lg space-y-1 border-[1px] border-[#272b2f] shadow-2xl mt-5 w-[80vw] md:w-[50vw] ${
-                      currentPlan === itm.name ? "border-[#db1a5a]" : ""
+                    className={`p-5  space-y-1 border-[1px] border-[#272b2f] shadow-2xl mt-5 w-[80vw] md:w-[50vw] ${
+                      currentPlan === itm.name ? "border-white" : ""
                     }`}
                   >
-                    <h1 className="text-lg font-semibold text-white">
+                    <h1 className="text-lg font-semibold text-slate-300">
                       {itm.name}{" "}
                       {currentPlan === itm.name && (
                         <span className="bg-[#2e2e34] px-3 py-1.5 rounded-full text-[10px]">
@@ -132,13 +132,13 @@ const page = () => {
 
       <div className="border-t-[1px] border-[#272b2f] md:fixed md:bottom-3 w-full pr-10 mt-6">
         <div className="flex justify-end gap-4  py-5">
-          <button className="border-[1px] border-[#272b2f] text-white px-5 rounded-lg text-sm py-2 cursor-pointer font-semibold">
+          <button className="border-[1px] border-[#272b2f] text-slate-300 px-5 rounded-full text-sm py-2 cursor-pointer font-semibold">
             Cancel
           </button>
           <Script src="https://checkout.razorpay.com/v1/checkout.js" />
           <button
             onClick={handlePayment}
-            className="bg-[#db1a5a] text-white px-5 rounded-lg text-sm py-2 cursor-pointer font-semibold"
+            className="bg-white text-black px-5 rounded-full text-sm py-2 cursor-pointer font-semibold"
           >
             Purchase
           </button>

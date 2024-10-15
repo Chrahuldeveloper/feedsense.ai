@@ -2,7 +2,7 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <nav className="border-b-[1px] border-[#272b2f] p-8 flex justify-between items-center px-12">
+    <nav className=" p-8 flex justify-between items-center px-12">
       <div>
         <h1 className="text-2xl font-bold text-white">TaskFeed</h1>
       </div>

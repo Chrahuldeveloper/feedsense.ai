@@ -8,7 +8,6 @@ import "highlight.js/styles/github.css";
 import dbService from "../firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 
-
 const Addintegration = () => {
   const [toogle, settoogle] = useState(false);
 
@@ -113,7 +112,7 @@ const Addintegration = () => {
               onClick={() => {
                 setsection("showinput");
               }}
-              className="bg-[#db1a5a] text-white px-5 rounded-lg text-sm py-2 cursor-pointer font-semibold"
+              className="bg-white text-black px-5 rounded-full text-sm py-2 cursor-pointer font-semibold"
             >
               Start Integration
             </button>
@@ -136,7 +135,7 @@ const Addintegration = () => {
           }`}
         >
           <div
-            className={`w-[85vw] md:w-[33vw] p-6 space-y-6 mt-20 mx-auto  border-[#272b2f] bg-[#18181b] rounded-lg border-[1px] ${
+            className={`w-[85vw] md:w-[33vw] p-6 space-y-6 mt-20 mx-auto  bg-[#2a2a2a]  ${
               section === "showcode" ? "hidden" : "block"
             }`}
           >
@@ -149,7 +148,7 @@ const Addintegration = () => {
                 onChange={(e) => {
                   setwebsiteData({ ...websiteData, name: e.target.value });
                 }}
-                className="bg-[#1c1c21] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
+                className="bg-[#2d2f2f]  px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
               />
             </div>
             <div className="space-y-4 text-slate-300">
@@ -161,7 +160,7 @@ const Addintegration = () => {
                 onChange={(e) => {
                   setwebsiteData({ ...websiteData, url: e.target.value });
                 }}
-                className="bg-[#1c1c21] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
+                className="bg-[#2d2f2f]  px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
               />
             </div>
             <div className="space-y-4 text-slate-300">
@@ -172,7 +171,7 @@ const Addintegration = () => {
                 onChange={(e) => {
                   setwebsiteData({ ...websiteData, type: e.target.value });
                 }}
-                className="bg-[#1c1c21] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
+                className="bg-[#2d2f2f]  px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
               >
                 <option value="WebApp">WebApp</option>
                 <option value="E-commerce">E-commerce</option>
@@ -185,7 +184,7 @@ const Addintegration = () => {
                 onClick={async () => {
                   await saveData();
                 }}
-                className="bg-[#db1a5a] text-white px-5 mt-2.5 text-sm py-2 font-semibold md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
+                className="bg-white text-black px-5 mt-2.5 text-sm py-2 font-semibold md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
               >
                 Get Code
               </button>
@@ -194,12 +193,12 @@ const Addintegration = () => {
 
           {/* Code for integration */}
           <div
-            className={`p-6  space-y-6 mt-20 -mr-10 bg-[#18181b] ${
+            className={`p-6  space-y-6 mt-20 -mr-20 bg-[#2a2a2a] ${
               section === "showcode" ? "block" : "hidden"
             }`}
           >
-            <div className="border-[#272b2f]  rounded-lg border-[1px] bg-[#1c1c21] overflow-auto">
-              <pre className="text-white p-3">
+            <div className="  bg-[#1c1c21] overflow-auto">
+              <pre className="text-white p-3 w-[40vw]">
                 <div className="flex justify-end">
                   <FaRegCopy
                     size={19}

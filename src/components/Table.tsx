@@ -75,29 +75,27 @@ const Table = () => {
           />
         </nav>
 
-        <div className="bg-[#18181b] w-screen p-9  md:-ml-36 hidden md:block border-b-[1px] border-[#272b2f]"></div>
+        <div className="bg-[#1c1d1c] w-screen   md:-ml-36 hidden md:block"></div>
         {toogle ? <MobileSideBar settoogle={settoogle} /> : null}
-        <Analytics
-          totalWebsites={infodata.totalWebsites}
-          totalFeedback={infodata.totalFeedback}
-        />
-        <div className="w-full md:w-[90vw] mt-12 px-12 py-6">
+
+        <div className="w-full md:w-[75vw] mt-12 px-12 py-6 mx-auto ">
           <div className="overflow-x-auto">
-            <table className="text-white w-full table-auto bg-[#18181b]  border-[#272b2f] border-[1px] rounded-lg">
-              <thead className="border-[#272b2f] border-[1px]">
+            <table className="text-white w-full table-auto bg-[#2a2a2a]    ">
+              <thead className=" mb-3">
                 <tr className="text-center text-xs">
                   <th className="py-1 px-2">Name</th>
                   <th className="py-1 px-2">Feedback Count</th>
                   <th className="py-1 px-2">Action</th>
+                  <th className="py-1 px-2">Delete</th>
                 </tr>
               </thead>
               <tbody>
                 {websitedata.map((site, idx) => (
                   <tr
                     key={idx}
-                    className={`text-center transition duration-300 ease-in-out border-[#272b2f] border-[1px]  rounded-lg`}
+                    className={`text-center transition duration-300 ease-in-out border-[#272b2f] border-[1px]  mt-2 `}
                   >
-                    <td className="py-1  cursor-pointer text-[11px] md:text-sm">
+                    <td className="py-1 cursor-pointer text-[11px] md:text-sm">
                       {site?.name}
                     </td>
                     <td className="py-1 cursor-pointer text-[11px] md:text-sm">
@@ -110,16 +108,25 @@ const Table = () => {
                           query: { feedback: JSON.stringify(site?.feedback) },
                         }}
                       >
-                        <button className="bg-[#272c2e] text-white px-6 rounded-lg text-sm py-1 cursor-pointer ease-in-out duration-500">
+                        <button className=" text-white px-6 rounded-lg text-sm py-1 cursor-pointer ease-in-out duration-500">
                           View
                         </button>
                       </Link>
+                    </td>
+                    <td>
+                      <button className=" text-white px-6 rounded-lg text-sm py-1 cursor-pointer ease-in-out duration-500">
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+          <Analytics
+            totalWebsites={infodata.totalWebsites}
+            totalFeedback={infodata.totalFeedback}
+          />
         </div>
       </div>
     </>
