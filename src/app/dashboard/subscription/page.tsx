@@ -2,8 +2,54 @@
 import Bill from "@/components/Bill";
 import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
+import Script from "next/script";
+import axios from "axios";
+import Razorpay from "razorpay";
+import Link from "next/link";
+declare global {
+  interface window {
+    RazorPay: any;
+  }
+}
 
 const page = () => {
+  const AMOUNT = 100;
+
+  const handlePayment = async () => {
+    try {
+      const orderID = await axios.post("http://localhost:3000/api/subscribe");
+
+      console.log(orderID.data);
+
+      const data = orderID.data;
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: AMOUNT * 100,
+        currency: "INR",
+        name: "TASKFEED",
+        description: "TEST TRANSCATION",
+        order_id: data.orderId,
+        handler: function (response: any) {
+          console.log("payment is successful", response);
+        },
+        prefill: {
+          name: "Rahul",
+          email: "chrahulofficial@gmail.com",
+          contact: "8317680338",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const subscriptionPlans = [
     {
       id: 1,
@@ -41,10 +87,12 @@ const page = () => {
   const [currentPlan, setcurrentPlan] = useState("Basic");
 
   return (
-    <div className="bg-[#1c1c21] w-screen min-h-screen overflow-x-clip">
+    <div className="bg-[#131315] w-screen min-h-screen overflow-x-clip">
       <div className="flex justify-between w-[80vw] mx-auto pt-5 pb-10">
         <h1 className="text-white text-lg">Change Plan</h1>
-        <RxCross2 size={24} color="white" />
+        <Link href={"/dashboard"}>
+          <RxCross2 size={24} color="white" />
+        </Link>
       </div>
 
       <div className=" flex flex-col md:flex-row justify-between w-[90vw] md:w-[75vw] mx-auto pt-8 gap-6 items-center border-[1px] border-[#272b2f] p-6">
@@ -59,7 +107,7 @@ const page = () => {
                 <>
                   <div
                     key={idx}
-                    className={`bg-[#1c1c21] p-5 rounded-lg space-y-1 border-[1px] border-[#272b2f] shadow-2xl mt-5 w-[80vw] md:w-[50vw] ${
+                    className={`bg-[#131315] p-5 rounded-lg space-y-1 border-[1px] border-[#272b2f] shadow-2xl mt-5 w-[80vw] md:w-[50vw] ${
                       currentPlan === itm.name ? "border-[#db1a5a]" : ""
                     }`}
                   >
@@ -87,7 +135,11 @@ const page = () => {
           <button className="border-[1px] border-[#272b2f] text-white px-5 rounded-lg text-sm py-2 cursor-pointer font-semibold">
             Cancel
           </button>
-          <button className="bg-[#db1a5a] text-white px-5 rounded-lg text-sm py-2 cursor-pointer font-semibold">
+          <Script src="https://checkout.razorpay.com/v1/checkout.js" />
+          <button
+            onClick={handlePayment}
+            className="bg-[#db1a5a] text-white px-5 rounded-lg text-sm py-2 cursor-pointer font-semibold"
+          >
             Purchase
           </button>
         </div>
