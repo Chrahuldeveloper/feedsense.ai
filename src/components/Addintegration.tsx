@@ -135,7 +135,7 @@ const Addintegration = () => {
           }`}
         >
           <div
-            className={`w-[85vw] md:w-[33vw] p-6 space-y-6 mt-20 mx-auto  bg-[#2a2a2a]  ${
+            className={`w-[85vw] md:w-[33vw] p-6 space-y-6 mt-20 mx-auto bg-[#171819] rounded-lg ${
               section === "showcode" ? "hidden" : "block"
             }`}
           >
@@ -148,7 +148,7 @@ const Addintegration = () => {
                 onChange={(e) => {
                   setwebsiteData({ ...websiteData, name: e.target.value });
                 }}
-                className="bg-[#2d2f2f]  px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
+                className="bg-[#272c2e]  px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
               />
             </div>
             <div className="space-y-4 text-slate-300">
@@ -160,7 +160,7 @@ const Addintegration = () => {
                 onChange={(e) => {
                   setwebsiteData({ ...websiteData, url: e.target.value });
                 }}
-                className="bg-[#2d2f2f]  px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
+                className="bg-[#272c2e]  px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer "
               />
             </div>
             <div className="space-y-4 text-slate-300">
@@ -171,7 +171,7 @@ const Addintegration = () => {
                 onChange={(e) => {
                   setwebsiteData({ ...websiteData, type: e.target.value });
                 }}
-                className="bg-[#2d2f2f]  px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
+                className="bg-[#272c2e]  px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
               >
                 <option value="WebApp">WebApp</option>
                 <option value="E-commerce">E-commerce</option>
@@ -193,7 +193,7 @@ const Addintegration = () => {
 
           {/* Code for integration */}
           <div
-            className={`p-6  space-y-6 mt-20 -mr-20 bg-[#2a2a2a] ${
+            className={`p-6  space-y-6 mt-20 -mr-20 bg-[#171819] ${
               section === "showcode" ? "block" : "hidden"
             }`}
           >

@@ -39,7 +39,7 @@ const page = () => {
 
   return (
     <>
-      <nav className="md:hidden bg-[#1c1d1c] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
+      <nav className="md:hidden bg-[#0e0f11] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
         <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
         <CiMenuFries
           onClick={() => {
@@ -51,12 +51,12 @@ const page = () => {
         />
       </nav>
 
-      <div className="bg-[#1c1d1c] w-full h-screen flex overflow-x-clip">
+      <div className="bg-[#1a1a1a] w-full h-screen flex overflow-x-clip">
         <SideBar page="Home" />
         <div className="md:w-[90vw] mx-auto px-4 md:px-12 md:ml-44 space-y-16">
-          <div className="bg-[#1c1d1c] w-screen p-9 md:-ml-36 hidden md:block "></div>
+          <div className="bg-[#171819] w-screen p-9 md:-ml-36 hidden md:block "></div>
           <div className="overflow-x-auto">
-            <table className="text-white w-full max-w-4xl mx-auto table-auto bg-[#2a2a2a] ">
+            <table className="text-white w-full max-w-4xl mx-auto table-auto bg-[#171819] ">
               <thead>
                 <tr className="text-center text-xs ">
                   <th className="py-2 px-4">Name</th>
@@ -69,7 +69,7 @@ const page = () => {
                 {websites?.map((site, idx) => (
                   <tr
                     key={idx}
-                    className={`text-center transition duration-300 ease-in-out bg-[#2a2a2a]  rounded-lg`}
+                    className={`text-center transition duration-300 ease-in-out bg-[#171819]  rounded-lg`}
                   >
                     <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
                       {site.name}

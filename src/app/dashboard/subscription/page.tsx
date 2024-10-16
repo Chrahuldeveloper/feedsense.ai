@@ -87,7 +87,7 @@ const page = () => {
   const [currentPlan, setcurrentPlan] = useState("Basic");
 
   return (
-    <div className="bg-[#1c1d1c] w-screen min-h-screen overflow-x-clip">
+    <div className="bg-[#0e0f11] w-screen min-h-screen overflow-x-clip">
       <div className="flex justify-between w-[80vw] mx-auto pt-5 pb-10">
         <h1 className="text-slate-300 text-lg">Change Plan</h1>
         <Link href={"/dashboard"}>

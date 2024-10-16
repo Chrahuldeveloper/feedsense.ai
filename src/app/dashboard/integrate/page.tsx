@@ -6,7 +6,7 @@ import React from "react";
 const page = () => {
   return (
     <>
-      <div className="bg-[#1c1d1c] w-screen min-h-screen flex overflow-x-clip ">
+      <div className="bg-[#0e0f11] w-screen min-h-screen flex overflow-x-clip ">
         <SideBar page="Integrate"/>
         <Addintegration />
       </div>
