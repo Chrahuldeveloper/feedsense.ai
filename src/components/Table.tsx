@@ -87,19 +87,19 @@ const Table = () => {
         <div className="w-full md:w-[75vw] mt-12 px-12 py-6 mx-auto rounded-xl">
           <div className="overflow-x-auto rounded-xl">
             <table className="text-white w-full table-auto bg-[#17161c]">
-              <thead className="mb-3 border-b-2 border-[#272b2f]">
+              <thead className="mb-3 ">
                 <tr className="text-center text-xs">
-                  <th className="py-1 px-  ">Icon</th>
-                  <th className="py-1   ">Name</th>
-                  <th className="py-1 ">Feedback Count</th>
-                  <th className="py-1   ">Action</th>
+                  <th className="py-1">Icon</th>
+                  <th className="py-1">Name</th>
+                  <th className="py-1">Feedback Count</th>
+                  <th className="py-1">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {websitedata.map((site, idx) => (
                   <tr
                     key={idx}
-                    className={`text-center transition duration-300 ease-in-out border-[#272b2f] border-b-[2px] mt-2`}
+                    className={`text-center transition duration-300 ease-in-out border-[#272b2f]  mt-2`}
                   >
                     <td className="py-1 cursor-pointer ">
                       <img

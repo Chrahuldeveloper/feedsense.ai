@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Script from "next/script";
 import axios from "axios";
-import Razorpay from "razorpay";
 import Link from "next/link";
 declare global {
   interface window {
@@ -31,6 +30,7 @@ const page = () => {
         description: "TEST TRANSCATION",
         order_id: data.orderId,
         handler: function (response: any) {
+
           console.log("payment is successful", response);
         },
         prefill: {
