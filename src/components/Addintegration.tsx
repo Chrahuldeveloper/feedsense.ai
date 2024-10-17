@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
 import { FaRegCopy } from "react-icons/fa";
@@ -18,6 +18,8 @@ const Addintegration = () => {
     email: string;
   }
 
+  const [websitedata, setwebsitedata] = useState([]);
+
   const { user, loading } = useAuth() as {
     user: User | null;
     loading?: boolean;
@@ -28,6 +30,17 @@ const Addintegration = () => {
     url: "",
     type: "",
   });
+
+  useEffect(() => {
+    const fetchWebsites = async () => {
+      if (!loading && user) {
+        const data = await db.fetchWebsites(user?.uid);
+        console.log(data);
+        setwebsitedata(data);
+      }
+    };
+    fetchWebsites();
+  }, [loading, user]);
 
   const url = new URL(window.location.href);
 
@@ -102,28 +115,36 @@ const Addintegration = () => {
               : "block"
           }`}
         >
-          <div className="lg:space-y-8 space-y-5 order-2">
-            <h1 className="text-3xl font-bold lg:text-5xl">Add your website</h1>
-            <p className="max-w-sm md:text-lg md:max-w-md">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-              Laboriosam consectetur enim praesentium.
-            </p>
-            <button
-              onClick={() => {
-                setsection("showinput");
-              }}
-              className="bg-white text-black px-5 rounded-full text-sm py-2 cursor-pointer font-semibold"
-            >
-              Start Integration
-            </button>
-          </div>
-
-          <div className="md:order-2 ">
-            <img
-              src="https://images.pexels.com/photos/943096/pexels-photo-943096.jpeg?auto=compress&cs=tinysrgb&w=600"
-              alt=""
-              className="max-w-sm md:max-w-md rounded-lg hover:brightness-75 ease-in-out duration-500 cursor-pointer"
-            />
+          <div className=" md:ml-52">
+            <div className="bg-[#17161c] w-[35vw] mx-auto p-6 rounded-xl mt-6">
+              <div className="space-y-5">
+                <h1 className="text-xl   font-bold">Welcome to Integration</h1>
+                <p className="text-slate-300  font-semibold">
+                  Connect your website{" "}
+                </p>
+                <div className="space-y-4">
+                  {websitedata.map((i, idx) => {
+                    return (
+                      <div
+                        key={idx}
+                        className="flex items-center gap-x-5 justify-between"
+                      >
+                        <h1 className="text-sm font-semibold">{i?.name}</h1>
+                        <button className="text-sm">Remove</button>
+                      </div>
+                    );
+                  })}
+                </div>
+                <button
+                  onClick={() => {
+                    setsection("showinput");
+                  }}
+                  className="bg-white w-full  text-black  py-2 px-20 text-sm  font-semibold rounded-full"
+                >
+                  Connect website
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         {/* Add the process to integrate the websites */}

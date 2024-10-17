@@ -2,7 +2,7 @@ import React from "react";
 
 const Bill = () => {
   return (
-    <div className=" p-5 w-[80vw] md:w-[60vw] rounded-lg border-[1px] border-[#272b2f] text-slate-300 space-y-6 mt-12">
+    <div className=" p-5 w-[80vw] md:w-[60vw] bg-[#17161c] rounded-lg border-[1px] border-[#272b2f] text-slate-300 space-y-6 mt-12">
       <div className="flex items-center justify-between mx-3">
         <h1>Pro Plan </h1>
         <p>$30</p>

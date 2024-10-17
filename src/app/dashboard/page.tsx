@@ -31,7 +31,7 @@ const Page = () => {
   }, [user?.uid]);
 
   return (
-    <div className="bg-[#111018] w-full flex min-h-screen overflow-x-clip">
+    <div className="bg-[#0e0f11] w-full flex min-h-screen overflow-x-clip">
       <SideBar page="Home" />
       <Table />
     </div>

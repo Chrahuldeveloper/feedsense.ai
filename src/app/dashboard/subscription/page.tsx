@@ -95,7 +95,7 @@ const page = () => {
         </Link>
       </div>
 
-      <div className=" flex flex-col md:flex-row justify-between  w-[90vw] md:w-[75vw] mx-auto pt-8 gap-6 items-center border-[1px] border-[#272b2f] p-6">
+      <div className=" flex flex-col md:flex-row justify-between rounded-xl  w-[90vw] md:w-[75vw] mx-auto pt-8 gap-6 items-center border-[1px] border-[#272b2f] p-6">
         <div className="space-y-4">
           <h1 className="text-slate-300 text-sm font-bold">Select Plan</h1>
           <p className="text-slate-300">
@@ -107,7 +107,7 @@ const page = () => {
                 <>
                   <div
                     key={idx}
-                    className={`p-5  space-y-1 border-[1px] border-[#272b2f] shadow-2xl mt-5 w-[80vw] md:w-[50vw] ${
+                    className={`p-5 rounded-xl space-y-1 border-[1px] bg-[#17161c] border-[#272b2f] shadow-2xl mt-5 w-[80vw] md:w-[50vw] ${
                       currentPlan === itm.name ? "border-white" : ""
                     }`}
                   >
@@ -130,7 +130,7 @@ const page = () => {
         <Bill />
       </div>
 
-      <div className="border-t-[1px] border-[#272b2f] md:fixed md:bottom-3 w-full pr-10 mt-6">
+      <div className="border-t-[1px] bg-[#17161c] border-[#272b2f] md:fixed md:bottom-0 w-full pr-10 mt-6">
         <div className="flex justify-end gap-4  py-5">
           <button className="border-[1px] border-[#272b2f] text-slate-300 px-5 rounded-full text-sm py-2 cursor-pointer font-semibold">
             Cancel
