@@ -150,4 +150,17 @@ export default class dbService {
       console.log(error);
     }
   }
+  async isSubcribe(user: any) {
+    try {
+      const userDocRef = doc(db, "USERS", user);
+
+      const docSnap = await getDoc(userDocRef);
+
+      if (docSnap.exists()) {
+        return docSnap.data()?.subscribe;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
