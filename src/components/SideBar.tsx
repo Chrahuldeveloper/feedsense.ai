@@ -19,7 +19,7 @@ const SideBar: React.FC<props> = ({ page }) => {
 
   return (
     <>
-      <aside className="bg-[#1a1a1a] w-42 h-screen space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0 ">
+      <aside className="bg-[#151719] w-42 h-screen space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0 ">
         <div className="flex flex-col space-y-8 pt-7">
           {/* Home */}
           <Link href="/dashboard">
@@ -40,7 +40,7 @@ const SideBar: React.FC<props> = ({ page }) => {
             <div
               className={`flex items-center space-x-4 py-3 pr-12 pl-4 transition duration-200 ease-in-out text-white rounded-lg ${
                 page === "Integrate"
-                  ? "bg-[#272c2e] border-[1px] border-[#272c2e]"
+                  ? "bg-[#1a1a1a] border-[1px] border-[#272c2e]"
                   : ""
               }`}
             >

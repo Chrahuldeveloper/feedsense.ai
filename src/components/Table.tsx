@@ -64,7 +64,7 @@ const Table = () => {
       {loading ? <Loader /> : null}
 
       <div className="md:ml-44">
-        <nav className="md:hidden bg-[#17161c] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
+        <nav className="md:hidden bg-[#151719] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
           <CiMenuFries
             size={26}
@@ -76,7 +76,7 @@ const Table = () => {
           />
         </nav>
 
-        <div className="bg-[#1a1a1a] w-screen px-6  py-5 md:-ml-36 hidden md:block ">
+        <div className="bg-[#151719] w-screen px-6  py-5 md:-ml-36 hidden md:block ">
           <div className="flex justify-end gap-x-3 px-20 items-center">
             <CgProfile size={23} color="white" />
             <h1 className="text-slate-300 text-lg font-semibold">Rahul</h1>
