@@ -4,8 +4,8 @@ import Table from "@/components/Table";
 import SideBar from "@/components/SideBar";
 import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
+import useSubscribe from "@/hooks/subscribed";
 import axios from "axios";
-
 const Page = () => {
   const db = new dbService();
   const { user, loading } = useAuth();
@@ -29,6 +29,10 @@ const Page = () => {
       fetchFeedbackTasks();
     }
   }, [user?.uid]);
+
+  const { subcribe } = useSubscribe();
+
+  console.log(subcribe);
 
   return (
     <div className="bg-[#0e0f11] w-full flex min-h-screen overflow-x-clip">

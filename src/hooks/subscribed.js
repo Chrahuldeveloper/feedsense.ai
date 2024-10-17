@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import dbService from "../../src/firebase/utils/db";
-const subscribed = () => {
+const useSubscribe = () => {
   const [loading, setLoading] = useState(true);
   const [subcribe, setsubcribe] = useState();
 
@@ -23,4 +23,4 @@ const subscribed = () => {
   return { loading, subcribe };
 };
 
-export default subscribed;
+export default useSubscribe;
