@@ -1,10 +1,25 @@
+import authService from "@/firebase/utils/auth";
 import React from "react";
-
+import { useRouter } from "next/navigation";
 interface ModelLogoutProps {
   settoggle: Function;
 }
 
 const ModelLogout: React.FC<ModelLogoutProps> = ({ settoggle }) => {
+  const auth = new authService();
+
+  const navigate = useRouter();
+
+  const handleLogOut = async () => {
+    try {
+      await auth.signOut();
+      console.log("logout sucessful");
+      navigate.push("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center h-full bg-black bg-opacity-75 backdrop-blur-sm">
       <div className="bg-[#0f0d15] w-[85vw] md:w-[60vw] lg:w-[40vw] xl:w-[30vw] p-6 rounded-md ">
@@ -24,7 +39,10 @@ const ModelLogout: React.FC<ModelLogoutProps> = ({ settoggle }) => {
           >
             Cancel
           </button>
-          <button className="text-slate-300 text-xs bg-blue-600 px-8 py-1.5 rounded-md font-semibold">
+          <button
+            onClick={handleLogOut}
+            className="text-slate-300 text-xs bg-blue-600 px-8 py-1.5 rounded-md font-semibold"
+          >
             Logout
           </button>
         </div>
