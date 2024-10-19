@@ -45,8 +45,8 @@ const page = () => {
   };
 
   return (
-    <div className="bg-[#131315] w-full overflow-y-clip h-screen md:h-auto ">
-      <div className="md:flex gap-8 items-center pt-20 md:pt-0">
+    <div className="bg-[black] w-full overflow-y-clip h-screen md:h-auto ">
+      <div className="md:flex gap-8 items-center py-20 md:pt-0">
         <div>
           <img
             src="https://images.pexels.com/photos/3861959/pexels-photo-3861959.jpeg?auto=compress&cs=tinysrgb&w=600"
@@ -54,13 +54,13 @@ const page = () => {
             className="h-[100vh] hidden md:block w-[50vw] object-cover brightness-75"
           />
         </div>
-        <div className="text-slate-300 bg-[#18181b] p-7 rounded-lg w-[90vw] md:w-[30vw] mx-auto md:my-0 border-[#272b2f] border-[1px]">
-          <div className="space-y-3.5">
+        <div className="text-slate-300 bg-[#121212] p-7 rounded-lg w-[90vw] md:w-[30vw] mx-auto md:my-0 border-[#282e32] border-[1px]">
+          <div className="space-y-5">
             <h1 className="text-2xl font-bold ">Welcome back</h1>
             <p className="text-sm font-semibold">Sign in to your account</p>
           </div>
 
-          <div className="space-y-2 mt-4">
+          <div className="space-y-4 mt-6">
             <h1 className="font-semibold ">Email*</h1>
             <input
               type="text"
@@ -69,10 +69,10 @@ const page = () => {
                 setdata({ ...data, email: e.target.value });
               }}
               autoComplete="false"
-              className=" bg-[#1c1c21] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
+              className=" bg-[#121212] border-[1px] border-[#282e32] px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
             />
           </div>
-          <div className="space-y-2 mt-4">
+          <div className="space-y-4 mt-6">
             <h1 className="font-semibold ">Password*</h1>
             <input
               type="password"
@@ -81,17 +81,17 @@ const page = () => {
                 setdata({ ...data, password: e.target.value });
               }}
               autoComplete="false"
-              className="bg-[#1c1c21] border-[1px] border-neutral-900 px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
+              className="bg-[#121212] border-[1px] border-[#282e32] px-2 py-2 outline-none md:w-[25vw] w-[80vw] rounded-lg"
             />
           </div>
 
           <button
             onClick={handleSubmit}
-            className="bg-white mt-6  text-black  py-2 md:w-[25vw]  w-[80vw]  font-semibold rounded-lg  "
+            className=" bg-gradient-to-r from-blue-400 via-blue-700 to-blue-800 mt-7  text-white  py-2 md:w-[25vw]  w-[80vw]  font-semibold rounded-lg  "
           >
             Login
           </button>
-          <div className="text-center my-3.5 text-slate-300">
+          <div className="text-center my-5 text-slate-300">
             ---------------------OR---------------------
           </div>
           <div className="mt-5">
