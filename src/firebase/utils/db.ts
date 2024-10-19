@@ -18,14 +18,13 @@ export default class dbService {
       const docSnap = await getDoc(userDocRef);
 
       const res = await axios.post(
-        "http://localhost:3000/api/saveWebsiteData",{
+        "http://localhost:3000/api/saveWebsiteData",
+        {
           user,
-          data
+          data,
         }
       );
-
       console.log(res.data, "sucess");
-
       if (docSnap.exists()) {
         await updateDoc(userDocRef, {
           websites: arrayUnion(data),
@@ -81,16 +80,33 @@ export default class dbService {
   }
 
   async fetchWebsites(user: any) {
-    const userDocRef = doc(db, "USERS", user);
+    try {
+      const getAllWebsites = await axios.get(
+        `http://localhost:3000/api/saveWebsiteData`,
+        {
+          params: {
+            userId: user.uid,
+          },
+        }
+      );
 
-    const docSnap = await getDoc(userDocRef);
+      console.log(getAllWebsites.data);
 
-    if (docSnap.exists()) {
-      const usertWebsites = await docSnap.data()?.websites;
-      return usertWebsites;
-    } else {
-      return "user not exitsts";
+      return getAllWebsites.data;
+    } catch (error) {
+      console.log(error);
     }
+
+    // const userDocRef = doc(db, "USERS", user);
+
+    // const docSnap = await getDoc(userDocRef);
+
+    // if (docSnap.exists()) {
+    //   const usertWebsites = await docSnap.data()?.websites;
+    //   return usertWebsites;
+    // } else {
+    //   return "user not exitsts";
+    // }
   }
 
   async fetchDashBoardDetails(user: any) {

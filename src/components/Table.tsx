@@ -10,7 +10,7 @@ import Analytics from "./Analytics";
 import { CgProfile } from "react-icons/cg";
 
 const Table = () => {
-  const [websitedata, setwebsitedata] = useState([]);
+  const [websitedata, setWebsitedata] = useState([]);
 
   interface InfoData {
     totalWebsites: any;
@@ -23,15 +23,14 @@ const Table = () => {
   });
 
   const db = new dbService();
-
   const { user, loading } = useAuth();
 
   useEffect(() => {
     const fetchWebsites = async () => {
       if (!loading && user) {
-        const data = await db.fetchWebsites(user?.uid);
-        console.log(data);
-        setwebsitedata(data);
+        const data = await db.fetchWebsites(user);
+        console.log("Fetched Websites Data:", data);
+        setWebsitedata(data);
       }
     };
     fetchWebsites();
@@ -57,7 +56,7 @@ const Table = () => {
     fetchdetails();
   }, [loading, user]);
 
-  const [toogle, settoogle] = useState(false);
+  const [toggle, setToggle] = useState(false);
 
   return (
     <>
@@ -71,18 +70,18 @@ const Table = () => {
             color="white"
             className="cursor-pointer"
             onClick={() => {
-              settoogle(true);
+              setToggle(true);
             }}
           />
         </nav>
 
-        <div className="bg-[#151719] w-screen px-6  py-5 md:-ml-36 hidden md:block ">
+        <div className="bg-[#151719] w-screen px-6 py-5 md:-ml-36 hidden md:block ">
           <div className="flex justify-end gap-x-3 px-20 items-center">
             <CgProfile size={23} color="white" />
             <h1 className="text-slate-300 text-lg font-semibold">Rahul</h1>
           </div>
         </div>
-        {toogle ? <MobileSideBar settoogle={settoogle} /> : null}
+        {toggle ? <MobileSideBar setToggle={setToggle} /> : null}
 
         <div className="w-full md:w-[75vw] mt-12 px-12 py-6 mx-auto rounded-xl">
           <div className="overflow-x-auto rounded-xl">
@@ -96,10 +95,10 @@ const Table = () => {
                 </tr>
               </thead>
               <tbody>
-                {websitedata.map((site, idx) => (
+                {websitedata?.map((site, idx) => (
                   <tr
                     key={idx}
-                    className={`text-center transition duration-300 ease-in-out border-[#272b2f]  mt-2`}
+                    className={`text-center transition duration-300 ease-in-out border-[#272b2f] mt-2`}
                   >
                     <td className="py-1 cursor-pointer ">
                       <img
@@ -109,7 +108,7 @@ const Table = () => {
                       />
                     </td>
                     <td className="py-1 cursor-pointer text-[11px] md:text-sm">
-                      {site?.name}
+                      {site?.name} {/* Ensure site has a name property */}
                     </td>
                     <td className="py-1 cursor-pointer text-[11px] md:text-sm">
                       {site?.feedback?.length || 0}
