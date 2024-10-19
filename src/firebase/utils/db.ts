@@ -1,5 +1,6 @@
 import { db } from "../Firebase";
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import axios from "axios";
 
 interface User {
   uid: string;
@@ -15,6 +16,15 @@ export default class dbService {
       const userDocRef = doc(db, "USERS", user.uid);
 
       const docSnap = await getDoc(userDocRef);
+
+      const res = await axios.post(
+        "http://localhost:3000/api/saveWebsiteData",{
+          user,
+          data
+        }
+      );
+
+      console.log(res.data, "sucess");
 
       if (docSnap.exists()) {
         await updateDoc(userDocRef, {

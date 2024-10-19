@@ -87,7 +87,7 @@ const page = () => {
 
           <button
             onClick={handleSubmit}
-            className="bg-[#db1a5a] mt-6  text-white  py-2 md:w-[25vw]  w-[80vw]  font-semibold rounded-lg  "
+            className="bg-white mt-6  text-black  py-2 md:w-[25vw]  w-[80vw]  font-semibold rounded-lg  "
           >
             Login
           </button>
