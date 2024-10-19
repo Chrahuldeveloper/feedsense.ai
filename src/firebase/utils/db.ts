@@ -89,9 +89,7 @@ export default class dbService {
           },
         }
       );
-
       console.log(getAllWebsites.data);
-
       return getAllWebsites.data;
     } catch (error) {
       console.log(error);

@@ -25,20 +25,24 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");
 
-    if (!userId) {
-      return NextResponse.json(
-        { error: "User ID is required" },
-        { status: 400 }
-      );
+    const cachedData = await client.get(userId!);
+
+    if (cachedData) {
+      return NextResponse.json(JSON.parse(cachedData), { status: 200 });
     }
 
-    const allWebsites = await client.hGetAll(userId);
+    const allWebsites = await client.hGetAll(userId!);
 
     if (Object.keys(allWebsites).length > 0) {
-      const parsedData = Object.entries(allWebsites).map(([key, value]) => ({
-        url: key, 
-        ...JSON.parse(value), 
-      }));
+      const parsedData = Object.fromEntries(
+        Object.entries(allWebsites).map(([key, value]) => [
+          key,
+          JSON.parse(value),
+        ])
+      );
+
+      await client.set(userId!, JSON.stringify(parsedData));
+      await client.expire(userId!, 3600);
 
       return NextResponse.json(parsedData, { status: 200 });
     } else {

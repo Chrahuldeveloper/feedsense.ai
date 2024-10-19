@@ -36,7 +36,6 @@ const Addintegration = () => {
       if (!loading && user) {
         const data = await db.fetchWebsites(user?.uid);
         console.log(data);
-        setwebsitedata(data);
       }
     };
     fetchWebsites();
