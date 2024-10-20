@@ -94,17 +94,6 @@ export default class dbService {
     } catch (error) {
       console.log(error);
     }
-
-    // const userDocRef = doc(db, "USERS", user);
-
-    // const docSnap = await getDoc(userDocRef);
-
-    // if (docSnap.exists()) {
-    //   const usertWebsites = await docSnap.data()?.websites;
-    //   return usertWebsites;
-    // } else {
-    //   return "user not exitsts";
-    // }
   }
 
   async fetchDashBoardDetails(user: any) {
