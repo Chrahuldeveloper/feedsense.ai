@@ -5,14 +5,20 @@ import { RxCross2 } from "react-icons/rx";
 import Script from "next/script";
 import axios from "axios";
 import Link from "next/link";
+
 declare global {
-  interface window {
-    RazorPay: any;
+  interface Window {
+    Razorpay: any;
   }
 }
 
-const page = () => {
-  const AMOUNT = 100;
+const Page = () => {
+  const [currentPlan, setCurrentPlan] = useState({
+    name: "Basic",
+    price: 10,
+  });
+
+  const AMOUNT = currentPlan.price;
 
   const handlePayment = async () => {
     try {
@@ -27,10 +33,9 @@ const page = () => {
         amount: AMOUNT * 100,
         currency: "INR",
         name: "TASKFEED",
-        description: "TEST TRANSCATION",
+        description: "TEST TRANSACTION",
         order_id: data.orderId,
         handler: function (response: any) {
-
           console.log("payment is successful", response);
         },
         prefill: {
@@ -84,8 +89,6 @@ const page = () => {
     },
   ];
 
-  const [currentPlan, setcurrentPlan] = useState("Basic");
-
   return (
     <div className="bg-[#0e0f11] w-screen min-h-screen overflow-x-clip">
       <div className="flex justify-between w-[80vw] mx-auto pt-5 pb-10">
@@ -95,50 +98,47 @@ const page = () => {
         </Link>
       </div>
 
-      <div className=" flex flex-col md:flex-row justify-between rounded-xl  w-[90vw] md:w-[75vw] mx-auto pt-8 gap-6 items-center border-[1px] border-[#272b2f] p-6">
+      <div className="flex flex-col md:flex-row justify-between rounded-xl w-[90vw] md:w-[75vw] mx-auto pt-8 gap-6 items-center border-[1px] border-[#272b2f] p-6">
         <div className="space-y-4">
-          <h1 className="text-slate-300 text-sm font-bold">Select Plan</h1>
+          <h1 className="text-slate-300 text-xl font-bold">Select Plan</h1>
           <p className="text-slate-300">
             For more details on our plans, visit our pricing page.
           </p>
           <div>
-            {subscriptionPlans.map((itm, idx) => {
-              return (
-                <>
-                  <div
-                    key={idx}
-                    className={`p-5 rounded-xl space-y-1 border-[1px] bg-[#17161c] border-[#272b2f] shadow-2xl mt-5 w-[80vw] md:w-[50vw] ${
-                      currentPlan === itm.name ? "border-white" : ""
-                    }`}
-                  >
-                    <h1 className="text-lg font-semibold text-slate-300">
-                      {itm.name}{" "}
-                      {currentPlan === itm.name && (
-                        <span className="bg-[#2e2e34] px-3 py-1.5 rounded-full text-[10px]">
-                          {"CurrentPlan"}
-                        </span>
-                      )}
-                    </h1>
-                    <p className="text-slate-300">${itm.price}</p>
-                    <p className="text-slate-200">{itm.billingCycle}</p>
-                  </div>
-                </>
-              );
-            })}
+            {subscriptionPlans.map((itm) => (
+              <div
+                key={itm.id}
+                onClick={() => setCurrentPlan(itm)}
+                className={`p-5 rounded-xl space-y-1 border-[1px] bg-[#17161c] border-[#272b2f] shadow-2xl mt-5 w-[80vw] md:w-[50vw] cursor-pointer ${
+                  currentPlan.name === itm.name ? "border-blue-600" : ""
+                }`}
+              >
+                <h1 className="text-lg font-semibold text-slate-300">
+                  {itm.name}{" "}
+                  {currentPlan.name === itm.name && (
+                    <span className="bg-[#2e2e34] px-3 py-1.5 rounded-full text-[10px]">
+                      {"Current Plan"}
+                    </span>
+                  )}
+                </h1>
+                <p className="text-slate-300">${itm.price}</p>
+                <p className="text-slate-200">{itm.billingCycle}</p>
+              </div>
+            ))}
           </div>
         </div>
-        <Bill />
+        <Bill selectedPlan={currentPlan} />
       </div>
 
-      <div className="border-t-[1px] bg-[#17161c] border-[#272b2f] md:fixed md:bottom-0 w-full pr-10 mt-6">
-        <div className="flex justify-end gap-4  py-5">
-          <button className="border-[1px] border-[#272b2f] text-slate-300 px-5 rounded-full text-sm py-2 cursor-pointer font-semibold">
+      <div className="border-t-[1px] bg-[#17161c] border-[#272b2f]  md:fixed md:bottom-0  w-full pr-10">
+        <div className="flex justify-end gap-4 py-5">
+          <button className="border-[1px] border-[#272b2f] text-slate-300 px-5 rounded-lg text-sm py-2 cursor-pointer font-semibold">
             Cancel
           </button>
           <Script src="https://checkout.razorpay.com/v1/checkout.js" />
           <button
             onClick={handlePayment}
-            className="bg-white text-black px-5 rounded-full text-sm py-2 cursor-pointer font-semibold"
+            className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 px-5 rounded-lg text-sm py-2 cursor-pointer font-semibold text-white"
           >
             Purchase
           </button>
@@ -148,4 +148,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

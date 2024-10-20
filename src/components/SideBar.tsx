@@ -19,14 +19,14 @@ const SideBar: React.FC<props> = ({ page }) => {
 
   return (
     <>
-      <aside className="bg-[#151719] w-42 h-screen space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0 ">
+      <aside className="bg-[#161618] w-42 h-screen space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0 ">
         <div className="flex flex-col space-y-8 pt-7">
           {/* Home */}
           <Link href="/dashboard">
             <div
               className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out text-white rounded-lg ${
                 page === "Home"
-                  ? "bg-[#272c2e] border-[1px] border-[#272c2e]"
+                  ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 "
                   : ""
               }`}
             >
@@ -40,7 +40,7 @@ const SideBar: React.FC<props> = ({ page }) => {
             <div
               className={`flex items-center space-x-4 py-3 pr-12 pl-4 transition duration-200 ease-in-out text-white rounded-lg ${
                 page === "Integrate"
-                  ? "bg-[#1a1a1a] border-[1px] border-[#272c2e]"
+                  ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
                   : ""
               }`}
             >
@@ -51,9 +51,9 @@ const SideBar: React.FC<props> = ({ page }) => {
 
           {/* Contact */}
           <div
-            className={`flex items-center space-x-4 py-3   pr-12 pl-4 transition duration-200 ease-in-out text-white rounded-lg ${
+            className={`flex items-center space-x-4 py-3   pr-12 pl-4 transition duration-200 ease-in-out text-white rounded-full ${
               page === "Contact"
-                ? "bg-[#272c2e] border-[1px] border-[#272c2e]"
+                ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
                 : ""
             }`}
           >
@@ -66,7 +66,7 @@ const SideBar: React.FC<props> = ({ page }) => {
             <div
               className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out   text-white rounded-lg ${
                 page === "Subscription"
-                  ? "bg-[#272c2e] border-[1px] border-[#272c2e]"
+                  ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
                   : ""
               }`}
             >
@@ -79,7 +79,7 @@ const SideBar: React.FC<props> = ({ page }) => {
           <div
             className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out  text-white rounded-lg ${
               page === "Logout"
-                ? "bg-[#272c2e] border-[1px] border-[#272c2e]"
+                ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
                 : ""
             }`}
             onClick={() => settoggle(true)}

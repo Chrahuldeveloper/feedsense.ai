@@ -1,6 +1,5 @@
 import { db } from "../Firebase";
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import axios from "axios";
 
 interface User {
   uid: string;
@@ -17,14 +16,6 @@ export default class dbService {
 
       const docSnap = await getDoc(userDocRef);
 
-      const res = await axios.post(
-        "http://localhost:3000/api/saveWebsiteData",
-        {
-          user,
-          data,
-        }
-      );
-      console.log(res.data, "sucess");
       if (docSnap.exists()) {
         await updateDoc(userDocRef, {
           websites: arrayUnion(data),
@@ -81,16 +72,15 @@ export default class dbService {
 
   async fetchWebsites(user: any) {
     try {
-      const getAllWebsites = await axios.get(
-        `http://localhost:3000/api/saveWebsiteData`,
-        {
-          params: {
-            userId: user.uid,
-          },
-        }
-      );
-      console.log(getAllWebsites.data);
-      return getAllWebsites.data;
+      const userDocRef = doc(db, "USERS", user.uid);
+
+      const docSnap = await getDoc(userDocRef);
+      if (docSnap.exists()) {
+        const usertWebsites = await docSnap.data()?.websites;
+        return usertWebsites;
+      } else {
+        return "user not exitsts";
+      }
     } catch (error) {
       console.log(error);
     }

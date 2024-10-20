@@ -34,9 +34,9 @@ const Analytics: React.FC<AnalyticsProps> = ({
       {
         label: "Dashboard",
         data: [40, 34, 40],
-        borderColor: "#588b79",
-        pointBackgroundColor: "#588b79",
-        pointBorderColor: "#588b79",
+        borderColor: "#2967ec",
+        pointBackgroundColor: "#2967ec",
+        pointBorderColor: "#2967ec",
         tension: 0.3,
         fill: true,
       },
@@ -54,7 +54,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
   // boxShadow: "0 0 15px rgba(5, 188, 255, 0.5)",
   return (
     <div className="md:max-w-6xl mx-auto p-5 mt-5">
-      <div className="p-4   bg-[#17161c] rounded-xl">
+      <div className="p-4   bg-[#121212] rounded-xl">
         <h1 className="text-2xl font-semibold text-white  px-8 pt-3 mb-2">
           Your Analytics
         </h1>

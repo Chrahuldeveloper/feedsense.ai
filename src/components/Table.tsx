@@ -75,7 +75,7 @@ const Table = () => {
           />
         </nav>
 
-        <div className="bg-[#151719] w-screen px-6 py-5 md:-ml-36 hidden md:block ">
+        <div className="bg-[#161618] w-screen px-6 py-5 md:-ml-36 hidden md:block ">
           <div className="flex justify-end gap-x-3 px-20 items-center">
             <CgProfile size={23} color="white" />
             <h1 className="text-slate-300 text-lg font-semibold">Rahul</h1>
@@ -85,42 +85,62 @@ const Table = () => {
 
         <div className="w-full md:w-[75vw] mt-12 px-12 py-6 mx-auto rounded-xl">
           <div className="overflow-x-auto rounded-xl">
-            <table className="text-white w-full table-auto bg-[#17161c]">
-              <thead className="mb-3 ">
-                <tr className="text-center text-xs">
-                  <th className="py-1">Icon</th>
-                  <th className="py-1">Name</th>
-                  <th className="py-1">Feedback Count</th>
-                  <th className="py-1">Action</th>
+            <table className="min-w-full divide-y divide-gray-700">
+              <thead className="bg-[#1a1a1a]">
+                <tr>
+                  <th
+                    scope="col"
+                    className="px-6  py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                  >
+                    Icon
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6  py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                  >
+                    Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6  py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                  >
+                    Feedback Count
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6  py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                  >
+                    Action
+                  </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-[#121212] divide-y divide-gray-800">
                 {websitedata?.map((site, idx) => (
                   <tr
                     key={idx}
-                    className={`text-center transition duration-300 ease-in-out border-[#272b2f] mt-2`}
+                    className="hover:bg-[#1a1a1a] transition-colors duration-200"
                   >
-                    <td className="py-1 cursor-pointer ">
+                    <td className="px-8 py-4 whitespace-nowrap">
                       <img
-                        className="w-7 h-7 rounded-full mx-auto"
+                        className="h-10 w-10 rounded-full"
                         src="https://img.freepik.com/premium-photo/man-with-glasses-shirt-that-says-hes-character_1103290-90487.jpg?size=626&ext=jpg"
                         alt=""
                       />
                     </td>
-                    <td className="py-1 cursor-pointer text-[11px] md:text-sm">
-                      {site?.name} {/* Ensure site has a name property */}
+                    <td className="px-8 py-4 whitespace-nowrap text-sm text-slate-300 font-semibold">
+                      {site?.name}
                     </td>
-                    <td className="py-1 cursor-pointer text-[11px] md:text-sm">
+                    <td className="px-10 py-4 whitespace-nowrap text-sm text-slate-300">
                       {site?.feedback?.length || 0}
                     </td>
-                    <td className="py-1 cursor-pointer">
+                    <td className="px-2 py-4 whitespace-nowrap text-sm text-slate-300">
                       <Link
                         href={{
                           pathname: "/dashboard/tasks",
                           query: { feedback: JSON.stringify(site?.feedback) },
                         }}
                       >
-                        <button className="text-white px-6 rounded-lg text-sm py-1 cursor-pointer ease-in-out duration-500">
+                        <button className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700  text-xs text-white px-6  py-2 rounded-lg transition-colors duration-200 cursor-pointer font-semibold">
                           View
                         </button>
                       </Link>

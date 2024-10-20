@@ -51,7 +51,7 @@ export default function PricingPage() {
 
       <div className="relative z-10">
         <Navbar />
-        <div className="flex items-center justify-center min-h-screen relative -mt-24">
+        <div className="flex items-center justify-center min-h-screen relative -mt-28">
           <div className="absolute inset-2 flex items-center justify-center">
             <div className="w-96 md:w-[500px] h-72 rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0)_0%,_rgba(59,130,246,0.3)_110%)] shadow-lg shadow-blue-400/30 blur-3xl"></div>
           </div>
@@ -62,7 +62,7 @@ export default function PricingPage() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8 px-10 pb-10 justify-center">
+        <div className="flex flex-col md:flex-row gap-8 px-10 pb-14 justify-center -mt-28">
           {Plans.map((plan, idx) => (
             <div
               key={idx}
