@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import { useSearchParams } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const searchParams = useSearchParams();
 
   interface Feedback {
@@ -51,44 +51,32 @@ const page = () => {
         />
       </nav>
 
-      <div className="bg-[#1a1a1a] w-full h-screen flex overflow-x-clip">
+      <div className="bg-[#0e0f11] w-full h-screen flex overflow-x-clip">
         <SideBar page="Home" />
-        <div className="md:w-[90vw] mx-auto px-4 md:px-12 md:ml-44 space-y-16">
-          <div className="bg-[#171819] w-screen p-9 md:-ml-36 hidden md:block "></div>
-          <div className="overflow-x-auto">
-            <table className="text-white w-full max-w-4xl mx-auto table-auto bg-[#171819] ">
-              <thead>
-                <tr className="text-center text-xs ">
-                  <th className="py-2 px-4">Name</th>
-                  <th className="py-2 px-4">Email</th>
-                  <th className="py-2 px-4">Task</th>
-                  <th className="py-2 px-4">Action</th>
+        <div className="md:w-[100vw] mx-auto  md:ml-44 space-y-16 rounded-xl">
+          <div className="overflow-x-auto rounded-xl mt-16">
+            <table className="mx-auto w-[40vw] md:w-[64vw] divide-y divide-gray-700 rounded-lg overflow-hidden">
+              <thead className="bg-[#1a1a1a] rounded-lg">
+                <tr>
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Name</th>
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Email</th>
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Task</th>
+                  <th className="py-3 px-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Action</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-[#121212] divide-y divide-gray-800">
                 {websites?.map((site, idx) => (
-                  <tr
-                    key={idx}
-                    className={`text-center transition duration-300 ease-in-out bg-[#171819]  rounded-lg`}
-                  >
-                    <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
-                      {site.name}
-                    </td>
-                    <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
-                      {site.email}
-                    </td>
-                    <td className="py-2 px-4 cursor-pointer text-[11px] md:text-sm">
-                      {site.feedback}
-                    </td>
-                    <td className="py-2 px-4">
+                  <tr key={idx} className="hover:bg-[#1a1a1a] transition-colors duration-200">
+                    <td className="py-4 px-5 md:px-9 text-xs  text-slate-300 ">{site.name}</td>
+                    <td className="py-4 px-5 md:px-9 text-xs  text-slate-300 ">{site.email}</td>
+                    <td className="py-4 px-5 md:px-9 text-xs  text-slate-300 ">{site.feedback}</td>
+                    <td className="py-4 px-4 md:px-3">
                       <select
-                        className="bg-[#272c2e] text-white text-sm px-2 py-1 border-[1px] border-stone-800 rounded-md outline-none"
+                        className="bg-[#272c2e] text-xs text-white  px-2 py-1 border-[1px] border-stone-800 rounded-md outline-none"
                         defaultValue="Select Action"
                         onChange={(e) => handleAction(idx, e.target.value)}
                       >
-                        <option value="Select Action" disabled>
-                          Select Action
-                        </option>
+                        <option value="Select Action" disabled>Select Action</option>
                         <option value="Done">Done</option>
                         <option value="Delete">Delete</option>
                       </select>
@@ -106,4 +94,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

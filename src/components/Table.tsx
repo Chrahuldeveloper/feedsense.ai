@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
 import dbService from "@/firebase/utils/db";
@@ -25,15 +25,16 @@ const Table = () => {
   const db = new dbService();
   const { user, loading } = useAuth();
 
-  useEffect(() => {
+  useMemo(() => {
     const fetchWebsites = async () => {
       if (!loading && user) {
         const data = await db.fetchWebsites(user);
         console.log("Fetched Websites Data:", data);
-        setWebsitedata(data);
+        return data;
       }
+      return [];
     };
-    fetchWebsites();
+    fetchWebsites().then(setWebsitedata);
   }, [loading, user]);
 
   useEffect(() => {
