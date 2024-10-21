@@ -8,6 +8,7 @@ import useAuth from "@/hooks/CurrentUser";
 import Loader from "./Loader";
 import Analytics from "./Analytics";
 import { CgProfile } from "react-icons/cg";
+import cache from "../cache/cache";
 
 const Table = () => {
   const [websitedata, setWebsitedata] = useState([]);
@@ -28,8 +29,18 @@ const Table = () => {
   useMemo(() => {
     const fetchWebsites = async () => {
       if (!loading && user) {
+        const cachedData = cache.get(user.uid);
+
+        if (cachedData) {
+          console.log("Fetched Websites Data from Cache:", cachedData.value);
+          return cachedData.value;
+        }
+
         const data = await db.fetchWebsites(user);
-        console.log("Fetched Websites Data:", data);
+        console.log("Fetched Websites Data from Firestore:", data);
+
+        cache.set(user.uid, data);
+
         return data;
       }
       return [];

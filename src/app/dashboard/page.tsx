@@ -6,9 +6,11 @@ import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import useSubscribe from "@/hooks/subscribed";
 import axios from "axios";
+
 const Page = () => {
   const db = new dbService();
   const { user, loading } = useAuth();
+
 
   console.log(user);
 

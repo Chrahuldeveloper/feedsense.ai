@@ -1,5 +1,6 @@
 import { db } from "../Firebase";
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import cache from "../../cache/cache";
 
 interface User {
   uid: string;
@@ -16,14 +17,21 @@ export default class dbService {
 
       const docSnap = await getDoc(userDocRef);
 
+      let updatedWebsites;
+
       if (docSnap.exists()) {
         await updateDoc(userDocRef, {
           websites: arrayUnion(data),
         });
+
+        updatedWebsites = [...docSnap.data().websites, data];
+
+        cache.set(user.uid, updatedWebsites);
       } else {
         await setDoc(userDocRef, {
           websites: [data],
         });
+        updatedWebsites = [data];
       }
 
       console.log("data saved");
@@ -72,12 +80,20 @@ export default class dbService {
 
   async fetchWebsites(user: any) {
     try {
+      const cachedWebsites = cache.get(user.uid);
+
+      if (cachedWebsites) {
+        console.log("Fetched websites from cache");
+        return cachedWebsites;
+      }
+
       const userDocRef = doc(db, "USERS", user.uid);
 
       const docSnap = await getDoc(userDocRef);
       if (docSnap.exists()) {
-        const usertWebsites = await docSnap.data()?.websites;
-        return usertWebsites;
+        const userWebsites = await docSnap.data()?.websites;
+        cache.set(user.uid, userWebsites);
+        return userWebsites;
       } else {
         return "user not exitsts";
       }
