@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
 import dbService from "@/firebase/utils/db";
@@ -26,7 +26,7 @@ const Table = () => {
   const db = new dbService();
   const { user, loading } = useAuth();
 
-  useMemo(() => {
+  useEffect(() => {
     const fetchWebsites = async () => {
       if (!loading && user) {
         const cachedData = cache.get(user.uid);
@@ -73,7 +73,6 @@ const Table = () => {
   return (
     <>
       {loading ? <Loader /> : null}
-
       <div className="md:ml-44">
         <nav className="md:hidden bg-[#151719] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
@@ -99,7 +98,7 @@ const Table = () => {
           <div className="overflow-x-auto rounded-xl">
             <table className="min-w-full divide-y divide-gray-700">
               <thead className="bg-[#1a1a1a]">
-                <tr>
+                <tr className="cursor-pointer">
                   <th
                     scope="col"
                     className="px-6  py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
@@ -130,7 +129,7 @@ const Table = () => {
                 {websitedata?.map((site, idx) => (
                   <tr
                     key={idx}
-                    className="hover:bg-[#1a1a1a] transition-colors duration-200"
+                    className="hover:bg-[#1a1a1a] transition-colors duration-200 cursor-pointer"
                   >
                     <td className="px-8 py-4 whitespace-nowrap">
                       <img
@@ -152,7 +151,7 @@ const Table = () => {
                           query: { feedback: JSON.stringify(site?.feedback) },
                         }}
                       >
-                        <button className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700  text-xs text-white px-6  py-2 rounded-lg transition-colors duration-200 cursor-pointer font-semibold">
+                        <button className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700  text-xs text-white px-6  py-2 rounded-full transition-colors duration-200 cursor-pointer font-semibold">
                           View
                         </button>
                       </Link>

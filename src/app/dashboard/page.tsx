@@ -11,7 +11,6 @@ const Page = () => {
   const db = new dbService();
   const { user, loading } = useAuth();
 
-
   console.log(user);
 
   const fetchFeedbackTasks = async () => {

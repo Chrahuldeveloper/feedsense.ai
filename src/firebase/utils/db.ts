@@ -67,6 +67,8 @@ export default class dbService {
           });
 
           console.log("Feedback and task saved successfully");
+
+          cache.set(userID, websites);
         } else {
           console.log("Website not found");
         }
@@ -95,7 +97,7 @@ export default class dbService {
         cache.set(user.uid, userWebsites);
         return userWebsites;
       } else {
-        return "user not exitsts";
+        return "user not exists";
       }
     } catch (error) {
       console.log(error);
@@ -104,6 +106,13 @@ export default class dbService {
 
   async fetchDashBoardDetails(user: any) {
     try {
+      const cachedDashboard = cache.get(`${user}-dashboard`);
+
+      if (cachedDashboard) {
+        console.log("Fetched dashboard details from cache");
+        return cachedDashboard;
+      }
+
       const userDocRef = doc(db, "USERS", user);
 
       const docSnap = await getDoc(userDocRef);
@@ -118,9 +127,14 @@ export default class dbService {
 
         const totalWebsites = await docSnap.data()?.websites.length;
 
-        return { totalWebsites, totalFeedback };
+        const dashboardDetails = { totalWebsites, totalFeedback };
+
+        // Cache dashboard details
+        cache.set(`${user}-dashboard`, dashboardDetails);
+
+        return dashboardDetails;
       } else {
-        return "user not exitsts";
+        return "user not exists";
       }
     } catch (error) {
       console.log(error);
@@ -129,6 +143,13 @@ export default class dbService {
 
   async fetchFeedbacks(user: any) {
     try {
+      const cachedFeedbacks = cache.get(`${user}-feedbacks`);
+
+      if (cachedFeedbacks) {
+        console.log("Fetched feedbacks from cache");
+        return cachedFeedbacks;
+      }
+
       const userDocRef = doc(db, "USERS", user);
 
       const docSnap = await getDoc(userDocRef);
@@ -145,6 +166,9 @@ export default class dbService {
               allFeedbacks.push(feedbackArray[j].feedback);
             }
           }
+
+          // Cache feedbacks
+          cache.set(`${user}-feedbacks`, allFeedbacks);
 
           return allFeedbacks;
         }
@@ -169,6 +193,7 @@ export default class dbService {
       console.log(error);
     }
   }
+
   async isSubcribe(user: any) {
     try {
       const userDocRef = doc(db, "USERS", user);

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
 import { FaRegCopy } from "react-icons/fa";
@@ -7,7 +7,7 @@ import javascript from "highlight.js/lib/languages/javascript";
 import "highlight.js/styles/github.css";
 import dbService from "../firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
-
+import cache from "../cache/cache";
 const Addintegration = () => {
   const [toogle, settoogle] = useState(false);
 
@@ -34,9 +34,17 @@ const Addintegration = () => {
   useEffect(() => {
     const fetchWebsites = async () => {
       if (!loading && user) {
+        const cachedData = cache.get(user.uid);
+
+        if (cachedData) {
+          console.log("Fetched Websites Data from Cache:", cachedData.value);
+          return setwebsitedata(cachedData.value);
+        }
         const data = await db.fetchWebsites(user?.uid);
         console.log(data);
+        return setwebsitedata(data);
       }
+      return [];
     };
     fetchWebsites();
   }, [loading, user]);
@@ -115,14 +123,14 @@ const Addintegration = () => {
           }`}
         >
           <div className=" md:ml-52">
-            <div className="bg-[#17161c] w-[35vw] mx-auto p-6 rounded-xl mt-6">
+            <div className="bg-[#121212] w-[35vw] mx-auto p-6 rounded-xl mt-6">
               <div className="space-y-5">
                 <h1 className="text-xl   font-bold">Welcome to Integration</h1>
                 <p className="text-slate-300  font-semibold">
                   Connect your website{" "}
                 </p>
                 <div className="space-y-4">
-                  {websitedata.map((i, idx) => {
+                  {websitedata?.map((i, idx) => {
                     return (
                       <div
                         key={idx}
@@ -138,7 +146,7 @@ const Addintegration = () => {
                   onClick={() => {
                     setsection("showinput");
                   }}
-                  className="bg-white w-full  text-black  py-2 px-20 text-sm  font-semibold rounded-full"
+                  className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 w-full  text-white  py-2 px-20 text-sm  font-semibold rounded-full"
                 >
                   Connect website
                 </button>
@@ -146,7 +154,6 @@ const Addintegration = () => {
             </div>
           </div>
         </div>
-        {/* Add the process to integrate the websites */}
         <div
           className={`lg:ml-52 ${
             section === "showinput" || section === "showcode"

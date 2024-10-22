@@ -3,7 +3,7 @@ class Cache {
     this.cache = {};
   }
 
-  set(key, value, ttl = 120) {
+  set(key, value, ttl = 1000) {
     const expiry = Date.now() + ttl * 1000;
     this.cache[key] = { value, expiry };
   }

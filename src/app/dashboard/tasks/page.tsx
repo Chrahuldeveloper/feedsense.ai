@@ -4,6 +4,8 @@ import SideBar from "@/components/SideBar";
 import React, { useEffect, useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import { useSearchParams } from "next/navigation";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import Link from "next/link";
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -25,18 +27,6 @@ const Page = () => {
 
   const [toggle, setToggle] = useState(false);
 
-  const handleAction = (idx: number, action: string) => {
-    if (action === "Delete") {
-      setWebsites(websites.filter((_, index) => index !== idx));
-    } else if (action === "Done") {
-      setWebsites(
-        websites.map((site, index) =>
-          index === idx ? { ...site, status: "Done" } : site
-        )
-      );
-    }
-  };
-
   return (
     <>
       <nav className="md:hidden bg-[#0e0f11] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
@@ -55,31 +45,46 @@ const Page = () => {
         <SideBar page="Home" />
         <div className="md:w-[100vw] mx-auto  md:ml-44 space-y-16 rounded-xl">
           <div className="overflow-x-auto rounded-xl mt-16">
-            <table className="mx-auto w-[40vw] md:w-[64vw] divide-y divide-gray-700 rounded-lg overflow-hidden">
-              <thead className="bg-[#1a1a1a] rounded-lg">
+            <div className="flex mx-auto items-center justify-end w-[40vw] md:w-[64vw] ">
+              {/* <h1 className="text-white text-lg font-semibold">Back</h1> */}
+              <Link href="/dashboard">
+                <FaArrowLeftLong size={25} color="white" />
+              </Link>
+            </div>
+            <table className="mx-auto w-[40vw] md:w-[64vw] mt-7 divide-y divide-gray-700 rounded-lg overflow-hidden">
+              <thead className="bg-[#1a1a1a] rounded-lg cursor-pointer">
                 <tr>
-                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Name</th>
-                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Email</th>
-                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Task</th>
-                  <th className="py-3 px-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Action</th>
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    SNo
+                  </th>
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    Name
+                  </th>
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    Task
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-[#121212] divide-y divide-gray-800">
                 {websites?.map((site, idx) => (
-                  <tr key={idx} className="hover:bg-[#1a1a1a] transition-colors duration-200">
-                    <td className="py-4 px-5 md:px-9 text-xs  text-slate-300 ">{site.name}</td>
-                    <td className="py-4 px-5 md:px-9 text-xs  text-slate-300 ">{site.email}</td>
-                    <td className="py-4 px-5 md:px-9 text-xs  text-slate-300 ">{site.feedback}</td>
-                    <td className="py-4 px-4 md:px-3">
-                      <select
-                        className="bg-[#272c2e] text-xs text-white  px-2 py-1 border-[1px] border-stone-800 rounded-md outline-none"
-                        defaultValue="Select Action"
-                        onChange={(e) => handleAction(idx, e.target.value)}
-                      >
-                        <option value="Select Action" disabled>Select Action</option>
-                        <option value="Done">Done</option>
-                        <option value="Delete">Delete</option>
-                      </select>
+                  <tr
+                    key={idx}
+                    className="hover:bg-[#1a1a1a] transition-colors duration-200 cursor-pointer"
+                  >
+                    <td className="py-5 px-6 md:px-9 text-sm  text-slate-300 ">
+                      {idx + 1}
+                    </td>
+                    <td className="py-5 px-6 md:px-9 text-sm  text-slate-300 ">
+                      {site.name}
+                    </td>
+                    <td className="py-5 px-6 md:px-9 text-sm  text-slate-300 ">
+                      {site.email}
+                    </td>
+                    <td className="py-5 px-6 md:px-9 text-sm  text-slate-300 ">
+                      {site.feedback}
                     </td>
                   </tr>
                 ))}

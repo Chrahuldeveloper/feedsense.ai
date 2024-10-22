@@ -51,7 +51,7 @@ const SideBar: React.FC<props> = ({ page }) => {
 
           {/* Contact */}
           <div
-            className={`flex items-center space-x-4 py-3   pr-12 pl-4 transition duration-200 ease-in-out text-white rounded-full ${
+            className={`flex items-center space-x-4 py-3   pr-12 pl-4 transition duration-200 ease-in-out text-white rounded-lg ${
               page === "Contact"
                 ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
                 : ""
