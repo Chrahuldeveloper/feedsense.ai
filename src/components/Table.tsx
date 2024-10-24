@@ -86,7 +86,7 @@ const Table = () => {
           />
         </nav>
 
-        <div className="bg-[#161618] w-screen px-6 py-5 md:-ml-36 hidden md:block ">
+        <div className="bg-[#17161c] w-screen px-6 py-5 md:-ml-36 hidden md:block ">
           <div className="flex justify-end gap-x-3 px-20 items-center">
             <CgProfile size={23} color="white" />
             <h1 className="text-slate-300 text-lg font-semibold">Rahul</h1>
@@ -96,8 +96,8 @@ const Table = () => {
 
         <div className="w-full md:w-[75vw] mt-12 px-12 py-6 mx-auto rounded-xl">
           <div className="overflow-x-auto rounded-xl">
-            <table className="min-w-full divide-y divide-gray-700">
-              <thead className="bg-[#1a1a1a]">
+            <table className="min-w-full divide-y divide-stone-900">
+              <thead className="bg-[#201d24]">
                 <tr className="cursor-pointer">
                   <th
                     scope="col"
@@ -125,11 +125,11 @@ const Table = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-[#121212] divide-y divide-gray-800">
+              <tbody className="bg-[#161419] divide-">
                 {websitedata?.map((site, idx) => (
                   <tr
                     key={idx}
-                    className="hover:bg-[#1a1a1a] transition-colors duration-200 cursor-pointer"
+                    className="hover:bg-[#141316] transition-colors duration-200 cursor-pointer"
                   >
                     <td className="px-8 py-4 whitespace-nowrap">
                       <img

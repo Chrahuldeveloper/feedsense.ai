@@ -46,13 +46,12 @@ const Page = () => {
         <div className="md:w-[100vw] mx-auto  md:ml-44 space-y-16 rounded-xl">
           <div className="overflow-x-auto rounded-xl mt-16">
             <div className="flex mx-auto items-center justify-end w-[40vw] md:w-[64vw] ">
-              {/* <h1 className="text-white text-lg font-semibold">Back</h1> */}
               <Link href="/dashboard">
                 <FaArrowLeftLong size={25} color="white" />
               </Link>
             </div>
-            <table className="mx-auto w-[40vw] md:w-[64vw] mt-7 divide-y divide-gray-700 rounded-lg overflow-hidden">
-              <thead className="bg-[#1a1a1a] rounded-lg cursor-pointer">
+            <table className="mx-auto w-[40vw] md:w-[64vw] mt-7 divide-y divide-stone-900 rounded-lg overflow-hidden">
+              <thead className="bg-[#201d24] rounded-lg cursor-pointer">
                 <tr>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     SNo
@@ -68,11 +67,11 @@ const Page = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-[#121212] divide-y divide-gray-800">
+              <tbody className="bg-[#161419] ">
                 {websites?.map((site, idx) => (
                   <tr
                     key={idx}
-                    className="hover:bg-[#1a1a1a] transition-colors duration-200 cursor-pointer"
+                    className="hover:bg-[#141316] transition-colors duration-200 cursor-pointer"
                   >
                     <td className="py-5 px-6 md:px-9 text-sm  text-slate-300 ">
                       {idx + 1}
