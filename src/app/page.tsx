@@ -66,15 +66,15 @@ export default function page() {
   return (
     <div className="bg-black w-full min-h-screen">
       <Navbar />
-      <div className="flex flex-col items-center space-y-8 pt-40 px-4">
+      <div className="flex flex-col items-center space-y-8 pt-36 px-4">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[30vh] bg-blue-600 rounded-full opacity-20 blur-[120px]" />
             <div className="absolute top-1/4 left-1/4 w-[60vw] h-[30vh] bg-blue-500 rounded-full opacity-15 blur-[100px]" />
-            <div className="absolute bottom-1/4 right-1/4 w-[70vw] h-[30vh] bg-blue-400 rounded-full opacity-10 blur-[130px]" />
+            <div className="absolute bottom-1/4 right-1/4 w-[70vw] h-[50vh] bg-blue-400 rounded-full opacity-10 blur-[130px]" />
           </div>{" "}
         </div>
-        <h1 className="text-xl md:text-3xl lg:text-5xl text-center font-semibold text-white leading-8 z-50">
+        <h1 className="text-3xl lg:text-5xl text-center font-semibold text-white leading-8 z-50">
           Boost your design productivity
         </h1>
         <p className="text-[#a2a2a2] max-w-lg text-center z-50 text-sm md:text-base">
@@ -84,9 +84,10 @@ export default function page() {
         <button className="bg-white z-50 text-black py-2 px-8 md:px-16 lg:px-20 font-semibold rounded-full">
           Get Started
         </button>
+        <img src="https://firebasestorage.googleapis.com/v0/b/notes-app-e3995.appspot.com/o/TaskFeed-10-24-2024_09_01_PM.png?alt=media&token=48ce631d-3bd7-4df3-a7c1-6147d9503532" alt=""  className="lg:max-w-5xl mx-auto"/>
       </div>
 
-      <div className="mt-20 md:mt-36 px-4">
+      <div className="mt-32 md:mt-40 px-4">
         <div className="space-y-8 flex flex-col items-center justify-center">
           <h1 className="text-xl md:text-3xl text-white">
             Don’t repeat yourself
@@ -112,7 +113,7 @@ export default function page() {
         </div>
       </div>
 
-      <div className="mt-28 px-4">
+      <div className="mt-40 px-4">
         <div className="space-y-8 flex flex-col items-center justify-center">
           <h1 className="text-xl md:text-3xl text-white">How does it work?</h1>
           <p className="text-[#a2a2a2] max-w-xl text-center text-sm md:text-base">
@@ -139,7 +140,7 @@ export default function page() {
         </div>
       </div>
 
-      <div className="py-28 px-4">
+      <div className="py-40 px-4">
         <div className="space-y-10 flex flex-col justify-center items-center">
           <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-white">
             Macros for busy designers
