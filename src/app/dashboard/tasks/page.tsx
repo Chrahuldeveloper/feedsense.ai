@@ -18,6 +18,10 @@ const Page = () => {
 
   const [websites, setWebsites] = useState<Feedback[]>([]);
   const getdata = searchParams!.get("feedback")!;
+  const getImage = searchParams!.get("image")!;
+  const getName = searchParams!.get("name")!;
+
+  console.log(getImage, getName);
 
   useEffect(() => {
     const data: Feedback[] = JSON.parse(getdata);
@@ -45,9 +49,15 @@ const Page = () => {
         <SideBar page="Home" />
         <div className="md:w-[100vw] mx-auto  md:ml-44 space-y-16 rounded-xl">
           <div className="overflow-x-auto rounded-xl mt-16">
-            <div className="flex mx-auto items-center justify-end w-[40vw] md:w-[64vw] ">
+            <div className="flex mx-auto items-center  justify-between w-[85vw] md:w-[64vw] ">
+              <div className="flex items-center gap-5">
+                <img src={getImage} className="w-12 h-12 rounded-full" alt="" />
+                <h1 className="text-xl text-slate-300 font-semibold">
+                  {getName}
+                </h1>
+              </div>
               <Link href="/dashboard">
-                <FaArrowLeftLong size={25} color="white" />
+                <FaArrowLeftLong size={22} color="white" />
               </Link>
             </div>
             <table className="mx-auto w-[40vw] md:w-[64vw] mt-7 divide-y divide-stone-900 rounded-lg overflow-hidden">

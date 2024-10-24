@@ -10,53 +10,58 @@ import Analytics from "./Analytics";
 import { CgProfile } from "react-icons/cg";
 import cache from "../cache/cache";
 
-const Table = () => {
-  const [websitedata, setWebsitedata] = useState([]);
+interface Props {
+  user: any;
+}
+
+const Table: React.FC<Props> = ({ user }) => {
+  const [websitedata, setWebsitedata] = useState<any[]>([]);
 
   interface InfoData {
-    totalWebsites: any;
-    totalFeedback: any;
+    totalWebsites: string;
+    totalFeedback: string;
   }
 
-  const [infodata, setinfodata] = useState<InfoData>({
-    totalWebsites: "",
-    totalFeedback: "",
+  const [infodata, setInfodata] = useState<InfoData>({
+    totalWebsites: "0",
+    totalFeedback: "0",
   });
 
   const db = new dbService();
-  const { user, loading } = useAuth();
+  const { user: currentUser, loading } = useAuth();
 
   useEffect(() => {
     const fetchWebsites = async () => {
-      if (!loading && user) {
-        const cachedData = cache.get(user.uid);
+      if (!loading && currentUser) {
+        const cachedData = cache.get(currentUser.uid);
 
         if (cachedData) {
           console.log("Fetched Websites Data from Cache:", cachedData.value);
-          return cachedData.value;
+          setWebsitedata(cachedData.value);
+          return;
         }
 
-        const data = await db.fetchWebsites(user);
+        const data = await db.fetchWebsites(currentUser);
         console.log("Fetched Websites Data from Firestore:", data);
 
-        cache.set(user.uid, data);
-
-        return data;
+        cache.set(currentUser.uid, data);
+        setWebsitedata(data);
       }
-      return [];
     };
-    fetchWebsites().then(setWebsitedata);
-  }, [loading, user]);
+    fetchWebsites();
+  }, [loading, currentUser]);
 
   useEffect(() => {
-    const fetchdetails = async () => {
+    const fetchDetails = async () => {
       try {
-        const websiteinfodata = await db.fetchDashBoardDetails(user?.uid);
-        if (websiteinfodata) {
-          console.log("Fetched Dashboard Details:", websiteinfodata);
-          setinfodata({
-            totalWebsites: websiteinfodata?.totalWebsites || "0",
-            totalFeedback: websiteinfodata?.totalFeedback || "0",
+        const websiteInfoData = await db.fetchDashBoardDetails(
+          currentUser?.uid
+        );
+        if (websiteInfoData) {
+          console.log("Fetched Dashboard Details:", websiteInfoData);
+          setInfodata({
+            totalWebsites: websiteInfoData?.totalWebsites?.toString() || "0",
+            totalFeedback: websiteInfoData?.totalFeedback?.toString() || "0",
           });
         } else {
           console.error("No data returned for dashboard details.");
@@ -65,14 +70,14 @@ const Table = () => {
         console.error("Error fetching dashboard details:", error);
       }
     };
-    fetchdetails();
-  }, [loading, user]);
+    fetchDetails();
+  }, [loading, currentUser]);
 
   const [toggle, setToggle] = useState(false);
 
   return (
     <>
-      {loading ? <Loader /> : null}
+      {loading && <Loader />}
       <div className="md:ml-44">
         <nav className="md:hidden bg-[#151719] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
@@ -80,53 +85,42 @@ const Table = () => {
             size={26}
             color="white"
             className="cursor-pointer"
-            onClick={() => {
-              setToggle(true);
-            }}
+            onClick={() => setToggle(true)}
           />
         </nav>
 
-        <div className="bg-[#17161c] w-screen px-6 py-5 md:-ml-36 hidden md:block ">
+        <div className="bg-[#17161c] w-screen px-6 py-5 md:-ml-36 hidden md:block">
           <div className="flex justify-end gap-x-3 px-20 items-center">
             <CgProfile size={23} color="white" />
-            <h1 className="text-slate-300 text-lg font-semibold">Rahul</h1>
+            <h1 className="text-slate-300 text-lg font-semibold">
+              {currentUser?.displayName || "User"}
+            </h1>
           </div>
         </div>
-        {toggle ? <MobileSideBar setToggle={setToggle} /> : null}
+
+        {toggle && <MobileSideBar setToggle={setToggle} />}
 
         <div className="w-full md:w-[75vw] mt-12 px-12 py-6 mx-auto rounded-xl">
           <div className="overflow-x-auto rounded-xl">
             <table className="min-w-full divide-y divide-stone-900">
               <thead className="bg-[#201d24]">
                 <tr className="cursor-pointer">
-                  <th
-                    scope="col"
-                    className="px-6  py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                  >
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Icon
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6  py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                  >
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Name
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6  py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                  >
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Feedback Count
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6  py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                  >
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Action
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-[#161419] divide-">
-                {websitedata?.map((site, idx) => (
+              <tbody className="bg-[#161419] divide-y divide-stone-800">
+                {websitedata.map((site, idx) => (
                   <tr
                     key={idx}
                     className="hover:bg-[#141316] transition-colors duration-200 cursor-pointer"
@@ -135,7 +129,7 @@ const Table = () => {
                       <img
                         className="h-10 w-10 rounded-full"
                         src="https://img.freepik.com/premium-photo/man-with-glasses-shirt-that-says-hes-character_1103290-90487.jpg?size=626&ext=jpg"
-                        alt=""
+                        alt="Profile"
                       />
                     </td>
                     <td className="px-8 py-4 whitespace-nowrap text-sm text-slate-300 font-semibold">
@@ -148,10 +142,15 @@ const Table = () => {
                       <Link
                         href={{
                           pathname: "/dashboard/tasks",
-                          query: { feedback: JSON.stringify(site?.feedback) },
+                          query: {
+                            feedback: JSON.stringify(site?.feedback),
+                            name: site?.name,
+                            image:
+                              "https://img.freepik.com/premium-photo/man-with-glasses-shirt-that-says-hes-character_1103290-90487.jpg?size=626&ext=jpg",
+                          },
                         }}
                       >
-                        <button className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700  text-xs text-white px-6  py-2 rounded-full transition-colors duration-200 cursor-pointer font-semibold">
+                        <button className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-xs text-white px-6 py-2 rounded-full transition-colors duration-200 cursor-pointer font-semibold">
                           View
                         </button>
                       </Link>

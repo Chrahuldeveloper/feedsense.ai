@@ -11,11 +11,9 @@ const Page = () => {
   const db = new dbService();
   const { user, loading } = useAuth();
 
-  console.log(user);
-
   const fetchFeedbackTasks = async () => {
     try {
-      const feedback = await db.fetchFeedbacks(user?.uid);
+      const feedback = await db.fetchFeedbacks(user?.uid!);
       console.log(feedback);
       const data = await axios.post(
         "http://localhost:3000/api/generateFeedback",
@@ -40,7 +38,7 @@ const Page = () => {
   return (
     <div className="bg-[#0e0f11] w-full flex min-h-screen overflow-x-clip">
       <SideBar page="Home" />
-      <Table />
+      <Table user={user!} />
     </div>
   );
 };
