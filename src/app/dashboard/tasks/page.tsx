@@ -60,7 +60,7 @@ const Page = () => {
                 <FaArrowLeftLong size={22} color="white" />
               </Link>
             </div>
-            <table className="mx-auto w-[40vw] md:w-[64vw] mt-7 divide-y divide-stone-900 rounded-lg overflow-hidden">
+            <table className="mx-auto w-[45vw] md:w-[64vw] mt-7 divide-y divide-stone-900 rounded-lg overflow-hidden">
               <thead className="bg-[#201d24] rounded-lg cursor-pointer">
                 <tr>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
