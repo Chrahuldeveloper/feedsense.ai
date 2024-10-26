@@ -8,14 +8,16 @@ interface User {
 }
 
 export default class dbService {
-  async deleteWebsite(userId: string, websiteId: string) {
+  async deleteWebsite(userId: string, websiteName: string) {
     try {
       const userDocRef = doc(db, "USERS", userId);
       const docSnap = await getDoc(userDocRef);
 
       if (docSnap.exists()) {
         const websites = docSnap.data()?.websites || [];
-        const updatedWebsites = websites.filter((website: { id: string }) => website.id !== websiteId);
+        const updatedWebsites = websites.filter(
+          (website: { name: string }) => website.name !== websiteName
+        );
 
         await updateDoc(userDocRef, {
           websites: updatedWebsites,
@@ -31,7 +33,10 @@ export default class dbService {
     }
   }
 
-  async saveWebsite(user: User, data: { id: string; name: string; url: string; type: string }) {
+  async saveWebsite(
+    user: User,
+    data: { id: string; name: string; url: string; type: string }
+  ) {
     try {
       const userDocRef = doc(db, "USERS", user.uid);
       const docSnap = await getDoc(userDocRef);
@@ -96,7 +101,10 @@ export default class dbService {
 
       if (docSnap.exists()) {
         const websites = docSnap.data()?.websites || [];
-        const totalFeedback = websites.reduce((total: number, site: any) => total + (site.feedback?.length || 0), 0);
+        const totalFeedback = websites.reduce(
+          (total: number, site: any) => total + (site.feedback?.length || 0),
+          0
+        );
         const totalWebsites = websites.length;
 
         const dashboardDetails = { totalWebsites, totalFeedback };
@@ -126,7 +134,9 @@ export default class dbService {
 
       if (docSnap.exists()) {
         const websites = docSnap.data()?.websites || [];
-        const allFeedbacks = websites.flatMap((website: any) => website.feedback || []);
+        const allFeedbacks = websites.flatMap(
+          (website: any) => website.feedback || []
+        );
         cache.set(`${user}-feedbacks`, allFeedbacks);
         return allFeedbacks;
       } else {
@@ -139,7 +149,11 @@ export default class dbService {
     }
   }
 
-  async saveFeedback(userID: string, websiteIndex: number, data: { name: string; email: string; feedback: string }) {
+  async saveFeedback(
+    userID: string,
+    websiteIndex: number,
+    data: { name: string; email: string; feedback: string }
+  ) {
     try {
       const userDocRef = doc(db, "USERS", userID);
       const docSnap = await getDoc(userDocRef);

@@ -10,21 +10,35 @@ import useAuth from "@/hooks/CurrentUser";
 import cache from "../cache/cache";
 import Loader from "../components/Loader";
 
-const AddIntegration = () => {
+interface Website {
+  id: string;
+  name: string;
+  url?: string;
+  type?: string;
+}
+
+interface WebsiteDataInput {
+  name: string;
+  url: string;
+  type: string;
+}
+
+const AddIntegration: React.FC = () => {
   const [toggle, setToggle] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
-  const [websitedata, setWebsiteData] = useState([]);
+  const [websitedata, setWebsiteData] = useState<Website[]>([]);
   const [fetchingData, setFetchingData] = useState(true);
   const [savingData, setSavingData] = useState(false);
   const { user, loading: userLoading } = useAuth();
+  const [deleting, setDeleting] = useState(false);
   const [showCode, setShowCode] = useState(false);
-  const [websiteDataInput, setWebsiteDataInput] = useState({
+  const [websiteDataInput, setWebsiteDataInput] = useState<WebsiteDataInput>({
     name: "",
     url: "",
     type: "",
   });
   const [highlightedCode, setHighlightedCode] = useState("");
-  const [lastWebsiteId, setLastWebsiteId] = useState(null);
+  const [lastWebsiteId, setLastWebsiteId] = useState<string | null>(null);
   const db = new dbService();
 
   useEffect(() => {
@@ -46,19 +60,31 @@ const AddIntegration = () => {
 
   hljs.registerLanguage("html", html);
 
-  const generateCodeToCopy = (websiteId) => {
+  const generateCodeToCopy = (websiteId: string) => {
     const code = `<!-- Add this snippet to your website's HTML -->\n<iframe src="http://${window.location.hostname}:3000/integrate/${websiteId}"></iframe>`;
     const highlighted = hljs.highlight(code, { language: "html" }).value;
     setHighlightedCode(highlighted);
     setShowCode(true);
   };
 
-  const handleDeleteWebsite = async (websiteId) => {
+  const handleDeleteWebsite = async (websiteName: string) => {
     try {
-      await db.deleteWebsite(user.uid, websiteId);
-      setWebsiteData((prev) => prev.filter((site) => site.id !== websiteId));
+      setDeleting(true);
+
+      await db.deleteWebsite(user!.uid, websiteName);
+
+      setWebsiteData((prev) =>
+        prev.filter((site) => site.name !== websiteName)
+      );
+
+      cache.set(
+        user!.uid,
+        websitedata.filter((site) => site.name !== websiteName)
+      );
     } catch (error) {
       console.log("Error deleting website:", error);
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -105,7 +131,7 @@ const AddIntegration = () => {
 
   return (
     <>
-      {(fetchingData || savingData) && <Loader />}
+      {(fetchingData || savingData || deleting) && <Loader />}
       <div className="md:ml-80">
         <nav className="md:hidden bg-[#18181b] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
@@ -163,7 +189,7 @@ const AddIntegration = () => {
                           >
                             <h1 className="text-sm font-semibold">{i?.name}</h1>
                             <button
-                              onClick={() => handleDeleteWebsite(i?.id)}
+                              onClick={() => handleDeleteWebsite(i?.name)}
                               className="text-sm hover:text-red-500 ease-in-out duration-500"
                             >
                               Remove
@@ -215,50 +241,45 @@ const AddIntegration = () => {
                             type: e.target.value,
                           })
                         }
-                        className="bg-[#272c2e] w-full px-2 py-2 outline-none rounded-lg cursor-pointer"
+                        className="bg-[#272c2e] px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
                       >
-                        <option value="">Select Website Type</option>
+                        <option value="">Choose</option>
+                        <option value="ecommerce">Ecommerce</option>
                         <option value="blog">Blog</option>
-                        <option value="ecommerce">E-commerce</option>
-                        <option value="portfolio">Portfolio</option>
-                        <option value="other">Other</option>
                       </select>
                     </div>
-                    <div className="flex items-center justify-end gap-x-4">
-                      <button
-                        onClick={() => setCurrentStep(1)}
-                        className="text-sm bg-gray-300 text-black  py-2 px-4 rounded-full"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        onClick={saveData}
-                        className="text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white  py-2 px-4 rounded-full"
-                      >
-                        Save Website
-                      </button>
-                    </div>
+
+                    <button
+                      onClick={saveData}
+                      className="text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white w-[75vw] md:w-[30vw] py-2 px-4 rounded-full"
+                    >
+                      Save Website
+                    </button>
                   </div>
                 )}
 
-                {currentStep === 3 && showCode && (
-                  <div className="mt-10">
-                    <h1 className="text-2xl font-semibold">Code to Embed</h1>
-                    <p className="text-sm mt-2 mb-4">
-                      Copy and paste this code into your website’s HTML.
-                    </p>
-                    <pre
-                      className="bg-[#272b2f] p-5 rounded-md overflow-auto"
-                      dangerouslySetInnerHTML={{ __html: highlightedCode }}
-                    />
-                    <div className="flex justify-end">
-                    <button
-                      onClick={copyCode}
-                      className="text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2 px-4 rounded-lg mt-4"
+                {currentStep === 3 && (
+                  <div className="space-y-5">
+                    <h1 className="text-2xl font-semibold">
+                      Integration Steps
+                    </h1>
+                    <div className="space-y-3 mt-5">
+                      <h1 className="font-semibold text-sm">
+                        Step 1: Copy Code
+                      </h1>
+                      <button
+                        onClick={copyCode}
+                        className="text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2 px-4 rounded-full"
                       >
-                      Copy Code
-                    </button>
-                      </div>
+                        Copy Code
+                      </button>
+                    </div>
+                    {showCode && (
+                      <pre
+                        className="bg-gray-800 text-white rounded-md p-4 mt-4"
+                        dangerouslySetInnerHTML={{ __html: highlightedCode }}
+                      ></pre>
+                    )}
                   </div>
                 )}
               </div>
