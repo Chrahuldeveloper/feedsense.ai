@@ -1,29 +1,28 @@
 import Navbar from "@/components/Navbar";
 import React from "react";
+import { TiTickOutline } from "react-icons/ti";
 
 export default function PricingPage() {
   const Plans = [
     {
       name: "Basic",
-      price: "$20/month",
+      price: "₹450/month",
       features: [
-        "Collect up to 100 feedback entries per month",
-        "Basic sentiment analysis",
-        "Manual task creation from feedback",
+        "Collect up to 100 feedback",
         "Email support",
+        "Analytics",
+        "Only 3 websites integration",
       ],
     },
     {
       name: "Pro",
-      price: "$30/month",
+      price: "₹2000 for 4 months",
       features: [
         "Unlimited feedback entries",
-        "Advanced sentiment analysis with keyword insights",
         "Automated task generation from feedback",
-        "Task assignment to team members",
         "Priority email support",
-        "Feedback analytics dashboard",
-        "Basic integration with project management tools (Trello, Asana)",
+        "Analytics",
+        "Unlimited websites",
       ],
     },
   ];
@@ -57,13 +56,14 @@ export default function PricingPage() {
               <p className="text-lg font-semibold text-slate-300">
                 {plan.price}
               </p>
-              <button className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 mt-6 text-white py-2 md:w-[25vw] w-[80vw] font-semibold rounded-lg">
+              <button className="bg-gradient-to-r mx-auto from-blue-400 via-blue-600 to-blue-700 mt-6 text-white py-2 md:w-[25vw] w-[75vw] font-semibold rounded-lg">
                 Get Plan
               </button>
               <ul className="space-y-3 text-slate-300">
                 {plan.features.map((feature, index) => (
-                  <li key={index} className="text-sm">
-                    {feature}
+                  <li key={index} className="text-sm flex items-center gap-3">
+                    <TiTickOutline size={23} color="green" />
+                    <h1>{feature}</h1>
                   </li>
                 ))}
               </ul>

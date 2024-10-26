@@ -183,18 +183,18 @@ const AddIntegration: React.FC = () => {
                 {currentStep === 1 && (
                   <div>
                     <div className="flex items-center justify-between">
-                      <h1 className="text-2xl font-semibold">
+                      <h1 className="text-xl font-semibold">
                         Connected Websites
                       </h1>
                       <button
                         onClick={() => setCurrentStep(2)}
-                        className="text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white  py-2 px-4 rounded-full"
+                        className="text-xs bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-white  py-2 px-4 rounded-full"
                       >
                         Add Website
                       </button>
                     </div>
                     {websitedata?.length === 0 ? (
-                      <div className="space-y-4 text-center pt-20">
+                      <div className="space-y-4 text-center pt-28">
                         <FaRegCircleStop
                           size={23}
                           color="white"
@@ -234,7 +234,7 @@ const AddIntegration: React.FC = () => {
                 )}
 
                 {currentStep === 2 && (
-                  <div className="w-[85vw] md:w-[33vw] p-6 space-y-6 mt-0.5 mx-auto bg-[#171819] rounded-lg">
+                  <div className="w-[85vw] md:w-[33vw] p-6 space-y-6 mt- mx-auto ">
                     <div className="space-y-4 text-slate-300">
                       <h1 className="text-2xl font-semibold">
                         Add your website
@@ -242,7 +242,7 @@ const AddIntegration: React.FC = () => {
                       <input
                         type="text"
                         placeholder="Website Name"
-                        className="bg-[#1E1E1E] border-[1px] border-[#282c34] outline-none p-3 rounded-lg w-full"
+                        className="bg-[#1E1E1E] border-[1px] border-[#282c34] outline-none p-3 rounded-lg w-full text-sm"
                         value={websiteDataInput.name}
                         onChange={(e) =>
                           setWebsiteDataInput((prev) => ({
@@ -254,7 +254,7 @@ const AddIntegration: React.FC = () => {
                       <input
                         type="text"
                         placeholder="Website URL"
-                        className="bg-[#1E1E1E] border-[1px] border-[#282c34] outline-none p-3 rounded-lg w-full"
+                        className="bg-[#1E1E1E] border-[1px] border-[#282c34] outline-none p-3 rounded-lg w-full text-sm"
                         value={websiteDataInput.url}
                         onChange={(e) =>
                           setWebsiteDataInput((prev) => ({
@@ -264,7 +264,7 @@ const AddIntegration: React.FC = () => {
                         }
                       />
                       <select
-                        className="bg-[#1E1E1E] border-[1px] border-[#282c34] outline-none p-3 rounded-lg w-full"
+                        className="bg-[#1E1E1E] border-[1px] border-[#282c34] outline-none p-3 rounded-lg w-full text-sm"
                         value={websiteDataInput.type}
                         onChange={(e) =>
                           setWebsiteDataInput((prev) => ({
@@ -294,7 +294,7 @@ const AddIntegration: React.FC = () => {
                           />
                           <label
                             htmlFor="fileInput"
-                            className="bg-blue-500 hover:bg-blue-600 text-center text-white rounded-lg p-2 cursor-pointer"
+                            className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700   text-center text-white rounded-lg p-2 cursor-pointer"
                           >
                             Change Logo
                           </label>
@@ -315,7 +315,7 @@ const AddIntegration: React.FC = () => {
                           />
                           <label
                             htmlFor="fileInput"
-                            className="bg-blue-500 text-center hover:bg-blue-600 text-white rounded-lg p-2 cursor-pointer"
+                            className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-center  text-sm text-white rounded-lg p-2 cursor-pointer"
                           >
                             Upload Logo
                           </label>
@@ -325,13 +325,13 @@ const AddIntegration: React.FC = () => {
                       <div className="flex justify-between">
                         <button
                           onClick={() => setCurrentStep(1)}
-                          className="bg-[#1E1E1E] border-[1px] border-[#282c34] text-white rounded-full px-6 py-2 hover:bg-[#25262a]"
+                          className="bg-[#1E1E1E] border-[1px] border-[#282c34] text-white rounded-lg px-6 py-2 text-sm"
                         >
                           Back
                         </button>
                         <button
                           onClick={saveData}
-                          className="bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-full px-6 py-2 hover:bg-gradient-to-l"
+                          className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-white rounded-lg px-6 py-2 text-sm"
                         >
                           Save
                         </button>
@@ -353,7 +353,7 @@ const AddIntegration: React.FC = () => {
                     <div className="flex justify-end">
                       <button
                         onClick={copyCode}
-                        className="bg-gradient-to-r from-blue-600 to-blue-500 text-white py-2 px-6 text-xs  font-semibold rounded-full"
+                        className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-white py-2 px-6 text-xs  font-semibold rounded-full"
                       >
                         Copy Code
                       </button>
