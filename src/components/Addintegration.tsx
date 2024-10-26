@@ -14,7 +14,9 @@ const AddIntegration = () => {
   const [toggle, setToggle] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [websitedata, setWebsiteData] = useState([]);
-  const { user, loading } = useAuth();
+  const [fetchingData, setFetchingData] = useState(true);
+  const [savingData, setSavingData] = useState(false);
+  const { user, loading: userLoading } = useAuth();
   const [showCode, setShowCode] = useState(false);
   const [websiteDataInput, setWebsiteDataInput] = useState({
     name: "",
@@ -27,24 +29,20 @@ const AddIntegration = () => {
 
   useEffect(() => {
     const fetchWebsites = async () => {
-      if (!loading && user) {
+      if (!userLoading && user) {
+        setFetchingData(true);
         const cachedData = cache.get(user.uid);
         if (cachedData) {
-          console.log("Fetched Websites Data from Cache:", cachedData.value);
           setWebsiteData(cachedData.value);
         } else {
           const data = await db.fetchWebsites(user);
-          if (Array.isArray(data)) {
-            setWebsiteData(data);
-          } else {
-            console.error("Fetched data is not an array:", data);
-            setWebsiteData([]);
-          }
+          setWebsiteData(Array.isArray(data) ? data : []);
         }
+        setFetchingData(false);
       }
     };
     fetchWebsites();
-  }, [loading, user]);
+  }, [userLoading, user]);
 
   hljs.registerLanguage("html", html);
 
@@ -67,9 +65,10 @@ const AddIntegration = () => {
   const saveData = async () => {
     try {
       if (Object.values(websiteDataInput).every((i) => i !== "")) {
-        if (!loading && user) {
+        if (!userLoading && user) {
+          setSavingData(true);
           const data = { uid: user.uid, email: user.email };
-          await db.saveWebsite(data, websiteDataInput); 
+          await db.saveWebsite(data, websiteDataInput);
           setLastWebsiteId(websiteDataInput.url);
           setCurrentStep(3);
           generateCodeToCopy(websiteDataInput.url);
@@ -77,13 +76,15 @@ const AddIntegration = () => {
           const updatedWebsites = await db.fetchWebsites(user);
           setWebsiteData(updatedWebsites);
         } else {
-          console.log("Loading or user not authenticated");
+          console.log("User is loading or not authenticated");
         }
       } else {
         alert("Fill in all the details.");
       }
     } catch (error) {
       console.log("Error saving website:", error);
+    } finally {
+      setSavingData(false);
     }
   };
 
@@ -104,6 +105,7 @@ const AddIntegration = () => {
 
   return (
     <>
+      {(fetchingData || savingData) && <Loader />}
       <div className="md:ml-80">
         <nav className="md:hidden bg-[#18181b] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
@@ -114,7 +116,7 @@ const AddIntegration = () => {
             onClick={() => setToggle(true)}
           />
         </nav>
-        {toggle ? <MobileSideBar setToggle={setToggle} /> : null}
+        {toggle && <MobileSideBar setToggle={setToggle} />}
 
         <div className="text-slate-300 flex flex-col md:flex-row items-center gap-8 md:gap-12 md:mt-16 justify-center">
           <div className="md:ml-52">
@@ -128,7 +130,9 @@ const AddIntegration = () => {
                 {currentStep === 1 && (
                   <div>
                     <div className="flex items-center justify-between">
-                      <h1 className="text-2xl font-semibold">Connected Websites</h1>
+                      <h1 className="text-2xl font-semibold">
+                        Connected Websites
+                      </h1>
                       <button
                         onClick={() => setCurrentStep(2)}
                         className="text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white  py-2 px-4 rounded-full"
@@ -137,15 +141,26 @@ const AddIntegration = () => {
                       </button>
                     </div>
                     {websitedata?.length === 0 ? (
-                      <div className="space-y-4 text-center pt-16">
-                        <FaRegCircleStop size={23} color="white" className="mx-auto" />
-                        <p className="text-xl font-semibold">No websites connected yet</p>
-                        <p className="text-sm">Add your first website to get started</p>
+                      <div className="space-y-4 text-center pt-20">
+                        <FaRegCircleStop
+                          size={23}
+                          color="white"
+                          className="mx-auto"
+                        />
+                        <p className="text-xl font-semibold">
+                          No websites connected yet
+                        </p>
+                        <p className="text-sm">
+                          Add your first website to get started
+                        </p>
                       </div>
                     ) : (
                       <div className="space-y-4 mt-5">
                         {websitedata?.map((i) => (
-                          <div key={i.id} className="flex items-center gap-x-5 justify-between">
+                          <div
+                            key={i.id}
+                            className="flex items-center gap-x-5 justify-between"
+                          >
                             <h1 className="text-sm font-semibold">{i?.name}</h1>
                             <button
                               onClick={() => handleDeleteWebsite(i?.id)}
@@ -167,7 +182,12 @@ const AddIntegration = () => {
                       <input
                         type="text"
                         value={websiteDataInput.name}
-                        onChange={(e) => setWebsiteDataInput({ ...websiteDataInput, name: e.target.value })}
+                        onChange={(e) =>
+                          setWebsiteDataInput({
+                            ...websiteDataInput,
+                            name: e.target.value,
+                          })
+                        }
                         className="bg-[#272c2e] px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
                       />
                     </div>
@@ -176,7 +196,12 @@ const AddIntegration = () => {
                       <input
                         type="text"
                         value={websiteDataInput.url}
-                        onChange={(e) => setWebsiteDataInput({ ...websiteDataInput, url: e.target.value })}
+                        onChange={(e) =>
+                          setWebsiteDataInput({
+                            ...websiteDataInput,
+                            url: e.target.value,
+                          })
+                        }
                         className="bg-[#272c2e] px-2 py-2 outline-none md:w-[30vw] w-[75vw] rounded-lg cursor-pointer"
                       />
                     </div>
@@ -184,7 +209,12 @@ const AddIntegration = () => {
                       <h1 className="font-semibold text-sm">Website Type*</h1>
                       <select
                         value={websiteDataInput.type}
-                        onChange={(e) => setWebsiteDataInput({ ...websiteDataInput, type: e.target.value })}
+                        onChange={(e) =>
+                          setWebsiteDataInput({
+                            ...websiteDataInput,
+                            type: e.target.value,
+                          })
+                        }
                         className="bg-[#272c2e] w-full px-2 py-2 outline-none rounded-lg cursor-pointer"
                       >
                         <option value="">Select Website Type</option>
@@ -194,32 +224,41 @@ const AddIntegration = () => {
                         <option value="other">Other</option>
                       </select>
                     </div>
-
-                    <button
-                      onClick={saveData}
-                      className="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full w-full py-3 hover:bg-blue-700"
-                    >
-                      Save Website
-                    </button>
+                    <div className="flex items-center justify-end gap-x-4">
+                      <button
+                        onClick={() => setCurrentStep(1)}
+                        className="text-sm bg-gray-300 text-black  py-2 px-4 rounded-full"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={saveData}
+                        className="text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white  py-2 px-4 rounded-full"
+                      >
+                        Save Website
+                      </button>
+                    </div>
                   </div>
                 )}
 
-                {currentStep === 3 && (
-                  <div className="w-[85vw] md:w-[40vw] p-6 space-y-6 mx-auto mt-10">
-                    <div className="bg-[#272c2e] rounded-lg p-4">
-                      <h1 className="font-semibold text-slate-300">Code to Integrate</h1>
-                      <div className="code-block">
-                        <pre>
-                          <code dangerouslySetInnerHTML={{ __html: highlightedCode }} />
-                        </pre>
-                      </div>
-                      <button
-                        onClick={copyCode}
-                        className="mt-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full w-full py-2 hover:bg-blue-700"
+                {currentStep === 3 && showCode && (
+                  <div className="mt-10">
+                    <h1 className="text-2xl font-semibold">Code to Embed</h1>
+                    <p className="text-sm mt-2 mb-4">
+                      Copy and paste this code into your website’s HTML.
+                    </p>
+                    <pre
+                      className="bg-[#272b2f] p-5 rounded-md overflow-auto"
+                      dangerouslySetInnerHTML={{ __html: highlightedCode }}
+                    />
+                    <div className="flex justify-end">
+                    <button
+                      onClick={copyCode}
+                      className="text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2 px-4 rounded-lg mt-4"
                       >
-                        Copy to Clipboard
-                      </button>
-                    </div>
+                      Copy Code
+                    </button>
+                      </div>
                   </div>
                 )}
               </div>
