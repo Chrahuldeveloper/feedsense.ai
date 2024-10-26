@@ -102,7 +102,11 @@ const Page = () => {
         <div className="space-y-4">
           <h1 className="text-slate-300 text-xl font-bold">Select Plan</h1>
           <p className="text-slate-300">
-            For more details on our plans, visit our pricing page.
+            For more details on our plans, visit our{" "}
+            <span className="border-b-[1px] border-slate-300 cursor-pointer">
+              <Link href={"/plans"}>Pricing page</Link>
+            </span>
+            .
           </p>
           <div>
             {subscriptionPlans.map((itm) => (
