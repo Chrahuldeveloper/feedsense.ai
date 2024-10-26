@@ -35,7 +35,7 @@ export default class dbService {
 
   async saveWebsite(
     user: User,
-    data: { id: string; name: string; url: string; type: string }
+    data: { id: string; name: string; url: string; type: string; image: string }
   ) {
     try {
       const userDocRef = doc(db, "USERS", user.uid);

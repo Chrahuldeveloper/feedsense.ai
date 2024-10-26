@@ -127,8 +127,8 @@ const Table: React.FC<Props> = ({ user }) => {
                   >
                     <td className="px-8 py-4 whitespace-nowrap">
                       <img
-                        className="h-10 w-10 rounded-full"
-                        src="https://img.freepik.com/premium-photo/man-with-glasses-shirt-that-says-hes-character_1103290-90487.jpg?size=626&ext=jpg"
+                        className="h-12 w-12 rounded-full object-cover"
+                        src={site?.logo}
                         alt="Profile"
                       />
                     </td>
