@@ -9,7 +9,7 @@ const useSubscribe = () => {
   useEffect(() => {
     const checkSubscription = async () => {
       try {
-        const isSubcribe = await db.isSubcribe();
+        const isSubcribe = await db.isSubscribed();
         setsubcribe(isSubcribe);
         setLoading(false);
       } catch (error) {
