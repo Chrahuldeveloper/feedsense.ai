@@ -8,6 +8,7 @@ import useAuth from "@/hooks/CurrentUser";
 import Loader from "./Loader";
 import Analytics from "./Analytics";
 import { CgProfile } from "react-icons/cg";
+import { FaRegCircleStop } from "react-icons/fa6";
 import cache from "../cache/cache";
 
 interface Props {
@@ -54,7 +55,7 @@ const Table: React.FC<Props> = ({ user }) => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const websiteInfoData = await db.fetchDashBoardDetails(
+        const websiteInfoData = await db.fetchDashboardDetails(
           currentUser?.uid
         );
         if (websiteInfoData) {
@@ -89,7 +90,7 @@ const Table: React.FC<Props> = ({ user }) => {
           />
         </nav>
 
-        <div className="bg-[#17161c] w-screen px-6 py-5 md:-ml-36 hidden md:block">
+        <div className="bg-[#17161c] w-screen px-6 pt-5 md:-ml-36 hidden md:block">
           <div className="flex justify-end gap-x-3 px-20 items-center">
             <CgProfile size={23} color="white" />
             <h1 className="text-slate-300 text-lg font-semibold">
@@ -100,66 +101,75 @@ const Table: React.FC<Props> = ({ user }) => {
 
         {toggle && <MobileSideBar setToggle={setToggle} />}
 
-        <div className="w-full md:w-[75vw] mt-12 px-12 py-6 mx-auto rounded-xl">
-          <div className="overflow-x-auto rounded-xl">
-            <table className="min-w-full divide-y divide-stone-900">
-              <thead className="bg-[#201d24]">
-                <tr className="cursor-pointer">
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Icon
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Name
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Feedback Count
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-[#161419] divide-y divide-stone-800">
-                {websitedata.map((site, idx) => (
-                  <tr
-                    key={idx}
-                    className="hover:bg-[#141316] transition-colors duration-200 cursor-pointer"
-                  >
-                    <td className="px-8 py-4 whitespace-nowrap">
-                      <img
-                        className="h-12 w-12 rounded-full object-cover"
-                        src={site?.logo}
-                        alt="Profile"
-                      />
-                    </td>
-                    <td className="px-8 py-4 whitespace-nowrap text-sm text-slate-300 font-semibold">
-                      {site?.name}
-                    </td>
-                    <td className="px-10 py-4 whitespace-nowrap text-sm text-slate-300">
-                      {site?.feedback?.length || 0}
-                    </td>
-                    <td className="px-2 py-4 whitespace-nowrap text-sm text-slate-300">
-                      <Link
-                        href={{
-                          pathname: "/dashboard/tasks",
-                          query: {
-                            feedback: JSON.stringify(site?.feedback),
-                            name: site?.name,
-                            image:
-                              "https://img.freepik.com/premium-photo/man-with-glasses-shirt-that-says-hes-character_1103290-90487.jpg?size=626&ext=jpg",
-                          },
-                        }}
-                      >
-                        <button className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-xs text-white px-6 py-2 rounded-full transition-colors duration-200 cursor-pointer font-semibold">
-                          View
-                        </button>
-                      </Link>
-                    </td>
+        <div className="w-full md:w-[70vw]  px-12 py-14 mx-auto rounded-xl">
+          {websitedata.length === 0 ? (
+            <div className="space-y-6 text-center bg-[#17161c] rounded-xl p-10">
+              <FaRegCircleStop size={23} color="white" className="mx-auto" />
+              <p className="text-2xl font-semibold text-white">
+                No websites connected yet
+              </p>
+              <p className="text-sm text-slate-200">Add your first website to get started</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto rounded-xl pt-20">
+              <table className="min-w-full divide-y divide-stone-900">
+                <thead className="bg-[#201d24]">
+                  <tr className="cursor-pointer">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                      Icon
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                      Feedback Count
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                      Action
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="bg-[#161419] divide-y divide-stone-800">
+                  {websitedata.map((site, idx) => (
+                    <tr
+                      key={idx}
+                      className="hover:bg-[#141316] transition-colors duration-200 cursor-pointer"
+                    >
+                      <td className="px-8 py-4 whitespace-nowrap">
+                        <img
+                          className="h-12 w-12 rounded-full object-cover"
+                          src={site?.logo}
+                          alt="Profile"
+                        />
+                      </td>
+                      <td className="px-8 py-4 whitespace-nowrap text-sm text-slate-300 font-semibold">
+                        {site?.name}
+                      </td>
+                      <td className="px-10 py-4 whitespace-nowrap text-sm text-slate-300">
+                        {site?.feedback?.length || 0}
+                      </td>
+                      <td className="px-2 py-4 whitespace-nowrap text-sm text-slate-300">
+                        <Link
+                          href={{
+                            pathname: "/dashboard/tasks",
+                            query: {
+                              feedback: JSON.stringify(site?.feedback),
+                              name: site?.name,
+                              image: site?.logo,
+                            },
+                          }}
+                        >
+                          <button className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-xs text-white px-6 py-2 rounded-full transition-colors duration-200 cursor-pointer font-semibold">
+                            View
+                          </button>
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
           <Analytics
             totalWebsites={infodata.totalWebsites}
             totalFeedback={infodata.totalFeedback}

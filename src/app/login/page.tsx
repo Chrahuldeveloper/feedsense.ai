@@ -6,6 +6,7 @@ import { auth } from "../../firebase/Firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
 import { Mail, Lock, ArrowRight } from "lucide-react";
+import Cookies from "js-cookie";
 
 export default function LoginPage() {
   const navigate = useRouter();
@@ -26,6 +27,7 @@ export default function LoginPage() {
         );
         console.log(user.user);
         alert("Login successful!");
+        Cookies.set("auth-token", "authenticated", { expires: 1 });
         navigate.push("/dashboard");
       } catch (error) {
         console.log(error);
@@ -39,8 +41,9 @@ export default function LoginPage() {
     try {
       const user = await signInWithPopup(auth, provider);
       console.log(user.user);
-      navigate.push("/dashboard");
       alert("Login successful!");
+      Cookies.set("auth-token", "authenticated", { expires: 1 });
+      navigate.push("/dashboard");
     } catch (error) {
       console.log(error);
     }

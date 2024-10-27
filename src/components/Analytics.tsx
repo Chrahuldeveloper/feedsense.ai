@@ -20,8 +20,8 @@ ChartJS.register(
 );
 
 interface AnalyticsProps {
-  totalWebsites: number;
-  totalFeedback: number;
+  totalWebsites: string;
+  totalFeedback: string;
 }
 
 const Analytics: React.FC<AnalyticsProps> = ({
@@ -29,11 +29,11 @@ const Analytics: React.FC<AnalyticsProps> = ({
   totalFeedback,
 }) => {
   const analytics = {
-    labels: ["totalWebsites", "totalFeedback", "totalTasks"],
+    labels: ["totalWebsites", "totalFeedback"],
     datasets: [
       {
         label: "Dashboard",
-        data: [40, 34, 40],
+        data: [totalWebsites, totalFeedback],
         borderColor: "#2967ec",
         pointBackgroundColor: "#2967ec",
         pointBorderColor: "#2967ec",
@@ -43,15 +43,6 @@ const Analytics: React.FC<AnalyticsProps> = ({
     ],
   };
 
-  // shiny effect
-
-  // borderImage: `linear-gradient(
-  //   to right,
-  //   #05bcff, #00b4db 25%,
-  //   #0083b0 75%,
-  //   #05bcff
-  // ) 1 1`,
-  // boxShadow: "0 0 15px rgba(5, 188, 255, 0.5)",
   return (
     <div className="md:max-w-6xl mx-auto p-5 mt-5">
       <div className="p-4   bg-[#17161c] rounded-xl">
