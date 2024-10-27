@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import React from "react";
 import { TiTickOutline } from "react-icons/ti";
-
+import Link from "next/link";
 export default function PricingPage() {
   const Plans = [
     {
@@ -56,9 +56,11 @@ export default function PricingPage() {
               <p className="text-lg font-semibold text-slate-300">
                 {plan.price}
               </p>
-              <button className="bg-gradient-to-r mx-auto from-blue-400 via-blue-600 to-blue-700 mt-6 text-white py-2 md:w-[25vw] w-[75vw] font-semibold rounded-lg">
-                Get Plan
-              </button>
+              <Link href={`/subscription/${plan.name}`}>
+                <button className="bg-gradient-to-r mx-auto from-blue-400 via-blue-600 to-blue-700 mt-6 text-white py-2 md:w-[25vw] w-[75vw] font-semibold rounded-lg">
+                  Get Plan
+                </button>
+              </Link>
               <ul className="space-y-3 text-slate-300">
                 {plan.features.map((feature, index) => (
                   <li key={index} className="text-sm flex items-center gap-3">

@@ -62,7 +62,7 @@ const SideBar: React.FC<props> = ({ page }) => {
           </div>
 
           {/* Subscription */}
-          <Link href="/dashboard/subscription">
+          <Link href="/plans">
             <div
               className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out   text-white rounded-lg ${
                 page === "Subscription"

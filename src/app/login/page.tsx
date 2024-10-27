@@ -28,7 +28,7 @@ export default function LoginPage() {
         console.log(user.user);
         alert("Login successful!");
         Cookies.set("auth-token", "authenticated", { expires: 1 });
-        navigate.push("/dashboard");
+        navigate.push("/plans");
       } catch (error) {
         console.log(error);
       }
@@ -43,7 +43,7 @@ export default function LoginPage() {
       console.log(user.user);
       alert("Login successful!");
       Cookies.set("auth-token", "authenticated", { expires: 1 });
-      navigate.push("/dashboard");
+      navigate.push("/plans");
     } catch (error) {
       console.log(error);
     }

@@ -108,7 +108,9 @@ const Table: React.FC<Props> = ({ user }) => {
               <p className="text-2xl font-semibold text-white">
                 No websites connected yet
               </p>
-              <p className="text-sm text-slate-200">Add your first website to get started</p>
+              <p className="text-sm text-slate-200">
+                Add your first website to get started
+              </p>
             </div>
           ) : (
             <div className="overflow-x-auto rounded-xl pt-20">

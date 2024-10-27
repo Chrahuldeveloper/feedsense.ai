@@ -34,7 +34,9 @@ const Form: React.FC<Props> = ({
 
   const saveFeedBack = async () => {
     try {
-      await db.saveFeedBack(userID, websiteID, feedback);
+      // check if he is one basic plan if yes then only 100 feedbacks if not then unlimted
+
+      await db.saveFeedback(userID, websiteID, feedback);
     } catch (error) {
       console.log(error);
     }
