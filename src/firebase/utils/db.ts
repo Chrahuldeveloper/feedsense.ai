@@ -8,6 +8,37 @@ interface User {
 }
 
 export default class dbService {
+  async checkifSubscribed(userId: string, websiteName: string) {
+    try {
+      const userDocRef = doc(db, "USERS", userId);
+      const docSnap = await getDoc(userDocRef);
+      if (docSnap.exists()) {
+        const subscriptionPlan = docSnap.data()?.subscription;
+
+        if (subscriptionPlan === "Basic") {
+          const userWebsites = docSnap.data()?.websites;
+          const filteredWebsite = userWebsites.filter((website: any) => {
+            website.name === websiteName;
+          });
+          const websiteFeedbacks = filteredWebsite?.feedback?.length;
+          if (websiteFeedbacks <= 100 && userWebsites.length > 3) {
+            return true;
+          }
+        }
+
+        if (subscriptionPlan === "Pro") {
+          return true;
+        }
+
+        return false;
+      }
+
+      return false;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async deleteWebsite(userId: string, websiteName: string) {
     try {
       const userDocRef = doc(db, "USERS", userId);
@@ -43,18 +74,38 @@ export default class dbService {
       let updatedWebsites: any[] = [];
 
       if (docSnap.exists()) {
-        await updateDoc(userDocRef, {
-          websites: arrayUnion(data),
-        });
-        updatedWebsites = [...docSnap.data().websites, data];
+        const subscription = docSnap.data().subscription;
+        const userWebsites = docSnap.data().websites || [];
+
+        if (subscription === "Basic") {
+          if (userWebsites.length < 3) {
+            await updateDoc(userDocRef, {
+              websites: arrayUnion(data),
+            });
+            updatedWebsites = [...userWebsites, data];
+            console.log("Website data saved successfully for Basic plan");
+          } else {
+            console.log(
+              "Cannot save more than 3 websites for Basic subscription"
+            );
+            updatedWebsites = userWebsites;
+          }
+        } else if (subscription === "Pro") {
+          await updateDoc(userDocRef, {
+            websites: arrayUnion(data),
+          });
+          updatedWebsites = [...userWebsites, data];
+          console.log("Website data saved successfully for Pro plan");
+        }
       } else {
         await setDoc(userDocRef, {
           websites: [data],
         });
         updatedWebsites = [data];
+        console.log("Website data saved successfully for new user");
       }
 
-      console.log("Website data saved successfully");
+      // Cache the updated websites for the user
       cache.set(user.uid, updatedWebsites);
     } catch (error) {
       console.error("Error saving website:", error);
@@ -151,7 +202,7 @@ export default class dbService {
 
   async saveFeedback(
     userID: string,
-    websiteIndex: number,
+    websiteName: string,
     data: { name: string; email: string; feedback: string }
   ) {
     try {
@@ -161,7 +212,11 @@ export default class dbService {
       if (docSnap.exists()) {
         const websites = docSnap.data()?.websites || [];
 
-        if (websites[websiteIndex]) {
+        const websiteIndex = websites.findIndex(
+          (website: { name: string }) => website.name === websiteName
+        );
+
+        if (websiteIndex !== -1) {
           const currentFeedback = websites[websiteIndex].feedback || [];
           const updatedWebsite = {
             ...websites[websiteIndex],
@@ -177,7 +232,7 @@ export default class dbService {
           console.log("Feedback saved successfully");
           cache.set(userID, websites);
         } else {
-          console.error("Website not found at the specified index");
+          console.error("Website not found with the specified name");
         }
       } else {
         console.error("User not found");

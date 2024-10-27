@@ -18,7 +18,7 @@ const Form: React.FC<Props> = ({
   buttonColor,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { userID, websiteID } = useParams();
+  const { userID, websiteName } = useParams();
 
   const toggleForm = () => {
     setIsOpen(!isOpen);
@@ -34,9 +34,11 @@ const Form: React.FC<Props> = ({
 
   const saveFeedBack = async () => {
     try {
-      // check if he is one basic plan if yes then only 100 feedbacks if not then unlimted
+      const isSubscribed = await db.checkifSubscribed(userID, websiteName);
 
-      await db.saveFeedback(userID, websiteID, feedback);
+      if (isSubscribed) {
+        await db.saveFeedback(userID, websiteName, feedback);
+      }
     } catch (error) {
       console.log(error);
     }
