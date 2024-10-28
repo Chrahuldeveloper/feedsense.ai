@@ -90,10 +90,10 @@ const Table: React.FC<Props> = ({ user }) => {
           />
         </nav>
 
-        <div className="bg-[#17161c] w-screen px-6 pt-5 md:-ml-36 hidden md:block">
-          <div className="flex justify-end gap-x-3 px-20 items-center">
+        <div className="bg-[#17161c] w-screen px-14 py-7 pt-5 md:-ml-36 hidden md:block">
+          <div className="flex justify-end gap-x-3   items-center">
             <CgProfile size={23} color="white" />
-            <h1 className="text-slate-300 text-lg font-semibold">
+            <h1 className="text-slate-300 text-lg  font-semibold">
               {currentUser?.displayName || "User"}
             </h1>
           </div>
@@ -103,7 +103,7 @@ const Table: React.FC<Props> = ({ user }) => {
 
         <div className="w-full md:w-[70vw]  px-12 py-14 mx-auto rounded-xl">
           {websitedata.length === 0 ? (
-            <div className="space-y-6 text-center bg-[#17161c] rounded-xl p-10">
+            <div className="space-y-6 text-center bg-[#17161c]  rounded-xl p-10">
               <FaRegCircleStop size={23} color="white" className="mx-auto" />
               <p className="text-2xl font-semibold text-white">
                 No websites connected yet
@@ -113,8 +113,8 @@ const Table: React.FC<Props> = ({ user }) => {
               </p>
             </div>
           ) : (
-            <div className="overflow-x-auto rounded-xl pt-20">
-              <table className="min-w-full divide-y divide-stone-900">
+            <div className="overflow-x-auto rounded-xl pt-5 ">
+              <table className="min-w-full divide-y rounded-xl divide-stone-900">
                 <thead className="bg-[#201d24]">
                   <tr className="cursor-pointer">
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">

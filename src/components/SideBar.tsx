@@ -50,21 +50,23 @@ const SideBar: React.FC<props> = ({ page }) => {
           </Link>
 
           {/* Contact */}
-          <div
-            className={`flex items-center space-x-4 py-3   pr-12 pl-4 transition duration-200 ease-in-out text-white rounded-lg ${
-              page === "Contact"
-                ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
-                : ""
-            }`}
-          >
-            <IoIosCall color="white" size={iconSize} />
-            <h1 className="text-white text-sm font-semibold">Contact</h1>
-          </div>
+          <Link href="/dashboard/contact">
+            <div
+              className={`flex items-center space-x-4 py-3 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out text-white rounded-lg ${
+                page === "Contact"
+                  ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
+                  : ""
+              }`}
+            >
+              <IoIosCall color="white" size={iconSize} />
+              <h1 className="text-white text-sm font-semibold">Contact</h1>
+            </div>
+          </Link>
 
           {/* Subscription */}
           <Link href="/plans">
             <div
-              className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out   text-white rounded-lg ${
+              className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out text-white rounded-lg ${
                 page === "Subscription"
                   ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
                   : ""

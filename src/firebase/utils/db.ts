@@ -8,6 +8,32 @@ interface User {
 }
 
 export default class dbService {
+  async genrateId(length: number): Promise<string> {
+    const letters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let id = "";
+    for (let i = 0; i <= length; i++) {
+      const randomIndex = Math.floor(Math.random() * letters.length);
+
+      id += letters[randomIndex];
+    }
+    return id;
+  }
+
+  async ContactUs(data: Object) {
+    try {
+      const Id = await this.genrateId(5);
+
+      const userDocRef = doc(db, "CONTACT-US", Id);
+
+      await setDoc(userDocRef, {
+        data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async checkifSubscribed(userId: string, websiteName: string) {
     try {
       const userDocRef = doc(db, "USERS", userId);
@@ -105,7 +131,6 @@ export default class dbService {
         console.log("Website data saved successfully for new user");
       }
 
-      // Cache the updated websites for the user
       cache.set(user.uid, updatedWebsites);
     } catch (error) {
       console.error("Error saving website:", error);
