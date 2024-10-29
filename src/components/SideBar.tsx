@@ -79,7 +79,7 @@ const SideBar: React.FC<props> = ({ page }) => {
 
           {/* Logout */}
           <div
-            className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out  text-white rounded-lg ${
+            className={`flex items-center space-x-4 py-3 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out  text-white rounded-lg ${
               page === "Logout"
                 ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
                 : ""
@@ -87,7 +87,7 @@ const SideBar: React.FC<props> = ({ page }) => {
             onClick={() => settoggle(true)}
           >
             <IoLogOut size={iconSize} color="white" />
-            <h1 className="text-white text-sm font-semibold">Logout</h1>
+            <button className="text-white text-sm font-semibold ">Logout</button>
           </div>
         </div>
       </aside>

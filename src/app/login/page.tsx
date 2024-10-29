@@ -7,6 +7,7 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import Cookies from "js-cookie";
+import SendEmail from "../../emailJs/Email";
 
 export default function LoginPage() {
   const navigate = useRouter();
@@ -16,6 +17,8 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
+
+  const Email = new SendEmail();
 
   const handleSubmit = async () => {
     if (Object.values(data).every((i) => i !== "")) {
@@ -27,6 +30,8 @@ export default function LoginPage() {
         );
         console.log(user.user);
         alert("Login successful!");
+        const message = `Thank you for logging in ${user.user.displayName} ! If you need any help navigating your account or have questions, we're just a message away.`;
+        Email.sendLoginEmail(user.user.email, user.user.displayName, message);
         Cookies.set("auth-token", "authenticated", { expires: 1 });
         navigate.push("/plans");
       } catch (error) {
@@ -42,6 +47,8 @@ export default function LoginPage() {
       const user = await signInWithPopup(auth, provider);
       console.log(user.user);
       alert("Login successful!");
+      const message = `Thank you for logging in ${user.user.displayName} ! If you need any help navigating your account or have questions, we're just a message away.`;
+      Email.sendLoginEmail(user.user.email, user.user.displayName, message);
       Cookies.set("auth-token", "authenticated", { expires: 1 });
       navigate.push("/plans");
     } catch (error) {
