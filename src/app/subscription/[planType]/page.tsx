@@ -16,8 +16,6 @@ declare global {
 const Page = () => {
   const { planType } = useParams();
 
-  console.log(planType);
-
   const [currentPlan, setCurrentPlan] = useState({
     name: "Basic",
     price: 10,
@@ -29,8 +27,6 @@ const Page = () => {
     try {
       const orderID = await axios.post("http://localhost:3000/api/subscribe");
 
-      console.log(orderID.data);
-
       const data = orderID.data;
 
       const options = {
@@ -41,7 +37,7 @@ const Page = () => {
         description: "TEST TRANSACTION",
         order_id: data.orderId,
         handler: function (response: any) {
-          console.log("payment is successful", response);
+          console.log("Payment is successful", response);
         },
         prefill: {
           name: "Rahul",
@@ -64,7 +60,8 @@ const Page = () => {
     {
       id: 1,
       name: "Basic",
-      price: "₹450/month",
+      price: 450, 
+      displayPrice: "₹450/month", 
       features: [
         "Collect up to 100 feedback",
         "Email support",
@@ -75,7 +72,8 @@ const Page = () => {
     {
       id: 2,
       name: "Pro",
-      price: "₹2000 for 4 months",
+      price: 2000, 
+      displayPrice: "₹2000 for 4 months", 
       features: [
         "Unlimited feedback entries",
         "Automated task generation from feedback",
@@ -111,20 +109,22 @@ const Page = () => {
             {subscriptionPlans.map((itm) => (
               <div
                 key={itm.id}
-                onClick={() => setCurrentPlan(itm)}
+                onClick={() => {
+                  setCurrentPlan({ name: itm.name, price: itm.price });
+                }}
                 className={`p-5 rounded-xl space-y-1 border-[1px] bg-[#17161c] border-[#272b2f] shadow-2xl mt-5 w-[80vw] md:w-[50vw] cursor-pointer ${
-                  planType === itm.name ? "border-blue-600" : null
+                  currentPlan.name === itm.name ? "border-blue-600" : ""
                 }`}
               >
                 <h1 className="text-lg font-semibold text-slate-300">
                   {itm.name}{" "}
                   {currentPlan.name === itm.name && (
                     <span className="bg-[#2e2e34] px-3 py-1.5 rounded-full text-[10px]">
-                      {"Current Plan"}
+                      Current Plan
                     </span>
                   )}
                 </h1>
-                <p className="text-slate-300">{itm.price}</p>
+                <p className="text-slate-300">{itm.displayPrice}</p>
               </div>
             ))}
           </div>
@@ -132,7 +132,7 @@ const Page = () => {
         <Bill selectedPlan={currentPlan} />
       </div>
 
-      <div className="border-t-[1px] bg-[#17161c] border-[#272b2f]  md:fixed md:bottom-0  w-full pr-10">
+      <div className="border-t-[1px] bg-[#17161c] border-[#272b2f] md:fixed md:bottom-0 w-full pr-10">
         <div className="flex justify-end gap-4 py-5">
           <button className="border-[1px] border-[#272b2f] text-slate-300 px-5 rounded-lg text-sm py-2 cursor-pointer font-semibold">
             Cancel

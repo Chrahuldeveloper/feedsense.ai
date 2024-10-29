@@ -1,4 +1,4 @@
-export default {
+export default class Analyse {
   async fetch(request, env) {
     const tasks = [];
 
@@ -11,5 +11,5 @@ export default {
     let response = await env.AI.run("@cf/meta/llama-3-8b-instruct", taskInput);
     tasks.push({ inputs: taskInput, response });
     return Response.json(tasks);
-  },
+  }
 };

@@ -11,7 +11,7 @@ const Loader: React.FC<props> = ({ message }) => {
       <div className="flex flex-col items-center space-y-3">
         <LuLoader2 size={35} color="white" className="animate-spin " />
         <h1 className="text-slate-300 font-semibold text-lg">
-          {message || "Loading"} 
+          {message || "Loading"}
         </h1>
       </div>
     </div>

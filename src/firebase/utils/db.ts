@@ -41,13 +41,19 @@ export default class dbService {
       if (docSnap.exists()) {
         const subscriptionPlan = docSnap.data()?.subscription;
 
-        if (subscriptionPlan === "Basic") {
+        if (subscriptionPlan == "Basic") {
           const userWebsites = docSnap.data()?.websites;
           const filteredWebsite = userWebsites.filter((website: any) => {
             website.name === websiteName;
           });
           const websiteFeedbacks = filteredWebsite?.feedback?.length;
-          if (websiteFeedbacks <= 100 && userWebsites.length > 3) {
+
+          if(!websiteFeedbacks){
+            return true;
+            
+          }
+          
+          if (websiteFeedbacks <= 3 && userWebsites.length < 3) {
             return true;
           }
         }
@@ -231,14 +237,19 @@ export default class dbService {
     data: { name: string; email: string; feedback: string }
   ) {
     try {
+      console.log(data,websiteName,userID)
       const userDocRef = doc(db, "USERS", userID);
       const docSnap = await getDoc(userDocRef);
 
       if (docSnap.exists()) {
         const websites = docSnap.data()?.websites || [];
+        // const subscription = docSnap.data().subscription;
+
+
+
 
         const websiteIndex = websites.findIndex(
-          (website: { name: string }) => website.name === websiteName
+          (website: { name: any }) => website.name === websiteName
         );
 
         if (websiteIndex !== -1) {
@@ -256,12 +267,24 @@ export default class dbService {
 
           console.log("Feedback saved successfully");
           cache.set(userID, websites);
+
+          // if (subscription === "Pro") {
+          //   // const analysisResult = await An
+          //   // console.log('Feedback Analysis:', analysisResult);
+          // }
+      
+          
         } else {
           console.error("Website not found with the specified name");
         }
+
+        
       } else {
         console.error("User not found");
       }
+
+
+
     } catch (error) {
       console.error("Error saving feedback:", error);
     }

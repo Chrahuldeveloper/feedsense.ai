@@ -18,7 +18,7 @@ const Form: React.FC<Props> = ({
   buttonColor,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { userID, websiteName } = useParams();
+  const { userID, websiteID } = useParams();
 
   const toggleForm = () => {
     setIsOpen(!isOpen);
@@ -34,10 +34,10 @@ const Form: React.FC<Props> = ({
 
   const saveFeedBack = async () => {
     try {
-      const isSubscribed = await db.checkifSubscribed(userID, websiteName);
+      const isSubscribed = await db.checkifSubscribed(userID, websiteID);
 
       if (isSubscribed) {
-        await db.saveFeedback(userID, websiteName, feedback);
+        await db.saveFeedback(userID, websiteID, feedback);
       }
     } catch (error) {
       console.log(error);

@@ -34,7 +34,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto py-14">
+    <div className="max-w-xl mx-auto py-7">
       <div className="">
         <div className="bg-[#121212] p-8 rounded-lg w-[80vw] md:w-[35vw] mx-auto border-[#282e32] border-[1px] shadow-2xl">
           <div>

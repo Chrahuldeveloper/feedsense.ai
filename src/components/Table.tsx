@@ -132,7 +132,7 @@ const Table: React.FC<Props> = ({ user }) => {
                   </tr>
                 </thead>
                 <tbody className="bg-[#161419] divide-y divide-stone-800">
-                  {websitedata.map((site, idx) => (
+                  {websitedata?.map((site, idx) => (
                     <tr
                       key={idx}
                       className="hover:bg-[#141316] transition-colors duration-200 cursor-pointer"
