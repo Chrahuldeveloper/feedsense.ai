@@ -1,6 +1,7 @@
 import { db } from "../Firebase";
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import cache from "../../cache/cache";
+import axios from "axios";
 
 interface User {
   uid: string;
@@ -48,11 +49,10 @@ export default class dbService {
           });
           const websiteFeedbacks = filteredWebsite?.feedback?.length;
 
-          if(!websiteFeedbacks){
+          if (!websiteFeedbacks) {
             return true;
-            
           }
-          
+
           if (websiteFeedbacks <= 3 && userWebsites.length < 3) {
             return true;
           }
@@ -237,16 +237,12 @@ export default class dbService {
     data: { name: string; email: string; feedback: string }
   ) {
     try {
-      console.log(data,websiteName,userID)
+      console.log(data, websiteName, userID);
       const userDocRef = doc(db, "USERS", userID);
       const docSnap = await getDoc(userDocRef);
 
       if (docSnap.exists()) {
         const websites = docSnap.data()?.websites || [];
-        // const subscription = docSnap.data().subscription;
-
-
-
 
         const websiteIndex = websites.findIndex(
           (website: { name: any }) => website.name === websiteName
@@ -264,27 +260,39 @@ export default class dbService {
           await updateDoc(userDocRef, {
             websites,
           });
+          const givenfeedback = data.feedback;
 
           console.log("Feedback saved successfully");
           cache.set(userID, websites);
 
-          // if (subscription === "Pro") {
-          //   // const analysisResult = await An
-          //   // console.log('Feedback Analysis:', analysisResult);
-          // }
-      
-          
+          const Subscription = docSnap.data()?.subscription;
+
+          if (Subscription === "Pro") {
+            let headersList = {
+              Accept: "*/*",
+              "Content-Type": "application/json",
+            };
+
+            let bodyContent: any = JSON.stringify({
+              message: givenfeedback,
+            });
+
+            let response = await fetch("http://127.0.0.1:8787", {
+              method: "POST",
+              body: bodyContent,
+              headers: headersList,
+            });
+
+            let data = await response.text();
+            const plainObject = JSON.parse(data);
+            console.log(plainObject);
+          }
         } else {
           console.error("Website not found with the specified name");
         }
-
-        
       } else {
         console.error("User not found");
       }
-
-
-
     } catch (error) {
       console.error("Error saving feedback:", error);
     }

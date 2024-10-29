@@ -1,15 +1,49 @@
-export default class Analyse {
+export default {
   async fetch(request, env) {
-    const tasks = [];
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        status: 204,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      });
+    }
 
-    const feedback = await request.json();
+    try {
+      const feedback = await request.json();
 
-    const taskInput = {
-      prompt: `Convert the following feedback into a short actionable task that is between 15 and 20 characters long: ${feedback.message}`,
-    };
+      const taskInput = {
+        prompt: `You are an AI tool designed to analyze feedback and provide actionable suggestions for improvments. Based on the following feedback, give a clear and concise suggestion that is between 10 and 15 characters long: "${feedback.message}"`,
+      };
 
-    let response = await env.AI.run("@cf/meta/llama-3-8b-instruct", taskInput);
-    tasks.push({ inputs: taskInput, response });
-    return Response.json(tasks);
-  }
+      const aiResponse = await env.AI.run(
+        "@cf/meta/llama-3-8b-instruct",
+        taskInput
+      );
+
+      const responseContent = {
+        response: aiResponse.response,
+      };
+
+      const headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+      };
+
+      return new Response(JSON.stringify(responseContent), { headers });
+    } catch (error) {
+      return new Response(
+        JSON.stringify({ error: "Failed to process request" }),
+        {
+          status: 500,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+    }
+  },
 };

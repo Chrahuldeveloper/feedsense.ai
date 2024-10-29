@@ -71,7 +71,7 @@ const Form: React.FC<Props> = ({
           </div>
           <div className="text-center">
             <h1 className={`text-xl font-bold`} style={{ color: textColor }}>
-              Feedback {websiteID}
+              Feedback
             </h1>
           </div>
           <div className="space-y-2 mt-6">
