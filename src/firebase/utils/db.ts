@@ -250,32 +250,29 @@ export default class dbService {
 
         if (websiteIndex !== -1) {
           const currentFeedback = websites[websiteIndex].feedback || [];
-          const updatedWebsite = {
+
+          const newFeedback = { ...data };
+          const updatedFeedback = [...currentFeedback, newFeedback];
+
+          websites[websiteIndex] = {
             ...websites[websiteIndex],
-            feedback: [...currentFeedback, data],
+            feedback: updatedFeedback,
           };
 
-          websites[websiteIndex] = updatedWebsite;
-
-          await updateDoc(userDocRef, {
-            websites,
-          });
-          const givenfeedback = data.feedback;
+          await updateDoc(userDocRef, { websites });
 
           console.log("Feedback saved successfully");
           cache.set(userID, websites);
 
-          const Subscription = docSnap.data()?.subscription;
+          const subscription = docSnap.data()?.subscription;
 
-          if (Subscription === "Pro") {
+          if (subscription === "Pro") {
             let headersList = {
               Accept: "*/*",
               "Content-Type": "application/json",
             };
 
-            let bodyContent: any = JSON.stringify({
-              message: givenfeedback,
-            });
+            let bodyContent = JSON.stringify({ message: data.feedback });
 
             let response = await fetch("http://127.0.0.1:8787", {
               method: "POST",
@@ -283,9 +280,22 @@ export default class dbService {
               headers: headersList,
             });
 
-            let data = await response.text();
-            const plainObject = JSON.parse(data);
-            console.log(plainObject);
+            let responseData = await response.text();
+            const plainObject = JSON.parse(responseData);
+
+            console.log("Parsed response:", plainObject);
+
+            updatedFeedback[updatedFeedback.length - 1] = {
+              ...newFeedback,
+              parsedFeedback: plainObject,
+            };
+
+            websites[websiteIndex].feedback = updatedFeedback;
+            await updateDoc(userDocRef, { websites });
+
+            console.log(
+              "Parsed feedback added to specific feedback entry in Firestore."
+            );
           }
         } else {
           console.error("Website not found with the specified name");
