@@ -73,7 +73,10 @@ const Page = () => {
                     Email
                   </th>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Task
+                    FeedBack
+                  </th>
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    Analsysis
                   </th>
                 </tr>
               </thead>
@@ -94,6 +97,9 @@ const Page = () => {
                     </td>
                     <td className="py-5 px-6 md:px-9 text-sm  text-slate-300 ">
                       {site.feedback}
+                    </td>
+                    <td className="py-5 px-6 md:px-9 text-sm  text-slate-300 ">
+                      {site?.parsedFeedback?.response?.replace(/"/g, "")}
                     </td>
                   </tr>
                 ))}
