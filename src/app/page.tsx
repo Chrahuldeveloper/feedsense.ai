@@ -1,61 +1,68 @@
 import Navbar from "@/components/Navbar";
 import React from "react";
 import Link from "next/link";
+import { FaXTwitter } from "react-icons/fa6";
+import { FiInstagram } from "react-icons/fi";
+import { FaFacebookF } from "react-icons/fa";
 
 export default function page() {
   const data = [
     {
-      title: "Automate Your Workflow",
-      para: "Our tool simplifies repetitive tasks, letting you focus on creativity. Automate your work and boost productivity with ease.",
+      title: "Unified Feedback Management",
+      para: "Easily gather feedback from multiple websites in one place. Streamline your workflow by centralizing all user insights and responses.",
     },
     {
-      title: "Convert Feedback to Action",
-      para: "Automatically turn user feedback into actionable tasks. Improve your website's performance and user experience effortlessly.",
+      title: "AI-Driven Feedback Analysis",
+      para: "Our AI goes beyond simple data collection, transforming user feedback into actionable insights and prioritized suggestions for improvement.",
     },
     {
-      title: "Real-Time Insights",
-      para: "Gain real-time insights from your users. Understand their needs and make informed improvements faster than ever.",
+      title: "Smart Suggestions for Improvement",
+      para: "Let AI guide you with tailored suggestions based on user feedback. Quickly identify areas to enhance user experience and boost engagement.",
     },
     {
-      title: "Boost Website Performance",
-      para: "Let AI prioritize the most critical changes needed to improve your website's performance based on user feedback.",
+      title: "Centralized Data, Maximum Efficiency",
+      para: "Save time and resources by collecting and analyzing feedback from all your websites in one dashboard, powered by intelligent automation.",
     },
   ];
 
   const howItWorks = [
     {
-      title: "Install Our Extension",
-      para: "Get started by installing our extension on your website. It integrates seamlessly and starts gathering user feedback immediately.",
+      title: "Integrate Feedback Form",
+      para: "Simply add our feedback form to each of your websites. Our form is easy to integrate and starts collecting user input immediately.",
     },
     {
-    title: "Collect Feedback",
-      para: "Your users can submit feedback about their experience on your site. Our AI processes this to highlight areas of improvement.",
+      title: "Gather User Insights",
+      para: "Your users can submit feedback directly through the form on your websites. All responses are stored and organized in one place for easy access.",
     },
     {
-      title: "AI-Generated Task List",
-      para: "Our AI converts feedback into prioritized tasks, making it easy for you to take action and improve your website efficiently.",
+      title: "AI-Generated Improvement Suggestions",
+      para: "Our AI analyzes the feedback and provides actionable, prioritized suggestions, helping you enhance user experience efficiently across all your sites.",
     },
   ];
 
   const faq = [
     {
-      qes: "How does your tool work?",
-      ans: "Our AI-powered software collects user feedback and converts it into actionable tasks that can improve your website's performance.",
+      qes: "How does your tool work with multiple websites?",
+      ans: "Our tool lets you integrate a feedback form on any number of websites. All collected data is centralized, making it easy to manage and review feedback from one dashboard.",
     },
     {
-      qes: "What kind of tasks does it generate?",
-      ans: "It creates tasks focused on enhancing user experience, improving performance, and addressing feedback-driven insights.",
+      qes: "What kind of feedback does AI analyze?",
+      ans: "The AI identifies trends and patterns in user feedback, offering insights on areas needing improvement, from design enhancements to functionality upgrades.",
     },
     {
       qes: "How do I get started?",
-      ans: "Simply install our extension on your website, and it will start collecting feedback immediately, turning it into actionable improvements.",
+      ans: "Install our feedback form on your websites, and our AI will start gathering and analyzing responses, providing actionable suggestions for improvement.",
+    },
+    {
+      qes: "Is my data secure when using your feedback tool?",
+      ans: "Yes, we prioritize data security and privacy. All feedback data collected is encrypted and stored securely, ensuring that only authorized personnel can access it.",
     },
   ];
 
   return (
     <div className="bg-black w-full min-h-screen">
       <Navbar />
-      <div className="flex flex-col items-center space-y-8 pt-36 px-4">
+      <div className="flex flex-col items-center space-y-8 pt-44 px-4">
         <div className="absolute inset-0 overflow-hidden ">
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[30vh] bg-blue-600 rounded-full opacity-20 blur-[120px]" />
@@ -64,14 +71,14 @@ export default function page() {
           </div>
         </div>
         <h1 className="text-3xl lg:text-5xl text-center font-semibold text-white leading-8 z-50">
-          Boost Your Website's Performance
+          Centralize Feedback, Empower Your Websites
         </h1>
         <p className="text-[#a2a2a2] max-w-lg text-center z-50 text-sm md:text-base">
-          Our AI-driven tool collects user feedback and turns it into actionable
-          tasks to enhance your website's user experience.
+          Collect and analyze feedback across multiple sites in one dashboard.
+          Let our AI guide your next improvements.
         </p>
         <Link href="/login" className="z-50">
-          <button className="bg-white  text-black py-2 px-8 md:px-16 lg:px-20 font-semibold rounded-full">
+          <button className="bg-white text-black py-2 px-8 md:px-16 lg:px-20 font-semibold rounded-full">
             Get Started
           </button>
         </Link>
@@ -82,14 +89,14 @@ export default function page() {
         />
       </div>
 
-      <div className="mt-32 md:mt-40 px-4">
+      <div className="mt-32 md:mt-44 px-4">
         <div className="space-y-8 flex flex-col items-center justify-center">
           <h1 className="text-xl md:text-3xl text-white">
-            Don’t waste time on repetitive tasks
+            Simplify Feedback Management
           </h1>
           <p className="text-[#a2a2a2] max-w-xl text-center text-sm md:text-base">
-            Our tool automates the mundane tasks you encounter daily. Focus on
-            creativity while we handle the rest.
+            Our tool collects user feedback across multiple websites and
+            consolidates it for easy review and action.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10">
             {data.map((i, idx) => (
@@ -105,12 +112,12 @@ export default function page() {
         </div>
       </div>
 
-      <div className="mt-40 px-4">
+      <div className="mt-44 px-4">
         <div className="space-y-8 flex flex-col items-center justify-center">
           <h1 className="text-xl md:text-3xl text-white">How does it work?</h1>
           <p className="text-[#a2a2a2] max-w-xl text-center text-sm md:text-base">
-            From feedback collection to task generation, here’s how our tool
-            helps you improve your website.
+            From integration to AI-powered analysis, here’s how our tool
+            centralizes feedback and generates improvement suggestions.
           </p>
           <div className="flex flex-col gap-8 md:flex-row">
             {howItWorks.map((i, idx) => (
@@ -129,13 +136,14 @@ export default function page() {
         </div>
       </div>
 
-      <div className="py-40 px-4">
+      <div className="py-44 px-4">
         <div className="space-y-10 flex flex-col justify-center items-center">
           <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-white">
             Frequently Asked Questions
           </h1>
           <p className="text-[#a2a2a2] text-sm max-w-md leading-7 font-semibold text-center">
-            Get answers to common questions about our AI-driven tool.
+            Get answers to common questions about managing feedback across
+            multiple websites with AI.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {faq.map((i, idx) => (
@@ -150,6 +158,53 @@ export default function page() {
           </div>
         </div>
       </div>
+
+      <footer className="bg-[#121212] border-t border-[#191d1f] py-12 px-36  flex flex-col md:flex-row justify-between items-center">
+        <div className="text-center md:text-left space-y-5 mb-8 md:mb-0">
+          <h1 className="text-2xl md:text-3xl font-semibold text-white">
+            Fixit
+          </h1>
+          <p className="text-slate-300 leading-8 text-sm max-w-xs">
+            Streamline feedback management across multiple websites with
+            AI-powered insights and suggestions for improvement.
+          </p>
+        </div>
+
+        <div className="flex flex-col md:flex-row space-y-9 md:space-y-0 md:space-x-20 text-white">
+          <div className="space-y-5 text-center md:text-left">
+            <h2 className="text-lg font-bold">Quick Links</h2>
+            <ul className="text-sm space-y-5">
+              <li>
+                <Link href="/">Home</Link>
+              </li>
+              <li>
+                <Link href="/features">Features</Link>
+              </li>
+              <li>
+                <Link href="/pricing">Pricing</Link>
+              </li>
+              <li>
+                <Link href="/contact">Contact</Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="space-y-5 text-center md:text-left">
+            <h2 className="text-lg font-bold">Follow Us</h2>
+            <div className="flex space-x-5 justify-center md:justify-start mt-3">
+              <Link href="#">
+                <FaXTwitter size={19} color="white" />
+              </Link>
+              <Link href="#">
+                <FiInstagram size={19} color="white" />
+              </Link>
+              <Link href="#">
+                <FaFacebookF size={19} color="white" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

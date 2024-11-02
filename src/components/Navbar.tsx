@@ -29,7 +29,7 @@ const Navbar = () => {
       }`}
     >
       <div>
-        <h1 className="text-2xl font-semibold text-white">RevampMe</h1>
+        <h1 className="text-2xl font-semibold text-white">Fixit</h1>
       </div>
       <div className="md:hidden">
         <CiMenuFries size={23} color="white" />
