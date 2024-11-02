@@ -8,6 +8,7 @@ import { GoogleAuthProvider } from "firebase/auth";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import Cookies from "js-cookie";
 import SendEmail from "../../emailJs/Email";
+import Loader from "../../components/Loader";
 
 export default function LoginPage() {
   const navigate = useRouter();
@@ -20,6 +21,8 @@ export default function LoginPage() {
 
   const Email = new SendEmail();
 
+  const [isloading, setisloading] = useState(false);
+
   const handleSubmit = async () => {
     if (Object.values(data).every((i) => i !== "")) {
       try {
@@ -28,14 +31,15 @@ export default function LoginPage() {
           data.email,
           data.password
         );
+        setisloading(true);
         console.log(user.user);
-        alert("Login successful!");
         const message = `Thank you for logging in ${user.user.displayName} ! If you need any help navigating your account or have questions, we're just a message away.`;
         Email.sendLoginEmail(user.user.email, user.user.displayName, message);
         Cookies.set("auth-token", "authenticated", { expires: 1 });
         navigate.push("/plans");
       } catch (error) {
         console.log(error);
+        setisloading(false);
       }
     } else {
       alert("Enter all the details");
@@ -45,19 +49,22 @@ export default function LoginPage() {
   const googleSignIn = async () => {
     try {
       const user = await signInWithPopup(auth, provider);
+      setisloading(true);
       console.log(user.user);
-      alert("Login successful!");
       const message = `Thank you for logging in ${user.user.displayName} ! If you need any help navigating your account or have questions, we're just a message away.`;
       Email.sendLoginEmail(user.user.email, user.user.displayName, message);
       Cookies.set("auth-token", "authenticated", { expires: 1 });
       navigate.push("/plans");
     } catch (error) {
       console.log(error);
+      setisloading(false);
     }
   };
 
   return (
     <div className="bg-[#000000] w-full overflow-hidden min-h-screen relative">
+      {isloading ? <Loader message="Loading" /> : null}
+
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/2 right-96 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500 rounded-full opacity-20 blur-[120px]" />
         <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-blue-500 rounded-full opacity-15 blur-[100px]" />

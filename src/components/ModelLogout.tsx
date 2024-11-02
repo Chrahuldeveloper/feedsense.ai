@@ -33,7 +33,7 @@ const ModelLogout: React.FC<ModelLogoutProps> = ({ settoggle }) => {
         <h1 className="text-slate-300 text-xl md:text-2xl text-center my-3">
           Are you sure you want to Logout?
         </h1>
-        <p className="text-slate-300 text-xs text-center my-5 leading-6">
+        <p className="text-slate-300 text-xs text-center my-5 leading-6 max-w-screen-sm">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus
           nesciunt accusamus ut?
         </p>

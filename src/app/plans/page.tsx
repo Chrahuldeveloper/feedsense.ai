@@ -16,7 +16,7 @@ export default function PricingPage() {
     },
     {
       name: "Pro",
-      price: "₹2000 for 4 months",
+      price: "₹2000 for 5 months",
       features: [
         "Unlimited feedback entries",
         "Automated task generation from feedback",
