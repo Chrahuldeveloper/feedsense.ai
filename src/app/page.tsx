@@ -62,7 +62,7 @@ export default function page() {
   return (
     <div className="bg-black w-full min-h-screen">
       <Navbar />
-      <div className="flex flex-col items-center space-y-8 pt-44 px-4">
+      <div className="flex flex-col items-center space-y-8 pt-32 px-4">
         <div className="absolute inset-0 overflow-hidden ">
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[30vh] bg-blue-600 rounded-full opacity-20 blur-[120px]" />
