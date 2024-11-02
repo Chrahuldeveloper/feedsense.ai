@@ -24,12 +24,12 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed   flex-row top-0 left-0 w-full z-50 p-8 flex justify-between items-center px-12 transition-all duration-300 ${
-        isScrolled ? "backdrop-blur-sm  " : "backdrop-blur-sm"
+      className={`fixed  flex-row top-0 left-0 w-full border-stone-900 z-50 p-7 flex justify-between items-center px-12 transition-all duration-300 ${
+        isScrolled ? "backdrop-blur-md  border-b-[0.1px] " : "backdrop-blur-lg"
       }`}
     >
       <div>
-        <h1 className="text-2xl font-semibold text-white">Fixit</h1>
+        <h1 className="text-2xl md:text-3xl font-semibold text-white">Fixit</h1>
       </div>
       <div className="md:hidden">
         <CiMenuFries size={23} color="white" />
