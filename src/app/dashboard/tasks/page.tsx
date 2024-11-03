@@ -48,7 +48,7 @@ const Page = () => {
       <div className="bg-[#0e0f11] w-full h-screen flex overflow-x-clip">
         <SideBar page="Home" />
         <div className="md:w-[100vw] mx-auto  md:ml-44 space-y-16 rounded-xl">
-          <div className="overflow-x-auto rounded-xl mt-16">
+          <div className="overflow-x-auto rounded-xl mt-12">
             <div className="flex mx-auto items-center  justify-between w-[90vw] md:w-[60vw] ">
               <div className="flex items-center gap-5">
                 <img src={getImage} className="w-12 h-12 rounded-full" alt="" />

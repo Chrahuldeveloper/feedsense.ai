@@ -158,7 +158,7 @@ const AddIntegration: React.FC = () => {
 
   return (
     <>
-      {(fetchingData || savingData || deleting) && <Loader />}
+      {(fetchingData || savingData || deleting) && <Loader message="" />}
       <div className="md:ml-80">
         <nav className="md:hidden bg-[#18181b] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
@@ -325,13 +325,13 @@ const AddIntegration: React.FC = () => {
                       <div className="flex justify-between">
                         <button
                           onClick={() => setCurrentStep(1)}
-                          className="bg-[#1E1E1E] border-[1px] border-[#282c34] text-white rounded-lg px-6 py-2 text-sm"
+                          className="bg-[#1E1E1E] border-[1px] border-[#282c34] text-white rounded-full px-6 py-2 text-sm"
                         >
                           Back
                         </button>
                         <button
                           onClick={saveData}
-                          className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-white rounded-lg px-6 py-2 text-sm"
+                          className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-white rounded-full px-6 py-2 text-sm"
                         >
                           Save
                         </button>
@@ -347,7 +347,7 @@ const AddIntegration: React.FC = () => {
                       Copy and paste this code into your website
                     </p>
                     <pre
-                      className="bg-slate-800 text-white p-4 rounded-md"
+                      className="bg-[#1E1E1E] border-[1px] border-[#282c34] text-white p-4 rounded-md"
                       dangerouslySetInnerHTML={{ __html: highlightedCode }}
                     ></pre>
                     <div className="flex justify-end">

@@ -4,27 +4,32 @@ import { IoIosCall } from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
+import { CgWebsite } from "react-icons/cg";
 
 interface MobileSideBarProps {
-  settoogle: Function;
+  setToggle: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MobileSideBar: React.FC<MobileSideBarProps> = ({ settoogle }) => {
+const MobileSideBar: React.FC<MobileSideBarProps> = ({ setToggle }) => {
   return (
-    <aside className="bg-[#0b090e] p-5 w-[43vw] h-full fixed top-0 left-0 md:hidden space-y-8 px-8">
+    <aside className="bg-[#151719] py-6 w-[50vw] h-full fixed top-0 left-0 md:hidden space-y-10 px-10 border-r-[1px] border-[#272b2f]">
       <div className="flex justify-end cursor-pointer">
         <RxCross2
-          size={24}
+          size={23}
           color="white"
           cursor={"pointer"}
           onClick={() => {
-            settoogle(false);
+            setToggle(false);
           }}
         />
       </div>
       <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer">
         <MdDashboard size={22} color="white" cursor={"pointer"} />
         <h1 className="text-slate-300 font-semibold">DashBoard</h1>
+      </div>
+      <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer">
+        <CgWebsite size={22} color="white" cursor={"pointer"} />
+        <h1 className="text-slate-300 font-semibold">Integrate</h1>
       </div>
       <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer">
         <IoIosCall size={22} color="white" cursor={"pointer"} />

@@ -81,7 +81,7 @@ const Table: React.FC<Props> = ({ user }) => {
       {loading && <Loader />}
       <div className="md:ml-44">
         <nav className="md:hidden bg-[#151719] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
-          <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
+          <h1 className="text-xl font-semibold text-slate-300">Fixit</h1>
           <CiMenuFries
             size={26}
             color="white"
