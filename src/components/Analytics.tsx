@@ -44,9 +44,9 @@ const Analytics: React.FC<AnalyticsProps> = ({
   };
 
   return (
-    <div className="md:max-w-6xl mx-auto p-5 mt-5">
-      <div className="p-4   bg-[#17161c] rounded-xl">
-        <h1 className="text-2xl font-semibold text-white  px-8 pt-3 mb-2">
+    <div className="  w-[90vw] md:w-[68vw] mx-auto  mt-7">
+      <div className="p-4 bg-[#17161c] rounded-xl">
+        <h1 className="md:text-2xl font-semibold text-white px-4 md:px-8 pt-3 mb-2">
           Your Analytics
         </h1>
         <Line data={analytics} />

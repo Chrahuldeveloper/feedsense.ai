@@ -49,7 +49,7 @@ const Page = () => {
         <SideBar page="Home" />
         <div className="md:w-[100vw] mx-auto  md:ml-44 space-y-16 rounded-xl">
           <div className="overflow-x-auto rounded-xl mt-16">
-            <div className="flex mx-auto items-center  justify-between w-[85vw] md:w-[64vw] ">
+            <div className="flex mx-auto items-center  justify-between w-[90vw] md:w-[60vw] ">
               <div className="flex items-center gap-5">
                 <img src={getImage} className="w-12 h-12 rounded-full" alt="" />
                 <h1 className="text-xl text-slate-300 font-semibold">
@@ -60,7 +60,7 @@ const Page = () => {
                 <FaArrowLeftLong size={22} color="white" />
               </Link>
             </div>
-            <table className="mx-auto w-[75vw] md:w-[60vw] mt-7 divide-y divide-stone-900 rounded-lg overflow-hidden">
+            <table className="mx-auto w-[90vw] md:w-[60vw] mt-7 divide-y divide-stone-900 rounded-lg overflow-hidden">
               <thead className="bg-[#201d24] rounded-lg cursor-pointer">
                 <tr>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
@@ -83,16 +83,16 @@ const Page = () => {
                     key={idx}
                     className="hover:bg-[#141316] transition-colors duration-200 cursor-pointer"
                   >
-                    <td className="py-5 px-6 md:px-9 text-sm  text-slate-300 ">
+                    <td className="py-5 px-6 md:px-9 text-xs md:text-sm  text-slate-300 ">
                       {idx + 1}
                     </td>
-                    <td className="py-5 px-6 md:px-9 text-sm  text-slate-300 ">
+                    <td className="py-5 px-6 md:px-9 text-xs md:text-sm  text-slate-300 ">
                       {site.name}
                     </td>
-                    <td className="py-5 px-6 md:px-9 text-sm  text-slate-300 ">
+                    <td className="py-5 px-6 md:px-9  text-xs md:text-sm  text-slate-300 ">
                       {site.feedback}
                     </td>
-                    <td className="py-5 px-6 md:px-9 text-sm  text-slate-300 w-60">
+                    <td className="py-5 px-6 md:px-9 text-xs md:text-sm  text-slate-300 w-60">
                       {site?.parsedFeedback?.response?.replace(/"/g, "")}
                     </td>
                   </tr>

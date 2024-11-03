@@ -101,7 +101,7 @@ const Table: React.FC<Props> = ({ user }) => {
 
         {toggle && <MobileSideBar setToggle={setToggle} />}
 
-        <div className="w-full md:w-[70vw]  px-12 py-14 mx-auto rounded-xl">
+        <div className="w-full md:w-[70vw]  px-2 py-14 mx-auto rounded-xl">
           {websitedata.length === 0 ? (
             <div className="space-y-6 text-center bg-[#17161c]  rounded-xl p-10">
               <FaRegCircleStop size={23} color="white" className="mx-auto" />
@@ -118,13 +118,13 @@ const Table: React.FC<Props> = ({ user }) => {
                 <thead className="bg-[#201d24]">
                   <tr className="cursor-pointer">
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Icon
+                      Logo
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                       Name
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Feedback Count
+                      Feedbacks
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                       Action
