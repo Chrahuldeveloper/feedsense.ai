@@ -15,6 +15,8 @@ interface props {
 const SideBar: React.FC<props> = ({ page }) => {
   const [toggle, settoggle] = useState(false);
 
+
+
   const iconSize = 24;
 
   return (
@@ -78,6 +80,7 @@ const SideBar: React.FC<props> = ({ page }) => {
           </Link>
 
           {/* Logout */}
+
           <div
             className={`flex items-center space-x-4 py-3 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out  text-white rounded-lg ${
               page === "Logout"

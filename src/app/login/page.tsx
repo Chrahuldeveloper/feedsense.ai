@@ -133,7 +133,7 @@ export default function LoginPage() {
 
           <button
             onClick={handleSubmit}
-            className="bg-gradient-to-r from-blue-500 to-blue-600 mt-8 text-white py-2 px-4 w-full font-semibold rounded-lg hover:from-blue-600 hover:to-blue-700 transition-colors flex items-center justify-center"
+            className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 mt-8 text-white py-2 px-4 w-full font-semibold rounded-lg  flex items-center justify-center"
           >
             <span>Login</span>
             <ArrowRight className="ml-2" size={18} />

@@ -1,9 +1,12 @@
+"use client";
+
 import Navbar from "@/components/Navbar";
 import React from "react";
 import Link from "next/link";
 import { FaXTwitter } from "react-icons/fa6";
 import { FiInstagram } from "react-icons/fi";
 import { FaFacebookF } from "react-icons/fa";
+import useAuth from "@/hooks/CurrentUser";
 
 export default function page() {
   const data = [
@@ -59,6 +62,8 @@ export default function page() {
     },
   ];
 
+  const { user, loading } = useAuth();
+
   return (
     <div className="bg-black w-full min-h-screen">
       <Navbar />
@@ -77,7 +82,10 @@ export default function page() {
           Collect and analyze feedback across multiple sites in one dashboard.
           Let our AI guide your next improvements.
         </p>
-        <Link href="/login" className="z-50">
+        <Link
+          href={`${!loading && user ? "/dashboard" : "/login"}`}
+          className="z-50"
+        >
           <button className="bg-white text-black py-2 px-8 md:px-16 lg:px-20 font-semibold rounded-full">
             Get Started
           </button>
