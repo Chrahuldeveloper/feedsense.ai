@@ -7,8 +7,12 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FiInstagram } from "react-icons/fi";
 import { FaFacebookF } from "react-icons/fa";
 import Cookies from "js-cookie";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function page() {
+  AOS.init();
+
   const data = [
     {
       title: "Unified Feedback Management",
@@ -71,7 +75,13 @@ export default function page() {
   return (
     <div className="bg-black w-full min-h-screen">
       <Navbar />
-      <div className="flex flex-col items-center space-y-8 pt-32 px-4">
+      <div
+        className="flex flex-col items-center space-y-8 pt-32 px-4"
+        data-aos="fade-up"
+        data-aos-duration="1400"
+        data-aos-easing="ease-in-out"
+        data-aos-once="false"
+      >
         <div className="absolute inset-0 overflow-hidden ">
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[30vh] bg-blue-600 rounded-full opacity-20 blur-[120px]" />
@@ -96,6 +106,10 @@ export default function page() {
         </Link>
 
         <img
+          data-aos="fade-up"
+          data-aos-duration="2000"
+          data-aos-easing="ease-in-out"
+          data-aos-once="false"
           src="https://firebasestorage.googleapis.com/v0/b/notes-app-e3995.appspot.com/o/TaskFeed-10-24-2024_09_01_PM.png?alt=media&token=48ce631d-3bd7-4df3-a7c1-6147d9503532"
           alt=""
           className="lg:max-w-5xl mx-auto"
@@ -116,6 +130,10 @@ export default function page() {
             {data.map((i, idx) => (
               <div
                 className="p-5 max-w-lg text-center space-y-3 bg-[#121212] border-[#191d1f] border-[1px] rounded-lg cursor-pointer hover:scale-105 ease-in-out duration-300"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+                data-aos-easing="ease-in-out"
+                data-aos-once="false"
                 key={idx}
               >
                 <h1 className="text-white font-semibold text-xl">{i.title}</h1>
@@ -138,6 +156,10 @@ export default function page() {
             {howItWorks.map((i, idx) => (
               <div
                 className="p-5 max-w-sm text-center space-y-3 bg-[#121212] border-[#191d1f] border-[1px] rounded-lg cursor-pointer hover:scale-105 ease-in-out duration-300"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+                data-aos-easing="ease-in-out"
+                data-aos-once="false"
                 key={idx}
               >
                 <h1 className="bg-[#323334] rounded-full w-8 mx-auto px-3 py-1 text-center text-white">
@@ -165,6 +187,10 @@ export default function page() {
               <div
                 className="p-5 max-w-lg space-y-3 bg-[#121212] border-[#191d1f] border-[1px] rounded-lg cursor-pointer hover:scale-105 ease-in-out duration-300"
                 key={idx}
+                data-aos="fade-up"
+                data-aos-duration="1000"
+                data-aos-easing="ease-in-out"
+                data-aos-once="false"
               >
                 <h1 className="text-white font-semibold text-xl">{i.qes}</h1>
                 <p className="text-[#a2a2a2] leading-7">{i.ans}</p>
