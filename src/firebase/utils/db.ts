@@ -121,6 +121,7 @@ export default class dbService {
               "Cannot save more than 3 websites for Basic subscription"
             );
             updatedWebsites = userWebsites;
+            return "WebsiteFull"
           }
         } else if (subscription === "Pro") {
           await updateDoc(userDocRef, {

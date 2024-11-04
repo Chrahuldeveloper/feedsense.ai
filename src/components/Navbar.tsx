@@ -1,9 +1,8 @@
 "use client";
-
-import useAuth from "@/hooks/CurrentUser";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { CiMenuFries } from "react-icons/ci";
+import Cookies from "js-cookie";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,7 +23,8 @@ const Navbar = () => {
     };
   }, []);
 
-  const { user, loading } = useAuth();
+  const userSession = Cookies.get("auth-token");
+
 
   return (
     <>
@@ -50,22 +50,19 @@ const Navbar = () => {
           <Link href={"/contactUs"}>
             <li className="cursor-pointer font-semibold text-sm">Contact</li>
           </Link>
-          {!loading && user ? (
+          {userSession === undefined ? (
+            <Link href="/login">
+              <li className="cursor-pointer font-semibold text-sm">Login</li>
+            </Link>
+          ) : (
             <Link href="/dashboard">
               <li className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700  text-white py-2 px-5 w-full font-semibold rounded-full  text-sm">
                 Your Account
               </li>
             </Link>
-          ) : (
-            <Link href="/login">
-              <li className="cursor-pointer font-semibold text-sm">Login</li>
-            </Link>
           )}
         </ul>
       </nav>
-
-
-
     </>
   );
 };

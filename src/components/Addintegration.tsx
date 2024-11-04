@@ -11,6 +11,7 @@ import cache from "../cache/cache";
 import Loader from "../components/Loader";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebase/Firebase";
+import { useRouter } from "next/navigation";
 
 interface Website {
   id: string;
@@ -45,6 +46,8 @@ const AddIntegration: React.FC = () => {
   const [highlightedCode, setHighlightedCode] = useState("");
   const [lastWebsiteId, setLastWebsiteId] = useState<string | null>(null);
   const db = new dbService();
+
+  const router = useRouter()
 
   useEffect(() => {
     const fetchWebsites = async () => {
@@ -121,13 +124,20 @@ const AddIntegration: React.FC = () => {
             ...websiteDataInput,
             logo: logoURL,
           };
-          await db.saveWebsite(data, newWebsiteData);
-          setLastWebsiteId(websiteDataInput.url);
-          setCurrentStep(3);
-          generateCodeToCopy(websiteDataInput.url);
-          setWebsiteDataInput({ name: "", url: "", type: "", logo: null });
-          const updatedWebsites = await db.fetchWebsites(user);
-          setWebsiteData(updatedWebsites);
+          const res = await db.saveWebsite(data, newWebsiteData);
+          if(res == "WebsiteFull"){
+
+             alert("Upgrad your plan") 
+             return router.push("/plans")
+          }else{
+            setLastWebsiteId(websiteDataInput.url);
+            setCurrentStep(3);
+            generateCodeToCopy(websiteDataInput.url);
+            setWebsiteDataInput({ name: "", url: "", type: "", logo: null });
+            const updatedWebsites = await db.fetchWebsites(user);
+            setWebsiteData(updatedWebsites);
+
+          }
         } else {
           console.log("User is loading or not authenticated");
         }
@@ -158,7 +168,7 @@ const AddIntegration: React.FC = () => {
 
   return (
     <>
-      {(fetchingData || savingData || deleting) && <Loader message=""/>}
+      {(fetchingData || savingData || deleting) && <Loader message="Loading" />}
       <div className="md:ml-80">
         <nav className="md:hidden bg-[#18181b] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>

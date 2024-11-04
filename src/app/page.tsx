@@ -6,55 +6,55 @@ import Link from "next/link";
 import { FaXTwitter } from "react-icons/fa6";
 import { FiInstagram } from "react-icons/fi";
 import { FaFacebookF } from "react-icons/fa";
-import useAuth from "@/hooks/CurrentUser";
+import Cookies from "js-cookie";
 
 export default function page() {
   const data = [
     {
       title: "Unified Feedback Management",
-      para: "Easily gather feedback from multiple websites in one place. Streamline your workflow by centralizing all user insights and responses.",
+      para: "Easily gather feedback from multiple websites and your business services in one place. Streamline your workflow by centralizing all user and client insights.",
     },
     {
       title: "AI-Driven Feedback Analysis",
-      para: "Our AI goes beyond simple data collection, transforming user feedback into actionable insights and prioritized suggestions for improvement.",
+      para: "Our AI goes beyond simple data collection, transforming user and client feedback into actionable insights and prioritized suggestions for improvement.",
     },
     {
       title: "Smart Suggestions for Improvement",
-      para: "Let AI guide you with tailored suggestions based on user feedback. Quickly identify areas to enhance user experience and boost engagement.",
+      para: "Let AI guide you with tailored suggestions based on feedback. Quickly identify areas to enhance your business services and online presence.",
     },
     {
       title: "Centralized Data, Maximum Efficiency",
-      para: "Save time and resources by collecting and analyzing feedback from all your websites in one dashboard, powered by intelligent automation.",
+      para: "Save time and resources by collecting and analyzing feedback from all your websites and business services in one dashboard, powered by intelligent automation.",
     },
   ];
 
   const howItWorks = [
     {
       title: "Integrate Feedback Form",
-      para: "Simply add our feedback form to each of your websites. Our form is easy to integrate and starts collecting user input immediately.",
+      para: "Simply add our feedback form to each of your websites and services. Our form is easy to integrate and starts collecting user and client input immediately.",
     },
     {
-      title: "Gather User Insights",
-      para: "Your users can submit feedback directly through the form on your websites. All responses are stored and organized in one place for easy access.",
+      title: "Gather User and Client Insights",
+      para: "Your users and clients can submit feedback directly through the form on your websites or services. All responses are stored and organized in one place for easy access.",
     },
     {
       title: "AI-Generated Improvement Suggestions",
-      para: "Our AI analyzes the feedback and provides actionable, prioritized suggestions, helping you enhance user experience efficiently across all your sites.",
+      para: "Our AI analyzes the feedback and provides actionable, prioritized suggestions, helping you enhance both your services and user experience efficiently.",
     },
   ];
 
   const faq = [
     {
-      qes: "How does your tool work with multiple websites?",
-      ans: "Our tool lets you integrate a feedback form on any number of websites. All collected data is centralized, making it easy to manage and review feedback from one dashboard.",
+      qes: "How does your tool work with multiple websites and business services?",
+      ans: "Our tool lets you integrate a feedback form on any number of websites or service pages. All collected data is centralized, making it easy to manage and review feedback from one dashboard.",
     },
     {
       qes: "What kind of feedback does AI analyze?",
-      ans: "The AI identifies trends and patterns in user feedback, offering insights on areas needing improvement, from design enhancements to functionality upgrades.",
+      ans: "The AI identifies trends and patterns in user and client feedback, offering insights on areas needing improvement, from service enhancements to functionality upgrades.",
     },
     {
       qes: "How do I get started?",
-      ans: "Install our feedback form on your websites, and our AI will start gathering and analyzing responses, providing actionable suggestions for improvement.",
+      ans: "Install our feedback form on your websites and services, and our AI will start gathering and analyzing responses, providing actionable suggestions for improvement.",
     },
     {
       qes: "Is my data secure when using your feedback tool?",
@@ -62,7 +62,7 @@ export default function page() {
     },
   ];
 
-  const { user, loading } = useAuth();
+  const userSession = Cookies.get("auth-token");
 
   return (
     <div className="bg-black w-full min-h-screen">
@@ -76,14 +76,13 @@ export default function page() {
           </div>
         </div>
         <h1 className="text-3xl lg:text-5xl text-center font-semibold text-white leading-8 z-50">
-          Centralize Feedback, Empower Your Websites
+          Centralize Feedback, Empower Your Business
         </h1>
         <p className="text-[#a2a2a2] max-w-lg text-center z-50 text-sm md:text-base">
-          Collect and analyze feedback across multiple sites in one dashboard.
-          Let our AI guide your next improvements.
+          Collect and analyze feedback across multiple sites and services in one dashboard. Let our AI guide your next improvements.
         </p>
         <Link
-          href={`${!loading && user ? "/dashboard" : "/login"}`}
+          href={`${ userSession === undefined  ? "/login" : "/dashboard"}`}
           className="z-50"
         >
           <button className="bg-white text-black py-2 px-8 md:px-16 lg:px-20 font-semibold rounded-full">
@@ -103,8 +102,7 @@ export default function page() {
             Simplify Feedback Management
           </h1>
           <p className="text-[#a2a2a2] max-w-xl text-center text-sm md:text-base">
-            Our tool collects user feedback across multiple websites and
-            consolidates it for easy review and action.
+            Our tool collects user and client feedback across multiple websites and business services and consolidates it for easy review and action.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10">
             {data.map((i, idx) => (
@@ -124,8 +122,7 @@ export default function page() {
         <div className="space-y-8 flex flex-col items-center justify-center">
           <h1 className="text-xl md:text-3xl text-white">How does it work?</h1>
           <p className="text-[#a2a2a2] max-w-xl text-center text-sm md:text-base">
-            From integration to AI-powered analysis, here’s how our tool
-            centralizes feedback and generates improvement suggestions.
+            From integration to AI-powered analysis, here’s how our tool centralizes feedback from both your websites and services, generating improvement suggestions.
           </p>
           <div className="flex flex-col gap-8 md:flex-row">
             {howItWorks.map((i, idx) => (
@@ -150,8 +147,7 @@ export default function page() {
             Frequently Asked Questions
           </h1>
           <p className="text-[#a2a2a2] text-sm max-w-md leading-7 font-semibold text-center">
-            Get answers to common questions about managing feedback across
-            multiple websites with AI.
+            Get answers to common questions about managing feedback across multiple websites and services with AI.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {faq.map((i, idx) => (
@@ -167,50 +163,19 @@ export default function page() {
         </div>
       </div>
 
-      <footer className="bg-[#121212] border-t border-[#191d1f] py-12 px-36  flex flex-col md:flex-row justify-between items-center">
+      <footer className="bg-[#121212] border-t border-[#191d1f] py-12 px-36 flex flex-col md:flex-row justify-between items-center">
         <div className="text-center md:text-left space-y-5 mb-8 md:mb-0">
           <h1 className="text-2xl md:text-3xl font-semibold text-white">
-            Fixit
+            TaskFeed
           </h1>
-          <p className="text-slate-300 leading-8 text-sm max-w-xs">
-            Streamline feedback management across multiple websites with
-            AI-powered insights and suggestions for improvement.
+          <p className="text-[#a2a2a2]">
+            Centralize and analyze feedback to continually improve your websites and business services.
           </p>
         </div>
-
-        <div className="flex flex-col md:flex-row space-y-9 md:space-y-0 md:space-x-20 text-white">
-          <div className="space-y-5 text-center md:text-left">
-            <h2 className="text-lg font-bold">Quick Links</h2>
-            <ul className="text-sm space-y-5">
-              <li>
-                <Link href="/">Home</Link>
-              </li>
-              <li>
-                <Link href="/features">Features</Link>
-              </li>
-              <li>
-                <Link href="/pricing">Pricing</Link>
-              </li>
-              <li>
-                <Link href="/contact">Contact</Link>
-              </li>
-            </ul>
-          </div>
-
-          <div className="space-y-5 text-center md:text-left">
-            <h2 className="text-lg font-bold">Follow Us</h2>
-            <div className="flex space-x-5 justify-center md:justify-start mt-3">
-              <Link href="#">
-                <FaXTwitter size={19} color="white" />
-              </Link>
-              <Link href="#">
-                <FiInstagram size={19} color="white" />
-              </Link>
-              <Link href="#">
-                <FaFacebookF size={19} color="white" />
-              </Link>
-            </div>
-          </div>
+        <div className="flex items-center gap-5 text-white text-sm">
+          <FaXTwitter className="w-6 h-6 cursor-pointer hover:scale-125 ease-in-out duration-300" />
+          <FiInstagram className="w-6 h-6 cursor-pointer hover:scale-125 ease-in-out duration-300" />
+          <FaFacebookF className="w-6 h-6 cursor-pointer hover:scale-125 ease-in-out duration-300" />
         </div>
       </footer>
     </div>
