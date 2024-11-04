@@ -158,7 +158,7 @@ const AddIntegration: React.FC = () => {
 
   return (
     <>
-      {(fetchingData || savingData || deleting) && <Loader message="" />}
+      {(fetchingData || savingData || deleting) && <Loader message=""/>}
       <div className="md:ml-80">
         <nav className="md:hidden bg-[#18181b] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>

@@ -14,8 +14,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "TaskFeed",
-  description: "TaskFeed",
+  title: "FixIt",
+  description: "Centralize and analyze feedback across multiple websites with AI-powered insights. Easily collect user input, prioritize improvements, and enhance user experience from one dashboard",
 };
 
 export default function RootLayout({
