@@ -10,6 +10,8 @@ import Analytics from "./Analytics";
 import { CgProfile } from "react-icons/cg";
 import { FaRegCircleStop } from "react-icons/fa6";
 import cache from "../cache/cache";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase/Firebase";
 
 interface Props {
   user: any;
@@ -28,8 +30,21 @@ const Table: React.FC<Props> = ({ user }) => {
     totalFeedback: "0",
   });
 
-  const db = new dbService();
+  const db1 = new dbService();
   const { user: currentUser, loading } = useAuth();
+  const [plan, setplan] = useState();
+
+  useEffect(() => {
+    const checkPlan = async () => {
+      if (!loading && currentUser) {
+        const userDocRef = doc(db, "USERS", currentUser.uid);
+        const docSnap = await getDoc(userDocRef);
+        console.log(docSnap.data()?.subscription);
+        setplan(docSnap.data()?.subscription);
+      }
+    };
+    checkPlan();
+  }, [loading, currentUser]);
 
   useEffect(() => {
     const fetchWebsites = async () => {
@@ -42,7 +57,7 @@ const Table: React.FC<Props> = ({ user }) => {
           return;
         }
 
-        const data = await db.fetchWebsites(currentUser);
+        const data = await db1.fetchWebsites(currentUser);
         console.log("Fetched Websites Data from Firestore:", data);
 
         cache.set(currentUser.uid, data);
@@ -55,7 +70,7 @@ const Table: React.FC<Props> = ({ user }) => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const websiteInfoData = await db.fetchDashboardDetails(
+        const websiteInfoData = await db1.fetchDashboardDetails(
           currentUser?.uid
         );
         if (websiteInfoData) {
@@ -148,16 +163,19 @@ const Table: React.FC<Props> = ({ user }) => {
                         {site?.name}
                       </td>
                       <td className="px-10 py-4 whitespace-nowrap text-sm text-slate-300">
-                        {site?.feedback?.length || 0}
+                        {site?.feedback && site.feedback.length > 0
+                          ? site.feedback.length
+                          : 0}
                       </td>
                       <td className="px-2 py-4 whitespace-nowrap text-sm text-slate-300">
                         <Link
                           href={{
                             pathname: "/dashboard/tasks",
                             query: {
-                              feedback: JSON.stringify(site?.feedback),
+                              feedback: JSON.stringify(site?.feedback || []),
                               name: site?.name,
                               image: site?.logo,
+                              Plan: plan,
                             },
                           }}
                         >

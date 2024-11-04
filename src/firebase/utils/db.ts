@@ -121,7 +121,7 @@ export default class dbService {
               "Cannot save more than 3 websites for Basic subscription"
             );
             updatedWebsites = userWebsites;
-            return "WebsiteFull"
+            return "WebsiteFull";
           }
         } else if (subscription === "Pro") {
           await updateDoc(userDocRef, {
@@ -333,7 +333,7 @@ export default class dbService {
       const docSnap = await getDoc(userDocRef);
 
       if (docSnap.exists()) {
-        return docSnap.data()?.subscribe || false;
+        return docSnap.data()?.subscription || false;
       } else {
         console.error("User does not exist");
         return false;
@@ -343,4 +343,18 @@ export default class dbService {
       return false;
     }
   }
+
+  // async checkPlan(userId: any) {
+  //   try {
+  //     const userDocRef = doc(db, "USERS", userId);
+  //     const docSnap = await getDoc(userDocRef);
+
+  //     if (docSnap.exists()) {
+  //       return docSnap.data()?.subscription;
+  //     }
+  //   } catch (error) {
+  //     console.error("Error checking subscription status:", error);
+  //     return false;
+  //   }
+  // }
 }

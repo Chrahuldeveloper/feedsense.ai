@@ -47,7 +47,7 @@ const AddIntegration: React.FC = () => {
   const [lastWebsiteId, setLastWebsiteId] = useState<string | null>(null);
   const db = new dbService();
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     const fetchWebsites = async () => {
@@ -125,18 +125,16 @@ const AddIntegration: React.FC = () => {
             logo: logoURL,
           };
           const res = await db.saveWebsite(data, newWebsiteData);
-          if(res == "WebsiteFull"){
-
-             alert("Upgrad your plan") 
-             return router.push("/plans")
-          }else{
+          if (res == "WebsiteFull") {
+            alert("Upgrad your plan");
+            return router.push("/plans");
+          } else {
             setLastWebsiteId(websiteDataInput.url);
             setCurrentStep(3);
             generateCodeToCopy(websiteDataInput.url);
             setWebsiteDataInput({ name: "", url: "", type: "", logo: null });
             const updatedWebsites = await db.fetchWebsites(user);
             setWebsiteData(updatedWebsites);
-
           }
         } else {
           console.log("User is loading or not authenticated");
