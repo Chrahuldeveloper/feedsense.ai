@@ -1,7 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FaXTwitter } from "react-icons/fa6";
 import { FiInstagram } from "react-icons/fi";
@@ -62,11 +62,15 @@ export default function page() {
     },
   ];
 
-  const userSession = Cookies.get("auth-token");
+  const [userSession, setUserSession] = useState(null);
+
+  useEffect(() => {
+    setUserSession(Cookies.get("auth-token"));
+  }, []);
 
   return (
     <div className="bg-black w-full min-h-screen">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="flex flex-col items-center space-y-8 pt-32 px-4">
         <div className="absolute inset-0 overflow-hidden ">
           <div className="absolute inset-0 overflow-hidden">
@@ -79,16 +83,18 @@ export default function page() {
           Centralize Feedback, Empower Your Business
         </h1>
         <p className="text-[#a2a2a2] max-w-lg text-center z-50 text-sm md:text-base">
-          Collect and analyze feedback across multiple sites and services in one dashboard. Let our AI guide your next improvements.
+          Collect and analyze feedback across multiple sites and services in one
+          dashboard. Let our AI guide your next improvements.
         </p>
         <Link
-          href={`${ userSession === undefined  ? "/login" : "/dashboard"}`}
+          href={`${userSession === null ? "/login" : "/dashboard"}`}
           className="z-50"
         >
           <button className="bg-white text-black py-2 px-8 md:px-16 lg:px-20 font-semibold rounded-full">
-            Get Started
+            {userSession === null ? "Login" : "Your Account"}
           </button>
         </Link>
+
         <img
           src="https://firebasestorage.googleapis.com/v0/b/notes-app-e3995.appspot.com/o/TaskFeed-10-24-2024_09_01_PM.png?alt=media&token=48ce631d-3bd7-4df3-a7c1-6147d9503532"
           alt=""
@@ -102,7 +108,9 @@ export default function page() {
             Simplify Feedback Management
           </h1>
           <p className="text-[#a2a2a2] max-w-xl text-center text-sm md:text-base">
-            Our tool collects user and client feedback across multiple websites and business services and consolidates it for easy review and action.
+            Our tool collects user and client feedback across multiple websites
+            and business services and consolidates it for easy review and
+            action.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10">
             {data.map((i, idx) => (
@@ -122,7 +130,9 @@ export default function page() {
         <div className="space-y-8 flex flex-col items-center justify-center">
           <h1 className="text-xl md:text-3xl text-white">How does it work?</h1>
           <p className="text-[#a2a2a2] max-w-xl text-center text-sm md:text-base">
-            From integration to AI-powered analysis, here’s how our tool centralizes feedback from both your websites and services, generating improvement suggestions.
+            From integration to AI-powered analysis, here’s how our tool
+            centralizes feedback from both your websites and services,
+            generating improvement suggestions.
           </p>
           <div className="flex flex-col gap-8 md:flex-row">
             {howItWorks.map((i, idx) => (
@@ -147,7 +157,8 @@ export default function page() {
             Frequently Asked Questions
           </h1>
           <p className="text-[#a2a2a2] text-sm max-w-md leading-7 font-semibold text-center">
-            Get answers to common questions about managing feedback across multiple websites and services with AI.
+            Get answers to common questions about managing feedback across
+            multiple websites and services with AI.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {faq.map((i, idx) => (
@@ -169,7 +180,8 @@ export default function page() {
             TaskFeed
           </h1>
           <p className="text-[#a2a2a2]">
-            Centralize and analyze feedback to continually improve your websites and business services.
+            Centralize and analyze feedback to continually improve your websites
+            and business services.
           </p>
         </div>
         <div className="flex items-center gap-5 text-white text-sm">
