@@ -69,7 +69,9 @@ const AddIntegration: React.FC = () => {
   hljs.registerLanguage("html", html);
 
   const generateCodeToCopy = (websiteId: string) => {
-    const code = `<!-- Add this snippet to your website's HTML -->\n<iframe src="http://${window.location.hostname}:3000/integrate/${websiteId}"></iframe>`;
+    const code = `<!-- Add this snippet to your website's HTML -->\n<iframe src="http://${
+      window.location.hostname
+    }:3000/integrate/${user!.uid}/${websiteId}"></iframe>`;
     const highlighted = hljs.highlight(code, { language: "html" }).value;
     setHighlightedCode(highlighted);
     setShowCode(true);
@@ -129,7 +131,7 @@ const AddIntegration: React.FC = () => {
             alert("Upgrad your plan");
             return router.push("/plans");
           } else {
-            setLastWebsiteId(websiteDataInput.url);
+            setLastWebsiteId(websiteDataInput.name);
             setCurrentStep(3);
             generateCodeToCopy(websiteDataInput.url);
             setWebsiteDataInput({ name: "", url: "", type: "", logo: null });
@@ -153,7 +155,9 @@ const AddIntegration: React.FC = () => {
     try {
       if (lastWebsiteId) {
         await navigator.clipboard.writeText(
-          `<iframe src="http://${window.location.hostname}:3000/integrate/${lastWebsiteId}"></iframe>`
+          `<iframe src="http://${window.location.hostname}:3000/integrate/${
+            user!.uid
+          }/${lastWebsiteId}"></iframe>`
         );
         alert("Code copied to clipboard!");
       } else {
