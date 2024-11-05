@@ -9,37 +9,50 @@ import { Mail, Lock, ArrowRight } from "lucide-react";
 import Cookies from "js-cookie";
 import SendEmail from "../../emailJs/Email";
 import Loader from "../../components/Loader";
+import ErrorModel from "@/components/ErrorModel";
 
 export default function LoginPage() {
   const navigate = useRouter();
   const provider = new GoogleAuthProvider();
 
-  const [data, setdata] = useState({
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const [data, setData] = useState({
     email: "",
     password: "",
   });
 
   const Email = new SendEmail();
-
-  const [isloading, setisloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
     if (Object.values(data).every((i) => i !== "")) {
+      setIsLoading(true);
       try {
         const user = await signInWithEmailAndPassword(
           auth,
           data.email,
           data.password
         );
-        setisloading(true);
         console.log(user.user);
-        const message = `Thank you for logging in ${user.user.displayName} ! If you need any help navigating your account or have questions, we're just a message away.`;
+        const message = `Thank you for logging in ${user.user.displayName}! If you need any help navigating your account or have questions, we're just a message away.`;
         Email.sendLoginEmail(user.user.email, user.user.displayName, message);
         Cookies.set("auth-token", "authenticated", { expires: 1 });
         navigate.push("/plans");
-      } catch (error) {
-        console.log(error);
-        setisloading(false);
+      } catch (error: any) {
+        console.log(error.code);
+        setError(true);
+        setIsLoading(false);
+        if (error.code === "auth/invalid-credential") {
+          setErrorMessage("Invalid credentials.");
+        } else if (error.code === "auth/email-already-in-use") {
+          setErrorMessage("Mail already in Use.");
+        } else if (error.code === "auth/wrong-password") {
+          setErrorMessage("Incorrect password.");
+        } else {
+          setErrorMessage("An error occurred. Please try again.");
+        }
       }
     } else {
       alert("Enter all the details");
@@ -47,23 +60,28 @@ export default function LoginPage() {
   };
 
   const googleSignIn = async () => {
+    setIsLoading(true);
     try {
       const user = await signInWithPopup(auth, provider);
-      setisloading(true);
       console.log(user.user);
-      const message = `Thank you for logging in ${user.user.displayName} ! If you need any help navigating your account or have questions, we're just a message away.`;
+      const message = `Thank you for logging in ${user.user.displayName}! If you need any help navigating your account or have questions, we're just a message away.`;
       Email.sendLoginEmail(user.user.email, user.user.displayName, message);
       Cookies.set("auth-token", "authenticated", { expires: 1 });
       navigate.push("/plans");
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      setisloading(false);
+      setError(true);
+      setIsLoading(false);
+      setErrorMessage("Google sign-in failed. Please try again.");
     }
   };
 
   return (
     <div className="bg-[#000000] w-full overflow-hidden min-h-screen relative">
-      {isloading ? <Loader message="Loading" /> : null}
+      {error && (
+        <ErrorModel message={errorMessage} setError={setError} />
+      )}
+      {isLoading && <Loader message="Loading" />}
 
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/2 right-96 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500 rounded-full opacity-20 blur-[120px]" />
@@ -76,7 +94,7 @@ export default function LoginPage() {
           <div className="space-y-6 text-center">
             <h1 className="text-3xl font-bold text-white">Welcome back</h1>
             <p className="text-sm font-semibold text-slate-400">
-              Sign in to your account
+              Sign in or Login to your account
             </p>
           </div>
 
@@ -97,7 +115,7 @@ export default function LoginPage() {
                   id="email"
                   type="email"
                   value={data.email}
-                  onChange={(e) => setdata({ ...data, email: e.target.value })}
+                  onChange={(e) => setData({ ...data, email: e.target.value })}
                   autoComplete="email"
                   className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-10 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="Enter your email"
@@ -121,7 +139,7 @@ export default function LoginPage() {
                   type="password"
                   value={data.password}
                   onChange={(e) =>
-                    setdata({ ...data, password: e.target.value })
+                    setData({ ...data, password: e.target.value })
                   }
                   autoComplete="current-password"
                   className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-10 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
@@ -133,7 +151,7 @@ export default function LoginPage() {
 
           <button
             onClick={handleSubmit}
-            className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 mt-8 text-white py-2 px-4 w-full font-semibold rounded-lg  flex items-center justify-center"
+            className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 mt-8 text-white py-2 px-4 w-full font-semibold rounded-lg flex items-center justify-center"
           >
             <span>Login</span>
             <ArrowRight className="ml-2" size={18} />
@@ -142,7 +160,7 @@ export default function LoginPage() {
           <div className="mt-6 text-center">
             <span className="text-slate-400">
               Sign In or Login into your account
-            </span>{" "}
+            </span>
           </div>
 
           <div className="mt-8">
@@ -167,7 +185,7 @@ export default function LoginPage() {
                   src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
                   alt="Google logo"
                 />
-                Sign in with Google
+                Log in with Google
               </button>
             </div>
           </div>
