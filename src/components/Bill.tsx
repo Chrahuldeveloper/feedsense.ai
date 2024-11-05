@@ -21,8 +21,7 @@ const Bill = ({
         <p>₹{selectedPlan.price}</p>
       </div>
       <p className="max-w-md text-xs text-center">
-        Your payment method will be charged this amount plus usage fees every 30
-        days
+        Your subscription will end in the specified time period.
       </p>
     </div>
   );
