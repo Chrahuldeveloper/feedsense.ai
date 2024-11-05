@@ -1,6 +1,6 @@
 "use client";
 import Bill from "@/components/Bill";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Script from "next/script";
 import axios from "axios";
@@ -15,48 +15,6 @@ declare global {
 
 const Page = () => {
   const { planType } = useParams();
-
-  const [currentPlan, setCurrentPlan] = useState({
-    name: "Basic",
-    price: 450,
-  });
-
-  const AMOUNT = currentPlan.price;
-
-  const handlePayment = async () => {
-    try {
-      const orderID = await axios.post("http://localhost:3000/api/subscribe", {
-        amount: currentPlan.price * 100,
-      });
-
-      const data = orderID.data;
-
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-        amount: AMOUNT * 100,
-        currency: "INR",
-        name: "TASKFEED",
-        description: "TEST TRANSACTION",
-        order_id: data.orderId,
-        handler: function (response: any) {
-          console.log("Payment is successful", response);
-        },
-        prefill: {
-          name: "Rahul",
-          email: "chrahulofficial@gmail.com",
-          contact: "8317680338",
-        },
-        theme: {
-          color: "#3399cc",
-        },
-      };
-
-      const rzp1 = new window.Razorpay(options);
-      rzp1.open();
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const subscriptionPlans = [
     {
@@ -85,6 +43,51 @@ const Page = () => {
       ],
     },
   ];
+
+  // Find the initial plan based on `planType`
+  const initialPlan = subscriptionPlans.find(
+    (plan) => plan.name === (planType || "Basic")
+  );
+
+  const [currentPlan, setCurrentPlan] = useState({
+    name: initialPlan?.name || "Basic",
+    price: initialPlan?.price || 450,
+  });
+
+  const handlePayment = async () => {
+    try {
+      const orderID = await axios.post("http://localhost:3000/api/subscribe", {
+        amount: currentPlan.price * 100,
+      });
+
+      const data = orderID.data;
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: currentPlan.price * 100,
+        currency: "INR",
+        name: "TASKFEED",
+        description: "TEST TRANSACTION",
+        order_id: data.orderId,
+        handler: function (response: any) {
+          console.log("Payment is successful", response);
+        },
+        prefill: {
+          name: "Rahul",
+          email: "chrahulofficial@gmail.com",
+          contact: "8317680338",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="bg-[#0e0f11] w-screen min-h-screen overflow-x-clip">
