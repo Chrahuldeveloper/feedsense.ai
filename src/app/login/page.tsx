@@ -140,10 +140,9 @@ export default function LoginPage() {
           </button>
 
           <div className="mt-6 text-center">
-            <span className="text-slate-400">Don't have an account?</span>{" "}
-            <a href="#" className="text-blue-500 hover:underline">
-              Sign up
-            </a>
+            <span className="text-slate-400">
+              Sign In or Login into your account
+            </span>{" "}
           </div>
 
           <div className="mt-8">

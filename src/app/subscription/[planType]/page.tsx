@@ -18,14 +18,16 @@ const Page = () => {
 
   const [currentPlan, setCurrentPlan] = useState({
     name: "Basic",
-    price: 10,
+    price: 450,
   });
 
   const AMOUNT = currentPlan.price;
 
   const handlePayment = async () => {
     try {
-      const orderID = await axios.post("http://localhost:3000/api/subscribe");
+      const orderID = await axios.post("http://localhost:3000/api/subscribe", {
+        amount: currentPlan.price * 100,
+      });
 
       const data = orderID.data;
 
@@ -60,8 +62,8 @@ const Page = () => {
     {
       id: 1,
       name: "Basic",
-      price: 450, 
-      displayPrice: "₹450/month", 
+      price: 450,
+      displayPrice: "₹450/month",
       features: [
         "Collect up to 100 feedback",
         "Email support",
@@ -72,8 +74,8 @@ const Page = () => {
     {
       id: 2,
       name: "Pro",
-      price: 2000, 
-      displayPrice: "₹2000 for 4 months", 
+      price: 2000,
+      displayPrice: "₹2000 for 4 months",
       features: [
         "Unlimited feedback entries",
         "Automated task generation from feedback",
@@ -87,7 +89,7 @@ const Page = () => {
   return (
     <div className="bg-[#0e0f11] w-screen min-h-screen overflow-x-clip">
       <div className="flex justify-between w-[80vw] mx-auto pt-5 pb-10">
-        <h1 className="text-slate-300 text-lg">Change Plan</h1>
+        <h1 className="text-slate-300 font-semibold text-lg">Change Plan</h1>
         <Link href={"/dashboard"}>
           <RxCross2 size={24} color="white" />
         </Link>

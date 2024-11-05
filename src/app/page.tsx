@@ -70,19 +70,20 @@ export default function page() {
 
   useEffect(() => {
     setUserSession(Cookies.get("auth-token"));
+    console.log(Cookies.get("auth-token"));
   }, []);
 
   return (
     <div className="bg-black w-full min-h-screen">
       <Navbar />
-      <div
-        className="flex flex-col items-center space-y-8 pt-32 px-4"
-        data-aos="fade-up"
-        data-aos-duration="1400"
-        data-aos-easing="ease-in-out"
-        data-aos-once="false"
-      >
-        <div className="absolute inset-0 overflow-hidden ">
+      <div className="flex flex-col items-center space-y-8 pt-32 px-4">
+        <div
+          className="absolute inset-0 overflow-hidden "
+          data-aos="fade-up"
+          data-aos-duration="1400"
+          data-aos-easing="ease-in-out"
+          data-aos-once="false"
+        >
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[30vh] bg-blue-600 rounded-full opacity-20 blur-[120px]" />
             <div className="absolute top-1/4 left-1/4 w-[60vw] h-[30vh] bg-blue-500 rounded-full opacity-15 blur-[100px]" />
@@ -97,11 +98,11 @@ export default function page() {
           dashboard. Let our AI guide your next improvements.
         </p>
         <Link
-          href={`${userSession === null ? "/login" : "/dashboard"}`}
+          href={`${userSession === undefined ? "/login" : "/dashboard"}`}
           className="z-50"
         >
           <button className="bg-white text-black py-2 px-8 md:px-16 lg:px-20 font-semibold rounded-full">
-            {userSession === null ? "Login" : "Your Account"}
+            {userSession === undefined ? "Login" : "Your Account"}
           </button>
         </Link>
 

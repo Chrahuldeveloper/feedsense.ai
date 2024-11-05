@@ -6,14 +6,14 @@ import Cookies from "js-cookie";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [userSession, setUserSession] = useState(null); 
+  const [userSession, setUserSession] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
     };
 
-    const token = Cookies.get("auth-token"); 
+    const token = Cookies.get("auth-token");
     setUserSession(token);
 
     window.addEventListener("scroll", handleScroll);
@@ -30,9 +30,7 @@ const Navbar = () => {
       }`}
     >
       <div>
-        <h1 className="text-2xl md:text-3xl font-semibold text-white">
-          Fixit
-        </h1>
+        <h1 className="text-2xl md:text-3xl font-semibold text-white">Fixit</h1>
       </div>
       <div className="md:hidden">
         <CiMenuFries size={23} color="white" />
@@ -44,7 +42,7 @@ const Navbar = () => {
         <Link href={"/contactUs"}>
           <li className="cursor-pointer font-semibold text-sm">Contact</li>
         </Link>
-        {userSession === null ? (
+        {userSession === undefined ? (
           <Link href="/login">
             <li className="cursor-pointer font-semibold text-sm">Login</li>
           </Link>
