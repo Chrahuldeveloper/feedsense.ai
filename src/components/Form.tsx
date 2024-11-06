@@ -41,13 +41,13 @@ const Form: React.FC<Props> = ({
   };
 
   return (
-    <div className="p-5 flex justify-center">
+    <div className="flex justify-center p-4 sm:p-8">
       <div
         style={{ backgroundColor: formBgColor }}
-        className="mt-4 p-5 border-[#272b2f] rounded-lg border-[1px] shadow-lg max-w-[500px] w-full"
+        className="p-5 border-[#272b2f] rounded-lg border-[1px] shadow-lg w-full max-w-md sm:max-w-lg lg:max-w-xl"
       >
         <div className="text-center">
-          <h1 className={`text-xl font-bold`} style={{ color: textColor }}>
+          <h1 className="text-xl font-bold" style={{ color: textColor }}>
             Feedback
           </h1>
         </div>
@@ -61,7 +61,7 @@ const Form: React.FC<Props> = ({
             onChange={(e) => {
               setFeedback({ ...feedback, name: e.target.value });
             }}
-            autoComplete="false"
+            autoComplete="off"
             className="border-[1px] border-neutral-900 px-3 py-2 outline-none w-full rounded-lg"
             style={{ backgroundColor: inputBgColor, color: textColor }}
           />
@@ -76,7 +76,7 @@ const Form: React.FC<Props> = ({
             onChange={(e) => {
               setFeedback({ ...feedback, email: e.target.value });
             }}
-            autoComplete="false"
+            autoComplete="off"
             className="border-[1px] border-neutral-900 px-3 py-2 outline-none w-full rounded-lg"
             style={{ backgroundColor: inputBgColor, color: textColor }}
           />
@@ -86,7 +86,6 @@ const Form: React.FC<Props> = ({
             Feedback*
           </h1>
           <textarea
-            autoComplete="false"
             value={feedback.feedback}
             onChange={(e) => {
               setFeedback({ ...feedback, feedback: e.target.value });
@@ -100,7 +99,7 @@ const Form: React.FC<Props> = ({
         <div className="mt-4">
           <button
             onClick={saveFeedBack}
-            className="text-white px-4 py-2 rounded-lg w-full hover:brightness-75 ease-in-out duration-300"
+            className="text-white px-4 py-2 rounded-lg w-full hover:brightness-75 transition duration-300"
             style={{ backgroundColor: buttonColor }}
           >
             Submit

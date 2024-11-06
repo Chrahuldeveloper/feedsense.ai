@@ -201,9 +201,9 @@ export default function page() {
         </div>
       </div>
 
-      <div>
+      <div >
         <iframe
-          className="w-screen h-screen"
+          className="  w-screen h-screen"
           src="http://localhost:3000/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/fixit.com"
         ></iframe>
       </div>
