@@ -235,7 +235,7 @@ export default class dbService {
   async saveFeedback(
     userID: string,
     websiteName: string,
-    data: { name: string; email: string; feedback: string }
+    data: { name: string; emotion: string; feedback: string }
   ) {
     try {
       console.log(data, websiteName, userID);

@@ -201,12 +201,7 @@ export default function page() {
         </div>
       </div>
 
-      <div >
-        <iframe
-          className="  w-screen h-screen"
-          src="http://localhost:3000/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/fixit.com"
-        ></iframe>
-      </div>
+      
 
       <footer className="bg-[#121212] border-t border-[#191d1f] py-12 px-36 flex flex-col md:flex-row justify-between items-center">
         <div className="text-center md:text-left space-y-5 mb-8 md:mb-0">

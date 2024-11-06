@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "FixIt",
+  title: "FeedSense.ai",
   description:
     "Centralize and analyze feedback across multiple websites with AI-powered insights. Easily collect user input, prioritize improvements, and enhance user experience from one dashboard",
 };

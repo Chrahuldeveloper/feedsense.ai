@@ -1,37 +1,30 @@
 "use client";
 import dbService from "@/firebase/utils/db";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { IoHappyOutline } from "react-icons/io5";
+import { IoSadOutline } from "react-icons/io5";
+import { TbMoodSadDizzy } from "react-icons/tb";
 
-interface Props {
-  formBgColor: string;
-  inputBgColor: string;
-  textColor: string;
-  buttonColor: string;
-}
-
-const Form: React.FC<Props> = ({
-  formBgColor,
-  inputBgColor,
-  textColor,
-  buttonColor,
-}) => {
+const Form = () => {
   const { userID, websiteID } = useParams();
   const [feedback, setFeedback] = useState({
     name: "",
-    email: "",
+    emotion: "",  
     feedback: "",
   });
+  const [selectedEmotion, setSelectedEmotion] = useState<number>(); 
   const db = new dbService();
 
   const saveFeedBack = async () => {
     try {
       const isSubscribed = await db.checkifSubscribed(userID, websiteID);
-
       if (isSubscribed) {
         await db.saveFeedback(userID, websiteID, feedback);
         alert("Feedback submitted successfully!");
-        setFeedback({ name: "", email: "", feedback: "" });
+        setFeedback({ name: "", emotion: "", feedback: "" });
+        setSelectedEmotion(null);
       } else {
         alert("You are not subscribed to this website.");
       }
@@ -40,72 +33,97 @@ const Form: React.FC<Props> = ({
     }
   };
 
+  const emotions = [
+    {
+      title: "Happy",
+      emoji: <IoHappyOutline size={32} color="#c1d0d5" />,
+    },
+    {
+      title: "Neutral",
+      emoji: <IoSadOutline size={32} color="#c1d0d5" />,
+    },
+    {
+      title: "Sad",
+      emoji: <TbMoodSadDizzy size={32} color="#c1d0d5" />,
+    },
+  ];
+
   return (
-    <div className="flex justify-center p-4 sm:p-8">
-      <div
-        style={{ backgroundColor: formBgColor }}
-        className="p-5 border-[#272b2f] rounded-lg border-[1px] shadow-lg w-full max-w-md sm:max-w-lg lg:max-w-xl"
-      >
-        <div className="text-center">
-          <h1 className="text-xl font-bold" style={{ color: textColor }}>
-            Feedback
+    <div className="flex justify-center p-5">
+      <div className="rounded-lg shadow-lg w-full max-w-md sm:max-w-lg lg:max-w-xl border-[1px] bg-[#121212] border-[#282e32]">
+        <div className="bg-gradient-to-r from-blue-600 via-blue-600 to-blue-500 p-6 rounded-t-lg border-b-[1px] border-stone-800 space-y-2">
+          <h1 className="text-2xl font-bold text-white">
+            Send Us Your Feedback
           </h1>
+          <p className="text-white text-sm font-semibold">
+            Do you have any suggestions to improve our services or product?
+          </p>
         </div>
-        <div className="space-y-2 mt-6">
-          <h1 className="font-semibold" style={{ color: textColor }}>
-            Name*
-          </h1>
-          <input
-            type="text"
-            value={feedback.name}
-            onChange={(e) => {
-              setFeedback({ ...feedback, name: e.target.value });
-            }}
-            autoComplete="off"
-            className="border-[1px] border-neutral-900 px-3 py-2 outline-none w-full rounded-lg"
-            style={{ backgroundColor: inputBgColor, color: textColor }}
-          />
+
+        <div className="p-5">
+          <div className="space-y-2.5 mt-6">
+            <h1 className="font-semibold text-white">Name*</h1>
+            <input
+              type="text"
+              value={feedback.name}
+              onChange={(e) => {
+                setFeedback({ ...feedback, name: e.target.value });
+              }}
+              autoComplete="off"
+              className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+            />
+          </div>
+
+          <div className="space-y-2.5 mt-6">
+            <h1 className="font-semibold text-white">Feedback*</h1>
+            <textarea
+              value={feedback.feedback}
+              onChange={(e) => {
+                setFeedback({ ...feedback, feedback: e.target.value });
+              }}
+              cols={20}
+              rows={5}
+              className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+            />
+          </div>
+
+          <div className="mt-6 space-y-2.5">
+            <h1 className="font-semibold text-white">How was your experience*</h1>
+            <div className="flex items-center space-x-5 mt-4">
+              {emotions.map((emotion, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => {
+                    setSelectedEmotion(idx);
+                    setFeedback({ ...feedback, emotion: emotion.title }); 
+                  }}
+                  className={`cursor-pointer p-2 rounded-full ${
+                    selectedEmotion === idx
+                      ? "bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700"
+                      : ""
+                  }`}
+                >
+                  {emotion.emoji}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <button
+              onClick={saveFeedBack}
+              className="text-white px-4 py-2 rounded-lg w-full bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
+            >
+              Submit
+            </button>
+          </div>
         </div>
-        <div className="space-y-2 mt-6">
-          <h1 className="font-semibold" style={{ color: textColor }}>
-            Email*
-          </h1>
-          <input
-            type="text"
-            value={feedback.email}
-            onChange={(e) => {
-              setFeedback({ ...feedback, email: e.target.value });
-            }}
-            autoComplete="off"
-            className="border-[1px] border-neutral-900 px-3 py-2 outline-none w-full rounded-lg"
-            style={{ backgroundColor: inputBgColor, color: textColor }}
-          />
-        </div>
-        <div className="space-y-2 mt-6">
-          <h1 className="font-semibold" style={{ color: textColor }}>
-            Feedback*
-          </h1>
-          <textarea
-            value={feedback.feedback}
-            onChange={(e) => {
-              setFeedback({ ...feedback, feedback: e.target.value });
-            }}
-            cols={20}
-            rows={5}
-            className="border-[1px] border-neutral-900 px-3 py-2 outline-none w-full rounded-lg"
-            style={{ backgroundColor: inputBgColor, color: textColor }}
-          />
-        </div>
-        <div className="mt-4">
-          <button
-            onClick={saveFeedBack}
-            className="text-white px-4 py-2 rounded-lg w-full hover:brightness-75 transition duration-300"
-            style={{ backgroundColor: buttonColor }}
-          >
-            Submit
-          </button>
-        </div>
-        <p className="text-slate-300 text-center mt-5">Powered By FixiT</p>
+        <p className="text-stone-600 text-center my-2">
+          Powered By{" "}
+          <span>
+            <Link href={"#"}>FeedSense.ai</Link>
+          </span>
+        </p>
       </div>
     </div>
   );
