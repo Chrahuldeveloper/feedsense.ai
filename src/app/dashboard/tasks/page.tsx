@@ -61,7 +61,7 @@ const Page = () => {
                 <RxCross2 size={25} color="white" />
               </Link>
             </div>
-            <table className=" w-[95vw] md:w-[60vw] mt-7 divide-y divide-stone-900 rounded-lg overflow-hidden">
+            <table className=" md:mx-auto w-[98vw] md:w-[60vw] mt-7 divide-y divide-stone-900 rounded-lg overflow-hidden">
               <thead className="bg-[#201d24] rounded-lg cursor-pointer">
                 <tr>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
@@ -101,8 +101,6 @@ const Page = () => {
                       >
                         {site?.parsedFeedback?.response?.replace(/"/g, "") ||
                           "No analysis available"}
-
-                        {getPlan}
                       </td>
                     </tr>
                   ))

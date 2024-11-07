@@ -61,10 +61,12 @@ const Form = () => {
         </div>
 
         {loading ? (
-          <div className="flex flex-col items-center justify-center w-[60w]">
-            <LottiePlayer loop animationData={FeedbackLoader} play />
-            <p className="text-white text-lg ">{feedbackStatus}</p>
-          </div>
+          <>
+            <div className="max-w-xs mx-auto -mt-10">
+              <LottiePlayer loop animationData={FeedbackLoader} play />
+            </div>
+            <p className="text-white  text-center -mt-28">{feedbackStatus}</p>
+          </>
         ) : (
           <div className="p-5">
             <div className="space-y-2.5 mt-4">
@@ -127,7 +129,7 @@ const Form = () => {
             </div>
           </div>
         )}
-        <p className="text-stone-600 text-center my-2">
+        <p className="text-stone-600 text-center my-4">
           Powered By{" "}
           <span>
             <Link href={"#"}>FeedSense.ai</Link>
