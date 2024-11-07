@@ -235,7 +235,7 @@ export default class dbService {
   async saveFeedback(
     userID: string,
     websiteName: string,
-    data: { name: string; emotion: string; feedback: string }
+    data: { name: string; email: string; emotion: string; feedback: string }
   ) {
     try {
       console.log(data, websiteName, userID);
@@ -309,14 +309,15 @@ export default class dbService {
     }
   }
 
-  async subscribe(user: any) {
+  async subscribe(user: any, plan: any, date: any) {
     try {
       const userDocRef = doc(db, "USERS", user);
       const docSnap = await getDoc(userDocRef);
 
       if (docSnap.exists()) {
         await updateDoc(userDocRef, {
-          subscribe: true,
+          subscribe: plan,
+          date: date,
         });
         console.log("User subscribed successfully");
       } else {
@@ -344,6 +345,41 @@ export default class dbService {
     }
   }
 
+  async isSubscribtionExpired(userId: any) {
+    try {
+      const userDocRef = doc(db, "USERS", userId);
+      const docSnap = await getDoc(userDocRef);
+
+      if (docSnap.exists()) {
+        const purchasedDateStr = docSnap.data()?.date;
+
+        if (!purchasedDateStr) {
+          console.error("Purchased date not found for user");
+          return false;
+        }
+
+        const [day, month, year] = purchasedDateStr.split("/").map(Number);
+        const purchasedDate = new Date(2000 + year, month - 1, day);
+
+        const currentDate = new Date();
+
+        const formatDate = (date: Date) => {
+          return `${String(date.getDate()).padStart(2, "0")}/${String(
+            date.getMonth() + 1
+          ).padStart(2, "0")}/${String(date.getFullYear()).slice(-2)}`;
+        };
+
+        return currentDate > purchasedDate;
+      } else {
+        console.error("User does not exist");
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
   // async checkPlan(userId: any) {
   //   try {
   //     const userDocRef = doc(db, "USERS", userId);
@@ -356,5 +392,4 @@ export default class dbService {
   //     console.error("Error checking subscription status:", error);
   //     return false;
   //   }
-  // }
 }

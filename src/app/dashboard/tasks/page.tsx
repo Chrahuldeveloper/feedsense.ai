@@ -14,6 +14,7 @@ const Page = () => {
   interface Feedback {
     name: string;
     email: string;
+    emotion: string;
     feedback: string;
     parsedFeedback?: { response: string };
   }
@@ -61,17 +62,17 @@ const Page = () => {
                 <RxCross2 size={25} color="white" />
               </Link>
             </div>
-            <table className=" md:mx-auto w-[98vw] md:w-[60vw] mt-7 divide-y divide-stone-900 rounded-lg overflow-hidden">
+            <table className=" md:mx-auto w-[98vw] md:w-[50vw] mt-7 divide-y divide-stone-900 rounded-lg overflow-hidden">
               <thead className="bg-[#201d24] rounded-lg cursor-pointer">
                 <tr>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    SNo
-                  </th>
-                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Name
+                    Email
                   </th>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Feedback
+                  </th>
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  Emotion
                   </th>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Analysis
@@ -86,10 +87,10 @@ const Page = () => {
                       className="hover:bg-[#141316] transition-colors duration-200 cursor-pointer"
                     >
                       <td className="py-5 px-6 md:px-9 text-xs md:text-sm text-slate-300">
-                        {idx + 1}
+                        {site.email}
                       </td>
                       <td className="py-5 px-6 md:px-9 text-xs md:text-sm text-slate-300">
-                        {site.name}
+                        {site.emotion}
                       </td>
                       <td className="py-5 px-6 w-72 md:px-9 text-xs md:text-sm text-slate-300">
                         {site.feedback}

@@ -1,11 +1,14 @@
 "use client";
 import Bill from "@/components/Bill";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Script from "next/script";
 import axios from "axios";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import dbService from "@/firebase/utils/db";
+import useAuth from "@/hooks/CurrentUser";
+import { useRouter } from "next/navigation";
 
 declare global {
   interface Window {
@@ -13,8 +16,12 @@ declare global {
   }
 }
 
+interface User {
+  uid: string;
+}
 const Page = () => {
   const { planType } = useParams();
+  const navigate = useRouter();
 
   const subscriptionPlans = [
     {
@@ -44,33 +51,53 @@ const Page = () => {
     },
   ];
 
-  // Find the initial plan based on `planType`
   const initialPlan = subscriptionPlans.find(
     (plan) => plan.name === (planType || "Basic")
   );
+
+  const db = new dbService();
 
   const [currentPlan, setCurrentPlan] = useState({
     name: initialPlan?.name || "Basic",
     price: initialPlan?.price || 450,
   });
 
+  const { user, loading } = useAuth() as {
+    user: User | null;
+    loading: boolean;
+  };
+
   const handlePayment = async () => {
     try {
       const orderID = await axios.post("http://localhost:3000/api/subscribe", {
-        amount: currentPlan.price * 100,
+        amount: 1 * 100,
       });
 
       const data = orderID.data;
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-        amount: currentPlan.price * 100,
+        amount: 1 * 100,
         currency: "INR",
         name: "TASKFEED",
         description: "TEST TRANSACTION",
         order_id: data.orderId,
-        handler: function (response: any) {
-          console.log("Payment is successful", response);
+        handler: async function (response: any) {
+          try {
+            console.log("Payment is successful", response);
+            const today = new Date();
+            const formattedDate = `${String(today.getDate()).padStart(
+              2,
+              "0"
+            )}/${String(today.getMonth() + 1).padStart(2, "0")}/${String(
+              today.getFullYear()
+            ).slice(-2)}`;
+
+            await db.subscribe(user!.uid, currentPlan.name, formattedDate);
+            navigate.push("/dashboard");
+          } catch (error) {
+            console.log(error);
+          }
         },
         prefill: {
           name: "Rahul",

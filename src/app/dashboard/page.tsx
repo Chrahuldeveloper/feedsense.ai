@@ -6,9 +6,15 @@ import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import axios from "axios";
 
+interface User {
+  uid: string;
+}
 const Page = () => {
   const db = new dbService();
-  const { user, loading } = useAuth();
+  const { user, loading } = useAuth() as {
+    user: User | null;
+    loading: boolean;
+  };
 
   const fetchFeedbackTasks = async () => {
     try {
@@ -27,6 +33,13 @@ const Page = () => {
   useEffect(() => {
     if (user?.uid) {
       fetchFeedbackTasks();
+    }
+  }, [user?.uid]);
+
+  useEffect(() => {
+    if (user?.uid) {
+      const dateofexp = db.isSubscribtionExpired(user?.uid);
+      console.log(dateofexp);
     }
   }, [user?.uid]);
 

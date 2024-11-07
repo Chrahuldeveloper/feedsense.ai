@@ -78,7 +78,7 @@ export default function page() {
     <div className="bg-black w-full min-h-screen">
       <Navbar />
       <div className="flex flex-col items-center space-y-8 pt-32 px-4">
-      <div
+        <div
           className="absolute inset-0 overflow-hidden "
           data-aos="fade-up"
           data-aos-duration="1400"
