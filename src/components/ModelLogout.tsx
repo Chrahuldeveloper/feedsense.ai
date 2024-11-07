@@ -30,12 +30,12 @@ const ModelLogout: React.FC<ModelLogoutProps> = ({ settoggle }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center h-full bg-black bg-opacity-75 backdrop-blur-sm">
       {isloading && <Loader message="Loggin you out!" />}
       <div className="bg-[#121212]  w-[85vw] md:w-[60vw] lg:w-[40vw] xl:w-[30vw] p-6 rounded-md ">
-        <h1 className="text-slate-300 text-xl md:text-2xl text-center my-3">
+        <h1 className="text-slate-300 text-xl md:text-2xl text-center font-semibold my-3">
           Are you sure you want to Logout?
         </h1>
         <p className="text-slate-300 text-xs text-center my-5 leading-6 max-w-screen-sm">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus
-          nesciunt accusamus ut?
+          Logging out will end your current session. You can always log back in
+          to continue where you left off. Are you ready to proceed?
         </p>
         <div className="flex justify-end gap-2 mt-6 -mx-4">
           <button
