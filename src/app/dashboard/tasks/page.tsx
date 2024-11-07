@@ -61,7 +61,7 @@ const Page = () => {
                 <RxCross2 size={25} color="white" />
               </Link>
             </div>
-            <table className="mx-auto w-[90vw] md:w-[60vw] mt-7 divide-y divide-stone-900 rounded-lg overflow-hidden">
+            <table className=" w-[95vw] md:w-[60vw] mt-7 divide-y divide-stone-900 rounded-lg overflow-hidden">
               <thead className="bg-[#201d24] rounded-lg cursor-pointer">
                 <tr>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
@@ -91,7 +91,7 @@ const Page = () => {
                       <td className="py-5 px-6 md:px-9 text-xs md:text-sm text-slate-300">
                         {site.name}
                       </td>
-                      <td className="py-5 px-6 md:px-9 text-xs md:text-sm text-slate-300">
+                      <td className="py-5 px-6 w-72 md:px-9 text-xs md:text-sm text-slate-300">
                         {site.feedback}
                       </td>
                       <td
@@ -101,8 +101,8 @@ const Page = () => {
                       >
                         {site?.parsedFeedback?.response?.replace(/"/g, "") ||
                           "No analysis available"}
-                      
-                          {getPlan}
+
+                        {getPlan}
                       </td>
                     </tr>
                   ))
@@ -110,8 +110,8 @@ const Page = () => {
                   <tr>
                     <td colSpan={4} className="py-5 text-center text-slate-300">
                       <div className="flex flex-col items-center gap-5">
-                        <BiConfused size={35} color="white" />
-                        <p>No Feedbacks Yet</p>
+                        <BiConfused size={40} color="white" />
+                        <p className="font-semibold">No Feedbacks Yet</p>
                       </div>
                     </td>
                   </tr>

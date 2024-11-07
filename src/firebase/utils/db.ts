@@ -246,7 +246,7 @@ export default class dbService {
         const websites = docSnap.data()?.websites || [];
 
         const websiteIndex = websites.findIndex(
-          (website: { name: any }) => website.name === websiteName
+          (website: { name: any }) => website.url === websiteName
         );
 
         if (websiteIndex !== -1) {
