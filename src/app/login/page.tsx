@@ -78,9 +78,7 @@ export default function LoginPage() {
 
   return (
     <div className="bg-[#000000] w-full overflow-hidden min-h-screen relative">
-      {error && (
-        <ErrorModel message={errorMessage} setError={setError} />
-      )}
+      {error && <ErrorModel message={errorMessage} setError={setError} />}
       {isLoading && <Loader message="Loading" />}
 
       <div className="absolute inset-0 overflow-hidden">

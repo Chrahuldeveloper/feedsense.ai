@@ -11,10 +11,10 @@ const Form = () => {
   const { userID, websiteID } = useParams();
   const [feedback, setFeedback] = useState({
     name: "",
-    emotion: "",  
+    emotion: "",
     feedback: "",
   });
-  const [selectedEmotion, setSelectedEmotion] = useState<number>(); 
+  const [selectedEmotion, setSelectedEmotion] = useState<number>();
   const db = new dbService();
 
   const saveFeedBack = async () => {
@@ -61,7 +61,7 @@ const Form = () => {
         </div>
 
         <div className="p-5">
-          <div className="space-y-2.5 mt-6">
+          <div className="space-y-2.5 mt-4">
             <h1 className="font-semibold text-white">Name*</h1>
             <input
               type="text"
@@ -88,14 +88,16 @@ const Form = () => {
           </div>
 
           <div className="mt-6 space-y-2.5">
-            <h1 className="font-semibold text-white">How was your experience*</h1>
+            <h1 className="font-semibold text-white">
+              How was your experience*
+            </h1>
             <div className="flex items-center space-x-5 mt-4">
               {emotions.map((emotion, idx) => (
                 <div
                   key={idx}
                   onClick={() => {
                     setSelectedEmotion(idx);
-                    setFeedback({ ...feedback, emotion: emotion.title }); 
+                    setFeedback({ ...feedback, emotion: emotion.title });
                   }}
                   className={`cursor-pointer p-2 rounded-full ${
                     selectedEmotion === idx
@@ -114,7 +116,7 @@ const Form = () => {
               onClick={saveFeedBack}
               className="text-white px-4 py-2 rounded-lg w-full bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
             >
-              Submit
+              Share Insights
             </button>
           </div>
         </div>

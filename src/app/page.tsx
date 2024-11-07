@@ -9,6 +9,7 @@ import { FaFacebookF } from "react-icons/fa";
 import Cookies from "js-cookie";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { MdSettingsSuggest } from "react-icons/md";
 
 export default function page() {
   AOS.init();
@@ -145,6 +146,18 @@ export default function page() {
         </div>
       </div>
 
+      <div className="fixed bottom-10 right-10 ">
+        <Link href="http://localhost:3000/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/fixit.com">
+          <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
+            <MdSettingsSuggest
+              size={47}
+              color="white"
+              className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 rounded-full p-3"
+            />
+          </button>
+        </Link>
+      </div>
+
       <div className="mt-44 px-4">
         <div className="space-y-8 flex flex-col items-center justify-center">
           <h1 className="text-xl md:text-3xl text-white">How does it work?</h1>
@@ -200,8 +213,6 @@ export default function page() {
           </div>
         </div>
       </div>
-
-      
 
       <footer className="bg-[#121212] border-t border-[#191d1f] py-12 px-36 flex flex-col md:flex-row justify-between items-center">
         <div className="text-center md:text-left space-y-5 mb-8 md:mb-0">
