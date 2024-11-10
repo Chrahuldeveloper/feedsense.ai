@@ -9,7 +9,7 @@ import { useParams } from "next/navigation";
 import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import { useRouter } from "next/navigation";
-
+import Loader from "../../../components/Loader";
 declare global {
   interface Window {
     Razorpay: any;
@@ -67,17 +67,20 @@ const Page = () => {
     loading: boolean;
   };
 
+  const [isloading, setisloading] = useState<boolean>(false);
+
   const handlePayment = async () => {
     try {
+      setisloading(true);
       const orderID = await axios.post("http://localhost:3000/api/subscribe", {
-        amount: 1 * 100,
+        amount: currentPlan.price * 100,
       });
 
       const data = orderID.data;
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-        amount: 1 * 100,
+        amount: currentPlan.price * 100,
         currency: "INR",
         name: "TASKFEED",
         description: "TEST TRANSACTION",
@@ -97,6 +100,7 @@ const Page = () => {
             navigate.push("/dashboard");
           } catch (error) {
             console.log(error);
+            setisloading(false);
           }
         },
         prefill: {
@@ -113,11 +117,16 @@ const Page = () => {
       rzp1.open();
     } catch (error) {
       console.log(error);
+      setisloading(false);
+    } finally {
+      setisloading(false);
     }
   };
 
   return (
     <div className="bg-[#0e0f11] w-screen min-h-screen overflow-x-clip">
+      {isloading ? <Loader message="Please wait" /> : null}
+
       <div className="flex justify-between w-[80vw] mx-auto pt-5 pb-10">
         <h1 className="text-slate-300 font-semibold text-lg">Change Plan</h1>
         <Link href={"/dashboard"}>
