@@ -67,12 +67,13 @@ export default function page() {
     },
   ];
 
-  const [userSession, setUserSession] = useState(null);
+  const [userSession, setUserSession] = useState<string | null>(null);
 
   useEffect(() => {
-    setUserSession(Cookies.get("auth-token"));
-    console.log(Cookies.get("auth-token"));
-  }, []);
+    const authToken = Cookies.get("auth-token");
+    setUserSession(authToken || null);  
+    console.log(authToken);
+    }, []);
 
   return (
     <div className="bg-black w-full min-h-screen">

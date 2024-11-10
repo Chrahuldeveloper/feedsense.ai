@@ -13,66 +13,86 @@ import cache from "../cache/cache";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/Firebase";
 
-interface Props {
-  user: any;
+interface WebsiteData {
+  id: string;
+  name: string;
+  url: string;
+  type: string;
+  image: string;
+  feedback: any[];
 }
 
-const Table: React.FC<Props> = ({ user }) => {
-  const [websitedata, setWebsitedata] = useState<any[]>([]);
+interface InfoData {
+  totalWebsites: string;
+  totalFeedback: string;
+}
 
-  interface InfoData {
-    totalWebsites: string;
-    totalFeedback: string;
-  }
+interface Plan {
+  subscription: string;
+}
 
+interface User {
+  uid: string;
+  displayName: string;
+  email: string;
+  photoURL: string;
+}
+
+interface Props {
+  user: User;
+}
+
+const Table: React.FC<Props> = () => {
+  const [websitedata, setWebsitedata] = useState<WebsiteData[]>([]);
   const [infodata, setInfodata] = useState<InfoData>({
     totalWebsites: "0",
     totalFeedback: "0",
   });
+  const [plan, setPlan] = useState<Plan | null>(null);
 
   const db1 = new dbService();
-  const { user: currentUser, loading } = useAuth();
-  const [plan, setplan] = useState();
+  const { user, loading } = useAuth() as {
+    user: User | null;
+    loading: boolean;
+  };
 
   useEffect(() => {
     const checkPlan = async () => {
-      if (!loading && currentUser) {
-        const userDocRef = doc(db, "USERS", currentUser.uid);
+      if (!loading && user) {
+        const userDocRef = doc(db, "USERS", user.uid);
         const docSnap = await getDoc(userDocRef);
-        console.log(docSnap.data()?.subscription);
-        setplan(docSnap.data()?.subscription);
+        const userPlan = docSnap.data()?.subscription;
+        console.log(userPlan);
+        setPlan({ subscription: userPlan });
       }
     };
     checkPlan();
-  }, [loading, currentUser]);
+  }, [loading, user]);
 
   useEffect(() => {
     const fetchWebsites = async () => {
-      if (!loading && currentUser) {
-        const cachedData = cache.get(currentUser.uid);
-
+      if (!loading && user) {
+        const cachedData = cache.get(user.uid);
         if (cachedData) {
           console.log("Fetched Websites Data from Cache:", cachedData.value);
           setWebsitedata(cachedData.value);
           return;
         }
 
-        const data = await db1.fetchWebsites(currentUser);
+        const data = await db1.fetchWebsites(user);
         console.log("Fetched Websites Data from Firestore:", data);
 
-        cache.set(currentUser.uid, data);
+        cache.set(user.uid, data);
         setWebsitedata(data);
       }
     };
     fetchWebsites();
-  }, [loading, currentUser]);
+  }, [loading, user]);
 
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const websiteInfoData = await db1.fetchDashboardDetails(
-          currentUser?.uid
-        );
+        const websiteInfoData = await db1.fetchDashboardDetails(user?.uid);
         if (websiteInfoData) {
           console.log("Fetched Dashboard Details:", websiteInfoData);
           setInfodata({
@@ -87,13 +107,13 @@ const Table: React.FC<Props> = ({ user }) => {
       }
     };
     fetchDetails();
-  }, [loading, currentUser]);
+  }, [loading, user]);
 
   const [toggle, setToggle] = useState(false);
 
   return (
     <>
-      {loading && <Loader />}
+      {loading && <Loader message="loading" />}
       <div className="md:ml-44">
         <nav className="md:hidden bg-[#151719] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">Fixit</h1>
@@ -106,19 +126,19 @@ const Table: React.FC<Props> = ({ user }) => {
         </nav>
 
         <div className="bg-[#17161c] w-screen px-14 py-7 pt-5 md:-ml-36 hidden md:block">
-          <div className="flex justify-end gap-x-3   items-center">
+          <div className="flex justify-end gap-x-3 items-center">
             <CgProfile size={23} color="white" />
-            <h1 className="text-slate-300 text-lg  font-semibold">
-              {currentUser?.displayName || "User"}
+            <h1 className="text-slate-300 text-lg font-semibold">
+              {user?.displayName || "User"}
             </h1>
           </div>
         </div>
 
         {toggle && <MobileSideBar setToggle={setToggle} />}
 
-        <div className="w-full md:w-[70vw]  px-2 py-14 mx-auto rounded-xl">
+        <div className="w-full md:w-[70vw] px-2 py-14 mx-auto rounded-xl">
           {websitedata.length === 0 ? (
-            <div className="space-y-6 text-center bg-[#17161c]  rounded-xl p-10">
+            <div className="space-y-6 text-center bg-[#17161c] rounded-xl p-10">
               <FaRegCircleStop size={23} color="white" className="mx-auto" />
               <p className="text-2xl font-semibold text-white">
                 No websites connected yet
@@ -128,7 +148,7 @@ const Table: React.FC<Props> = ({ user }) => {
               </p>
             </div>
           ) : (
-            <div className="overflow-x-auto rounded-xl pt-5 ">
+            <div className="overflow-x-auto rounded-xl pt-5">
               <table className="min-w-full divide-y rounded-xl divide-stone-900">
                 <thead className="bg-[#201d24]">
                   <tr className="cursor-pointer">
@@ -155,7 +175,7 @@ const Table: React.FC<Props> = ({ user }) => {
                       <td className="px-8 py-4 whitespace-nowrap">
                         <img
                           className="h-12 w-12 rounded-full object-cover"
-                          src={site?.logo}
+                          src={site?.image}
                           alt="Profile"
                         />
                       </td>
@@ -174,8 +194,8 @@ const Table: React.FC<Props> = ({ user }) => {
                             query: {
                               feedback: JSON.stringify(site?.feedback || []),
                               name: site?.name,
-                              image: site?.logo,
-                              Plan: plan,
+                              image: site?.image,
+                              Plan: plan?.subscription,
                             },
                           }}
                         >

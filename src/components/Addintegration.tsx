@@ -18,7 +18,7 @@ interface Website {
   name: string;
   url?: string;
   type?: string;
-  logo?: string;
+  image?: string;
 }
 
 interface WebsiteDataInput {
@@ -28,13 +28,21 @@ interface WebsiteDataInput {
   logo?: File | null;
 }
 
+interface User {
+  uid: any;
+  email: any;
+}
+
 const AddIntegration: React.FC = () => {
   const [toggle, setToggle] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [websitedata, setWebsiteData] = useState<Website[]>([]);
   const [fetchingData, setFetchingData] = useState(true);
   const [savingData, setSavingData] = useState(false);
-  const { user, loading: userLoading } = useAuth();
+  const { user, loading: userLoading } = useAuth() as {
+    user: User | null;
+    loading: boolean;
+  };
   const [deleting, setDeleting] = useState(false);
   const [showCode, setShowCode] = useState(false);
   const [websiteDataInput, setWebsiteDataInput] = useState<WebsiteDataInput>({
@@ -114,27 +122,35 @@ const AddIntegration: React.FC = () => {
 
   const saveData = async () => {
     try {
+      // Check if all fields are filled out
       if (Object.values(websiteDataInput).every((i) => i !== "")) {
         if (!userLoading && user) {
           setSavingData(true);
+
           let logoURL = "";
           if (websiteDataInput.logo) {
             logoURL = await uploadLogo(websiteDataInput.logo);
           }
-          const data = { uid: user.uid, email: user.email };
+
           const newWebsiteData = {
-            ...websiteDataInput,
-            logo: logoURL,
+            // id: generateUniqueId(), // Generate unique ID
+            name: websiteDataInput.name,
+            url: websiteDataInput.url,
+            type: websiteDataInput.type,
+            image: logoURL || "",
           };
-          const res = await db.saveWebsite(data, newWebsiteData);
-          if (res == "WebsiteFull") {
-            alert("Upgrad your plan");
+
+          const res = await db.saveWebsite(user, newWebsiteData); // Passing the correctly formatted data
+
+          if (res === "WebsiteFull") {
+            alert("Upgrade your plan");
             return router.push("/plans");
           } else {
             setLastWebsiteId(websiteDataInput.name);
             setCurrentStep(3);
             generateCodeToCopy(websiteDataInput.url);
             setWebsiteDataInput({ name: "", url: "", type: "", logo: null });
+
             const updatedWebsites = await db.fetchWebsites(user);
             setWebsiteData(updatedWebsites);
           }
@@ -227,7 +243,7 @@ const AddIntegration: React.FC = () => {
                             className="flex items-center gap-x-5 justify-between"
                           >
                             <img
-                              src={i.logo}
+                              src={i.image}
                               alt=""
                               className="h-12 w-12 rounded-full object-cover cursor-pointer"
                             />
