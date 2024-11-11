@@ -1,74 +1,85 @@
 "use client";
-
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "../../firebase/Firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { GoogleAuthProvider } from "firebase/auth";
-import { Mail, Lock, ArrowRight } from "lucide-react";
+import { GoogleAuthProvider, UserCredential } from "firebase/auth";
+import { Mail, Lock } from "lucide-react";
 import Cookies from "js-cookie";
 import SendEmail from "../../emailJs/Email";
 import Loader from "../../components/Loader";
 import ErrorModel from "@/components/ErrorModel";
+import Image from "next/image";
+
+interface UserData {
+  email: string;
+  password: string;
+}
+
+type ErrorMessage = string;
 
 export default function LoginPage() {
   const navigate = useRouter();
   const provider = new GoogleAuthProvider();
 
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<ErrorMessage>("");
 
-  const [data, setData] = useState({
+  const [data, setData] = useState<UserData>({
     email: "",
     password: "",
   });
 
   const Email = new SendEmail();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (): Promise<void> => {
     if (Object.values(data).every((i) => i !== "")) {
       setIsLoading(true);
       try {
-        const user = await signInWithEmailAndPassword(
+        const userCredential: UserCredential = await signInWithEmailAndPassword(
           auth,
           data.email,
           data.password
         );
-        console.log(user.user);
-        const message = `Thank you for logging in ${user.user.displayName}! If you need any help navigating your account or have questions, we're just a message away.`;
-        Email.sendLoginEmail(user.user.email, user.user.displayName, message);
+        const user = userCredential.user;
+        console.log(user);
+        const message = `Thank you for logging in ${user.displayName}! If you need any help navigating your account or have questions, we&apos;re just a message away.`;
+        Email.sendLoginEmail(
+          user.email!.toString(),
+          user.displayName!.toString(),
+          message
+        );
         Cookies.set("auth-token", "authenticated", { expires: 1 });
         navigate.push("/plans");
-      } catch (error: any) {
-        console.log(error.code);
+      } catch (error: unknown) {
         setError(true);
         setIsLoading(false);
-        if (error.code === "auth/invalid-credential") {
-          setErrorMessage("Invalid credentials.");
-        } else if (error.code === "auth/email-already-in-use") {
-          setErrorMessage("Mail already in Use.");
-        } else if (error.code === "auth/wrong-password") {
-          setErrorMessage("Incorrect password.");
-        } else {
-          setErrorMessage("An error occurred. Please try again.");
-        }
+        setErrorMessage("Invalid credentials.");
       }
     } else {
       alert("Enter all the details");
     }
   };
 
-  const googleSignIn = async () => {
+  const googleSignIn = async (): Promise<void> => {
     setIsLoading(true);
     try {
-      const user = await signInWithPopup(auth, provider);
-      console.log(user.user);
-      const message = `Thank you for logging in ${user.user.displayName}! If you need any help navigating your account or have questions, we're just a message away.`;
-      Email.sendLoginEmail(user.user.email, user.user.displayName, message);
+      const userCredential: UserCredential = await signInWithPopup(
+        auth,
+        provider
+      );
+      const user = userCredential.user;
+      console.log(user);
+      const message = `Thank you for logging in ${user.displayName}! If you need any help navigating your account or have questions, we're just a message away.`;
+      Email.sendLoginEmail(
+        user.email!.toString(),
+        user.displayName!.toString(),
+        message
+      );
       Cookies.set("auth-token", "authenticated", { expires: 1 });
       navigate.push("/plans");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.log(error);
       setError(true);
       setIsLoading(false);
@@ -145,47 +156,33 @@ export default function LoginPage() {
                 />
               </div>
             </div>
+            <button
+              onClick={handleSubmit}
+              className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors mt-4"
+            >
+              Login
+            </button>
           </div>
-
-          <button
-            onClick={handleSubmit}
-            className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 mt-8 text-white py-2 px-4 w-full font-semibold rounded-lg flex items-center justify-center"
-          >
-            <span>Login</span>
-            <ArrowRight className="ml-2" size={18} />
-          </button>
-
-          <div className="mt-6 text-center">
-            <span className="text-slate-400">
-              Sign In or Login into your account
-            </span>
-          </div>
-
-          <div className="mt-8">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-600"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-[#121212] text-slate-400">
-                  Or continue with
-                </span>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <button
-                onClick={googleSignIn}
-                className="w-full bg-white text-black py-2 px-4 rounded-lg font-semibold flex items-center justify-center hover:bg-gray-100 transition-colors"
-              >
-                <img
-                  className="w-6 h-6 mr-2"
-                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                  alt="Google logo"
-                />
-                Log in with Google
-              </button>
-            </div>
+          <div className="flex items-center justify-between mt-4 text-sm text-slate-400">
+            <p>
+              Don&apos;t have an account?
+              <a href="/register" className="text-blue-500 hover:text-blue-400">
+                Register
+              </a>
+            </p>
+            <button
+              onClick={googleSignIn}
+              className="flex items-center space-x-2 text-white bg-blue-700 py-2 px-4 rounded-lg"
+            >
+              <Image
+                className="w-6 h-6 mr-2"
+                src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                alt="Google logo"
+                width={24}
+                height={24}
+              />
+              <span>Sign in with Google</span>
+            </button>
           </div>
         </div>
       </div>

@@ -1,12 +1,14 @@
 "use client";
+
 import MobileSideBar from "@/components/MobileSideBar";
 import SideBar from "@/components/SideBar";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { BiConfused } from "react-icons/bi";
 import { RxCross2 } from "react-icons/rx";
+import Image from "next/image";
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -20,6 +22,7 @@ const Page = () => {
   }
 
   const [websites, setWebsites] = useState<Feedback[]>([]);
+
   const getdata = searchParams!.get("feedback")!;
   const getImage = searchParams!.get("image")!;
   const getName = searchParams!.get("name")!;
@@ -53,7 +56,13 @@ const Page = () => {
           <div className="overflow-x-auto rounded-xl mt-12">
             <div className="flex mx-auto items-center justify-between w-[90vw] md:w-[60vw]">
               <div className="flex items-center gap-5">
-                <img src={getImage} className="w-12 h-12 rounded-full" alt="" />
+                <Image
+                  src={getImage}
+                  alt={getName}
+                  className="w-12 h-12 rounded-full"
+                  width={48}
+                  height={48}
+                />
                 <h1 className="text-xl text-slate-300 font-semibold">
                   {getName}
                 </h1>
@@ -72,7 +81,7 @@ const Page = () => {
                     Feedback
                   </th>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                  Emotion
+                    Emotion
                   </th>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Analysis
@@ -126,4 +135,10 @@ const Page = () => {
   );
 };
 
-export default Page;
+const PageWithSuspense = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <Page />
+  </Suspense>
+);
+
+export default PageWithSuspense;

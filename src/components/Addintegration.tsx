@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
 import { FaRegCircleStop } from "react-icons/fa6";
@@ -12,6 +12,7 @@ import Loader from "../components/Loader";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebase/Firebase";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Website {
   id: string;
@@ -29,8 +30,8 @@ interface WebsiteDataInput {
 }
 
 interface User {
-  uid: any;
-  email: any;
+  uid: string;
+  email: string;
 }
 
 const AddIntegration: React.FC = () => {
@@ -53,9 +54,12 @@ const AddIntegration: React.FC = () => {
   });
   const [highlightedCode, setHighlightedCode] = useState("");
   const [lastWebsiteId, setLastWebsiteId] = useState<string | null>(null);
-  const db = new dbService();
 
   const router = useRouter();
+
+  console.log(showCode);
+
+  const db = useMemo(() => new dbService(), []);
 
   useEffect(() => {
     const fetchWebsites = async () => {
@@ -65,14 +69,15 @@ const AddIntegration: React.FC = () => {
         if (cachedData) {
           setWebsiteData(cachedData.value);
         } else {
-          const data = await db.fetchWebsites(user);
+          const data = (await db.fetchWebsites(user)) as Website[];
           setWebsiteData(Array.isArray(data) ? data : []);
         }
         setFetchingData(false);
       }
     };
+
     fetchWebsites();
-  }, [userLoading, user]);
+  }, [userLoading, user, db]);
 
   hljs.registerLanguage("html", html);
 
@@ -122,7 +127,6 @@ const AddIntegration: React.FC = () => {
 
   const saveData = async () => {
     try {
-      // Check if all fields are filled out
       if (Object.values(websiteDataInput).every((i) => i !== "")) {
         if (!userLoading && user) {
           setSavingData(true);
@@ -133,14 +137,13 @@ const AddIntegration: React.FC = () => {
           }
 
           const newWebsiteData = {
-            // id: generateUniqueId(), // Generate unique ID
             name: websiteDataInput.name,
             url: websiteDataInput.url,
             type: websiteDataInput.type,
             image: logoURL || "",
           };
 
-          const res = await db.saveWebsite(user, newWebsiteData); // Passing the correctly formatted data
+          const res = await db.saveWebsite(user, newWebsiteData);
 
           if (res === "WebsiteFull") {
             alert("Upgrade your plan");
@@ -151,8 +154,9 @@ const AddIntegration: React.FC = () => {
             generateCodeToCopy(websiteDataInput.url);
             setWebsiteDataInput({ name: "", url: "", type: "", logo: null });
 
-            const updatedWebsites = await db.fetchWebsites(user);
-            setWebsiteData(updatedWebsites);
+            await db.fetchWebsites(user);
+            const data = (await db.fetchWebsites(user)) as Website[];
+            setWebsiteData(Array.isArray(data) ? (data as Website[]) : []);
           }
         } else {
           console.log("User is loading or not authenticated");
@@ -242,9 +246,11 @@ const AddIntegration: React.FC = () => {
                             key={i.id}
                             className="flex items-center gap-x-5 justify-between"
                           >
-                            <img
-                              src={i.image}
-                              alt=""
+                            <Image
+                              src={i.image || "/default-image.jpg"}
+                              alt={`${i.name} logo`}
+                              width={48}
+                              height={48}
                               className="h-12 w-12 rounded-full object-cover cursor-pointer"
                             />
                             <h1 className="text-sm font-semibold">{i?.name}</h1>
@@ -343,7 +349,7 @@ const AddIntegration: React.FC = () => {
                           />
                           <label
                             htmlFor="fileInput"
-                            className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-center  text-sm text-white rounded-lg p-2 cursor-pointer"
+                            className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-center text-sm text-white rounded-lg p-2 cursor-pointer"
                           >
                             Upload Logo
                           </label>

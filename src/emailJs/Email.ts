@@ -1,7 +1,7 @@
 import emailjs from "@emailjs/browser";
 
 export default class SendEmail {
-  async sendLoginEmail(userEmail: any, UserName: any,message:string) {
+  async sendLoginEmail(userEmail: string, UserName: string,message:string) {
     try {
       await emailjs.send(
         "service_e0jwhmo",
@@ -11,7 +11,7 @@ export default class SendEmail {
           to_name: UserName,
           from_email: "chrahulofficial@gmail.com",
           to_email: userEmail,
-          message: ``,
+          message: message,
         },
         "UOrD1_W9s2qaOe4rC"
       );

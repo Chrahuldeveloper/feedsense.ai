@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "./Loader";
 interface ModelLogoutProps {
-  settoggle: Function;
+  settoggle: (value: boolean) => void;
 }
 
 const ModelLogout: React.FC<ModelLogoutProps> = ({ settoggle }) => {

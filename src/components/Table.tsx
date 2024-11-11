@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
 import dbService from "@/firebase/utils/db";
@@ -12,14 +12,14 @@ import { FaRegCircleStop } from "react-icons/fa6";
 import cache from "../cache/cache";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/Firebase";
+import Image from "next/image";
 
 interface WebsiteData {
-  id: string;
   name: string;
   url: string;
   type: string;
   image: string;
-  feedback: any[];
+  feedback?: string[];
 }
 
 interface InfoData {
@@ -38,11 +38,7 @@ interface User {
   photoURL: string;
 }
 
-interface Props {
-  user: User;
-}
-
-const Table: React.FC<Props> = () => {
+const Table = () => {
   const [websitedata, setWebsitedata] = useState<WebsiteData[]>([]);
   const [infodata, setInfodata] = useState<InfoData>({
     totalWebsites: "0",
@@ -50,7 +46,8 @@ const Table: React.FC<Props> = () => {
   });
   const [plan, setPlan] = useState<Plan | null>(null);
 
-  const db1 = new dbService();
+  const db1 = useMemo(() => new dbService(), []);
+
   const { user, loading } = useAuth() as {
     user: User | null;
     loading: boolean;
@@ -82,17 +79,29 @@ const Table: React.FC<Props> = () => {
         const data = await db1.fetchWebsites(user);
         console.log("Fetched Websites Data from Firestore:", data);
 
-        cache.set(user.uid, data);
-        setWebsitedata(data);
+        const transformedData = data.map((item: any) => ({
+          name: item.name || "",
+          url: item.url || "",
+          type: item.type || "",
+          image: item.image || "",
+          feedback: item.feedback || [],
+        }));
+
+        console.log(transformedData);
+
+        cache.set(user.uid, transformedData);
+        setWebsitedata(transformedData);
       }
     };
     fetchWebsites();
-  }, [loading, user]);
+  }, [loading, user, db1]);
 
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const websiteInfoData = await db1.fetchDashboardDetails(user?.uid);
+        const websiteInfoData = await db1.fetchDashboardDetails(
+          user!.uid.toString()
+        );
         if (websiteInfoData) {
           console.log("Fetched Dashboard Details:", websiteInfoData);
           setInfodata({
@@ -107,7 +116,7 @@ const Table: React.FC<Props> = () => {
       }
     };
     fetchDetails();
-  }, [loading, user]);
+  }, [loading, user, db1]);
 
   const [toggle, setToggle] = useState(false);
 
@@ -173,10 +182,12 @@ const Table: React.FC<Props> = () => {
                       className="hover:bg-[#141316] transition-colors duration-200 cursor-pointer"
                     >
                       <td className="px-8 py-4 whitespace-nowrap">
-                        <img
+                        <Image
                           className="h-12 w-12 rounded-full object-cover"
                           src={site?.image}
                           alt="Profile"
+                          width={48}
+                          height={48}
                         />
                       </td>
                       <td className="px-8 py-4 whitespace-nowrap text-sm text-slate-300 font-semibold">

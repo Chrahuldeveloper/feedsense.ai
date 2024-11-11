@@ -1,4 +1,4 @@
-export default {
+const feedbackHandler = {
   async fetch(request, env) {
     if (request.method === "OPTIONS") {
       return new Response(null, {
@@ -15,7 +15,7 @@ export default {
       const feedback = await request.json();
 
       const taskInput = {
-        prompt: `You are an AI tool designed to analyze feedback and provide actionable suggestions for improvments. Based on the following feedback, give a clear and concise suggestion that is between 10 and 15 characters long: "${feedback.message}"`,
+        prompt: `You are an AI tool designed to analyze feedback and provide actionable suggestions for improvements. Based on the following feedback, give a clear and concise suggestion that is between 10 and 15 characters long: "${feedback.message}"`,
       };
 
       const aiResponse = await env.AI.run(
@@ -47,3 +47,5 @@ export default {
     }
   },
 };
+
+export default feedbackHandler;

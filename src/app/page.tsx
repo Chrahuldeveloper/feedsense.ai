@@ -10,9 +10,22 @@ import Cookies from "js-cookie";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { MdSettingsSuggest } from "react-icons/md";
+import Image from "next/image";
 
-export default function page() {
-  AOS.init();
+export default function Page() {
+  const [userSession, setUserSession] = useState<string | null>(null);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-in-out",
+      once: false,
+    });
+
+    const authToken = Cookies.get("auth-token");
+    setUserSession(authToken || null);
+    console.log(authToken);
+  }, []);
 
   const data = [
     {
@@ -67,14 +80,6 @@ export default function page() {
     },
   ];
 
-  const [userSession, setUserSession] = useState<string | null>(null);
-
-  useEffect(() => {
-    const authToken = Cookies.get("auth-token");
-    setUserSession(authToken || null);  
-    console.log(authToken);
-    }, []);
-
   return (
     <div className="bg-black w-full min-h-screen">
       <Navbar />
@@ -100,21 +105,23 @@ export default function page() {
           dashboard. Let our AI guide your next improvements.
         </p>
         <Link
-          href={`${userSession === undefined ? "/login" : "/dashboard"}`}
+          href={`${userSession === null ? "/login" : "/dashboard"}`}
           className="z-50"
         >
           <button className="bg-white text-black py-2 px-8 md:px-16 lg:px-20 font-semibold rounded-full">
-            {userSession === undefined ? "Login" : "Your Account"}
+            {userSession === null ? "Login" : "Your Account"}
           </button>
         </Link>
 
-        <img
+        <Image
+          width={1024}
+          height={768}
           data-aos="fade-up"
           data-aos-duration="2000"
           data-aos-easing="ease-in-out"
           data-aos-once="false"
           src="https://firebasestorage.googleapis.com/v0/b/notes-app-e3995.appspot.com/o/TaskFeed-10-24-2024_09_01_PM.png?alt=media&token=48ce631d-3bd7-4df3-a7c1-6147d9503532"
-          alt=""
+          alt="Centralized Feedback Visualization"
           className="lg:max-w-5xl mx-auto"
         />
       </div>
@@ -177,7 +184,7 @@ export default function page() {
                 data-aos-once="false"
                 key={idx}
               >
-                <h1 className="bg-[#323334] rounded-full w-8 mx-auto px-3 py-1 text-center text-white">
+                <h1 className="bg-[#323334] rounded-full w-8 mx-auto px-3 py-1 text-center text-white font-semibold text-xl">
                   {idx + 1}
                 </h1>
                 <h1 className="text-white font-semibold text-xl">{i.title}</h1>
@@ -188,47 +195,42 @@ export default function page() {
         </div>
       </div>
 
-      <div className="py-32 px-4">
-        <div className="space-y-10 flex flex-col justify-center items-center">
-          <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-white">
-            Frequently Asked Questions
-          </h1>
-          <p className="text-[#a2a2a2] text-sm max-w-md leading-7 font-semibold text-center">
-            Get answers to common questions about managing feedback across
-            multiple websites and services with AI.
+      <div className="mt-24 px-4">
+        <div className="space-y-8 flex flex-col items-center justify-center">
+          <h1 className="text-xl md:text-3xl text-white">FAQs</h1>
+          <p className="text-[#a2a2a2] max-w-xl text-center text-sm md:text-base">
+            Still have questions? We’ve compiled a list of frequently asked
+            questions to help you out.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="space-y-8">
             {faq.map((i, idx) => (
               <div
-                className="p-5 max-w-lg space-y-3 bg-[#121212] border-[#191d1f] border-[1px] rounded-lg cursor-pointer hover:scale-105 ease-in-out duration-300"
                 key={idx}
+                className="bg-[#121212] text-white p-5 rounded-xl border-[1px] border-[#191d1f]"
                 data-aos="fade-up"
                 data-aos-duration="1000"
                 data-aos-easing="ease-in-out"
                 data-aos-once="false"
               >
-                <h1 className="text-white font-semibold text-xl">{i.qes}</h1>
-                <p className="text-[#a2a2a2] leading-7">{i.ans}</p>
+                <h1 className="font-semibold text-lg">{i.qes}</h1>
+                <p className="text-[#a2a2a2]">{i.ans}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      <footer className="bg-[#121212] border-t border-[#191d1f] py-12 px-36 flex flex-col md:flex-row justify-between items-center">
-        <div className="text-center md:text-left space-y-5 mb-8 md:mb-0">
-          <h1 className="text-2xl md:text-3xl font-semibold text-white">
-            TaskFeed
-          </h1>
-          <p className="text-[#a2a2a2]">
-            Centralize and analyze feedback to continually improve your websites
-            and business services.
-          </p>
-        </div>
-        <div className="flex items-center gap-5 text-white text-sm">
-          <FaXTwitter className="w-6 h-6 cursor-pointer hover:scale-125 ease-in-out duration-300" />
-          <FiInstagram className="w-6 h-6 cursor-pointer hover:scale-125 ease-in-out duration-300" />
-          <FaFacebookF className="w-6 h-6 cursor-pointer hover:scale-125 ease-in-out duration-300" />
+      <footer className="bg-[#121212] text-white py-8 px-4">
+        <div className="flex justify-center space-x-6">
+          <Link href="https://twitter.com/">
+            <FaXTwitter size={24} />
+          </Link>
+          <Link href="https://instagram.com/">
+            <FiInstagram size={24} />
+          </Link>
+          <Link href="https://facebook.com/">
+            <FaFacebookF size={24} />
+          </Link>
         </div>
       </footer>
     </div>

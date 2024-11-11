@@ -28,7 +28,7 @@ globalThis.fetch = new Proxy(globalThis.fetch, {
 });
 
 // src/ai/index.js
-var ai_default = {
+var feedbackHandler = {
   async fetch(request, env) {
     if (request.method === "OPTIONS") {
       return new Response(null, {
@@ -43,7 +43,7 @@ var ai_default = {
     try {
       const feedback = await request.json();
       const taskInput = {
-        prompt: `You are an AI tool designed to analyze feedback and provide actionable suggestions for improvments. Based on the following feedback, give a clear and concise suggestion that is between 10 and 15 characters long: "${feedback.message}"`
+        prompt: `You are an AI tool designed to analyze feedback and provide actionable suggestions for improvements. Based on the following feedback, give a clear and concise suggestion that is between 10 and 15 characters long: "${feedback.message}"`
       };
       const aiResponse = await env.AI.run(
         "@cf/meta/llama-3-8b-instruct",
@@ -71,6 +71,7 @@ var ai_default = {
     }
   }
 };
+var ai_default = feedbackHandler;
 
 // ../../../../../../AppData/Roaming/nvm/v22.8.0/node_modules/wrangler/templates/middleware/middleware-ensure-req-body-drained.ts
 var drainBody = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx) => {

@@ -10,20 +10,61 @@ import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import { useRouter } from "next/navigation";
 import Loader from "../../../components/Loader";
+
 declare global {
   interface Window {
-    Razorpay: any;
+    Razorpay: {
+      new (options: RazorpayOptions): RazorpayInstance;
+    };
   }
+}
+
+interface RazorpayInstance {
+  open: () => void;
+  on: (event: string, callback: () => void) => void;
 }
 
 interface User {
   uid: string;
 }
+
+interface SubscriptionPlan {
+  id: number;
+  name: string;
+  price: number;
+  displayPrice: string;
+  features: string[];
+}
+
+interface RazorpayOptions {
+  key: string;
+  amount: number;
+  currency: string;
+  name: string;
+  description: string;
+  order_id: string;
+  handler: (response: RazorpayResponse) => void;
+  prefill: {
+    name: string;
+    email: string;
+    contact: string;
+  };
+  theme: {
+    color: string;
+  };
+}
+
+interface RazorpayResponse {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+}
+
 const Page = () => {
   const { planType } = useParams();
   const navigate = useRouter();
 
-  const subscriptionPlans = [
+  const subscriptionPlans: SubscriptionPlan[] = [
     {
       id: 1,
       name: "Basic",
@@ -67,25 +108,27 @@ const Page = () => {
     loading: boolean;
   };
 
-  const [isloading, setisloading] = useState<boolean>(false);
+  console.log(loading);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handlePayment = async () => {
     try {
-      setisloading(true);
+      setIsLoading(true);
       const orderID = await axios.post("http://localhost:3000/api/subscribe", {
         amount: currentPlan.price * 100,
       });
 
       const data = orderID.data;
 
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      const options: RazorpayOptions = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID as string,
         amount: currentPlan.price * 100,
         currency: "INR",
         name: "TASKFEED",
         description: "TEST TRANSACTION",
         order_id: data.orderId,
-        handler: async function (response: any) {
+        handler: async (response: RazorpayResponse) => {
           try {
             console.log("Payment is successful", response);
             const today = new Date();
@@ -100,7 +143,7 @@ const Page = () => {
             navigate.push("/dashboard");
           } catch (error) {
             console.log(error);
-            setisloading(false);
+            setIsLoading(false);
           }
         },
         prefill: {
@@ -117,15 +160,15 @@ const Page = () => {
       rzp1.open();
     } catch (error) {
       console.log(error);
-      setisloading(false);
+      setIsLoading(false);
     } finally {
-      setisloading(false);
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="bg-[#0e0f11] w-screen min-h-screen overflow-x-clip">
-      {isloading ? <Loader message="Please wait" /> : null}
+      {isLoading ? <Loader message="Please wait" /> : null}
 
       <div className="flex justify-between w-[80vw] mx-auto pt-5 pb-10">
         <h1 className="text-slate-300 font-semibold text-lg">Change Plan</h1>

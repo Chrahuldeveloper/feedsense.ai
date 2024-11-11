@@ -12,7 +12,9 @@ const ContactForm = () => {
 
   const db = new dbService();
 
-  const handleChange = (e: any) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -20,7 +22,7 @@ const ContactForm = () => {
     }));
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async () => {
     try {
       await db.ContactUs(formData);
       setFormData({

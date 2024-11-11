@@ -1,11 +1,24 @@
 import { db } from "../Firebase";
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import cache from "../../cache/cache";
-import axios from "axios";
 
 interface User {
   uid: string;
   email: string;
+}
+
+interface Website {
+  name: string;
+  url: string;
+  type: string;
+  image: string;
+  feedback?: Feedback[];
+}
+
+interface Feedback {
+  email: string;
+  emotion: string;
+  feedback: string;
 }
 
 export default class dbService {
@@ -15,39 +28,36 @@ export default class dbService {
     let id = "";
     for (let i = 0; i <= length; i++) {
       const randomIndex = Math.floor(Math.random() * letters.length);
-
       id += letters[randomIndex];
     }
     return id;
   }
 
-  async ContactUs(data: Object) {
+  async ContactUs(data: object): Promise<void> {
     try {
       const Id = await this.genrateId(5);
-
       const userDocRef = doc(db, "CONTACT-US", Id);
-
-      await setDoc(userDocRef, {
-        data,
-      });
+      await setDoc(userDocRef, { data });
     } catch (error) {
       console.log(error);
     }
   }
 
-  async checkifSubscribed(userId: string, websiteName: string) {
+  async checkifSubscribed(
+    userId: string,
+    websiteName: string
+  ): Promise<boolean> {
     try {
       const userDocRef = doc(db, "USERS", userId);
       const docSnap = await getDoc(userDocRef);
       if (docSnap.exists()) {
         const subscriptionPlan = docSnap.data()?.subscription;
-
-        if (subscriptionPlan == "Basic") {
-          const userWebsites = docSnap.data()?.websites;
-          const filteredWebsite = userWebsites.filter((website: any) => {
-            website.name === websiteName;
-          });
-          const websiteFeedbacks = filteredWebsite?.feedback?.length;
+        if (subscriptionPlan === "Basic") {
+          const userWebsites = docSnap.data()?.websites || [];
+          const filteredWebsite = userWebsites.filter(
+            (website: Website) => website.name === websiteName
+          );
+          const websiteFeedbacks = filteredWebsite?.[0]?.feedback?.length;
 
           if (!websiteFeedbacks) {
             return true;
@@ -64,14 +74,14 @@ export default class dbService {
 
         return false;
       }
-
       return false;
     } catch (error) {
       console.log(error);
+      return false;
     }
   }
 
-  async deleteWebsite(userId: string, websiteName: string) {
+  async deleteWebsite(userId: string, websiteName: string): Promise<void> {
     try {
       const userDocRef = doc(db, "USERS", userId);
       const docSnap = await getDoc(userDocRef);
@@ -79,13 +89,10 @@ export default class dbService {
       if (docSnap.exists()) {
         const websites = docSnap.data()?.websites || [];
         const updatedWebsites = websites.filter(
-          (website: { name: string }) => website.name !== websiteName
+          (website: Website) => website.name !== websiteName
         );
 
-        await updateDoc(userDocRef, {
-          websites: updatedWebsites,
-        });
-
+        await updateDoc(userDocRef, { websites: updatedWebsites });
         console.log("Website deleted successfully");
         cache.set(userId, updatedWebsites);
       } else {
@@ -96,15 +103,11 @@ export default class dbService {
     }
   }
 
-  async saveWebsite(
-    user: User,
-    data: { name: string; url: string; type: string; image: string }
-    // data: { id: string; name: string; url: string; type: string; image: string }
-  ) {
+  async saveWebsite(user: User, data: Website): Promise<string | void> {
     try {
       const userDocRef = doc(db, "USERS", user.uid);
       const docSnap = await getDoc(userDocRef);
-      let updatedWebsites: any[] = [];
+      let updatedWebsites: Website[] = [];
 
       if (docSnap.exists()) {
         const subscription = docSnap.data().subscription;
@@ -112,9 +115,7 @@ export default class dbService {
 
         if (subscription === "Basic") {
           if (userWebsites.length < 3) {
-            await updateDoc(userDocRef, {
-              websites: arrayUnion(data),
-            });
+            await updateDoc(userDocRef, { websites: arrayUnion(data) });
             updatedWebsites = [...userWebsites, data];
             console.log("Website data saved successfully for Basic plan");
           } else {
@@ -125,16 +126,12 @@ export default class dbService {
             return "WebsiteFull";
           }
         } else if (subscription === "Pro") {
-          await updateDoc(userDocRef, {
-            websites: arrayUnion(data),
-          });
+          await updateDoc(userDocRef, { websites: arrayUnion(data) });
           updatedWebsites = [...userWebsites, data];
           console.log("Website data saved successfully for Pro plan");
         }
       } else {
-        await setDoc(userDocRef, {
-          websites: [data],
-        });
+        await setDoc(userDocRef, { websites: [data] });
         updatedWebsites = [data];
         console.log("Website data saved successfully for new user");
       }
@@ -145,7 +142,7 @@ export default class dbService {
     }
   }
 
-  async fetchWebsites(user: any) {
+  async fetchWebsites(user: User): Promise<Website[]> {
     try {
       const cachedWebsites = cache.get(user.uid);
 
@@ -171,7 +168,9 @@ export default class dbService {
     }
   }
 
-  async fetchDashboardDetails(user: any) {
+  async fetchDashboardDetails(
+    user: string
+  ): Promise<{ totalWebsites: number; totalFeedback: number } | null> {
     try {
       const cachedDashboard = cache.get(`${user}-dashboard`);
 
@@ -186,7 +185,8 @@ export default class dbService {
       if (docSnap.exists()) {
         const websites = docSnap.data()?.websites || [];
         const totalFeedback = websites.reduce(
-          (total: number, site: any) => total + (site.feedback?.length || 0),
+          (total: number, site: Website) =>
+            total + (site.feedback?.length || 0),
           0
         );
         const totalWebsites = websites.length;
@@ -204,7 +204,7 @@ export default class dbService {
     }
   }
 
-  async fetchFeedbacks(user: any) {
+  async fetchFeedbacks(user: string) {
     try {
       const cachedFeedbacks = cache.get(`${user}-feedbacks`);
 
@@ -219,7 +219,7 @@ export default class dbService {
       if (docSnap.exists()) {
         const websites = docSnap.data()?.websites || [];
         const allFeedbacks = websites.flatMap(
-          (website: any) => website.feedback || []
+          (website: Website) => website.feedback || []
         );
         cache.set(`${user}-feedbacks`, allFeedbacks);
         return allFeedbacks;
@@ -236,8 +236,8 @@ export default class dbService {
   async saveFeedback(
     userID: string,
     websiteName: string,
-    data: { name: string; email: string; emotion: string; feedback: string }
-  ) {
+    data: Feedback
+  ): Promise<void> {
     try {
       console.log(data, websiteName, userID);
       const userDocRef = doc(db, "USERS", userID);
@@ -247,7 +247,7 @@ export default class dbService {
         const websites = docSnap.data()?.websites || [];
 
         const websiteIndex = websites.findIndex(
-          (website: { url: any }) => website.url === websiteName
+          (website: Website) => website.url === websiteName
         );
 
         if (websiteIndex !== -1) {
@@ -269,20 +269,23 @@ export default class dbService {
           const subscription = docSnap.data()?.subscription;
 
           if (subscription === "Pro") {
-            let headersList = {
+            const headersList = {
               Accept: "*/*",
               "Content-Type": "application/json",
             };
 
-            let bodyContent = JSON.stringify({ message: data.feedback });
+            const bodyContent = JSON.stringify({ message: data.feedback });
 
-            let response = await fetch("http://127.0.0.1:8787", {
-              method: "POST",
-              body: bodyContent,
-              headers: headersList,
-            });
+            const response = await fetch(
+              " https://user-conversation-worker.chrahulofficial.workers.dev",
+              {
+                method: "POST",
+                body: bodyContent,
+                headers: headersList,
+              }
+            );
 
-            let responseData = await response.text();
+            const responseData = await response.text();
             const plainObject = JSON.parse(responseData);
 
             console.log("Parsed response:", plainObject);
@@ -310,26 +313,25 @@ export default class dbService {
     }
   }
 
-  async subscribe(user: any, plan: any, date: any) {
+  async subscribe(user: string, plan: string, date: string): Promise<void> {
     try {
       const userDocRef = doc(db, "USERS", user);
       const docSnap = await getDoc(userDocRef);
 
       if (docSnap.exists()) {
         await updateDoc(userDocRef, {
-          subscribe: plan,
-          date: date,
+          subscription: plan,
+          subscriptionDate: date,
         });
-        console.log("User subscribed successfully");
       } else {
-        console.error("User does not exist");
+        console.log("User does not exist");
       }
     } catch (error) {
-      console.error("Error subscribing user:", error);
+      console.error("Error subscribing:", error);
     }
   }
 
-  async isSubscribed(user: any) {
+  async isSubscribed(user: string) {
     try {
       const userDocRef = doc(db, "USERS", user);
       const docSnap = await getDoc(userDocRef);
@@ -346,7 +348,7 @@ export default class dbService {
     }
   }
 
-  async isSubscribtionExpired(userId: any) {
+  async isSubscribtionExpired(userId: string) {
     try {
       const userDocRef = doc(db, "USERS", userId);
       const docSnap = await getDoc(userDocRef);
@@ -364,12 +366,6 @@ export default class dbService {
 
         const currentDate = new Date();
 
-        const formatDate = (date: Date) => {
-          return `${String(date.getDate()).padStart(2, "0")}/${String(
-            date.getMonth() + 1
-          ).padStart(2, "0")}/${String(date.getFullYear()).slice(-2)}`;
-        };
-
         return currentDate > purchasedDate;
       } else {
         console.error("User does not exist");
@@ -380,17 +376,4 @@ export default class dbService {
       return false;
     }
   }
-
-  // async checkPlan(userId: any) {
-  //   try {
-  //     const userDocRef = doc(db, "USERS", userId);
-  //     const docSnap = await getDoc(userDocRef);
-
-  //     if (docSnap.exists()) {
-  //       return docSnap.data()?.subscription;
-  //     }
-  //   } catch (error) {
-  //     console.error("Error checking subscription status:", error);
-  //     return false;
-  //   }
 }

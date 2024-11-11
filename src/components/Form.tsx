@@ -8,27 +8,47 @@ import { TbMoodSadDizzy } from "react-icons/tb";
 import LottiePlayer from "react-lottie-player";
 import FeedbackLoader from "../app/lottie-asserts/FeedbackLoader.json";
 
+interface Feedback {
+  email: string;
+  emotion: string;
+  feedback: string;
+}
+
+interface Emotion {
+  title: string;
+  emoji: JSX.Element;
+}
+
+
 const Form = () => {
   const { userID, websiteID } = useParams();
-  const [feedback, setFeedback] = useState({
-    name: "",
+
+  const [feedback, setFeedback] = useState<Feedback>({
+    email: "",
     emotion: "",
     feedback: "",
   });
-  const [selectedEmotion, setSelectedEmotion] = useState<number>();
-  const [loading, setLoading] = useState(false);
-  const [feedbackStatus, setFeedbackStatus] = useState("");
+
+  const [selectedEmotion, setSelectedEmotion] = useState<number | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [feedbackStatus, setFeedbackStatus] = useState<string>("");
+
   const db = new dbService();
 
   const saveFeedBack = async () => {
     setLoading(true);
     setFeedbackStatus("Saving feedback...");
     try {
-      const isSubscribed = await db.checkifSubscribed(userID, websiteID);
+      const isSubscribed = await db.checkifSubscribed(userID.toString(), websiteID.toString());
       if (isSubscribed) {
-        await db.saveFeedback(userID, websiteID, feedback);
+        const savefeedback = {
+          email: feedback.email,
+          emotion: feedback.emotion,
+          feedback: feedback.feedback,
+        };
+        await db.saveFeedback(userID.toString(), websiteID.toString(), savefeedback);
         setFeedbackStatus("Feedback saved successfully!");
-        setFeedback({ name: "", emotion: "", feedback: "" });
+        setFeedback({ email: "", emotion: "", feedback: "" });
         setSelectedEmotion(null);
       } else {
         alert("You are not subscribed to this website.");
@@ -42,7 +62,7 @@ const Form = () => {
     }
   };
 
-  const emotions = [
+  const emotions: Emotion[] = [
     { title: "Happy", emoji: <IoHappyOutline size={32} color="#c1d0d5" /> },
     { title: "Neutral", emoji: <IoSadOutline size={32} color="#c1d0d5" /> },
     { title: "Sad", emoji: <TbMoodSadDizzy size={32} color="#c1d0d5" /> },
@@ -70,12 +90,12 @@ const Form = () => {
         ) : (
           <div className="p-5">
             <div className="space-y-2.5 mt-4">
-              <h1 className="font-semibold text-white">Name*</h1>
+              <h1 className="font-semibold text-white">Email*</h1>
               <input
                 type="text"
-                value={feedback.name}
+                value={feedback.email}
                 onChange={(e) =>
-                  setFeedback({ ...feedback, name: e.target.value })
+                  setFeedback({ ...feedback, email: e.target.value })
                 }
                 autoComplete="off"
                 className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"

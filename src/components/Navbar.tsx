@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [userSession, setUserSession] = useState(null);
+  const [userSession, setUserSession] = useState<string | null>(null); 
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,7 +14,7 @@ const Navbar = () => {
     };
 
     const token = Cookies.get("auth-token");
-    setUserSession(token);
+    setUserSession(token ?? null); 
 
     window.addEventListener("scroll", handleScroll);
 
@@ -42,7 +42,7 @@ const Navbar = () => {
         <Link href={"/contactUs"}>
           <li className="cursor-pointer font-semibold text-sm">Contact</li>
         </Link>
-        {userSession === undefined ? (
+        {userSession === null ? ( // Check if userSession is null
           <Link href="/login">
             <li className="cursor-pointer font-semibold text-sm">Login</li>
           </Link>
