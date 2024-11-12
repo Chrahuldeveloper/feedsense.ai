@@ -107,7 +107,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <div className="space-y-6 mt-8">
+          <div className="space-y-6 my-8">
             <div className="space-y-2">
               <label
                 htmlFor="email"
@@ -158,21 +158,16 @@ export default function LoginPage() {
             </div>
             <button
               onClick={handleSubmit}
-              className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors mt-4"
+              className="w-full py-2 px-4 bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-white rounded-lg  transition-colors mt-4"
             >
               Login
             </button>
           </div>
-          <div className="flex items-center justify-between mt-4 text-sm text-slate-400">
-            <p>
-              Don&apos;t have an account?
-              <a href="/register" className="text-blue-500 hover:text-blue-400">
-                Register
-              </a>
-            </p>
+          <div className="flex flex-col items-center justify-between mt-4 text-sm text-slate-400">
+            <p>--------------------Or login with--------------------</p>
             <button
               onClick={googleSignIn}
-              className="flex items-center space-x-2 text-white bg-blue-700 py-2 px-4 rounded-lg"
+              className="flex w-full justify-center items-center space-x-2 text-white bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 py-2 px-4 rounded-lg mt-5"
             >
               <Image
                 className="w-6 h-6 mr-2"

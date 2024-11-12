@@ -17,8 +17,11 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ orderId: order.id }, { status: 200 });
-  } catch (error:any) {
-    console.log("Error creating Razorpay order:", error);
+  } catch (error: any) {
+    console.error("Error creating Razorpay order:", error);
+    if (error.response) {
+      console.error("Razorpay Response Error:", error.response.data);
+    }
     return NextResponse.json(
       { error: error.message || "An error occurred" },
       { status: 500 }
