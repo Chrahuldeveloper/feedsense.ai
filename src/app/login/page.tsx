@@ -51,7 +51,7 @@ export default function LoginPage() {
           message
         );
         Cookies.set("auth-token", "authenticated", { expires: 1 });
-        navigate.push("/plans");
+        navigate.push("/dashboard");
       } catch (error: unknown) {
         setError(true);
         setIsLoading(false);
@@ -78,7 +78,7 @@ export default function LoginPage() {
         message
       );
       Cookies.set("auth-token", "authenticated", { expires: 1 });
-      navigate.push("/plans");
+      navigate.push("/dashboard");
     } catch (error: unknown) {
       console.log(error);
       setError(true);

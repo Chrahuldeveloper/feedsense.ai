@@ -175,9 +175,9 @@ const AddIntegration: React.FC = () => {
     try {
       if (lastWebsiteId) {
         await navigator.clipboard.writeText(
-          `<iframe src="http://${window.location.hostname}:3000/integrate/${
+          `http://${window.location.hostname}:3000/integrate/${
             user!.uid
-          }/${lastWebsiteId}"></iframe>`
+          }/${lastWebsiteId}"`
         );
         alert("Code copied to clipboard!");
       } else {

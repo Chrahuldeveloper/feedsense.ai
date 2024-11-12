@@ -155,7 +155,7 @@ export default function Page() {
       </div>
 
       <div className="fixed bottom-10 right-10 ">
-        <Link href="http://localhost:3000/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/feedsense.ai">
+        <Link href="http://localhost:3000/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/feedsenseai.vercel.app">
           <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
             <MdSettingsSuggest
               size={47}
@@ -195,18 +195,18 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="mt-24 px-4">
+      <div className="py-24 px-4">
         <div className="space-y-8 flex flex-col items-center justify-center">
           <h1 className="text-xl md:text-3xl text-white">FAQs</h1>
           <p className="text-[#a2a2a2] max-w-xl text-center text-sm md:text-base">
             Still have questions? We’ve compiled a list of frequently asked
             questions to help you out.
           </p>
-          <div className="space-y-8">
+          <div className="grid grid-cols-2 justify-center gap-4">
             {faq.map((i, idx) => (
               <div
                 key={idx}
-                className="bg-[#121212] text-white p-5 rounded-xl border-[1px] border-[#191d1f]"
+                className="bg-[#121212] text-white p-5 rounded-xl border-[1px] border-[#191d1f] max-w-md"
                 data-aos="fade-up"
                 data-aos-duration="1000"
                 data-aos-easing="ease-in-out"
@@ -220,19 +220,43 @@ export default function Page() {
         </div>
       </div>
 
-      <footer className="bg-[#121212] text-white py-8 px-4">
-        <div className="flex justify-center space-x-6">
-          <Link href="https://twitter.com/">
-            <FaXTwitter size={24} />
-          </Link>
-          <Link href="https://instagram.com/">
-            <FiInstagram size={24} />
-          </Link>
-          <Link href="https://facebook.com/">
-            <FaFacebookF size={24} />
-          </Link>
+      {/* <footer className="bg-[#121212] text-white py-8 px-4">
+        <div className=" mx-auto flex flex-col md:flex-row items-center justify-between">
+          <div className="text-center md:text-left mb-6 md:mb-0">
+            <h1 className="text-2xl font-semibold">TaskFeed</h1>
+            <p className="text-sm mt-2 text-gray-400 max-w-md">
+              Centralize and analyze feedback to continually improve your
+              websites and business services.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center mb-6 md:mb-0">
+            <h2 className="text-lg font-semibold mb-2">Pages</h2>
+            <div className="flex flex-col space-x-4 text-sm">
+              <Link href="/about">About</Link>
+              <Link href="/services">Services</Link>
+              <Link href="/contact">Contact</Link>
+              <Link href="/faq">FAQ</Link>
+            </div>
+          </div>
+
+          <div className="flex flex-col space-x-4">
+            <Link href="https://twitter.com/" aria-label="Twitter">
+              <FaXTwitter size={24} className="hover:text-gray-400" />
+            </Link>
+            <Link href="https://instagram.com/" aria-label="Instagram">
+              <FiInstagram size={24} className="hover:text-gray-400" />
+            </Link>
+            <Link href="https://facebook.com/" aria-label="Facebook">
+              <FaFacebookF size={24} className="hover:text-gray-400" />
+            </Link>
+          </div>
         </div>
-      </footer>
+
+        <div className="text-center text-xs text-gray-500 mt-6">
+          © {new Date().getFullYear()} TaskFeed. All rights reserved.
+        </div>
+      </footer> */}
     </div>
   );
 }
