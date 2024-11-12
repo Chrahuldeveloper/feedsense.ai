@@ -15,21 +15,17 @@ interface props {
 const SideBar: React.FC<props> = ({ page }) => {
   const [toggle, settoggle] = useState(false);
 
-
-
   const iconSize = 24;
 
   return (
     <>
-      <aside className="bg-[#17161c] w-42 h-full space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0">
+      <aside className="bg-[#04050a] w-42 h-full space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-stone-900">
         <div className="flex flex-col space-y-8 pt-7">
           {/* Home */}
           <Link href="/dashboard">
             <div
-              className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out text-white rounded-lg ${
-                page === "Home"
-                  ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 "
-                  : ""
+              className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out text-slate-300 rounded-lg ${
+                page === "Home" ? "bg-[#242736] " : ""
               }`}
             >
               <MdDashboard color="white" size={iconSize} />
@@ -40,10 +36,8 @@ const SideBar: React.FC<props> = ({ page }) => {
           {/* Integrate */}
           <Link href="/dashboard/integrate">
             <div
-              className={`flex items-center space-x-4 py-3 pr-12 pl-4 transition duration-200 ease-in-out text-white rounded-lg ${
-                page === "Integrate"
-                  ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
-                  : ""
+              className={`flex items-center space-x-4 py-3 pr-12 pl-4 transition duration-200 ease-in-out text-slate-300 rounded-lg ${
+                page === "Integrate" ? "bg-[#242736]" : ""
               }`}
             >
               <CgWebsite color="white" size={iconSize} />
@@ -54,10 +48,8 @@ const SideBar: React.FC<props> = ({ page }) => {
           {/* Contact */}
           <Link href="/dashboard/contact">
             <div
-              className={`flex items-center space-x-4 py-3 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out text-white rounded-lg ${
-                page === "Contact"
-                  ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
-                  : ""
+              className={`flex items-center space-x-4 py-3 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out text-slate-300 rounded-lg ${
+                page === "Contact" ? "bg-[#242736]" : ""
               }`}
             >
               <IoIosCall color="white" size={iconSize} />
@@ -68,10 +60,8 @@ const SideBar: React.FC<props> = ({ page }) => {
           {/* Subscription */}
           <Link href="/plans">
             <div
-              className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out text-white rounded-lg ${
-                page === "Subscription"
-                  ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
-                  : ""
+              className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out text-slate-300 rounded-lg ${
+                page === "Subscription" ? "bg-[#242736]" : ""
               }`}
             >
               <MdOutlineAttachMoney color="white" size={iconSize} />
@@ -82,15 +72,15 @@ const SideBar: React.FC<props> = ({ page }) => {
           {/* Logout */}
 
           <div
-            className={`flex items-center space-x-4 py-3 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out  text-white rounded-lg ${
-              page === "Logout"
-                ? "bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
-                : ""
+            className={`flex items-center space-x-4 py-3 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out  text-slate-300 rounded-lg ${
+              page === "Logout" ? "bg-[#242736]" : ""
             }`}
             onClick={() => settoggle(true)}
           >
             <IoLogOut size={iconSize} color="white" />
-            <button className="text-white text-sm font-semibold ">Logout</button>
+            <button className="text-white text-sm font-semibold ">
+              Logout
+            </button>
           </div>
         </div>
       </aside>

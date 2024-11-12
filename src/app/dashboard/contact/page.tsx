@@ -4,7 +4,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="bg-[#0e0f11] w-full flex min-h-screen overflow-x-clip ">
+    <div className="bg-[#070707] w-full flex min-h-screen overflow-x-clip ">
       <SideBar page="Contact" />
       <ContactForm />
     </div>

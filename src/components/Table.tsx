@@ -134,8 +134,8 @@ const Table = () => {
           />
         </nav>
 
-        <div className="bg-[#17161c] w-screen px-14 py-7 pt-5 md:-ml-36 hidden md:block">
-          <div className="flex justify-end gap-x-3 items-center">
+        <div className="bg-[#04050a] w-screen px-14 py-8 pt-5 md:-ml-36 hidden md:block border-b-[1px] border-stone-900">
+          <div className="flex justify-end gap-x-3 items-center pt-2">
             <CgProfile size={23} color="white" />
             <h1 className="text-slate-300 text-lg font-semibold">
               {user?.displayName || "User"}
@@ -147,7 +147,7 @@ const Table = () => {
 
         <div className="w-full md:w-[70vw] px-2 py-14 mx-auto rounded-xl">
           {websitedata.length === 0 ? (
-            <div className="space-y-6 text-center bg-[#17161c] rounded-xl p-10">
+            <div className="space-y-6 text-center bg-[#070707] rounded-lg border-[1px] border-stone-900 p-10">
               <FaRegCircleStop size={23} color="white" className="mx-auto" />
               <p className="text-2xl font-semibold text-white">
                 No websites connected yet
@@ -157,9 +157,9 @@ const Table = () => {
               </p>
             </div>
           ) : (
-            <div className="overflow-x-auto rounded-xl pt-5">
-              <table className="min-w-full divide-y rounded-xl divide-stone-900">
-                <thead className="bg-[#201d24]">
+            <div className="overflow-x-auto  pt-5">
+              <table className="min-w-full divide-y rounded-xl divide-neutral-900 border-[1px] border-neutral-900">
+                <thead className="bg-[#070707]">
                   <tr className="cursor-pointer">
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                       Logo
@@ -175,15 +175,15 @@ const Table = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-[#161419] divide-y divide-stone-800">
+                <tbody className="bg-[#070707] divide-y divide-neutral-900">
                   {websitedata?.map((site, idx) => (
                     <tr
                       key={idx}
-                      className="hover:bg-[#141316] transition-colors duration-200 cursor-pointer"
+                      className="hover:bg-[#0b0b0c] transition-colors duration-200 cursor-pointer"
                     >
                       <td className="px-8 py-4 whitespace-nowrap">
                         <Image
-                          className="h-12 w-12 rounded-full object-cover"
+                          className="h-12 w-12 rounded-full object-cover border-[1px] border-stone-800"
                           src={site?.image}
                           alt="Profile"
                           width={48}
@@ -210,7 +210,7 @@ const Table = () => {
                             },
                           }}
                         >
-                          <button className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-xs text-white px-6 py-2 rounded-full transition-colors duration-200 cursor-pointer font-semibold">
+                          <button className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-xs text-white px-6 py-2 rounded-lg transition-colors duration-200 cursor-pointer font-semibold">
                             View
                           </button>
                         </Link>

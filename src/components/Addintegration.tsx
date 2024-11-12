@@ -205,9 +205,9 @@ const AddIntegration: React.FC = () => {
 
         <div className="text-slate-300 flex flex-col md:flex-row items-center gap-8 md:gap-12 md:mt-16 justify-center">
           <div className="md:ml-52">
-            <div className="bg-[#17161c] w-[96vw] md:w-[45vw] mx-auto h-[80vh] rounded-xl overflow-y-scroll mt-7">
-              <div className="space-y-3 border-b-[1px] border-stone-800 bg-gradient-to-r from-blue-600 via-blue-600 to-blue-500 p-5 rounded-t-xl">
-                <h1 className="text-2xl font-bold">Welcome to Integration</h1>
+            <div className="bg-[#070707] w-[96vw] shadow-2xl  md:w-[45vw] mx-auto h-[80vh] overflow-y-scroll mt-7 border-[1px] border-neutral-900">
+              <div className="space-y-3 border-b-[1px] border-stone-900 bg-[#111217] p-5 text-slate-300">
+                <h1 className="text-2xl font-bold ">Welcome to Integration</h1>
                 <p className="font-semibold">Connect your website</p>
               </div>
 
@@ -220,7 +220,7 @@ const AddIntegration: React.FC = () => {
                       </h1>
                       <button
                         onClick={() => setCurrentStep(2)}
-                        className="text-xs bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-white  py-2 px-4 rounded-full"
+                        className="text-xs bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-slate-300  py-2 px-4 rounded-lg"
                       >
                         Add Website
                       </button>
@@ -251,7 +251,7 @@ const AddIntegration: React.FC = () => {
                               alt={`${i.name} logo`}
                               width={48}
                               height={48}
-                              className="h-12 w-12 rounded-full object-cover cursor-pointer"
+                              className="h-12 w-12 rounded-full object-cover cursor-pointer border-[1px] border-stone-800"
                             />
                             <h1 className="text-sm font-semibold">{i?.name}</h1>
                             <button
@@ -328,7 +328,7 @@ const AddIntegration: React.FC = () => {
                           />
                           <label
                             htmlFor="fileInput"
-                            className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700   text-center text-white rounded-lg p-2 cursor-pointer"
+                            className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700   text-center text-white rounded-lg p-2 cursor-pointer"
                           >
                             Change Logo
                           </label>
@@ -349,7 +349,7 @@ const AddIntegration: React.FC = () => {
                           />
                           <label
                             htmlFor="fileInput"
-                            className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-center text-sm text-white rounded-lg p-2 cursor-pointer"
+                            className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-center text-sm text-white rounded-lg p-2 cursor-pointer"
                           >
                             Upload Logo
                           </label>
@@ -365,7 +365,7 @@ const AddIntegration: React.FC = () => {
                         </button>
                         <button
                           onClick={saveData}
-                          className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-white rounded-full px-6 py-2 text-sm"
+                          className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-white rounded-full px-6 py-2 text-sm"
                         >
                           Save
                         </button>
