@@ -155,7 +155,7 @@ export default function Page() {
       </div>
 
       <div className="fixed bottom-10 right-10 ">
-        <Link href="http://localhost:3000/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/feedsenseai.vercel.app">
+        <Link href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/feedsense AI">
           <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
             <MdSettingsSuggest
               size={47}

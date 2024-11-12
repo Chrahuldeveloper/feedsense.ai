@@ -19,7 +19,6 @@ interface Emotion {
   emoji: JSX.Element;
 }
 
-
 const Form = () => {
   const { userID, websiteID } = useParams();
 
@@ -28,6 +27,8 @@ const Form = () => {
     emotion: "",
     feedback: "",
   });
+
+  // console.log(decodeURIComponent(websiteID.toString()));
 
   const [selectedEmotion, setSelectedEmotion] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -39,14 +40,21 @@ const Form = () => {
     setLoading(true);
     setFeedbackStatus("Saving feedback...");
     try {
-      const isSubscribed = await db.checkifSubscribed(userID.toString(), websiteID.toString());
+      const isSubscribed = await db.checkifSubscribed(
+        userID.toString(),
+        decodeURIComponent(websiteID.toString())
+      );
       if (isSubscribed) {
         const savefeedback = {
           email: feedback.email,
           emotion: feedback.emotion,
           feedback: feedback.feedback,
         };
-        await db.saveFeedback(userID.toString(), websiteID.toString(), savefeedback);
+        await db.saveFeedback(
+          userID.toString(),
+          websiteID.toString(),
+          savefeedback
+        );
         setFeedbackStatus("Feedback saved successfully!");
         setFeedback({ email: "", emotion: "", feedback: "" });
         setSelectedEmotion(null);

@@ -82,9 +82,9 @@ const AddIntegration: React.FC = () => {
   hljs.registerLanguage("html", html);
 
   const generateCodeToCopy = (websiteId: string) => {
-    const code = `<!-- Add this snippet to your website's HTML -->\n<iframe src="http://${
-      window.location.hostname
-    }:3000/integrate/${user!.uid}/${websiteId}"></iframe>`;
+    const code = `<!-- Add this snippet to your website's HTML -->\n https://feedsenseai.vercel.app/integrate/${
+      user!.uid
+    }/${websiteId}`;
     const highlighted = hljs.highlight(code, { language: "html" }).value;
     setHighlightedCode(highlighted);
     setShowCode(true);
@@ -151,7 +151,7 @@ const AddIntegration: React.FC = () => {
           } else {
             setLastWebsiteId(websiteDataInput.name);
             setCurrentStep(3);
-            generateCodeToCopy(websiteDataInput.url);
+            generateCodeToCopy(websiteDataInput.name);
             setWebsiteDataInput({ name: "", url: "", type: "", logo: null });
 
             await db.fetchWebsites(user);
@@ -175,7 +175,7 @@ const AddIntegration: React.FC = () => {
     try {
       if (lastWebsiteId) {
         await navigator.clipboard.writeText(
-          `http://${window.location.hostname}:3000/integrate/${
+          `https://feedsenseai.vercel.app/integrate/${
             user!.uid
           }/${lastWebsiteId}"`
         );

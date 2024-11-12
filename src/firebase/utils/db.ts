@@ -239,7 +239,8 @@ export default class dbService {
     data: Feedback
   ): Promise<void> {
     try {
-      console.log(data, websiteName, userID);
+      // decodeURIComponent(websiteName.toString())
+      console.log(data, decodeURIComponent(websiteName.toString()), userID);
       const userDocRef = doc(db, "USERS", userID);
       const docSnap = await getDoc(userDocRef);
 
@@ -247,7 +248,7 @@ export default class dbService {
         const websites = docSnap.data()?.websites || [];
 
         const websiteIndex = websites.findIndex(
-          (website: Website) => website.url === websiteName
+          (website: Website) => website.name === decodeURIComponent(websiteName.toString())
         );
 
         if (websiteIndex !== -1) {
