@@ -202,7 +202,7 @@ export default function Page() {
             Still have questions? We’ve compiled a list of frequently asked
             questions to help you out.
           </p>
-          <div className="grid grid-cols-2 justify-center gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 justify-center gap-4">
             {faq.map((i, idx) => (
               <div
                 key={idx}
