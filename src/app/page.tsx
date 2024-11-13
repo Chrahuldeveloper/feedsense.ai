@@ -11,6 +11,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { MdSettingsSuggest } from "react-icons/md";
 import Image from "next/image";
+import TermsConditions from "../components/TermsConditions";
 
 export default function Page() {
   const [userSession, setUserSession] = useState<string | null>(null);
@@ -26,6 +27,8 @@ export default function Page() {
     setUserSession(authToken || null);
     console.log(authToken);
   }, []);
+
+  const [istoogle, setistoggle] = useState(false);
 
   const data = [
     {
@@ -220,9 +223,11 @@ export default function Page() {
         </div>
       </div>
 
+      {istoogle ? <TermsConditions setistoggle={setistoggle} /> : null}
+
       <footer className="bg-[#121212] text-white pt-10 px-4">
         <div className=" mx-auto flex flex-col md:flex-row items-center justify-around">
-          <div className="text-center md:text-left mb-6 md:mb-0">
+          <div className="text-center md:text-left mb-6 md:mb-0 space-y-5">
             <h1 className="text-2xl font-semibold">TaskFeed</h1>
             <p className="text-sm mt-2 text-gray-400 max-w-sm">
               Centralize and analyze feedback to continually improve your
@@ -232,8 +237,15 @@ export default function Page() {
 
           <div className="flex flex-col md:flex-row items-start  gap-20">
             <div className="flex flex-col items-center mb-6 md:mb-0">
-              <h2 className="text-lg font-semibold mb-2">Pages</h2>
-              <div className="flex flex-col gap-5 text-sm">
+              <p
+                onClick={() => {
+                  setistoggle(true);
+                }}
+                className="font-semibold cursor-pointer"
+              >
+                Terms and Conditions
+              </p>
+              <div className="flex flex-col gap-5 text-sm mt-3">
                 <Link href="/about">About</Link>
                 <Link href="/services">Services</Link>
                 <Link href="/contact">Contact</Link>
