@@ -230,38 +230,30 @@ export default function Page() {
             </p>
           </div>
 
+          <div className="flex flex-col md:flex-row items-start  gap-20">
+            <div className="flex flex-col items-center mb-6 md:mb-0">
+              <h2 className="text-lg font-semibold mb-2">Pages</h2>
+              <div className="flex flex-col gap-5 text-sm">
+                <Link href="/about">About</Link>
+                <Link href="/services">Services</Link>
+                <Link href="/contact">Contact</Link>
+                <Link href="/faq">FAQ</Link>
+              </div>
+            </div>
 
-          <div className="flex flex-col md:flex-row items-start  gap-28">
-          <div className="flex flex-col items-center mb-6 md:mb-0">
-            <h2 className="text-lg font-semibold mb-2">Pages</h2>
-            <div className="flex flex-col gap-5 text-sm">
-              <Link href="/about">About</Link>
-              <Link href="/services">Services</Link>
-              <Link href="/contact">Contact</Link>
-              <Link href="/faq">FAQ</Link>
+            <div className="flex flex-col items-center justify-center gap-5">
+              <h2 className="text-lg font-semibold mb-2">Follow Us</h2>
+              <Link href="https://twitter.com/" aria-label="Twitter">
+                <FaXTwitter size={24} className="hover:text-gray-400" />
+              </Link>
+              <Link href="https://instagram.com/" aria-label="Instagram">
+                <FiInstagram size={24} className="hover:text-gray-400" />
+              </Link>
+              <Link href="https://facebook.com/" aria-label="Facebook">
+                <FaFacebookF size={24} className="hover:text-gray-400" />
+              </Link>
             </div>
           </div>
-          <div className="flex flex-col items-center mb-6 md:mb-0">
-            <h2 className="text-lg font-semibold mb-2">Our Terms and Conditons</h2>
-            <div className="flex flex-col gap-5 text-sm">
-              <Link href="/faq">FAQ</Link>
-            </div>
-          </div>
-
-
-          <div className="flex flex-col items-center justify-center gap-5">
-          <h2 className="text-lg font-semibold mb-2">Follow Us</h2>
-            <Link href="https://twitter.com/" aria-label="Twitter">
-              <FaXTwitter size={24} className="hover:text-gray-400" />
-            </Link>
-            <Link href="https://instagram.com/" aria-label="Instagram">
-              <FiInstagram size={24} className="hover:text-gray-400" />
-            </Link>
-            <Link href="https://facebook.com/" aria-label="Facebook">
-              <FaFacebookF size={24} className="hover:text-gray-400" />
-            </Link>
-          </div>
-        </div>
         </div>
         <div className="text-center text-xs text-gray-500 py-5 pt-16">
           © {new Date().getFullYear()} TaskFeed. All rights reserved.

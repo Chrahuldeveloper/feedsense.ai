@@ -82,7 +82,7 @@ const AddIntegration: React.FC = () => {
   hljs.registerLanguage("html", html);
 
   const generateCodeToCopy = (websiteId: string) => {
-    const code = `<!-- Add this snippet to your website's HTML -->\n https://feedsenseai.vercel.app/integrate/${
+    const code = `<!-- Add this Link to your website -->\n https://feedsenseai.vercel.app/integrate/${
       user!.uid
     }/${websiteId}`;
     const highlighted = hljs.highlight(code, { language: "html" }).value;
@@ -207,7 +207,9 @@ const AddIntegration: React.FC = () => {
           <div className="md:ml-52">
             <div className="bg-[#04050a] w-[96vw] shadow-2xl  md:w-[45vw] mx-auto h-[80vh] overflow-y-scroll mt-7 border-[1px] border-[#15171b]">
               <div className="space-y-3 border-b-[1px] border-[#15171b] bg-[#111217] p-5 text-slate-300">
-                <h1 className="text-2xl font-semibold ">Welcome to Integration</h1>
+                <h1 className="text-2xl font-semibold ">
+                  Welcome to Integration
+                </h1>
                 <p className="">Connect your website</p>
               </div>
 
@@ -253,7 +255,9 @@ const AddIntegration: React.FC = () => {
                               height={48}
                               className="h-12 w-12 rounded-full object-cover cursor-pointer border-[1px] border-[#15171b]"
                             />
-                            <h1 className="text-sm font-semibold text-slate-300">{i?.name}</h1>
+                            <h1 className="text-sm font-semibold text-slate-300">
+                              {i?.name}
+                            </h1>
                             <button
                               onClick={() => handleDeleteWebsite(i?.name)}
                               className="text-sm hover:text-red-500 ease-in-out duration-500 text-slate-300"
@@ -375,19 +379,19 @@ const AddIntegration: React.FC = () => {
                 )}
 
                 {currentStep === 3 && (
-                  <div className="space-y-4 text-center mt-10">
+                  <div className="space-y-4 text-center mt-10 max-w-4xl mx-auto">
                     <h1 className="text-2xl font-semibold">Integration Code</h1>
                     <p className="text-slate-400">
                       Copy and paste this code into your website
                     </p>
                     <pre
-                      className="bg-[#1E1E1E] border-[1px] border-[#282c34] text-white p-4 rounded-md"
+                      className="bg-[#0c0c0c] border-[1px] border-[#15171b] max-w-2xl overflow-auto text-white p-4 rounded-md"
                       dangerouslySetInnerHTML={{ __html: highlightedCode }}
                     ></pre>
                     <div className="flex justify-end">
                       <button
                         onClick={copyCode}
-                        className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-white py-2 px-6 text-xs  font-semibold rounded-full"
+                        className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-white py-2 px-6 text-xs font-semibold rounded-lg"
                       >
                         Copy Code
                       </button>
