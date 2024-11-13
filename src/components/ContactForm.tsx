@@ -38,9 +38,11 @@ const ContactForm = () => {
   return (
     <div className="max-w-xl mx-auto py-7">
       <div className="">
-        <div className="bg-[#070707] p-8 rounded-lg w-[80vw] md:w-[35vw] mx-auto border-neutral-800 border-[1px] shadow-2xl">
+        <div className="bg-[#04050a] p-8  w-[95vw] md:w-[40vw] mx-auto border-[#15171b] border-[1px] shadow-2xl">
           <div>
-            <h1 className="text-white text-2xl font-semibold">Contact Us</h1>
+            <h1 className="text-slate-300 text-2xl font-semibold">
+              Contact Us
+            </h1>
           </div>
 
           <div className="space-y-6 mt-8">
@@ -55,7 +57,7 @@ const ContactForm = () => {
                 id="name"
                 name="name"
                 type="text"
-                className="bg-[#121111] border-[1px] border-[#282e32] pl-4 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+                className="bg-[#0c0c0c] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
                 placeholder="Enter your name"
                 value={formData.name}
                 onChange={handleChange}
@@ -73,7 +75,7 @@ const ContactForm = () => {
                 id="email"
                 name="email"
                 type="email"
-                className="bg-[#121111] border-[1px] border-[#282e32] pl-4 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+                className="bg-[#0c0c0c] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
                 placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleChange}
@@ -91,7 +93,7 @@ const ContactForm = () => {
               <textarea
                 id="message"
                 name="message"
-                className="bg-[#121111] border-[1px] border-[#282e32] pl-4 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+                className="bg-[#0c0c0c] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
                 placeholder="Enter your message"
                 rows={8}
                 value={formData.message}
@@ -101,7 +103,7 @@ const ContactForm = () => {
             </div>
             <button
               onClick={handleSubmit}
-              className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 mt-8 text-white py-2 px-4 w-full font-semibold rounded-lg  transition-colors flex items-center justify-center"
+              className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 mt-8 text-slate-300 py-2 px-4 w-full font-semibold rounded-lg  transition-colors flex items-center justify-center"
             >
               Submit
             </button>

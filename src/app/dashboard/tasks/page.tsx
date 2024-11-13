@@ -45,16 +45,16 @@ const Page = () => {
             setToggle(true);
           }}
           size={26}
-          color="white"
+          color="#9ca3af"
           className="cursor-pointer"
         />
       </nav>
 
-      <div className="bg-[#0e0f11] w-full h-screen flex overflow-x-clip">
+      <div className="bg-[black] w-full h-screen flex overflow-x-clip">
         <SideBar page="Home" />
-        <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl">
+        <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl ">
           <div className="overflow-x-auto rounded-xl mt-12">
-            <div className="flex mx-auto items-center justify-between w-[90vw] md:w-[60vw]">
+            <div className="flex mx-auto items-center justify-between w-[90vw] md:w-[60vw] bg-[#07070b] px-4 py-2 border-[1px] border-[#0e1012]">
               <div className="flex items-center gap-5">
                 <Image
                   src={getImage}
@@ -63,16 +63,16 @@ const Page = () => {
                   width={48}
                   height={48}
                 />
-                <h1 className="text-xl text-slate-300 font-semibold">
+                <h1 className="text-xl text-gray-300 font-semibold">
                   {getName}
                 </h1>
               </div>
               <Link href="/dashboard">
-                <RxCross2 size={25} color="white" />
+                <RxCross2 size={25} color="#9ca3af" />
               </Link>
             </div>
-            <table className=" md:mx-auto w-[98vw] md:w-[50vw] mt-7 divide-y divide-stone-900 rounded-lg overflow-hidden">
-              <thead className="bg-[#201d24] rounded-lg cursor-pointer">
+            <table className=" border-[1px] border-[#15171b] md:mx-auto w-[98vw] md:w-[60vw] mt-7 divide-y divide-[#15171b]  overflow-hidden ">
+              <thead className="bg-[#04050a]  cursor-pointer border-[1px] border-[#15171b]">
                 <tr>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Email
@@ -88,24 +88,24 @@ const Page = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-[#161419]">
+              <tbody className="bg-[#04050a] border-[1px] border-[#15171b]">
                 {websites.length > 0 ? (
                   websites.map((site, idx) => (
                     <tr
                       key={idx}
-                      className="hover:bg-[#141316] transition-colors duration-200 cursor-pointer"
+                      className="hover:bg-[#0c0d12] transition-colors duration-300 ease-in-out cursor-pointer"
                     >
-                      <td className="py-5 px-6 md:px-9 text-xs md:text-sm text-slate-300">
+                      <td className="py-5 px-6 md:px-9 text-xs md:text-sm text-gray-300">
                         {site.email}
                       </td>
-                      <td className="py-5 px-6 md:px-9 text-xs md:text-sm text-slate-300">
+                      <td className="py-5 px-6 md:px-9 text-xs md:text-sm text-gray-300">
                         {site.emotion}
                       </td>
-                      <td className="py-5 px-6 w-72 md:px-9 text-xs md:text-sm text-slate-300">
+                      <td className="py-5 px-6 w-72 md:px-9 text-xs md:text-sm text-gray-300">
                         {site.feedback}
                       </td>
                       <td
-                        className={`py-5 px-6 md:px-9 text-xs md:text-sm text-slate-300 w-60 ${
+                        className={`py-5 px-6 md:px-9 text-xs md:text-sm text-gray-300 w-60 ${
                           getPlan === "Basic" ? "blur-sm" : ""
                         }`}
                       >
@@ -118,8 +118,8 @@ const Page = () => {
                   <tr>
                     <td colSpan={4} className="py-5 text-center text-slate-300">
                       <div className="flex flex-col items-center gap-5">
-                        <BiConfused size={40} color="white" />
-                        <p className="font-semibold">No Feedbacks Yet</p>
+                        <BiConfused size={40} color="#9ca3af" />
+                        <p className=" text-slate-300">No Feedbacks Yet</p>
                       </div>
                     </td>
                   </tr>

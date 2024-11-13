@@ -4,7 +4,7 @@ import React from "react";
 const page = () => {
   return (
     <div className="bg-[#000000] w-full min-h-screen overflow-x-clip ">
-      <Form      />
+      <Form/>
     </div>
   );
 };

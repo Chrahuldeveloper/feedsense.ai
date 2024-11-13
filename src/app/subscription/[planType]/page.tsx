@@ -10,7 +10,7 @@ import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import { useRouter } from "next/navigation";
 import Loader from "../../../components/Loader";
-
+import TermsConditions from "../../../components/TermsConditions";
 declare global {
   interface Window {
     Razorpay: {
@@ -166,28 +166,41 @@ const Page = () => {
     }
   };
 
+  const [istoggle, setistoggle] = useState(false);
+
   return (
-    <div className="bg-[#0e0f11] w-screen min-h-screen overflow-x-clip">
+    <div className="bg-[#010101] w-screen min-h-screen overflow-x-clip">
       {isLoading ? <Loader message="Please wait" /> : null}
 
-      <div className="flex justify-between w-[80vw] mx-auto pt-5 pb-10">
-        <h1 className="text-slate-300 font-semibold text-lg">Change Plan</h1>
+      {istoggle ? <TermsConditions setistoggle={setistoggle} /> : null}
+
+      <div className="flex justify-between w-[76vw] mx-auto pt-8 pb-10">
+        <h1 className="text-gray-300  text-xl">Change Plan</h1>
         <Link href={"/dashboard"}>
           <RxCross2 size={24} color="white" />
         </Link>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between rounded-xl w-[90vw] md:w-[75vw] mx-auto pt-8 gap-6 items-center border-[1px] border-[#272b2f] p-6">
+      <div className="flex flex-col md:flex-row justify-between w-[90vw] md:w-[75vw] mx-auto pt-8 gap-6 items-center border-[1px] border-[#15171b] p-6">
         <div className="space-y-4">
-          <h1 className="text-slate-300 text-xl font-bold">
-            Select Plan {planType}
-          </h1>
           <p className="text-slate-300">
             For more details on our plans, visit our{" "}
             <span className="border-b-[1px] border-slate-300 cursor-pointer">
               <Link href={"/plans"}>Pricing page</Link>
             </span>
             .
+          </p>
+          <p className="text-gray-400">
+            Our
+            <span
+              onClick={() => {
+                setistoggle(true);
+              }}
+              className=" cursor-pointer border-b-[1px] border-gray-500"
+            >
+              {" "}
+              Terms and conditions
+            </span>
           </p>
           <div>
             {subscriptionPlans.map((itm) => (
@@ -196,14 +209,16 @@ const Page = () => {
                 onClick={() => {
                   setCurrentPlan({ name: itm.name, price: itm.price });
                 }}
-                className={`p-5 rounded-xl space-y-1 border-[1px] bg-[#17161c] border-[#272b2f] shadow-2xl mt-5 w-[80vw] md:w-[50vw] cursor-pointer ${
-                  currentPlan.name === itm.name ? "border-blue-600" : ""
+                className={`p-5  space-y-1 border-[0.1px] bg-[#04050a]  shadow-2xl mt-5 w-[80vw] md:w-[50vw] cursor-pointer ${
+                  currentPlan.name === itm.name
+                    ? "border-blue-900"
+                    : "border-[#15171b] "
                 }`}
               >
-                <h1 className="text-lg font-semibold text-slate-300">
+                <h1 className="text-lg font-semibold text-gray-300">
                   {itm.name}{" "}
                   {currentPlan.name === itm.name && (
-                    <span className="bg-[#2e2e34] px-3 py-1.5 rounded-full text-[10px]">
+                    <span className="bg-[#1f1f23] px-3 py-1.5 rounded-full text-[10px] text-gray-300">
                       Current Plan
                     </span>
                   )}
@@ -216,15 +231,15 @@ const Page = () => {
         <Bill selectedPlan={currentPlan} />
       </div>
 
-      <div className="border-t-[1px] bg-[#17161c] border-[#272b2f] md:fixed md:bottom-0 w-full pr-10">
+      <div className="border-t-[1px] bg-[#04050a] border-[#15171b] md:fixed md:bottom-0 w-full pr-10">
         <div className="flex justify-end gap-4 py-5">
-          <button className="border-[1px] border-[#272b2f] text-slate-300 px-5 rounded-lg text-sm py-2 cursor-pointer font-semibold">
+          <button className="bg-[#1E1E1E] border-[1px] border-[#15171b] text-gray-300 px-5 rounded-lg text-sm py-2 cursor-pointer font-semibold">
             Cancel
           </button>
           <Script src="https://checkout.razorpay.com/v1/checkout.js" />
           <button
             onClick={handlePayment}
-            className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 px-5 rounded-lg text-sm py-2 cursor-pointer font-semibold text-white"
+            className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 px-5 rounded-lg text-sm py-2 cursor-pointer font-semibold text-white"
           >
             Purchase
           </button>

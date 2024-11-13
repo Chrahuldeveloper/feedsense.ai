@@ -19,13 +19,13 @@ const SideBar: React.FC<props> = ({ page }) => {
 
   return (
     <>
-      <aside className="bg-[#04050a] w-42 h-full space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-stone-900">
+      <aside className="bg-[#04050a]  w-42 h-full space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-[#15171b]">
         <div className="flex flex-col space-y-8 pt-7">
           {/* Home */}
           <Link href="/dashboard">
             <div
-              className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out text-slate-300 rounded-lg ${
-                page === "Home" ? "bg-[#242736] " : ""
+              className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
+                page === "Home" ? "bg-[#12131a] " : ""
               }`}
             >
               <MdDashboard color="white" size={iconSize} />
@@ -36,8 +36,8 @@ const SideBar: React.FC<props> = ({ page }) => {
           {/* Integrate */}
           <Link href="/dashboard/integrate">
             <div
-              className={`flex items-center space-x-4 py-3 pr-12 pl-4 transition duration-200 ease-in-out text-slate-300 rounded-lg ${
-                page === "Integrate" ? "bg-[#242736]" : ""
+              className={`flex items-center space-x-4 py-3 pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
+                page === "Integrate" ? "bg-[#12131a]" : ""
               }`}
             >
               <CgWebsite color="white" size={iconSize} />
@@ -48,8 +48,8 @@ const SideBar: React.FC<props> = ({ page }) => {
           {/* Contact */}
           <Link href="/dashboard/contact">
             <div
-              className={`flex items-center space-x-4 py-3 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out text-slate-300 rounded-lg ${
-                page === "Contact" ? "bg-[#242736]" : ""
+              className={`flex items-center space-x-4 py-3 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
+                page === "Contact" ? "bg-[#12131a]" : ""
               }`}
             >
               <IoIosCall color="white" size={iconSize} />
@@ -60,8 +60,8 @@ const SideBar: React.FC<props> = ({ page }) => {
           {/* Subscription */}
           <Link href="/plans">
             <div
-              className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out text-slate-300 rounded-lg ${
-                page === "Subscription" ? "bg-[#242736]" : ""
+              className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
+                page === "Subscription" ? "bg-[#12131a]" : ""
               }`}
             >
               <MdOutlineAttachMoney color="white" size={iconSize} />
@@ -72,8 +72,8 @@ const SideBar: React.FC<props> = ({ page }) => {
           {/* Logout */}
 
           <div
-            className={`flex items-center space-x-4 py-3 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out  text-slate-300 rounded-lg ${
-              page === "Logout" ? "bg-[#242736]" : ""
+            className={`flex items-center space-x-4 py-3 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out  text-gray-300 rounded-lg ${
+              page === "Logout" ? "bg-[#12131a]" : ""
             }`}
             onClick={() => settoggle(true)}
           >
