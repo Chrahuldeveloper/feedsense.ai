@@ -235,13 +235,13 @@ export default function Page() {
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row items-start  gap-20">
-            <div className="flex flex-col items-center mb-6 md:mb-0">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-20">
+            <div className="flex flex-col items-center mt-6 md:mt-0 ">
               <p
                 onClick={() => {
                   setistoggle(true);
                 }}
-                className="font-semibold cursor-pointer"
+                className="font-semibold cursor-pointer text-lg"
               >
                 Terms and Conditions
               </p>
@@ -268,7 +268,7 @@ export default function Page() {
           </div>
         </div>
         <div className="text-center text-xs text-gray-500 py-5 pt-16">
-          © {new Date().getFullYear()} TaskFeed. All rights reserved.
+          © {new Date().getFullYear()} FeedSense Ai. All rights reserved.
         </div>
       </footer>
     </div>

@@ -3,10 +3,12 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import Cookies from "js-cookie";
+import logo from "../../src/app/favicon.ico";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [userSession, setUserSession] = useState<string | null>(null); 
+  const [userSession, setUserSession] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,7 +16,7 @@ const Navbar = () => {
     };
 
     const token = Cookies.get("auth-token");
-    setUserSession(token ?? null); 
+    setUserSession(token ?? null);
 
     window.addEventListener("scroll", handleScroll);
 
@@ -25,12 +27,16 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed flex-row top-0 left-0 w-full border-stone-900 z-50 p-7 flex justify-between items-center px-12 transition-all duration-300 ${
+      className={`fixed flex-row top-0 left-0 w-full border-stone-900 z-50 p-3.5 flex justify-between items-center px-12 transition-all duration-300 ${
         isScrolled ? "backdrop-blur-md border-b-[0.1px]" : "backdrop-blur-lg"
       }`}
     >
       <div>
-        <h1 className="text-2xl md:text-3xl font-semibold text-white">Fixit</h1>
+        <Image
+          className="h-16 w-16 rounded-full object-cover border-[1px] border-[#15171b]"
+          src={logo}
+          alt="Profile"
+        />
       </div>
       <div className="md:hidden">
         <CiMenuFries size={23} color="white" />
