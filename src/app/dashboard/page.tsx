@@ -18,7 +18,7 @@ const Page = () => {
   useEffect(() => {
     const fetchFeedbackTasks = async () => {
       if (!user?.uid) return;
-  
+
       try {
         const feedback = await db.fetchFeedbacks(user.uid);
         console.log(feedback);
@@ -31,12 +31,11 @@ const Page = () => {
         console.error("Fetch error:", error);
       }
     };
-  
+
     if (user?.uid) {
       fetchFeedbackTasks();
     }
   }, [user?.uid, db]);
-  
 
   useEffect(() => {
     if (user?.uid) {
