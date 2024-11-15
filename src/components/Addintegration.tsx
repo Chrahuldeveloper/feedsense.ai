@@ -13,6 +13,9 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebase/Firebase";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { FaRegCopy } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Website {
   id: string;
@@ -53,6 +56,8 @@ const AddIntegration: React.FC = () => {
     logo: null,
   });
   const [highlightedCode, setHighlightedCode] = useState("");
+  const [highlightedCode1, setHighlightedCode1] = useState("");
+
   const [lastWebsiteId, setLastWebsiteId] = useState<string | null>(null);
 
   const router = useRouter();
@@ -87,6 +92,29 @@ const AddIntegration: React.FC = () => {
     }/${websiteId}`;
     const highlighted = hljs.highlight(code, { language: "html" }).value;
     setHighlightedCode(highlighted);
+    setShowCode(true);
+  };
+
+  const codeToCopy = (websiteId: string) => {
+    const code = `
+  <!-- Make sure you have Tailwind CSS set up to use these utility classes for styling -->
+  <div className="fixed bottom-10 right-10">
+    <Link href="https://feedsenseai.vercel.app/integrate/${
+      user!.uid
+    }/${websiteId}">
+      <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
+        <MdSettingsSuggest
+          size={47}
+          color="white"
+          className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 rounded-full p-3"
+        />
+      </button>
+    </Link>
+  </div>
+`;
+
+    const highlighted = hljs.highlight(code, { language: "html" }).value;
+    setHighlightedCode1(highlighted);
     setShowCode(true);
   };
 
@@ -152,6 +180,7 @@ const AddIntegration: React.FC = () => {
             setLastWebsiteId(websiteDataInput.name);
             setCurrentStep(3);
             generateCodeToCopy(websiteDataInput.name);
+            codeToCopy(websiteDataInput.name);
             setWebsiteDataInput({ name: "", url: "", type: "", logo: null });
 
             await db.fetchWebsites(user);
@@ -179,6 +208,33 @@ const AddIntegration: React.FC = () => {
             user!.uid
           }/${lastWebsiteId}"`
         );
+        toast("Code Copied!");
+      } else {
+        alert("No website ID available to copy.");
+      }
+    } catch (error) {
+      console.log("Error copying code:", error);
+    }
+  };
+
+  const copyCodeToIntegrate = async () => {
+    try {
+      if (lastWebsiteId) {
+        await navigator.clipboard.writeText(
+          `<div className="fixed bottom-10 right-10">
+    <Link href="https://feedsenseai.vercel.app/integrate/${
+      user!.uid
+    }/${lastWebsiteId}">
+      <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
+        <MdSettingsSuggest1
+          size={47}
+          color="white"
+          className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 rounded-full p-3"
+        />
+      </button>
+    </Link>
+  </div>`
+        );
         alert("Code copied to clipboard!");
       } else {
         alert("No website ID available to copy.");
@@ -203,7 +259,7 @@ const AddIntegration: React.FC = () => {
         </nav>
         {toggle && <MobileSideBar setToggle={setToggle} />}
 
-        <div className="text-slate-300 flex flex-col md:flex-row items-center gap-8 md:gap-12 md:mt-16 justify-center">
+        <div className="text-slate-300 flex flex-col md:flex-row items-center gap-8 md:gap-12 md:mt-14 justify-center">
           <div className="md:ml-52">
             <div className="bg-[#04050a] w-[96vw] shadow-2xl  md:w-[45vw] mx-auto h-[80vh] overflow-y-scroll mt-7 border-[1px] border-[#15171b]">
               <div className="space-y-3 border-b-[1px] border-[#15171b] bg-[#111217] p-5 text-slate-300">
@@ -272,7 +328,7 @@ const AddIntegration: React.FC = () => {
                 )}
 
                 {currentStep === 2 && (
-                  <div className="w-[85vw] md:w-[33vw] p-6 space-y-9 mt- mx-auto ">
+                  <div className="w-[85vw] md:w-[33vw] p-6 space-y-9  mx-auto ">
                     <div className="space-y-4 text-slate-300">
                       <h1 className="text-2xl font-semibold">
                         Add your website
@@ -379,22 +435,61 @@ const AddIntegration: React.FC = () => {
                 )}
 
                 {currentStep === 3 && (
-                  <div className="space-y-4 text-center mt-10 max-w-4xl mx-auto">
+                  <div className="space-y-4 text-center  max-w-4xl mx-auto">
                     <h1 className="text-2xl font-semibold">Integration Code</h1>
                     <p className="text-slate-400">
                       Copy and paste this code into your website
                     </p>
                     <pre
-                      className="bg-[#0c0c0c] border-[1px] border-[#15171b] max-w-2xl overflow-auto text-white p-4 rounded-md"
+                      className="bg-[#0c0c0c] border-[1px] border-[#15171b] max-w-2xl overflow-auto text-white px-4 py-16"
                       dangerouslySetInnerHTML={{ __html: highlightedCode }}
                     ></pre>
                     <div className="flex justify-end">
-                      <button
+                      <FaRegCopy
+                        size={24}
+                        className="relative bottom-14 right-5"
+                        cursor={"pointer"}
                         onClick={copyCode}
-                        className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-white py-2 px-6 text-xs font-semibold rounded-lg"
-                      >
-                        Copy Code
-                      </button>
+                      />
+                    </div>
+                    OR
+                    <div>
+                      <pre
+                        className="bg-[#0c0c0c] border-[1px] border-[#15171b] px-4 py-10 overflow-auto text-white  "
+                        dangerouslySetInnerHTML={{
+                          __html: "npm i react-icons",
+                        }}
+                      ></pre>
+                      <div className="flex justify-end">
+                        <FaRegCopy
+                          onClick={async () => {
+                            try {
+                              await navigator.clipboard.writeText(
+                                "npm i react-icons"
+                              );
+                            } catch (error: any) {
+                              console.log(error);
+                            }
+                          }}
+                          size={24}
+                          className="relative bottom-10 right-5"
+                          cursor={"pointer"}
+                        />
+                      </div>
+                    </div>
+                    <div className="bg-[#0c0c0c] border-[1px] border-[#15171b]">
+                      <pre
+                        className="  overflow-auto text-white  rounded-md"
+                        dangerouslySetInnerHTML={{ __html: highlightedCode1 }}
+                      ></pre>
+                      <div className="flex justify-end">
+                        <FaRegCopy
+                          size={24}
+                          className="relative bottom-5 right-5"
+                          cursor={"pointer"}
+                          onClick={copyCodeToIntegrate}
+                        />
+                      </div>
                     </div>
                   </div>
                 )}
@@ -403,6 +498,8 @@ const AddIntegration: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <ToastContainer theme="dark" toastClassName={"custom-toast"}/>
     </>
   );
 };

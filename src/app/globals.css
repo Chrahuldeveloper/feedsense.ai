@@ -7,3 +7,9 @@
 ::-webkit-scrollbar {
     display: none;
 }
+
+
+.custom-toast .Toastify__progress-bar {
+    background-color: #5296f7; 
+  }
+  
