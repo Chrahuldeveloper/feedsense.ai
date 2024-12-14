@@ -9,9 +9,30 @@ import Link from "next/link";
 import { BiConfused } from "react-icons/bi";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
+import { Bar, Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
 const Page = () => {
   const searchParams = useSearchParams();
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    PointElement,
+    LineElement,
+    Tooltip,
+    Legend
+  );
 
   interface Feedback {
     name: string;
@@ -36,6 +57,20 @@ const Page = () => {
 
   const [toggle, setToggle] = useState(false);
 
+  const analytics = {
+    labels: ["Happy", "Neutral", "Sad"],
+    datasets: [
+      {
+        label: "Dashboard Data",
+        data: [10, 20, 30],
+        borderColor: "#2967ec",
+        pointBackgroundColor: "#2967ec",
+        pointBorderColor: "#2967ec",
+        borderWidth: 1,
+      },
+    ],
+  };
+
   return (
     <>
       <nav className="md:hidden bg-[#0e0f11] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
@@ -50,10 +85,10 @@ const Page = () => {
         />
       </nav>
 
-      <div className="bg-[black] w-full h-screen flex overflow-x-clip">
+      <div className="bg-[black] w-full  flex overflow-x-clip">
         <SideBar page="Home" />
         <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl ">
-          <div className="overflow-x-auto rounded-xl mt-12">
+          <div className="overflow-x-auto rounded-xl my-12">
             <div className="flex mx-auto items-center justify-between w-[90vw] md:w-[60vw] bg-[#07070b] px-4 py-2 border-[1px] border-[#0e1012]">
               <div className="flex items-center gap-5">
                 <Image
@@ -78,10 +113,10 @@ const Page = () => {
                     Email
                   </th>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Feedback
+                    Emotion
                   </th>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                    Emotion
+                    Feedback
                   </th>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Analysis
@@ -126,6 +161,13 @@ const Page = () => {
                 )}
               </tbody>
             </table>
+          </div>
+
+          <div className="w-[90vw] md:w-[50vw] mx-auto mb-5">
+            <h2 className="text-gray-300 text-lg font-semibold mb-4">
+              Bar Graph
+            </h2>
+            <Line data={analytics} />
           </div>
         </div>
       </div>

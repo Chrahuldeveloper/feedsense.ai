@@ -15,7 +15,7 @@ const feedbackHandler = {
       const feedback = await request.json();
 
       const taskInput = {
-        prompt: `You are an AI tool designed to analyze feedback and provide actionable suggestions for improvements. Based on the following feedback, give a clear and concise suggestion that is between 10 and 15 characters long: "${feedback.message}"`,
+        prompt: `You are an AI tool designed to analyze user feedback and provide actionable suggestions for website improvements. Based on the feedback provided, generate a concise and actionable suggestion (10–15 characters) that directly addresses the user's concern or highlights an improvement area: "${feedback.message}"`,
       };
 
       const aiResponse = await env.AI.run(
