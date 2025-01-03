@@ -38,7 +38,7 @@ const ContactForm = () => {
   return (
     <div className="max-w-xl mx-auto py-7">
       <div className="">
-        <div className="bg-[#04050a] p-8  w-[95vw] md:w-[40vw] mx-auto border-[#15171b] border-[1px] shadow-2xl">
+        <div className="bg-[#0e0f12] p-8  w-[95vw] md:w-[40vw] mx-auto border-[#15171b] border-[1px] shadow-2xl">
           <div>
             <h1 className="text-slate-300 text-2xl font-semibold">
               Contact Us
@@ -57,7 +57,7 @@ const ContactForm = () => {
                 id="name"
                 name="name"
                 type="text"
-                className="bg-[#0c0c0c] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                className="bg-[#101113] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
                 placeholder="Enter your name"
                 value={formData.name}
                 onChange={handleChange}
@@ -75,7 +75,7 @@ const ContactForm = () => {
                 id="email"
                 name="email"
                 type="email"
-                className="bg-[#0c0c0c] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                className="bg-[#101113] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
                 placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleChange}
@@ -93,7 +93,7 @@ const ContactForm = () => {
               <textarea
                 id="message"
                 name="message"
-                className="bg-[#0c0c0c] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                className="bg-[#101113] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
                 placeholder="Enter your message"
                 rows={8}
                 value={formData.message}

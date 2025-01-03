@@ -248,7 +248,7 @@ const AddIntegration: React.FC = () => {
     <>
       {(fetchingData || savingData || deleting) && <Loader message="Loading" />}
       <div className="md:ml-80">
-        <nav className="md:hidden bg-[#18181b] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
+        <nav className="md:hidden bg-[#0e0f12] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
           <CiMenuFries
             size={26}
@@ -261,8 +261,8 @@ const AddIntegration: React.FC = () => {
 
         <div className="text-slate-300 flex flex-col md:flex-row items-center gap-8 md:gap-12 md:mt-14 justify-center">
           <div className="md:ml-52">
-            <div className="bg-[#04050a] w-[96vw] shadow-2xl  md:w-[45vw] mx-auto h-[80vh] overflow-y-scroll mt-7 border-[1px] border-[#15171b]">
-              <div className="space-y-3 border-b-[1px] border-[#15171b] bg-[#111217] p-5 text-slate-300">
+            <div className="bg-[#0e0f12] w-[96vw] shadow-2xl  md:w-[45vw] mx-auto h-[80vh] overflow-y-scroll mt-7 border-[1px] border-[#15171b]">
+              <div className="space-y-3 border-b-[1px] border-[#15171b] bg-[#131417] p-5 text-slate-300">
                 <h1 className="text-2xl font-semibold ">
                   Welcome to Integration
                 </h1>

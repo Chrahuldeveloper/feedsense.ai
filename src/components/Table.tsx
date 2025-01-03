@@ -124,7 +124,7 @@ const Table = () => {
     <>
       {loading && <Loader message="loading" />}
       <div className="md:ml-44">
-        <nav className="md:hidden bg-[#151719] p-7 w-screen border-b-[1px] border-[#15171b] flex justify-between items-center">
+        <nav className="md:hidden bg-[#0e0f12] p-7 w-screen border-b-[1px] border-[#15171b] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">Fixit</h1>
           <CiMenuFries
             size={26}
@@ -134,7 +134,7 @@ const Table = () => {
           />
         </nav>
 
-        <div className="bg-[#04050a] w-screen px-14 py-8 pt-5 md:-ml-36 hidden md:block border-b-[1px] border-[#15171b]">
+        <div className="bg-[#0e0f12] w-screen px-14 py-8 pt-5 md:-ml-36 hidden md:block border-b-[1px] border-[#15171b]">
           <div className="flex justify-end gap-x-3 items-center pt-2">
             <CgProfile size={23} color="white" />
             <h1 className="text-slate-300 text-lg ">
@@ -147,7 +147,7 @@ const Table = () => {
 
         <div className="w-full md:w-[70vw] px-2 py-14 mx-auto rounded-xl">
           {websitedata.length === 0 ? (
-            <div className="space-y-6 text-center bg-[#070707] rounded-lg border-[1px] border-[#15171b] p-10">
+            <div className="space-y-6 text-center bg-[#0e0f12] rounded-lg border-[1px] border-[#15171b] p-10">
               <FaRegCircleStop size={23} color="white" className="mx-auto" />
               <p className="text-2xl font-semibold text-white">
                 No websites connected yet
@@ -159,7 +159,7 @@ const Table = () => {
           ) : (
             <div className="overflow-x-auto  pt-5">
               <table className="min-w-full divide-y rounded-xl divide-[#15171b] border-[1px] border-[#15171b]">
-                <thead className="bg-[#04050a]">
+                <thead className="bg-[#0e0f12]">
                   <tr className="cursor-pointer">
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                       Logo
@@ -175,7 +175,7 @@ const Table = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-[#04050a] divide-y divide-[#15171b]">
+                <tbody className="bg-[#0e0f12] divide-y divide-[#15171b]">
                   {websitedata?.map((site, idx) => (
                     <tr
                       key={idx}

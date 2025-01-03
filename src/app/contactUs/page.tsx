@@ -2,7 +2,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="bg-[#000000] w-full overflow-hidden min-h-screen relative">
+    <div className="bg-[#0f1113] w-full overflow-hidden min-h-screen relative">
       <div className="absolute inset-0 bg-[#000000] opacity-95"></div>
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/2 right-96 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500 rounded-full opacity-20 blur-[120px]" />

@@ -48,7 +48,7 @@ const Navbar = () => {
         <Link href={"/contactUs"}>
           <li className="cursor-pointer font-semibold text-sm">Contact</li>
         </Link>
-        {userSession === null ? ( // Check if userSession is null
+        {userSession === null ? (
           <Link href="/login">
             <li className="cursor-pointer font-semibold text-sm">Login</li>
           </Link>
