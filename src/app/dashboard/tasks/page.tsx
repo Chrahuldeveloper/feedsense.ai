@@ -150,17 +150,17 @@ const Page = () => {
                       key={idx}
                       className="hover:bg-[#0c0d12] transition-colors duration-300 ease-in-out cursor-pointer"
                     >
-                      <td className="py-5 px-6 md:px-9 text-xs md:text-sm text-gray-300">
+                      <td className="py-5 px-6 md:px-9 text-xs md:text-xs text-gray-300">
                         {site.email}
                       </td>
-                      <td className="py-5 px-6 md:px-9 text-xs md:text-sm text-gray-300">
+                      <td className="py-5 px-6 md:px-9 text-xs md:text-xs text-gray-300">
                         {site.emotion}
                       </td>
-                      <td className="py-5 px-6 w-72 md:px-9 text-xs md:text-sm text-gray-300">
+                      <td className="py-5 px-6 w-72 md:px-9 text-xs md:text-xs text-gray-300">
                         {site.feedback}
                       </td>
                       <td
-                        className={`py-5 px-6 md:px-9 text-xs md:text-sm text-gray-300 w-60 ${
+                        className={`py-5 px-6 md:px-9 text-xs md:text-xs text-gray-300 w-60 ${
                           getPlan === "Basic" ? "blur-sm" : ""
                         }`}
                       >

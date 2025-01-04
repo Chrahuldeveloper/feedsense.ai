@@ -79,7 +79,7 @@ const Form = () => {
   return (
     <div className="flex justify-center p-5">
       <div className="rounded-lg shadow-lg w-full max-w-md sm:max-w-lg lg:max-w-xl border-[1px] bg-[#121212] border-[#282e32]">
-        <div className="bg-gradient-to-r from-blue-600 via-blue-600 to-blue-500 p-6 rounded-t-lg border-b-[1px] border-stone-800 space-y-2">
+        <div className="bg-[#1E1E1E] p-6 rounded-t-lg border-b-[1px] border-stone-800 space-y-2">
           <h1 className="text-2xl font-bold text-white">
             Send Us Your Feedback
           </h1>
@@ -150,7 +150,7 @@ const Form = () => {
             <div className="mt-4">
               <button
                 onClick={saveFeedBack}
-                className="text-white px-4 py-2 rounded-lg w-full bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700"
+                className="text-black font-semibold px-4 py-2 rounded-lg w-full bg-slate-50"
               >
                 Share Insights
               </button>
