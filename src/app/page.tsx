@@ -209,7 +209,7 @@ export default function Page() {
             {faq.map((i, idx) => (
               <div
                 key={idx}
-                className="bg-[#121212] text-white p-5 rounded-xl border-[1px] border-[#191d1f] max-w-md"
+                className="bg-[#121212] text-white p-5 rounded-xl border-[1px] border-[#191d1f] max-w-md space-y-3"
                 data-aos="fade-up"
                 data-aos-duration="1000"
                 data-aos-easing="ease-in-out"

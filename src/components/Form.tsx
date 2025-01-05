@@ -28,8 +28,6 @@ const Form = () => {
     feedback: "",
   });
 
-  // console.log(decodeURIComponent(websiteID.toString()));
-
   const [selectedEmotion, setSelectedEmotion] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [feedbackStatus, setFeedbackStatus] = useState<string>("");
@@ -106,7 +104,7 @@ const Form = () => {
                   setFeedback({ ...feedback, email: e.target.value })
                 }
                 autoComplete="off"
-                className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+                className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-lg text-white "
               />
             </div>
 
@@ -119,7 +117,7 @@ const Form = () => {
                 }
                 cols={20}
                 rows={5}
-                className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+                className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-lg text-white "
               />
             </div>
 

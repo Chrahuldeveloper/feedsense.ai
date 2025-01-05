@@ -89,7 +89,7 @@ export default function LoginPage() {
 
   return (
     <div className="bg-[#000000] w-full overflow-hidden min-h-screen relative">
-      {error && <ErrorModel message={errorMessage} setError={setError} />}
+      {/* {error && <ErrorModel message={errorMessage} setError={setError} />} */}
       {isLoading && <Loader message="Loading" />}
 
       <div className="absolute inset-0 overflow-hidden">
@@ -106,6 +106,12 @@ export default function LoginPage() {
               Sign in or Login to your account
             </p>
           </div>
+
+          {error && (
+            <div>
+              <h1 className="text-red-500 text-center mt-5">{errorMessage}</h1>
+            </div>
+          )}
 
           <div className="space-y-6 my-8">
             <div className="space-y-2">
