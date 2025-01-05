@@ -169,7 +169,7 @@ const Page = () => {
   const [istoggle, setistoggle] = useState(false);
 
   return (
-    <div className="bg-[#010101] w-screen min-h-screen overflow-x-clip">
+    <div className="bg-[#111115] w-screen min-h-screen overflow-x-clip">
       {isLoading ? <Loader message="Please wait" /> : null}
 
       {istoggle ? <TermsConditions setistoggle={setistoggle} /> : null}
@@ -181,7 +181,7 @@ const Page = () => {
         </Link>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between w-[90vw] md:w-[75vw] mx-auto pt-8 gap-6 items-center border-[1px] border-[#15171b] p-6">
+      <div className="flex flex-col md:flex-row justify-between w-[90vw] md:w-[75vw] mx-auto pt-8 gap-6 items-center border-[1px] border-[#1a1d22] p-6 bg-[#0e0f12]">
         <div className="space-y-4">
           <p className="text-slate-300">
             For more details on our plans, visit our{" "}
@@ -209,16 +209,16 @@ const Page = () => {
                 onClick={() => {
                   setCurrentPlan({ name: itm.name, price: itm.price });
                 }}
-                className={`p-5  space-y-1 border-[0.1px] bg-[#04050a]  shadow-2xl mt-5 w-[80vw] md:w-[50vw] cursor-pointer ${
+                className={`p-5  space-y-1 border-[0.1px] bg-[#0e0f12]  shadow-2xl mt-5 w-[80vw] md:w-[50vw] cursor-pointer ${
                   currentPlan.name === itm.name
                     ? "border-blue-900"
-                    : "border-[#15171b] "
+                    : "border-[#1a1d22] "
                 }`}
               >
                 <h1 className="text-lg font-semibold text-gray-300">
                   {itm.name}{" "}
                   {currentPlan.name === itm.name && (
-                    <span className="bg-[#1f1f23] px-3 py-1.5 rounded-full text-[10px] text-gray-300">
+                    <span className="bg-[#0e0f12] px-3 py-1.5 rounded-full text-[10px] text-gray-300">
                       Current Plan
                     </span>
                   )}
@@ -231,7 +231,7 @@ const Page = () => {
         <Bill selectedPlan={currentPlan} />
       </div>
 
-      <div className="border-t-[1px] bg-[#04050a] border-[#15171b] md:fixed md:bottom-0 w-full pr-10">
+      <div className="border-t-[1px] bg-[#0e0f12] border-[#1a1d22] md:fixed md:bottom-0 w-full pr-10">
         <div className="flex justify-end gap-4 py-5">
           <button className="bg-[#1E1E1E] border-[1px] border-[#15171b] text-gray-300 px-5 rounded-lg text-sm py-2 cursor-pointer font-semibold">
             Cancel

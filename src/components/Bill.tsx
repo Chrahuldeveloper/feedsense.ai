@@ -6,7 +6,7 @@ const Bill = ({
   selectedPlan: { name: string; price: number };
 }) => {
   return (
-    <div className="p-5 w-[80vw] md:w-[60vw] bg-[#04050a]  border-[1px] border-[#15171b] text-gray-300 space-y-6 mt-12">
+    <div className="p-5 w-[80vw] md:w-[60vw] bg-[#0e0f12]  border-[1px] border-[#15171b] text-gray-300 space-y-6 mt-12">
       <div className="flex items-center justify-between mx-3">
         <h1>{selectedPlan.name} Plan</h1>
         <p>₹{selectedPlan.price}</p>
