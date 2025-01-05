@@ -3,7 +3,7 @@
 import Navbar from "@/components/Navbar";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaCode, FaXTwitter } from "react-icons/fa6";
 import { FiInstagram } from "react-icons/fi";
 import { FaFacebookF } from "react-icons/fa";
 import Cookies from "js-cookie";
@@ -12,6 +12,10 @@ import "aos/dist/aos.css";
 import { MdSettingsSuggest } from "react-icons/md";
 import Image from "next/image";
 import TermsConditions from "../components/TermsConditions";
+import { CiChat1 } from "react-icons/ci";
+import { SlMagnifier } from "react-icons/sl";
+import { IoRocketOutline } from "react-icons/io5";
+import { FaArrowsTurnRight } from "react-icons/fa6";
 
 export default function Page() {
   const [userSession, setUserSession] = useState<string | null>(null);
@@ -83,10 +87,53 @@ export default function Page() {
     },
   ];
 
+  const features = [
+    {
+      icon: <CiChat1 size={20} color="white" />,
+      tittle: "Collect Feedback",
+    },
+    {
+      icon: <SlMagnifier size={20} color="white" />,
+      tittle: "Analyze Insights",
+    },
+    {
+      icon: <FaCode size={20} color="white" />,
+      tittle: "Develop Solution",
+    },
+    {
+      icon: <IoRocketOutline size={20} color="white" />,
+      tittle: "Launch Feature",
+    },
+  ];
+
+  const feedbackComparison = [
+    {
+      type: "Before",
+      points: [
+        "The old way feedback feels like a nightmare 😩",
+        "Exhausting manual feedback collection",
+        "Frustrating platform switching",
+        "Time-consuming manual analysis",
+        "Overwhelmed by too much feedback",
+      ],
+    },
+    {
+      type: "After",
+      points: [
+        "Let FeedsenseAi do the hard work for you 🤩",
+        "Centralized feedback,reducing platform switching by 40%",
+        "Automated collection saves hours each week",
+        "30% more actionable insights with AI-powered analysis",
+        "Cut 70% of manual work",
+        "Boost customer engagement by 15% by showing users their feedback matters",
+      ],
+    },
+  ];
+
   return (
     <div className="bg-black w-full min-h-screen">
       <Navbar />
-      <div className="flex flex-col items-center space-y-8 pt-32 px-4">
+      <div className="flex flex-col items-center space-y-8 pt-24 px-4">
         <div
           className="absolute inset-0 overflow-hidden "
           data-aos="fade-up"
@@ -100,18 +147,26 @@ export default function Page() {
             <div className="absolute bottom-1/4 right-1/4 w-[70vw] h-[50vh] bg-blue-400 rounded-full opacity-10 blur-[130px]" />
           </div>
         </div>
+        <p className="bg-white p-2 rounded-full text-[11px] font-semibold">
+          AI Powered Feedback Collection & Prioritization Technology
+        </p>
         <h1 className="text-3xl lg:text-5xl text-center font-semibold text-white leading-8 z-50">
-          Centralize Feedback, Empower Your Business
+          Build What Users Truly Need – <br />{" "}
+          <span className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 text-transparent bg-clip-text">
+            Don’t Waste
+          </span>{" "}
+          Time or Resources
         </h1>
         <p className="text-[#a2a2a2] max-w-lg text-center z-50 text-sm md:text-base">
-          Collect and analyze feedback across multiple sites and services in one
-          dashboard. Let our AI guide your next improvements.
+          Collect, Analyze, and Prioritize Feedback to Shape Your Product’s
+          Future with Visionari’s AI Feedback Collection & Prioritization
+          Technology <br /> <p className="text-4xl cursor-pointer">💡</p>
         </p>
         <Link
           href={`${userSession === null ? "/login" : "/dashboard"}`}
           className="z-50"
         >
-          <button className="bg-white text-black py-2 px-8 md:px-16 lg:px-20 font-semibold rounded-full">
+          <button className="bg-white text-black py-2 px-8 md:px-16 lg:px-20 font-semibold rounded-lg text-sm">
             {userSession === null ? "Login" : "Your Account"}
           </button>
         </Link>
@@ -127,6 +182,55 @@ export default function Page() {
           alt="Centralized Feedback Visualization"
           className="lg:max-w-5xl mx-auto"
         />
+      </div>
+
+      <div className="grid grid-cols-2 gap-6 md:gap-0 place-items-center justify-center md:flex flex-col md:justify-evenly items-center md:flex-row mt-10">
+        {features.map((i, id) => {
+          return (
+            <React.Fragment key={id}>
+              <div className="flex flex-col items-center justify-center bg-[#121212] p-4 rounded-full w-24 h-24 space-y-2 cursor-pointer hover:scale-125 duration-500 ease-in-out">
+                {i.icon}
+                <h1 className="text-[#a2a2a2] font-semibold text-center text-[11px]">
+                  {i.tittle}
+                </h1>
+              </div>
+            </React.Fragment>
+          );
+        })}
+      </div>
+
+      <div className="flex flex-col md:flex-row justify-center gap-14 mt-16">
+        {feedbackComparison.map((i, id) => {
+          return (
+            <React.Fragment key={id}>
+              <div>
+                <div
+                  className={`border-[#191d1f] border-[1px] p-5 rounded-lg max-w-sm md:max-w-md mx-auto ${
+                    i.type === "After"
+                      ? "bg-gradient-to-r from-[#000000] via-[#191d1f] to-black"
+                      : "bg-[#121212]"
+                  }`}
+                >
+                  <div className="flex items-center gap-4 ">
+                    <FaArrowsTurnRight size={14} color="white" />
+                    <h1 className="text-white font-semibold text-lg">
+                      {i.type}
+                    </h1>
+                  </div>
+                  <ul className="space-y-5 mt-5">
+                    {i.points.map((i, id) => {
+                      return (
+                        <li key={id} className="text-[#a2a2a2] text-sm">
+                          {i}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+            </React.Fragment>
+          );
+        })}
       </div>
 
       <div className="mt-32 md:mt-44 px-4">
@@ -163,7 +267,7 @@ export default function Page() {
             <MdSettingsSuggest
               size={47}
               color="white"
-              className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 rounded-full p-3"
+              className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-600 rounded-full p-3"
             />
           </button>
         </Link>

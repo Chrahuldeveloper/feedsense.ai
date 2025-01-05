@@ -54,7 +54,7 @@ const Navbar = () => {
           </Link>
         ) : (
           <Link href="/dashboard">
-            <li className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-white py-2 px-5 w-full font-semibold rounded-full text-sm">
+            <li className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-600 text-white py-2 px-5 w-full font-semibold rounded-lg text-xs">
               Your Account
             </li>
           </Link>
