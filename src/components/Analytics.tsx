@@ -43,6 +43,9 @@ const Analytics: React.FC<AnalyticsProps> = ({
     ],
   };
 
+
+  console.log(totalWebsites, totalFeedback)
+
   return (
     <div className="w-[90vw] md:w-[68vw] mx-auto  mt-7">
       <div className="p-4 bg-[#111115]  border-[1px] border-[#15171b]">

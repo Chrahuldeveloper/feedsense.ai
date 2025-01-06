@@ -122,6 +122,18 @@ const Page = () => {
               </Link>
             </div>
 
+            <div className="flex flex-col md:flex-row gap-7 items-center mt-5 justify-center">
+              <div className="bg-[#0e0f12] p-5 border-[1px] border-[#0e1012] w-[60vw] md:w-[40vw] lg:w-[20vw] h-28 text-center text-white space-y-2">
+                <h1>Avg Nps</h1>
+                <p>20</p>
+              </div>
+
+              <div className="bg-[#0e0f12] p-5 border-[1px] border-[#0e1012] w-[60vw] md:w-[40vw] lg:w-[20vw] h-28 text-center text-white space-y-2">
+                <h1>Avg Nps</h1>
+                <p>20</p>
+              </div>
+            </div>
+
             {/* Bar Chart */}
             <div className="w-[90vw] md:w-[60vw] mx-auto mb-5 bg-[#0e0f12] p-4 my-10">
               <h2 className="text-gray-300 text-lg font-semibold mb-4">
@@ -134,16 +146,13 @@ const Page = () => {
             <table className="border-[1px] border-[#15171b] md:mx-auto w-[98vw] md:w-[60vw] mt-7 divide-y divide-[#15171b] overflow-hidden">
               <thead className="bg-[#0e0f12] border-[1px] border-[#15171b]">
                 <tr>
-                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
-                    Email
-                  </th>
-                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
+                  <th className="py-3 px-3 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
                     Emotion
                   </th>
-                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
+                  <th className="py-3 px-3 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
                     Feedback
                   </th>
-                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
+                  <th className="py-3 px-3 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
                     Analysis
                   </th>
                 </tr>
@@ -155,17 +164,14 @@ const Page = () => {
                       key={idx}
                       className="hover:bg-[#0c0d12] transition-colors duration-300 ease-in-out cursor-pointer"
                     >
-                      <td className="py-5 px-6 text-xs text-gray-300">
-                        {site.email}
-                      </td>
-                      <td className="py-5 px-6 text-xs text-gray-300">
+                      <td className="py-5 px-5 text-xs text-gray-300">
                         {site.emotion}
                       </td>
-                      <td className="py-5 px-6 w-72 text-xs text-gray-300">
+                      <td className="py-5 px-3 w-72 text-xs text-gray-300">
                         {site.feedback}
                       </td>
                       <td
-                        className={`py-5 px-6 text-xs text-gray-300 w-60 ${
+                        className={`py-5 px-3 text-xs text-gray-300 w-60 ${
                           getPlan === "Basic" ? "blur-sm" : ""
                         }`}
                       >

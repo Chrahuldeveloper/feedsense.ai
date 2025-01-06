@@ -235,7 +235,7 @@ const AddIntegration: React.FC = () => {
     </Link>
   </div>`
         );
-        alert("Code copied to clipboard!");
+        toast("Code Copied!");
       } else {
         alert("No website ID available to copy.");
       }
@@ -467,6 +467,7 @@ const AddIntegration: React.FC = () => {
                               await navigator.clipboard.writeText(
                                 "npm i react-icons"
                               );
+                              toast("Code Copied!");
                             } catch (error: any) {
                               console.log(error);
                             }
@@ -499,7 +500,7 @@ const AddIntegration: React.FC = () => {
         </div>
       </div>
 
-      <ToastContainer theme="dark" toastClassName={"custom-toast"}/>
+      <ToastContainer theme="dark" toastClassName={"custom-toast"} />
     </>
   );
 };

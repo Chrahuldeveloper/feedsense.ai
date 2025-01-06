@@ -79,10 +79,10 @@ const Form = () => {
       <div className="rounded-lg shadow-lg w-full max-w-md sm:max-w-lg lg:max-w-xl border-[1px] bg-[#121212] border-[#282e32]">
         <div className="bg-[#1E1E1E] p-6 rounded-t-lg border-b-[1px] border-stone-800 space-y-2">
           <h1 className="text-2xl font-bold text-white">
-            Send Us Your Feedback
+          Your Opinion Matters
           </h1>
-          <p className="text-white text-sm font-semibold">
-            Do you have any suggestions to improve our services or product?
+          <p className="text-white text-xs font-semibold">
+          Take a moment to share your feedback 
           </p>
         </div>
 
