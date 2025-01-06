@@ -19,13 +19,13 @@ const SideBar: React.FC<props> = ({ page }) => {
 
   return (
     <>
-      <aside className=" bg-[#0e0f12]  w-42 h-full space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-[#15171b]">
-        <div className="flex flex-col space-y-8 pt-7">
+      <aside className=" bg-[#111115]  w-42 h-full space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-[#15171b]">
+        <div className="flex flex-col space-y-6 pt-7">
           {/* Home */}
           <Link href="/dashboard">
             <div
               className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
-                page === "Home" ? "bg-[#04050a]" : ""
+                page === "Home" ? "bg-[#151720]" : ""
               }`}
             >
               <MdDashboard color="white" size={iconSize} />
@@ -37,7 +37,7 @@ const SideBar: React.FC<props> = ({ page }) => {
           <Link href="/dashboard/integrate">
             <div
               className={`flex items-center space-x-4 py-3 pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
-                page === "Integrate" ? "bg-[#12131a]" : ""
+                page === "Integrate" ? "bg-[#151720]" : ""
               }`}
             >
               <CgWebsite color="white" size={iconSize} />
@@ -49,7 +49,7 @@ const SideBar: React.FC<props> = ({ page }) => {
           <Link href="/dashboard/contact">
             <div
               className={`flex items-center space-x-4 py-3 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
-                page === "Contact" ? "bg-[#12131a]" : ""
+                page === "Contact" ? "bg-[#151720]" : ""
               }`}
             >
               <IoIosCall color="white" size={iconSize} />
@@ -61,7 +61,7 @@ const SideBar: React.FC<props> = ({ page }) => {
           <Link href="/plans">
             <div
               className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
-                page === "Subscription" ? "bg-[#12131a]" : ""
+                page === "Subscription" ? "bg-[#151720]" : ""
               }`}
             >
               <MdOutlineAttachMoney color="white" size={iconSize} />
@@ -73,7 +73,7 @@ const SideBar: React.FC<props> = ({ page }) => {
 
           <div
             className={`flex items-center space-x-4 py-3 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out  text-gray-300 rounded-lg ${
-              page === "Logout" ? "bg-[#12131a]" : ""
+              page === "Logout" ? "bg-[#151720]" : ""
             }`}
             onClick={() => settoggle(true)}
           >

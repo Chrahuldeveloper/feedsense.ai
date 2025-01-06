@@ -9,30 +9,28 @@ import Link from "next/link";
 import { BiConfused } from "react-icons/bi";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
-  PointElement,
-  LineElement,
   Tooltip,
   Legend,
+  ArcElement,
+  BarElement,
 } from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend,
+  ArcElement,
+  BarElement
+);
 
 const Page = () => {
   const searchParams = useSearchParams();
-
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    PointElement,
-    LineElement,
-    Tooltip,
-    Legend
-  );
 
   interface Feedback {
     name: string;
@@ -43,49 +41,45 @@ const Page = () => {
   }
 
   const [websites, setWebsites] = useState<Feedback[]>([]);
-
-  const getdata = searchParams!.get("feedback")!;
-  const getImage = searchParams!.get("image")!;
-  const getName = searchParams!.get("name")!;
-  const getPlan = searchParams!.get("Plan")!;
-
   const [HappyCount, setHappyCount] = useState<number>(0);
   const [NeutralCount, setNeutralCount] = useState<number>(0);
   const [SadCount, setSadCount] = useState<number>(0);
-
-  useEffect(() => {
-    const data: Feedback[] = JSON.parse(getdata);
-    console.log(data);
-    setWebsites(data);
-
-    const happy = data.filter(
-      (item) => item.emotion.toLowerCase() === "happy"
-    ).length;
-    const neutral = data.filter(
-      (item) => item.emotion.toLowerCase() === "neutral"
-    ).length;
-    const sad = data.filter(
-      (item) => item.emotion.toLowerCase() === "sad"
-    ).length;
-
-    setHappyCount(happy);
-    setNeutralCount(neutral);
-    setSadCount(sad);
-  }, [getdata]);
-
   const [toggle, setToggle] = useState(false);
 
-  console.log(HappyCount, NeutralCount, SadCount);
+  const getdata = searchParams?.get("feedback")!;
+  const getImage = searchParams?.get("image")!;
+  const getName = searchParams?.get("name")!;
+  const getPlan = searchParams?.get("Plan")!;
+
+  useEffect(() => {
+    if (getdata) {
+      const data: Feedback[] = JSON.parse(getdata);
+      setWebsites(data);
+
+      const happy = data.filter(
+        (item) => item.emotion.toLowerCase() === "happy"
+      ).length;
+      const neutral = data.filter(
+        (item) => item.emotion.toLowerCase() === "neutral"
+      ).length;
+      const sad = data.filter(
+        (item) => item.emotion.toLowerCase() === "sad"
+      ).length;
+
+      setHappyCount(happy);
+      setNeutralCount(neutral);
+      setSadCount(sad);
+    }
+  }, [getdata]);
 
   const analytics = {
     labels: ["Happy", "Neutral", "Sad"],
     datasets: [
       {
-        label: "Dashboard Data",
+        label: "Feedback Analytics",
         data: [HappyCount, NeutralCount, SadCount],
-        borderColor: "#2967ec",
-        pointBackgroundColor: "#2967ec",
-        pointBorderColor: "#2967ec",
+        backgroundColor: ["#1990ff"],
+        borderColor: ["#0096FF	"],
         borderWidth: 1,
       },
     ],
@@ -93,21 +87,22 @@ const Page = () => {
 
   return (
     <>
+      {/* Navigation Bar */}
       <nav className="md:hidden bg-[#0e0f11] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
         <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
         <CiMenuFries
-          onClick={() => {
-            setToggle(true);
-          }}
+          onClick={() => setToggle(true)}
           size={26}
           color="#9ca3af"
           className="cursor-pointer"
         />
       </nav>
 
+      {/* Main Content */}
       <div className="bg-[#111115] w-full flex overflow-x-clip">
         <SideBar page="Home" />
-        <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl ">
+        <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl">
+          {/* User Info */}
           <div className="overflow-x-auto rounded-xl my-12">
             <div className="flex mx-auto items-center justify-between w-[90vw] md:w-[60vw] bg-[#0e0f12] px-4 py-2 border-[1px] border-[#0e1012]">
               <div className="flex items-center gap-5">
@@ -126,19 +121,29 @@ const Page = () => {
                 <RxCross2 size={25} color="#9ca3af" />
               </Link>
             </div>
-            <table className=" border-[1px] border-[#15171b] md:mx-auto w-[98vw] md:w-[60vw] mt-7 divide-y divide-[#15171b]  overflow-hidden ">
-              <thead className="bg-[#0e0f12]  cursor-pointer border-[1px] border-[#15171b]">
+
+            {/* Bar Chart */}
+            <div className="w-[90vw] md:w-[60vw] mx-auto mb-5 bg-[#0e0f12] p-4 my-10">
+              <h2 className="text-gray-300 text-lg font-semibold mb-4">
+                Feedback Analytics
+              </h2>
+              <Bar data={analytics} />
+            </div>
+
+            {/* Feedback Table */}
+            <table className="border-[1px] border-[#15171b] md:mx-auto w-[98vw] md:w-[60vw] mt-7 divide-y divide-[#15171b] overflow-hidden">
+              <thead className="bg-[#0e0f12] border-[1px] border-[#15171b]">
                 <tr>
-                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
                     Email
                   </th>
-                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
                     Emotion
                   </th>
-                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
                     Feedback
                   </th>
-                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
                     Analysis
                   </th>
                 </tr>
@@ -150,17 +155,17 @@ const Page = () => {
                       key={idx}
                       className="hover:bg-[#0c0d12] transition-colors duration-300 ease-in-out cursor-pointer"
                     >
-                      <td className="py-5 px-6 md:px-9 text-xs md:text-xs text-gray-300">
+                      <td className="py-5 px-6 text-xs text-gray-300">
                         {site.email}
                       </td>
-                      <td className="py-5 px-6 md:px-9 text-xs md:text-xs text-gray-300">
+                      <td className="py-5 px-6 text-xs text-gray-300">
                         {site.emotion}
                       </td>
-                      <td className="py-5 px-6 w-72 md:px-9 text-xs md:text-xs text-gray-300">
+                      <td className="py-5 px-6 w-72 text-xs text-gray-300">
                         {site.feedback}
                       </td>
                       <td
-                        className={`py-5 px-6 md:px-9 text-xs md:text-xs text-gray-300 w-60 ${
+                        className={`py-5 px-6 text-xs text-gray-300 w-60 ${
                           getPlan === "Basic" ? "blur-sm" : ""
                         }`}
                       >
@@ -174,7 +179,7 @@ const Page = () => {
                     <td colSpan={4} className="py-5 text-center text-slate-300">
                       <div className="flex flex-col items-center gap-5">
                         <BiConfused size={40} color="#9ca3af" />
-                        <p className=" text-slate-300">No Feedbacks Yet</p>
+                        <p>No Feedbacks Yet</p>
                       </div>
                     </td>
                   </tr>
@@ -182,18 +187,11 @@ const Page = () => {
               </tbody>
             </table>
           </div>
-          <div>
-            <div className="w-[90vw] md:w-[60vw] mx-auto mb-5 bg-[#0e0f12] p-4">
-              <h2 className="text-gray-300 text-lg font-semibold mb-4">
-                Bar Graph
-              </h2>
-              <Line data={analytics} />
-            </div>
-          </div>
         </div>
       </div>
 
-      {toggle ? <MobileSideBar setToggle={setToggle} /> : null}
+      {/* Mobile Sidebar */}
+      {toggle && <MobileSideBar setToggle={setToggle} />}
     </>
   );
 };

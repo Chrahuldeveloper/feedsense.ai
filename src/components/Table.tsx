@@ -124,7 +124,7 @@ const Table = () => {
     <>
       {loading && <Loader message="loading" />}
       <div className="md:ml-44">
-        <nav className="md:hidden bg-[#0e0f12] p-7 w-screen border-b-[1px] border-[#15171b] flex justify-between items-center">
+        <nav className="md:hidden bg-[#111115] p-7 w-screen border-b-[1px] border-[#15171b] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">Fixit</h1>
           <CiMenuFries
             size={26}
@@ -134,7 +134,7 @@ const Table = () => {
           />
         </nav>
 
-        <div className="bg-[#0e0f12] w-screen px-14 py-8 pt-5 md:-ml-36 hidden md:block border-b-[1px] border-[#15171b]">
+        <div className="bg-[#111115] w-screen px-14 py-8 pt-5 md:-ml-36 hidden md:block border-b-[1px] border-[#15171b]">
           <div className="flex justify-end gap-x-3 items-center pt-2">
             <CgProfile size={23} color="white" />
             <h1 className="text-slate-300 text-lg ">
@@ -147,7 +147,7 @@ const Table = () => {
 
         <div className="w-full md:w-[70vw] px-2 py-14 mx-auto rounded-xl">
           {websitedata.length === 0 ? (
-            <div className="space-y-6 text-center bg-[#0e0f12] rounded-lg border-[1px] border-[#15171b] p-10">
+            <div className="space-y-6 text-center bg-[#111115] rounded-lg border-[1px] border-[#15171b] p-10">
               <FaRegCircleStop size={23} color="white" className="mx-auto" />
               <p className="text-2xl font-semibold text-white">
                 No websites connected yet
@@ -159,7 +159,7 @@ const Table = () => {
           ) : (
             <div className="overflow-x-auto  pt-5">
               <table className="min-w-full divide-y rounded-xl divide-[#15171b] border-[1px] border-[#15171b]">
-                <thead className="bg-[#0e0f12]">
+                <thead className="bg-[#111115]">
                   <tr className="cursor-pointer">
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                       Logo
@@ -175,11 +175,11 @@ const Table = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-[#0e0f12] divide-y divide-[#15171b]">
+                <tbody className="bg-[#111115] divide-y divide-[#15171b]">
                   {websitedata?.map((site, idx) => (
                     <tr
                       key={idx}
-                      className="hover:bg-[#0c0d12] transition-colors duration-300 ease-in-out cursor-pointer"
+                      className="hover:bg-[#15161d] transition-colors duration-300 ease-in-out cursor-pointer"
                     >
                       <td className="px-8 py-4 whitespace-nowrap">
                         <Image
@@ -210,7 +210,7 @@ const Table = () => {
                             },
                           }}
                         >
-                          <button className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-xs text-white px-6 py-2 rounded-lg transition-colors duration-200 cursor-pointer font-semibold">
+                          <button className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-600 text-xs text-white px-6 py-2 rounded-lg transition-colors duration-200 cursor-pointer font-semibold">
                             View
                           </button>
                         </Link>

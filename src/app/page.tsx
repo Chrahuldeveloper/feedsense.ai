@@ -199,7 +199,7 @@ export default function Page() {
         })}
       </div>
 
-      <div className="flex flex-col md:flex-row justify-center gap-14 mt-16">
+      <div className="flex flex-col md:flex-row justify-center gap-14 mt-20">
         {feedbackComparison.map((i, id) => {
           return (
             <React.Fragment key={id}>
@@ -207,7 +207,7 @@ export default function Page() {
                 <div
                   className={`border-[#191d1f] border-[1px] p-5 rounded-lg max-w-sm md:max-w-md mx-auto ${
                     i.type === "After"
-                      ? "bg-gradient-to-r from-[#000000] via-[#191d1f] to-black"
+                      ? "bg-gradient-to-r from-[#000000] via-[black] to-[#191d1f]"
                       : "bg-[#121212]"
                   }`}
                 >
@@ -217,10 +217,13 @@ export default function Page() {
                       {i.type}
                     </h1>
                   </div>
-                  <ul className="space-y-5 mt-5">
+                  <ul className="space-y-5 mt-5 pl-3">
                     {i.points.map((i, id) => {
                       return (
-                        <li key={id} className="text-[#a2a2a2] text-sm">
+                        <li
+                          key={id}
+                          className="text-[#a2a2a2] text-sm list-disc "
+                        >
                           {i}
                         </li>
                       );
