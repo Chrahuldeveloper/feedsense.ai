@@ -103,7 +103,7 @@ const Page = () => {
 
   return (
     <>
-      {isloading ? <Loader message="Loading..." /> : null}
+      {isloading ? <Loader message="Deleting..." /> : null}
       {/* Navigation Bar */}
       <nav className="md:hidden bg-[#0e0f11] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
         <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>

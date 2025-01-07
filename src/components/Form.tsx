@@ -7,7 +7,7 @@ import { IoHappyOutline, IoSadOutline } from "react-icons/io5";
 import { TbMoodSadDizzy } from "react-icons/tb";
 import LottiePlayer from "react-lottie-player";
 import FeedbackLoader from "../app/lottie-asserts/FeedbackLoader.json";
-import { CiStar } from "react-icons/ci";
+import { IoIosStarOutline, IoMdStar } from "react-icons/io";
 
 interface Feedback {
   emotion: string;
@@ -28,6 +28,7 @@ const Form = () => {
   });
 
   const [selectedEmotion, setSelectedEmotion] = useState<number | null>(null);
+  const [selectedRating, setSelectedRating] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [feedbackStatus, setFeedbackStatus] = useState<string>("");
 
@@ -54,6 +55,7 @@ const Form = () => {
         setFeedbackStatus("Feedback saved successfully!");
         setFeedback({ emotion: "", feedback: "" });
         setSelectedEmotion(null);
+        setSelectedRating(0);
       } else {
         alert("You are not subscribed to this website.");
         setFeedbackStatus("");
@@ -94,27 +96,23 @@ const Form = () => {
         ) : (
           <div className="p-5">
             <div className="space-y-2.5 mt-4">
-              {/* <h1 className="font-semibold text-white">Email*</h1>
-              <input
-                type="text"
-                value={feedback.email}
-                onChange={(e) =>
-                  setFeedback({ ...feedback, email: e.target.value })
-                }
-                autoComplete="off"
-                className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-lg text-white "
-              /> */}
               <div>
                 <h1 className="text-white font-sem">Rate Us</h1>
               </div>
               <div className="flex items-center gap-5">
-                {[1, 2, 3, 4, 5].map((i, id) => {
-                  return (
-                    <React.Fragment key={id + i}>
-                      <CiStar size={24} color="white" />
-                    </React.Fragment>
-                  );
-                })}
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div
+                    key={i}
+                    onClick={() => setSelectedRating(i)}
+                    className="cursor-pointer"
+                  >
+                    {i <= selectedRating ? (
+                      <IoMdStar size={24} color="gold" />
+                    ) : (
+                      <IoIosStarOutline size={24} color="white" />
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
 
