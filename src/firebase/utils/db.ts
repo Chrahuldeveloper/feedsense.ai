@@ -20,6 +20,14 @@ interface Feedback {
   feedback: string;
 }
 
+interface SaveFeedback {
+  // name: string;
+  // email: string;
+  emotion: string;
+  feedback: string;
+  parsedFeedback?: { response: string };
+}
+
 export default class dbService {
   async genrateId(length: number): Promise<string> {
     const letters =
@@ -32,12 +40,12 @@ export default class dbService {
     return id;
   }
 
-  async handleStatusChange(
+  async handleStatusChange  (
     user: any,
     websiteId: number,
     status: string,
     response: any
-  ) {
+  )   {
     try {
       console.log(user, websiteId, status, response);
 
@@ -53,10 +61,7 @@ export default class dbService {
           return websiteId === id;
         });
 
-        if (findwebsite.length === 0) {
-          console.log("Website not found");
-          return;
-        }
+     
 
         console.log(findwebsite[0].feedback);
 

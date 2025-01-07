@@ -21,6 +21,7 @@ import {
 } from "chart.js";
 import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
+import Loader from "@/components/Loader";
 
 ChartJS.register(
   CategoryScale,
@@ -64,6 +65,8 @@ const Page = () => {
 
   const db = new dbService();
 
+  const [isloading, setisloading] = useState<boolean>(false);
+
   useEffect(() => {
     if (getdata) {
       const data: Feedback[] = JSON.parse(getdata);
@@ -100,6 +103,7 @@ const Page = () => {
 
   return (
     <>
+      {isloading ? <Loader message="Loading..." /> : null}
       {/* Navigation Bar */}
       <nav className="md:hidden bg-[#0e0f11] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
         <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
@@ -183,14 +187,28 @@ const Page = () => {
                         <select
                           className="bg-[#111115] border-[1px] border-[#222529] text-gray-300 text-xs rounded px-4 py-2 outline-none"
                           defaultValue="Pending"
-                          onChange={(e) => {
+                          onChange={async (e) => {
                             const status = e.target.value;
-                            db.handleStatusChange(
-                              user!,
-                              idx,
-                              status,
-                              site?.parsedFeedback?.response
-                            );
+
+                            if (status === "Completed") {
+                              try {
+                                setisloading(true);
+                                await db.handleStatusChange(
+                                  user!,
+                                  idx,
+                                  status,
+                                  site?.parsedFeedback?.response
+                                );
+
+                                setWebsites((prev) =>
+                                  prev.filter((_, i) => i !== idx)
+                                );
+                              } catch (error) {
+                                console.error("Error updating status:", error);
+                              } finally {
+                                setisloading(false);
+                              }
+                            }
                           }}
                         >
                           <option
