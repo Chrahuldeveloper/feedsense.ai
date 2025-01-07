@@ -19,6 +19,8 @@ import {
   ArcElement,
   BarElement,
 } from "chart.js";
+import dbService from "@/firebase/utils/db";
+import useAuth from "@/hooks/CurrentUser";
 
 ChartJS.register(
   CategoryScale,
@@ -30,11 +32,20 @@ ChartJS.register(
 );
 
 const Page = () => {
+  interface User {
+    uid: string;
+  }
+
   const searchParams = useSearchParams();
 
+  const { user, loading } = useAuth() as {
+    user: User | null;
+    loading: boolean;
+  };
+
   interface Feedback {
-    name: string;
-    email: string;
+    // name: string;
+    // email: string;
     emotion: string;
     feedback: string;
     parsedFeedback?: { response: string };
@@ -50,6 +61,8 @@ const Page = () => {
   const getImage = searchParams?.get("image")!;
   const getName = searchParams?.get("name")!;
   const getPlan = searchParams?.get("Plan")!;
+
+  const db = new dbService();
 
   useEffect(() => {
     if (getdata) {
@@ -99,12 +112,12 @@ const Page = () => {
       </nav>
 
       {/* Main Content */}
-      <div className="bg-[#111115] w-full flex overflow-x-clip">
+      <div className="bg-[#0e0f12] w-full flex overflow-x-clip">
         <SideBar page="Home" />
         <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl">
           {/* User Info */}
           <div className="overflow-x-auto rounded-xl my-12">
-            <div className="flex mx-auto items-center justify-between w-[90vw] md:w-[60vw] bg-[#0e0f12] px-4 py-2 border-[1px] border-[#0e1012]">
+            <div className="flex mx-auto items-center justify-between w-[90vw] md:w-[60vw] bg-[#111115] px-4 py-2 border-[1px] border-[#0e1012]">
               <div className="flex items-center gap-5">
                 <Image
                   src={getImage}
@@ -123,19 +136,97 @@ const Page = () => {
             </div>
 
             <div className="flex flex-col md:flex-row gap-7 items-center mt-5 justify-center">
-              <div className="bg-[#0e0f12] p-5 border-[1px] border-[#0e1012] w-[60vw] md:w-[40vw] lg:w-[20vw] h-28 text-center text-white space-y-2">
+              <div className="bg-[#111115] p-5 border-[1px] border-[#0e1012] w-[60vw] md:w-[40vw] lg:w-[25vw] h-28 text-center text-white space-y-2">
                 <h1>Avg Nps</h1>
                 <p>20</p>
               </div>
 
-              <div className="bg-[#0e0f12] p-5 border-[1px] border-[#0e1012] w-[60vw] md:w-[40vw] lg:w-[20vw] h-28 text-center text-white space-y-2">
+              <div className="bg-[#111115] p-5 border-[1px] border-[#0e1012] w-[60vw] md:w-[40vw] lg:w-[20vw] h-28 text-center text-white space-y-2">
                 <h1>Avg Nps</h1>
                 <p>20</p>
               </div>
             </div>
 
+            <table className="border border-[#15171b] md:mx-auto w-[98vw] md:w-[60vw] mt-7 divide-y divide-[#15171b] overflow-hidden">
+              <thead className="bg-[#111115]">
+                <tr>
+                  <th className="py-4 px-6 text-center text-xs font-medium text-gray-400 uppercase">
+                    S.No
+                  </th>
+                  <th className="py-4 px-6 text-left text-xs font-medium text-gray-400 uppercase">
+                    Analysis
+                  </th>
+                  <th className="py-4 px-6 text-center text-xs font-medium text-gray-400 uppercase">
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-[#111115]">
+                {websites.length > 0 ? (
+                  websites.map((site, idx) => (
+                    <tr
+                      key={idx}
+                      className="hover:bg-[#0c0d12] transition-colors duration-300 ease-in-out cursor-pointer font-semibold"
+                    >
+                      <td className="py-4 px-6 text-center text-xs text-gray-300">
+                        {idx + 1}
+                      </td>
+                      <td
+                        className={`py-4 px-6 text-left text-xs text-gray-300 ${
+                          getPlan === "Basic" ? "blur-sm" : ""
+                        }`}
+                      >
+                        {site?.parsedFeedback?.response?.replace(/"/g, "") ||
+                          "No analysis available"}
+                      </td>
+                      <td className="py-4 px-6 text-center text-xs text-gray-300">
+                        <select
+                          className="bg-[#111115] border-[1px] border-[#222529] text-gray-300 text-xs rounded px-4 py-2 outline-none"
+                          defaultValue="Pending"
+                          onChange={(e) => {
+                            const status = e.target.value;
+                            db.handleStatusChange(
+                              user!,
+                              idx,
+                              status,
+                              site?.parsedFeedback?.response
+                            );
+                          }}
+                        >
+                          <option
+                            value="Completed"
+                            className="hover:bg-[#222529] text-gray-300 px-4 py-2 cursor-pointer"
+                          >
+                            Completed
+                          </option>
+                          <option
+                            value="Pending"
+                            className="hover:bg-[#222529] text-gray-300 px-4 py-2 cursor-pointer"
+                          >
+                            Pending
+                          </option>
+                        </select>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan={3}
+                      className="py-10 text-center text-slate-300"
+                    >
+                      <div className="flex flex-col items-center gap-5">
+                        <BiConfused size={40} color="#9ca3af" />
+                        <p>No Feedbacks Yet</p>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+
             {/* Bar Chart */}
-            <div className="w-[90vw] md:w-[60vw] mx-auto mb-5 bg-[#0e0f12] p-4 my-10">
+            <div className="w-[90vw] md:w-[60vw] mx-auto mb-5 bg-[#111115] p-4 my-10">
               <h2 className="text-gray-300 text-lg font-semibold mb-4">
                 Feedback Analytics
               </h2>
@@ -143,41 +234,52 @@ const Page = () => {
             </div>
 
             {/* Feedback Table */}
+
             <table className="border-[1px] border-[#15171b] md:mx-auto w-[98vw] md:w-[60vw] mt-7 divide-y divide-[#15171b] overflow-hidden">
-              <thead className="bg-[#0e0f12] border-[1px] border-[#15171b]">
+              <thead className="bg-[#111115] border-[1px] border-[#15171b]">
                 <tr>
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
+                    S.NO
+                  </th>
+                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
+                    Rateing
+                  </th>
                   <th className="py-3 px-3 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
                     Emotion
                   </th>
                   <th className="py-3 px-3 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
-                    Feedback
+                    User Feedback
                   </th>
-                  <th className="py-3 px-3 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
+                  {/* <th className="py-3 px-3 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
                     Analysis
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
-              <tbody className="bg-[#0e0f12] border-[1px] border-[#15171b]">
+              <tbody className="bg-[#111115] border-[1px] border-[#15171b]">
                 {websites.length > 0 ? (
                   websites.map((site, idx) => (
                     <tr
                       key={idx}
-                      className="hover:bg-[#0c0d12] transition-colors duration-300 ease-in-out cursor-pointer"
+                      className="hover:bg-[#0c0d12] transition-colors duration-300 ease-in-out cursor-pointer font-semibold"
                     >
-                      <td className="py-5 px-5 text-xs text-gray-300">
+                      <td className="py-5 px-12 text-xs text-gray-300">
+                        {idx + 1}
+                      </td>
+                      <td className="py-5 px-12 text-xs text-gray-300">{5}</td>
+                      <td className="py-5 px-9 text-xs text-gray-300">
                         {site.emotion}
                       </td>
-                      <td className="py-5 px-3 w-72 text-xs text-gray-300">
+                      <td className="py-5 px-9 w-72 text-xs text-gray-300">
                         {site.feedback}
                       </td>
-                      <td
+                      {/* <td
                         className={`py-5 px-3 text-xs text-gray-300 w-60 ${
                           getPlan === "Basic" ? "blur-sm" : ""
                         }`}
                       >
                         {site?.parsedFeedback?.response?.replace(/"/g, "") ||
                           "No analysis available"}
-                      </td>
+                      </td> */}
                     </tr>
                   ))
                 ) : (

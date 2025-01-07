@@ -7,9 +7,9 @@ import { IoHappyOutline, IoSadOutline } from "react-icons/io5";
 import { TbMoodSadDizzy } from "react-icons/tb";
 import LottiePlayer from "react-lottie-player";
 import FeedbackLoader from "../app/lottie-asserts/FeedbackLoader.json";
+import { CiStar } from "react-icons/ci";
 
 interface Feedback {
-  email: string;
   emotion: string;
   feedback: string;
 }
@@ -23,7 +23,6 @@ const Form = () => {
   const { userID, websiteID } = useParams();
 
   const [feedback, setFeedback] = useState<Feedback>({
-    email: "",
     emotion: "",
     feedback: "",
   });
@@ -44,7 +43,6 @@ const Form = () => {
       );
       if (isSubscribed) {
         const savefeedback = {
-          email: feedback.email,
           emotion: feedback.emotion,
           feedback: feedback.feedback,
         };
@@ -54,7 +52,7 @@ const Form = () => {
           savefeedback
         );
         setFeedbackStatus("Feedback saved successfully!");
-        setFeedback({ email: "", emotion: "", feedback: "" });
+        setFeedback({ emotion: "", feedback: "" });
         setSelectedEmotion(null);
       } else {
         alert("You are not subscribed to this website.");
@@ -75,14 +73,14 @@ const Form = () => {
   ];
 
   return (
-    <div className="flex justify-center p-5">
+    <div className="flex justify-center p-5 pt-5">
       <div className="rounded-lg shadow-lg w-full max-w-md sm:max-w-lg lg:max-w-xl border-[1px] bg-[#121212] border-[#282e32]">
         <div className="bg-[#1E1E1E] p-6 rounded-t-lg border-b-[1px] border-stone-800 space-y-2">
           <h1 className="text-2xl font-bold text-white">
-          Your Opinion Matters
+            Your Opinion Matters
           </h1>
           <p className="text-white text-xs font-semibold">
-          Take a moment to share your feedback 
+            Take a moment to share your feedback
           </p>
         </div>
 
@@ -96,7 +94,7 @@ const Form = () => {
         ) : (
           <div className="p-5">
             <div className="space-y-2.5 mt-4">
-              <h1 className="font-semibold text-white">Email*</h1>
+              {/* <h1 className="font-semibold text-white">Email*</h1>
               <input
                 type="text"
                 value={feedback.email}
@@ -105,13 +103,25 @@ const Form = () => {
                 }
                 autoComplete="off"
                 className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-lg text-white "
-              />
+              /> */}
+              <div>
+                <h1 className="text-white font-sem">Rate Us</h1>
+              </div>
+              <div className="flex items-center gap-5">
+                {[1, 2, 3, 4, 5].map((i, id) => {
+                  return (
+                    <React.Fragment key={id + i}>
+                      <CiStar size={24} color="white" />
+                    </React.Fragment>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="space-y-2.5 mt-6">
-              <h1 className="font-semibold text-white">Feedback*</h1>
               <textarea
                 value={feedback.feedback}
+                placeholder="Feedback"
                 onChange={(e) =>
                   setFeedback({ ...feedback, feedback: e.target.value })
                 }
