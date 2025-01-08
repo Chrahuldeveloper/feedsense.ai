@@ -27,7 +27,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed flex-row top-0 left-0 w-full border-stone-900 z-50 p-3.5 flex justify-between items-center px-12 transition-all duration-300 ${
+      className={` border-b-[1px]  fixed flex-row top-0 left-0 w-full border-stone-900 z-50 p-3.5 flex justify-between items-center px-12 transition-all duration-300 ${
         isScrolled ? "backdrop-blur-md border-b-[0.1px]" : "backdrop-blur-lg"
       }`}
     >
