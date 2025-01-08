@@ -8,7 +8,6 @@ import { Mail, Lock } from "lucide-react";
 import Cookies from "js-cookie";
 import SendEmail from "../../emailJs/Email";
 import Loader from "../../components/Loader";
-import ErrorModel from "@/components/ErrorModel";
 import Image from "next/image";
 
 interface UserData {
@@ -164,7 +163,7 @@ export default function LoginPage() {
             </div>
             <button
               onClick={handleSubmit}
-              className="w-full py-2 px-4 bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 text-white rounded-lg  transition-colors mt-4"
+              className="w-full py-2 px-4 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-600 text-white rounded-lg  transition-colors mt-4"
             >
               Login
             </button>

@@ -6,7 +6,6 @@ import React, { useEffect, useState, Suspense } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { BiConfused } from "react-icons/bi";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
 import { Bar } from "react-chartjs-2";
@@ -22,6 +21,7 @@ import {
 import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import Loader from "@/components/Loader";
+import { FaRegCircleStop } from "react-icons/fa6";
 
 ChartJS.register(
   CategoryScale,
@@ -62,6 +62,9 @@ const Page = () => {
   const getImage = searchParams?.get("image")!;
   const getName = searchParams?.get("name")!;
   const getPlan = searchParams?.get("Plan")!;
+  const TotalFeedback = searchParams?.get("TotalFeedback")!;
+
+  console.log(TotalFeedback);
 
   const db = new dbService();
 
@@ -106,7 +109,7 @@ const Page = () => {
       {isloading ? <Loader message="Deleting..." /> : null}
       {/* Navigation Bar */}
       <nav className="md:hidden bg-[#0e0f11] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
-        <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
+        <h1 className="text-xl font-semibold text-slate-300">FeedSense.Ai</h1>
         <CiMenuFries
           onClick={() => setToggle(true)}
           size={26}
@@ -141,12 +144,12 @@ const Page = () => {
 
             <div className="flex flex-col md:flex-row gap-7 items-center mt-5 justify-center">
               <div className="bg-[#111115] p-5 border-[1px] border-[#0e1012] w-[60vw] md:w-[40vw] lg:w-[25vw] h-28 text-center text-white space-y-2">
-                <h1>Avg Nps</h1>
-                <p>20</p>
+                <h1 className="font-semibold mt-2">Total Feedback</h1>
+                <p>{TotalFeedback}</p>
               </div>
 
               <div className="bg-[#111115] p-5 border-[1px] border-[#0e1012] w-[60vw] md:w-[40vw] lg:w-[20vw] h-28 text-center text-white space-y-2">
-                <h1>Avg Nps</h1>
+                <h1 className="font-semibold mt-2">Avg Nps</h1>
                 <p>20</p>
               </div>
             </div>
@@ -234,8 +237,8 @@ const Page = () => {
                       className="py-10 text-center text-slate-300"
                     >
                       <div className="flex flex-col items-center gap-5">
-                        <BiConfused size={40} color="#9ca3af" />
-                        <p>No Feedbacks Yet</p>
+                        <FaRegCircleStop size={25} color="#9ca3af" />
+                        <p className="font-semibold">No Analysis Yet</p>
                       </div>
                     </td>
                   </tr>
@@ -304,8 +307,8 @@ const Page = () => {
                   <tr>
                     <td colSpan={4} className="py-5 text-center text-slate-300">
                       <div className="flex flex-col items-center gap-5">
-                        <BiConfused size={40} color="#9ca3af" />
-                        <p>No Feedbacks Yet</p>
+                        <FaRegCircleStop size={25} color="#9ca3af" />
+                        <p className="font-semibold">No Feedbacks Yet</p>
                       </div>
                     </td>
                   </tr>

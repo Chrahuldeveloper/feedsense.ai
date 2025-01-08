@@ -11,11 +11,11 @@ import cache from "../cache/cache";
 import Loader from "../components/Loader";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebase/Firebase";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaRegCopy } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import { useRouter } from "next/navigation";
 
 interface Website {
   id: string;
@@ -60,11 +60,13 @@ const AddIntegration: React.FC = () => {
 
   const [lastWebsiteId, setLastWebsiteId] = useState<string | null>(null);
 
-  const router = useRouter();
+  // const router = useRouter();
 
   console.log(showCode);
 
   const db = useMemo(() => new dbService(), []);
+
+  const notify = () => toast("Wow so easy!");
 
   useEffect(() => {
     const fetchWebsites = async () => {
@@ -112,7 +114,6 @@ const AddIntegration: React.FC = () => {
     </Link>
   </div>
 `;
-
     const highlighted = hljs.highlight(code, { language: "html" }).value;
     setHighlightedCode1(highlighted);
     setShowCode(true);
@@ -174,8 +175,7 @@ const AddIntegration: React.FC = () => {
           const res = await db.saveWebsite(user, newWebsiteData);
 
           if (res === "WebsiteFull") {
-            alert("Upgrade your plan");
-            return router.push("/plans");
+            toast("Upgrade your plan");
           } else {
             setLastWebsiteId(websiteDataInput.name);
             setCurrentStep(3);

@@ -207,6 +207,7 @@ const Table = () => {
                               name: site?.name,
                               image: site?.image,
                               Plan: plan?.subscription,
+                              TotalFeedback : site!.feedback!.length
                             },
                           }}
                         >

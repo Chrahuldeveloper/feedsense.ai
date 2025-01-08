@@ -12,6 +12,7 @@ import { IoIosStarOutline, IoMdStar } from "react-icons/io";
 interface Feedback {
   emotion: string;
   feedback: string;
+  Rating: number;
 }
 
 interface Emotion {
@@ -25,6 +26,7 @@ const Form = () => {
   const [feedback, setFeedback] = useState<Feedback>({
     emotion: "",
     feedback: "",
+    Rating: 0,
   });
 
   const [selectedEmotion, setSelectedEmotion] = useState<number | null>(null);
@@ -53,7 +55,7 @@ const Form = () => {
           savefeedback
         );
         setFeedbackStatus("Feedback saved successfully!");
-        setFeedback({ emotion: "", feedback: "" });
+        setFeedback({ emotion: "", feedback: "", Rating: 0 });
         setSelectedEmotion(null);
         setSelectedRating(0);
       } else {
