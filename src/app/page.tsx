@@ -20,7 +20,7 @@ import { FaArrowsTurnRight } from "react-icons/fa6";
 export default function Page() {
   const [userSession, setUserSession] = useState<string | null>(null);
 
-  useEffect(() => {
+  useEffect(() => { 
     AOS.init({
       duration: 1000,
       easing: "ease-in-out",
