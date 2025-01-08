@@ -142,94 +142,116 @@ const Page = () => {
               </Link>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-7 items-center mt-5 justify-center">
-              <div className="bg-[#111115] p-5 border-[1px] border-[#0e1012] w-[60vw] md:w-[40vw] lg:w-[25vw] h-28 text-center text-white space-y-2">
-                <h1 className="font-semibold mt-2">Total Feedback</h1>
-                <p>{TotalFeedback}</p>
-              </div>
-
-              <div className="bg-[#111115] p-5 border-[1px] border-[#0e1012] w-[60vw] md:w-[40vw] lg:w-[20vw] h-28 text-center text-white space-y-2">
-                <h1 className="font-semibold mt-2">Avg Nps</h1>
-                <p>20</p>
-              </div>
-            </div>
-
             <table className="border border-[#15171b] md:mx-auto w-[98vw] md:w-[60vw] mt-7 divide-y divide-[#15171b] overflow-hidden">
               <thead className="bg-[#111115]">
                 <tr>
-                  <th className="py-4 px-6 text-center text-xs font-medium text-gray-400 uppercase">
+                  <th
+                    className={`py-4 px-6 text-center text-xs font-medium text-gray-400 uppercase ${
+                      getPlan === "Basic" ? "blur-md cursor-not-allowed" : ""
+                    }`}
+                  >
                     S.No
                   </th>
-                  <th className="py-4 px-6 text-left text-xs font-medium text-gray-400 uppercase">
+                  <th
+                    className={`py-4 px-6 text-center text-xs font-medium text-gray-400 uppercase ${
+                      getPlan === "Basic" ? "blur-md cursor-not-allowed" : ""
+                    }`}
+                  >
                     Analysis
                   </th>
-                  <th className="py-4 px-6 text-center text-xs font-medium text-gray-400 uppercase">
+                  <th
+                    className={`py-4 px-6 text-center text-xs font-medium text-gray-400 uppercase ${
+                      getPlan === "Basic" ? "blur-md cursor-not-allowed" : ""
+                    }`}
+                  >
                     Status
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-[#111115]">
+              <tbody
+                className={`bg-[#111115] ${
+                  getPlan === "Basic" ? "blur-md cursor-not-allowed" : ""
+                }`}
+              >
                 {websites.length > 0 ? (
-                  websites.map((site, idx) => (
-                    <tr
-                      key={idx}
-                      className="hover:bg-[#0c0d12] transition-colors duration-300 ease-in-out cursor-pointer font-semibold"
-                    >
-                      <td className="py-4 px-6 text-center text-xs text-gray-300">
-                        {idx + 1}
-                      </td>
-                      <td
-                        className={`py-4 px-6 text-left text-xs text-gray-300 ${
-                          getPlan === "Basic" ? "blur-sm" : ""
+                  websites.map((site, idx) =>
+                    site?.parsedFeedback?.response ? ( // Check if there's an analysis
+                      <tr
+                        key={idx}
+                        className={`transition-colors duration-300 ease-in-out font-semibold ${
+                          getPlan === "Basic"
+                            ? "cursor-not-allowed"
+                            : "hover:bg-[#0c0d12]"
                         }`}
                       >
-                        {site?.parsedFeedback?.response?.replace(/"/g, "") ||
-                          "No analysis available"}
-                      </td>
-                      <td className="py-4 px-6 text-center text-xs text-gray-300">
-                        <select
-                          className="bg-[#111115] border-[1px] border-[#222529] text-gray-300 text-xs rounded px-4 py-2 outline-none"
-                          defaultValue="Pending"
-                          onChange={async (e) => {
-                            const status = e.target.value;
-
-                            if (status === "Completed") {
-                              try {
-                                setisloading(true);
-                                await db.handleStatusChange(
-                                  user!,
-                                  idx,
-                                  status,
-                                  site?.parsedFeedback?.response
-                                );
-
-                                setWebsites((prev) =>
-                                  prev.filter((_, i) => i !== idx)
-                                );
-                              } catch (error) {
-                                console.error("Error updating status:", error);
-                              } finally {
-                                setisloading(false);
-                              }
-                            }
-                          }}
+                        <td
+                          className={`py-4 px-6 text-center text-xs text-gray-300 ${
+                            getPlan === "Basic" ? "blur-md" : ""
+                          }`}
                         >
-                          <option
-                            value="Completed"
-                            className="hover:bg-[#222529] text-gray-300 px-4 py-2 cursor-pointer"
+                          {idx + 1}
+                        </td>
+                        <td
+                          className={`py-4 px-12 lg:pl-48 text-left text-xs text-gray-300 ${
+                            getPlan === "Basic" ? "blur-md" : ""
+                          }`}
+                        >
+                          {site?.parsedFeedback?.response?.replace(/"/g, "") ||
+                            "No analysis available"}
+                        </td>
+                        <td className="py-4 px-6 text-center text-xs text-gray-300">
+                          <select
+                            className={`bg-[#111115] border-[1px] border-[#222529] text-gray-300 text-xs rounded px-4 py-2 outline-none ${
+                              getPlan === "Basic"
+                                ? "blur-md cursor-not-allowed"
+                                : ""
+                            }`}
+                            defaultValue="Pending"
+                            disabled={getPlan === "Basic"}
+                            onChange={async (e) => {
+                              const status = e.target.value;
+
+                              if (status === "Completed") {
+                                try {
+                                  setisloading(true);
+                                  await db.handleStatusChange(
+                                    user!,
+                                    idx,
+                                    status,
+                                    site?.parsedFeedback?.response
+                                  );
+
+                                  setWebsites((prev) =>
+                                    prev.filter((_, i) => i !== idx)
+                                  );
+                                } catch (error) {
+                                  console.error(
+                                    "Error updating status:",
+                                    error
+                                  );
+                                } finally {
+                                  setisloading(false);
+                                }
+                              }
+                            }}
                           >
-                            Completed
-                          </option>
-                          <option
-                            value="Pending"
-                            className="hover:bg-[#222529] text-gray-300 px-4 py-2 cursor-pointer"
-                          >
-                            Pending
-                          </option>
-                        </select>
-                      </td>
-                    </tr>
-                  ))
+                            <option
+                              value="Completed"
+                              className="hover:bg-[#222529] text-gray-300 px-4 py-2 cursor-pointer"
+                            >
+                              Completed
+                            </option>
+                            <option
+                              value="Pending"
+                              className="hover:bg-[#222529] text-gray-300 px-4 py-2 cursor-pointer"
+                            >
+                              Pending
+                            </option>
+                          </select>
+                        </td>
+                      </tr>
+                    ) : null
+                  )
                 ) : (
                   <tr>
                     <td

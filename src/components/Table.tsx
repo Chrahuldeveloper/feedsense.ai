@@ -66,6 +66,7 @@ const Table = () => {
     checkPlan();
   }, [loading, user]);
 
+
   useEffect(() => {
     const fetchWebsites = async () => {
       if (!loading && user) {

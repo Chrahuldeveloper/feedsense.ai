@@ -191,7 +191,7 @@ const AddIntegration: React.FC = () => {
           console.log("User is loading or not authenticated");
         }
       } else {
-        alert("Fill in all the details.");
+        toast("Fill in all the details.");
       }
     } catch (error) {
       console.log("Error saving website:", error);

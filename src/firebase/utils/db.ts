@@ -18,6 +18,7 @@ interface Website {
 interface Feedback {
   emotion: string;
   feedback: string;
+  Rating: number;
 }
 
 interface ContactData {
@@ -96,19 +97,19 @@ export default class dbService {
       const docSnap = await getDoc(userDocRef);
       if (docSnap.exists()) {
         const subscriptionPlan = docSnap.data()?.subscription;
+        const userWebsites = docSnap.data()?.websites || [];
+
         if (subscriptionPlan === "Basic") {
-          const userWebsites = docSnap.data()?.websites || [];
-          const filteredWebsite = userWebsites.filter(
+          const filteredWebsite = userWebsites.find(
             (website: Website) => website.name === websiteName
           );
-          const websiteFeedbacks = filteredWebsite?.[0]?.feedback?.length;
 
-          if (!websiteFeedbacks) {
-            return true;
-          }
+          if (filteredWebsite) {
+            const websiteFeedbacks = filteredWebsite.feedback?.length || 0;
 
-          if (websiteFeedbacks <= 3 && userWebsites.length < 3) {
-            return true;
+            if (websiteFeedbacks < 100 && userWebsites.length <= 3) {
+              return true;
+            }
           }
         }
 
@@ -124,6 +125,44 @@ export default class dbService {
       return false;
     }
   }
+
+  // async checkifSubscribed(
+  //   userId: string,
+  //   websiteName: string
+  // ): Promise<boolean> {
+  //   try {
+  //     const userDocRef = doc(db, "USERS", userId);
+  //     const docSnap = await getDoc(userDocRef);
+  //     if (docSnap.exists()) {
+  //       const subscriptionPlan = docSnap.data()?.subscription;
+  //       if (subscriptionPlan === "Basic") {
+  //         const userWebsites = docSnap.data()?.websites || [];
+  //         const filteredWebsite = userWebsites.filter(
+  //           (website: Website) => website.name === websiteName
+  //         );
+  //         const websiteFeedbacks = filteredWebsite?.[0]?.feedback?.length;
+
+  //         if (!websiteFeedbacks) {
+  //           return true;
+  //         }
+
+  //         if (websiteFeedbacks <= 100 && userWebsites.length < 3) {
+  //           return true;
+  //         }
+  //       }
+
+  //       if (subscriptionPlan === "Pro") {
+  //         return true;
+  //       }
+
+  //       return false;
+  //     }
+  //     return false;
+  //   } catch (error) {
+  //     console.log(error);
+  //     return false;
+  //   }
+  // }
 
   async deleteWebsite(userId: string, websiteName: string): Promise<void> {
     try {
@@ -204,7 +243,6 @@ export default class dbService {
         console.log("Fetched websites from cache");
         return cachedWebsites;
       }
-
       const userDocRef = doc(db, "USERS", user.uid);
       const docSnap = await getDoc(userDocRef);
 

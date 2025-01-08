@@ -8,6 +8,8 @@ import { TbMoodSadDizzy } from "react-icons/tb";
 import LottiePlayer from "react-lottie-player";
 import FeedbackLoader from "../app/lottie-asserts/FeedbackLoader.json";
 import { IoIosStarOutline, IoMdStar } from "react-icons/io";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Feedback {
   emotion: string;
@@ -23,16 +25,16 @@ interface Emotion {
 const Form = () => {
   const { userID, websiteID } = useParams();
 
+  const [selectedEmotion, setSelectedEmotion] = useState<number | null>(null);
+  const [selectedRating, setSelectedRating] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [feedbackStatus, setFeedbackStatus] = useState<string>("");
+
   const [feedback, setFeedback] = useState<Feedback>({
     emotion: "",
     feedback: "",
     Rating: 0,
   });
-
-  const [selectedEmotion, setSelectedEmotion] = useState<number | null>(null);
-  const [selectedRating, setSelectedRating] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [feedbackStatus, setFeedbackStatus] = useState<string>("");
 
   const db = new dbService();
 
@@ -48,6 +50,7 @@ const Form = () => {
         const savefeedback = {
           emotion: feedback.emotion,
           feedback: feedback.feedback,
+          Rating: selectedRating,
         };
         await db.saveFeedback(
           userID.toString(),
@@ -59,7 +62,7 @@ const Form = () => {
         setSelectedEmotion(null);
         setSelectedRating(0);
       } else {
-        alert("You are not subscribed to this website.");
+        toast("You are not subscribed to this website.");
         setFeedbackStatus("");
       }
     } catch (error) {
@@ -144,9 +147,7 @@ const Form = () => {
                       setFeedback({ ...feedback, emotion: emotion.title });
                     }}
                     className={`cursor-pointer p-2 rounded-full ${
-                      selectedEmotion === idx
-                        ? "bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700"
-                        : ""
+                      selectedEmotion === idx ? "bg-blue-600" : ""
                     }`}
                   >
                     {emotion.emoji}
@@ -172,6 +173,7 @@ const Form = () => {
           </span>
         </p>
       </div>
+      <ToastContainer theme="dark" toastClassName={"custom-toast"} />
     </div>
   );
 };

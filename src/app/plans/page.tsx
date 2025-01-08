@@ -12,7 +12,7 @@ export default function PricingPage() {
   const Plans = [
     {
       name: "Basic",
-      price: "$10",
+      price: "$5",
       features: [
         "Collect up to 100 feedback",
         "Email support",
@@ -25,7 +25,7 @@ export default function PricingPage() {
     },
     {
       name: "Pro",
-      price: "$150",
+      price: "$25",
       features: [
         "Unlimited feedback entries",
         "Automated task generation from feedback",
