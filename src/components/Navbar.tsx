@@ -42,9 +42,15 @@ const Navbar = () => {
         <CiMenuFries size={23} color="white" />
       </div>
       <ul className="md:flex flex-row md:items-center gap-x-7 text-slate-300 hidden">
+        <Link href="/">
         <li className="cursor-pointer font-semibold text-sm">Home</li>
-        <li className="cursor-pointer font-semibold text-sm">About</li>
-        <li className="cursor-pointer font-semibold text-sm">Support</li>
+        </Link>
+        <Link href={"/about"}>
+          <li className="cursor-pointer font-semibold text-sm">About</li>
+        </Link>
+        <Link href="/plans">
+          <li className="cursor-pointer font-semibold text-sm">Plans</li>
+        </Link>
         <Link href={"/contactUs"}>
           <li className="cursor-pointer font-semibold text-sm">Contact</li>
         </Link>

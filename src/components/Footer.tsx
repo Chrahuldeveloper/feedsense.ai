@@ -1,4 +1,4 @@
-import { Link } from "lucide-react";
+import Link from "next/link";
 import React, { useState } from "react";
 import { FaFacebookF, FaXTwitter } from "react-icons/fa6";
 import TermsConditions from "./TermsConditions";
@@ -14,33 +14,52 @@ export default function Footer() {
       <footer className="bg-[#121212] text-white pt-10 px-4">
         <div className=" mx-auto flex flex-col md:flex-row items-center justify-around">
           <div className="text-center md:text-left mb-6 md:mb-0 space-y-5">
-            <h1 className="text-2xl font-semibold">TaskFeed</h1>
+            <h1 className="text-2xl font-semibold">FeedSense.Ai</h1>
             <p className="text-sm mt-2 text-gray-400 max-w-sm">
               Centralize and analyze feedback to continually improve your
               websites and business services.
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row items-center justify-center gap-20">
-            <div className="flex flex-col items-center mt-6 md:mt-0 ">
+          <div className="flex flex-col md:flex-row justify-center items-start gap-20">
+
+
+            <div className="flex flex-col items-center   ">
+              <div className="flex flex-col gap-5 text-sm items-center">
+              <h2 className="text-lg font-semibold ">FeedSense.AI</h2>
+                <Link href="/">
+                  <p className="font-semibold">Home</p>
+                </Link>
+                <Link href="/about">
+                  <p className="font-semibold">About</p>
+                </Link>
+                <Link href="/plans">
+                  <p className="font-semibold">Plans</p>
+                </Link>
+                <Link href="/contactUs">
+                  <p className="font-semibold">Contact</p>
+                </Link>
+              </div>
+            </div>
+
+
+            <div className="space-y-5 text-sm">
+            <h2 className="text-lg font-semibold ">Support</h2>
               <p
                 onClick={() => {
                   setistoggle(true);
                 }}
-                className="font-semibold cursor-pointer text-lg"
+                className="font-semibold cursor-pointer"
               >
                 Terms and Conditions
               </p>
-              <div className="flex flex-col gap-5 text-sm mt-3">
-                <p>About</p>
-                <p>Services</p>
-                <p>Contact</p>
-                <p>FAQ</p>
-              </div>
+              <p className="font-semibold cursor-pointer">
+                chrahulofficial@gmail.com
+              </p>
             </div>
 
             <div className="flex flex-col items-center justify-center gap-5">
-              <h2 className="text-lg font-semibold mb-2">Follow Us</h2>
+              <h2 className="text-lg font-semibold ">Follow Us</h2>
               <FaXTwitter size={22} className="hover:text-gray-400" />
               <FiInstagram size={22} className="hover:text-gray-400" />
               <FaFacebookF size={22} className="hover:text-gray-400" />

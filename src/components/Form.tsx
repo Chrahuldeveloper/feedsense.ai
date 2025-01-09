@@ -82,27 +82,29 @@ const Form = () => {
   return (
     <div className="flex justify-center p-5 pt-5">
       <div className="rounded-lg shadow-lg w-full max-w-md sm:max-w-lg lg:max-w-xl border-[1px] bg-[#121212] border-[#282e32]">
-        <div className="bg-[#1E1E1E] p-6 rounded-t-lg border-b-[1px] border-stone-800 space-y-2">
-          <h1 className="text-2xl font-bold text-white">
-            Your Opinion Matters
-          </h1>
-          <p className="text-white text-xs font-semibold">
-            Take a moment to share your feedback
-          </p>
-        </div>
-
         {loading ? (
           <>
-            <div className="max-w-xs mx-auto -mt-10">
-              <LottiePlayer loop animationData={FeedbackLoader} play />
+            <div className="fixed inset-0 z-50 flex items-center justify-center h-full bg-black bg-opacity-70 blur-xs">
+              <div className="max-w-xs mx-auto -mt-10">
+                <LottiePlayer loop animationData={FeedbackLoader} play className="w-36 lg:w-52"/>
+              </div>
+              <p className="text-white  text-center -mt-28">{feedbackStatus}</p>
             </div>
-            <p className="text-white  text-center -mt-28">{feedbackStatus}</p>
           </>
         ) : (
-          <div className="p-5">
-            <div className="space-y-2.5 mt-4">
+          <div className="">
+            <div className="bg-[#1e1e1e] p-6 rounded-t-lg border-b-[1px] border-stone-800 space-y-2">
+              <h1 className="text-2xl font-bold text-white">
+                Your Opinion Matters
+              </h1>
+              <p className="text-white text-xs font-semibold">
+                Take a moment to share your feedback
+              </p>
+            </div>
+
+            <div className="space-y-2.5 mt-4  px-5">
               <div>
-                <h1 className="text-white font-sem">Rate Us</h1>
+                <h1 className="text-white font-semibold">Rate Us</h1>
               </div>
               <div className="flex items-center gap-5">
                 {[1, 2, 3, 4, 5].map((i) => (
@@ -121,7 +123,7 @@ const Form = () => {
               </div>
             </div>
 
-            <div className="space-y-2.5 mt-6">
+            <div className="space-y-2.5 mt-7 px-5">
               <textarea
                 value={feedback.feedback}
                 placeholder="Feedback"
@@ -134,7 +136,7 @@ const Form = () => {
               />
             </div>
 
-            <div className="mt-6 space-y-2.5">
+            <div className="mt-6 space-y-2.5 px-5">
               <h1 className="font-semibold text-white">
                 How was your experience*
               </h1>
@@ -156,7 +158,7 @@ const Form = () => {
               </div>
             </div>
 
-            <div className="mt-4">
+            <div className="mt-4 p-5">
               <button
                 onClick={saveFeedBack}
                 className="text-black font-semibold px-4 py-2 rounded-lg w-full bg-slate-50"
@@ -164,14 +166,14 @@ const Form = () => {
                 Share Insights
               </button>
             </div>
+            <p className="text-stone-600 text-center my-4">
+              Powered By{" "}
+              <span>
+                <Link href={"#"}>FeedSense.ai</Link>
+              </span>
+            </p>
           </div>
         )}
-        <p className="text-stone-600 text-center my-4">
-          Powered By{" "}
-          <span>
-            <Link href={"#"}>FeedSense.ai</Link>
-          </span>
-        </p>
       </div>
       <ToastContainer theme="dark" toastClassName={"custom-toast"} />
     </div>

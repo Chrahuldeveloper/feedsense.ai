@@ -74,7 +74,7 @@ export default function page() {
         </div>
       </div>
 
-      <div className="bg-[#111115] p-5 w-full mx-auto my-28 space-y-8">
+      <div className=" p-5 w-full mx-auto my-28 space-y-8">
         <p className="bg-white p-2 rounded-full flex items-center justify-center gap-2 text-[11px] font-semibold w-44 mx-auto text-xs">
           Our Values
         </p>

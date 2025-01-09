@@ -16,11 +16,12 @@ import { CiChat1 } from "react-icons/ci";
 import { SlMagnifier } from "react-icons/sl";
 import { IoRocketOutline } from "react-icons/io5";
 import { FaArrowsTurnRight } from "react-icons/fa6";
+import Footer from "@/components/Footer";
 
 export default function Page() {
   const [userSession, setUserSession] = useState<string | null>(null);
 
-  useEffect(() => { 
+  useEffect(() => {
     AOS.init({
       duration: 1000,
       easing: "ease-in-out",
@@ -332,52 +333,7 @@ export default function Page() {
 
       {istoogle ? <TermsConditions setistoggle={setistoggle} /> : null}
 
-      <footer className="bg-[#121212] text-white pt-10 px-4">
-        <div className=" mx-auto flex flex-col md:flex-row items-center justify-around">
-          <div className="text-center md:text-left mb-6 md:mb-0 space-y-5">
-            <h1 className="text-2xl font-semibold">TaskFeed</h1>
-            <p className="text-sm mt-2 text-gray-400 max-w-sm">
-              Centralize and analyze feedback to continually improve your
-              websites and business services.
-            </p>
-          </div>
-
-          <div className="flex flex-col md:flex-row items-center justify-center gap-20">
-            <div className="flex flex-col items-center mt-6 md:mt-0 ">
-              <p
-                onClick={() => {
-                  setistoggle(true);
-                }}
-                className="font-semibold cursor-pointer text-lg"
-              >
-                Terms and Conditions
-              </p>
-              <div className="flex flex-col gap-5 text-sm mt-3">
-                <Link href="/about">About</Link>
-                <Link href="/services">Services</Link>
-                <Link href="/contact">Contact</Link>
-                <Link href="/faq">FAQ</Link>
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center justify-center gap-5">
-              <h2 className="text-lg font-semibold mb-2">Follow Us</h2>
-              <Link href="https://twitter.com/" aria-label="Twitter">
-                <FaXTwitter size={24} className="hover:text-gray-400" />
-              </Link>
-              <Link href="https://instagram.com/" aria-label="Instagram">
-                <FiInstagram size={24} className="hover:text-gray-400" />
-              </Link>
-              <Link href="https://facebook.com/" aria-label="Facebook">
-                <FaFacebookF size={24} className="hover:text-gray-400" />
-              </Link>
-            </div>
-          </div>
-        </div>
-        <div className="text-center text-xs text-gray-500 py-5 pt-16">
-          © {new Date().getFullYear()} FeedSense Ai. All rights reserved.
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

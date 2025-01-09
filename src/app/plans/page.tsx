@@ -1,12 +1,10 @@
 "use client";
 import Navbar from "@/components/Navbar";
-import React, { useState } from "react";
+import React from "react";
 import { TiTickOutline } from "react-icons/ti";
 import Link from "next/link";
 import { IoIosStarOutline } from "react-icons/io";
-import { FaFacebookF, FaXTwitter } from "react-icons/fa6";
-import { FiInstagram } from "react-icons/fi";
-import TermsConditions from "@/components/TermsConditions";
+import Footer from "@/components/Footer";
 
 export default function PricingPage() {
   const Plans = [
@@ -15,10 +13,11 @@ export default function PricingPage() {
       price: "$5",
       features: [
         "Collect up to 100 feedback",
-        "Email support",
+        "Priority Support",
         "Analytics",
         "Only 3 websites integration",
         "Incentivise Users",
+        "3 website widgets",
       ],
       Bill: "Billed monthly",
       para: "That's less than $0.34/day ≈ 2 coffees per month",
@@ -29,7 +28,7 @@ export default function PricingPage() {
       features: [
         "Unlimited feedback entries",
         "Automated task generation from feedback",
-        "Priority email support",
+        "Priority Support",
         "Analytics",
         "Unlimited websites",
         "Incentivise Users",
@@ -38,8 +37,6 @@ export default function PricingPage() {
       para: "That's $30/month ≈ $1/day ≈ 6 coffees per month",
     },
   ];
-
-  const [istoogle, setistoggle] = useState(false);
 
   return (
     <div className="bg-[#000000] w-full min-h-screen overflow-hidden">
@@ -109,54 +106,7 @@ export default function PricingPage() {
         </div>
       </div>
 
-      {istoogle ? <TermsConditions setistoggle={setistoggle} /> : null}
-
-      <footer className="bg-[#121212] text-white pt-10 px-4">
-        <div className=" mx-auto flex flex-col md:flex-row items-center justify-around">
-          <div className="text-center md:text-left mb-6 md:mb-0 space-y-5">
-            <h1 className="text-2xl font-semibold">TaskFeed</h1>
-            <p className="text-sm mt-2 text-gray-400 max-w-sm">
-              Centralize and analyze feedback to continually improve your
-              websites and business services.
-            </p>
-          </div>
-
-          <div className="flex flex-col md:flex-row items-center justify-center gap-20">
-            <div className="flex flex-col items-center mt-6 md:mt-0 ">
-              <p
-                onClick={() => {
-                  setistoggle(true);
-                }}
-                className="font-semibold cursor-pointer text-lg"
-              >
-                Terms and Conditions
-              </p>
-              <div className="flex flex-col gap-5 text-sm mt-3">
-                <Link href="/about">About</Link>
-                <Link href="/services">Services</Link>
-                <Link href="/contact">Contact</Link>
-                <Link href="/faq">FAQ</Link>
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center justify-center gap-5">
-              <h2 className="text-lg font-semibold mb-2">Follow Us</h2>
-              <Link href="https://twitter.com/" aria-label="Twitter">
-                <FaXTwitter size={24} className="hover:text-gray-400" />
-              </Link>
-              <Link href="https://instagram.com/" aria-label="Instagram">
-                <FiInstagram size={24} className="hover:text-gray-400" />
-              </Link>
-              <Link href="https://facebook.com/" aria-label="Facebook">
-                <FaFacebookF size={24} className="hover:text-gray-400" />
-              </Link>
-            </div>
-          </div>
-        </div>
-        <div className="text-center text-xs text-gray-500 py-5 pt-16">
-          © {new Date().getFullYear()} FeedSense Ai. All rights reserved.
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
