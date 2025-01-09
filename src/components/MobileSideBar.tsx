@@ -5,6 +5,7 @@ import { IoLogOut } from "react-icons/io5";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { CgWebsite } from "react-icons/cg";
+import Link from "next/link";
 
 interface MobileSideBarProps {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,23 +24,32 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({ setToggle }) => {
           }}
         />
       </div>
-      <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer">
-        <MdDashboard size={22} color="white" cursor={"pointer"} />
-        <h1 className="text-slate-300 font-semibold">DashBoard</h1>
-      </div>
-      <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer">
-        <CgWebsite size={22} color="white" cursor={"pointer"} />
-        <h1 className="text-slate-300 font-semibold">Integrate</h1>
-      </div>
-      <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer">
-        <IoIosCall size={22} color="white" cursor={"pointer"} />
-        <h1 className="text-slate-300 font-semibold">Contact Us</h1>
-      </div>
+      <Link href="/dashboard" >
+        <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer my-10">
+          <MdDashboard size={22} color="white" cursor={"pointer"} />
+          <h1 className="text-slate-300 font-semibold">DashBoard</h1>
+        </div>
+      </Link>
+      <Link href="/dashboard/integrate" >
+        <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer my-10">
+          <CgWebsite size={22} color="white" cursor={"pointer"} />
+          <h1 className="text-slate-300 font-semibold">Integrate</h1>
+        </div>
+      </Link>
+      <Link href="/dashboard/contact" >
+        <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer my-10">
+          <IoIosCall size={22} color="white" cursor={"pointer"} />
+          <h1 className="text-slate-300 font-semibold">Contact Us</h1>
+        </div>
+      </Link>
 
-      <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer">
-        <MdOutlineAttachMoney size={22} color="white" cursor={"pointer"} />
-        <h1 className="text-slate-300 font-semibold">Subcription</h1>
-      </div>
+      <Link href="/plans">
+        <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer">
+          <MdOutlineAttachMoney size={22} color="white" cursor={"pointer"} />
+          <h1 className="text-slate-300 font-semibold">Subcription</h1>
+        </div>
+      </Link>
+
       <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer">
         <IoLogOut size={22} color="white" cursor={"pointer"} />
         <h1 className="text-slate-300 font-semibold">LogOut</h1>

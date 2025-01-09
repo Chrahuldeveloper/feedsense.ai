@@ -66,7 +66,6 @@ const Table = () => {
     checkPlan();
   }, [loading, user]);
 
-
   useEffect(() => {
     const fetchWebsites = async () => {
       if (!loading && user) {
@@ -126,7 +125,7 @@ const Table = () => {
       {loading && <Loader message="loading" />}
       <div className="md:ml-44">
         <nav className="md:hidden bg-[#111115] p-7 w-screen border-b-[1px] border-[#15171b] flex justify-between items-center">
-          <h1 className="text-xl font-semibold text-slate-300">Fixit</h1>
+          <h1 className="text-xl font-semibold text-slate-300">FeedSense.ai</h1>
           <CiMenuFries
             size={26}
             color="white"
@@ -208,7 +207,7 @@ const Table = () => {
                               name: site?.name,
                               image: site?.image,
                               Plan: plan?.subscription,
-                              TotalFeedback : site!.feedback!.length
+                              TotalFeedback: site!.feedback!.length,
                             },
                           }}
                         >
