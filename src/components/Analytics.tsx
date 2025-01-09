@@ -43,8 +43,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
     ],
   };
 
-
-  console.log(totalWebsites, totalFeedback)
+  console.log(totalWebsites, totalFeedback);
 
   return (
     <div className="w-[90vw] md:w-[68vw] mx-auto  mt-7">
