@@ -151,14 +151,14 @@ export default function Page() {
         <p className="bg-white p-2 rounded-full text-[11px] font-semibold">
           AI Powered Feedback Collection & Prioritization Technology
         </p>
-        <h1 className="text-3xl lg:text-5xl text-center font-semibold text-white leading-8 z-50">
+        <h1 className="text-3xl lg:text-5xl text-center font-semibold text-white leading-8 md:z-50">
           Build What Users Truly Need – <br />{" "}
-          <span className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 text-transparent bg-clip-text">
+          <span className=" font-bold bg-gradient-to-r from-blue-500 to-cyan-500 text-transparent bg-clip-text">
             Don’t Waste
           </span>{" "}
           Time or Resources
         </h1>
-        <p className="text-[#a2a2a2] max-w-lg text-center z-50 text-sm md:text-base">
+        <p className="text-[#a2a2a2] max-w-lg text-center md:z-50 text-sm md:text-base">
           Collect, Analyze, and Prioritize Feedback to Shape Your Product’s
           Future with Visionari’s AI Feedback Collection & Prioritization
           Technology <br /> <p className="text-4xl cursor-pointer">💡</p>
