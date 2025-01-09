@@ -3,14 +3,17 @@ import React, { useState } from "react";
 import { FaFacebookF, FaXTwitter } from "react-icons/fa6";
 import TermsConditions from "./TermsConditions";
 import { FiInstagram } from "react-icons/fi";
+import Privacy from "./Privacy";
 
 export default function Footer() {
   const [istoogle, setistoggle] = useState(false);
 
+  const [isprivacy, setisprivacy] = useState<boolean>(false);
+
   return (
     <>
       {istoogle ? <TermsConditions setistoggle={setistoggle} /> : null}
-
+      {isprivacy ? <Privacy setisprivacy={setisprivacy} /> : null}
       <footer className="bg-[#121212] text-white pt-10 px-4">
         <div className=" mx-auto flex flex-col md:flex-row items-center justify-around">
           <div className="text-center md:text-left mb-6 md:mb-0 space-y-5">
@@ -22,11 +25,9 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col md:flex-row justify-center items-start gap-20">
-
-
             <div className="flex flex-col items-center   ">
               <div className="flex flex-col gap-5 text-sm items-center">
-              <h2 className="text-lg font-semibold ">FeedSense.AI</h2>
+                <h2 className="text-lg font-semibold ">FeedSense.AI</h2>
                 <Link href="/">
                   <p className="font-semibold">Home</p>
                 </Link>
@@ -42,9 +43,8 @@ export default function Footer() {
               </div>
             </div>
 
-
             <div className="space-y-5 text-sm">
-            <h2 className="text-lg font-semibold ">Support</h2>
+              <h2 className="text-lg font-semibold ">Support</h2>
               <p
                 onClick={() => {
                   setistoggle(true);
@@ -52,6 +52,14 @@ export default function Footer() {
                 className="font-semibold cursor-pointer"
               >
                 Terms and Conditions
+              </p>
+              <p
+                className="font-semibold cursor-pointer"
+                onClick={() => {
+                  setisprivacy(true);
+                }}
+              >
+                Privacy Policy
               </p>
               <p className="font-semibold cursor-pointer">
                 chrahulofficial@gmail.com

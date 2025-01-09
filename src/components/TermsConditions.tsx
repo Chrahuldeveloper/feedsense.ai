@@ -1,11 +1,11 @@
 import React from "react";
 import { RxCross2 } from "react-icons/rx";
 
-interface props {
+interface Props {
   setistoggle: (value: boolean) => void;
 }
 
-const TermsConditions: React.FC<props> = ({ setistoggle }) => {
+const TermsConditions: React.FC<Props> = ({ setistoggle }) => {
   const termsAndConditionsData = [
     {
       section: "Terms and Conditions",
@@ -48,25 +48,23 @@ const TermsConditions: React.FC<props> = ({ setistoggle }) => {
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center h-full bg-black bg-opacity-75 backdrop-blur-sm">
-      <div className="bg-[#04050a] w-[95vw] md:w-[50vw] text-gray-300 border-[1px] border-[#15171b] p-8 h-[90vh] overflow-y-scroll">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
+      <div className="p-6 max-w-4xl mx-auto bg-[#121212] rounded-lg shadow-md h-[90vh] overflow-y-scroll">
         <div className="flex justify-end">
           <RxCross2
             size={28}
-            onClick={() => {
-              setistoggle(false);
-            }}
             color="#9ca3af"
             className="cursor-pointer"
+            onClick={() => setistoggle(false)}
           />
         </div>
-        <div className="space-y-5">
+        <div className="space-y-6">
           {termsAndConditionsData.map((section, idx) => (
-            <div key={idx} className="space-y-5">
-              <h1 className="text-xl font-semibold">{section.section}</h1>
-              <ul className="list-disc list-inside space-y-3">
-                {section.content.map((paragraph, idx) => (
-                  <li key={idx} className="text-sm">
+            <div key={idx} className="space-y-4">
+              <h1 className="text-2xl font-bold text-white">{section.section}</h1>
+              <ul className="list-disc list-inside text-white space-y-3">
+                {section.content.map((paragraph, index) => (
+                  <li key={index} className="text-sm">
                     {paragraph}
                   </li>
                 ))}
