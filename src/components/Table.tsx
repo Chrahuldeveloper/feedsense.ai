@@ -13,6 +13,8 @@ import cache from "../cache/cache";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/Firebase";
 import Image from "next/image";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface WebsiteData {
   name: string;
@@ -122,7 +124,7 @@ const Table = () => {
 
   return (
     <>
-      {loading && <Loader message="loading" />}
+      {/* {loading && <Loader message="loading" />} */}
       <div className="md:ml-44">
         <nav className="md:hidden bg-[#111115] p-7 w-screen border-b-[1px] border-[#15171b] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">FeedSense.ai</h1>
@@ -146,7 +148,11 @@ const Table = () => {
         {toggle && <MobileSideBar setToggle={setToggle} />}
 
         <div className="w-full md:w-[70vw] px-2 py-14 mx-auto rounded-xl">
-          {websitedata.length === 0 ? (
+          {loading ? (
+            <SkeletonTheme baseColor="#111115" highlightColor="#444">
+              <Skeleton count={1} height={300} className="my-2" />
+            </SkeletonTheme>
+          ) : websitedata.length === 0 ? (
             <div className="space-y-6 text-center bg-[#111115] rounded-lg border-[1px] border-[#15171b] p-10">
               <FaRegCircleStop size={23} color="white" className="mx-auto" />
               <p className="text-2xl font-semibold text-white">
@@ -225,6 +231,7 @@ const Table = () => {
           <Analytics
             totalWebsites={infodata.totalWebsites}
             totalFeedback={infodata.totalFeedback}
+            loading={loading}
           />
         </div>
       </div>

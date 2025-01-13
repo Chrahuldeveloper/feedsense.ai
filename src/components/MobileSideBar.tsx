@@ -24,19 +24,19 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({ setToggle }) => {
           }}
         />
       </div>
-      <Link href="/dashboard" >
+      <Link href="/dashboard">
         <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer my-10">
           <MdDashboard size={22} color="white" cursor={"pointer"} />
           <h1 className="text-slate-300 font-semibold">DashBoard</h1>
         </div>
       </Link>
-      <Link href="/dashboard/integrate" >
+      <Link href="/dashboard/integrate">
         <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer my-10">
           <CgWebsite size={22} color="white" cursor={"pointer"} />
           <h1 className="text-slate-300 font-semibold">Integrate</h1>
         </div>
       </Link>
-      <Link href="/dashboard/contact" >
+      <Link href="/dashboard/contact">
         <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer my-10">
           <IoIosCall size={22} color="white" cursor={"pointer"} />
           <h1 className="text-slate-300 font-semibold">Contact Us</h1>
