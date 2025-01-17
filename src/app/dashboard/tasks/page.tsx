@@ -48,6 +48,7 @@ const Page = () => {
     // name: string;
     // email: string;
     emotion: string;
+    Rating: number;
     feedback: string;
     parsedFeedback?: { response: string };
   }
@@ -175,7 +176,7 @@ const Page = () => {
               >
                 {websites.length > 0 ? (
                   websites.map((site, idx) =>
-                    site?.parsedFeedback?.response ? ( // Check if there's an analysis
+                    site?.parsedFeedback?.response ? (
                       <tr
                         key={idx}
                         className={`transition-colors duration-300 ease-in-out font-semibold ${
@@ -210,7 +211,6 @@ const Page = () => {
                             disabled={getPlan === "Basic"}
                             onChange={async (e) => {
                               const status = e.target.value;
-
                               if (status === "Completed") {
                                 try {
                                   setisloading(true);
@@ -285,7 +285,7 @@ const Page = () => {
                     S.NO
                   </th>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
-                    Rateing
+                    Rating
                   </th>
                   <th className="py-3 px-3 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
                     Emotion
@@ -308,7 +308,9 @@ const Page = () => {
                       <td className="py-5 px-12 text-xs text-gray-300">
                         {idx + 1}
                       </td>
-                      <td className="py-5 px-12 text-xs text-gray-300">{5}</td>
+                      <td className="py-5 px-12 text-xs text-gray-300">
+                        {site.Rating}
+                      </td>
                       <td className="py-5 px-9 text-xs text-gray-300">
                         {site.emotion}
                       </td>

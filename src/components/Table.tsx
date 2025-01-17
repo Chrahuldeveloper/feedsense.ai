@@ -155,10 +155,10 @@ const Table = () => {
           ) : websitedata.length === 0 ? (
             <div className="space-y-6 text-center bg-[#111115] rounded-lg border-[1px] border-[#15171b] p-10">
               <FaRegCircleStop size={23} color="white" className="mx-auto" />
-              <p className="text-2xl font-semibold text-white">
+              <p className="text-lg font-semibold text-white">
                 No websites connected yet
               </p>
-              <p className="text-sm text-slate-200">
+              <p className="text-xs text-slate-200">
                 Add your first website to get started
               </p>
             </div>

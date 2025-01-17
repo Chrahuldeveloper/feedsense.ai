@@ -263,22 +263,22 @@ const AddIntegration: React.FC = () => {
           <div className="md:ml-52">
             <div className="bg-[#0e0f12] w-[96vw] shadow-2xl  md:w-[45vw] mx-auto h-[80vh] overflow-y-scroll mt-7 border-[1px] border-[#15171b]">
               <div className="space-y-3 border-b-[1px] border-[#15171b] bg-[#131417] p-5 text-slate-300">
-                <h1 className="text-2xl font-semibold ">
+                <h1 className="text-xl font-semibold ">
                   Welcome to Integration
                 </h1>
-                <p className="">Connect your website</p>
+                <p className="text-sm">Connect your website</p>
               </div>
 
               <div className="p-8">
                 {currentStep === 1 && (
                   <div>
                     <div className="flex items-center justify-between">
-                      <h1 className="text-xl font-semibold">
+                      <h1 className="text-lg font-semibold">
                         Connected Websites
                       </h1>
                       <button
                         onClick={() => setCurrentStep(2)}
-                        className="text-xs bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-slate-300  py-2 px-4 rounded-lg"
+                        className="text-[10px] bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-slate-300  py-2 px-4 rounded-lg"
                       >
                         Add Website
                       </button>
@@ -290,7 +290,7 @@ const AddIntegration: React.FC = () => {
                           color="white"
                           className="mx-auto"
                         />
-                        <p className="text-xl font-semibold text-slate-300">
+                        <p className="text-lg font-semibold text-slate-300">
                           No websites connected yet
                         </p>
                         <p className="text-sm text-slate-300">

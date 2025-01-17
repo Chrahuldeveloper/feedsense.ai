@@ -19,17 +19,17 @@ const SideBar: React.FC<props> = ({ page }) => {
 
   return (
     <>
-      <aside className=" bg-[#111115]  w-42 h-full space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-[#15171b]">
+      <aside className=" bg-[#111115] w-[60vw] lg:w-[15vw] h-full space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-[#15171b]">
         <div className="flex flex-col space-y-6 pt-7">
           {/* Home */}
           <Link href="/dashboard">
             <div
-              className={`flex items-center space-x-4 py-3  pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
+              className={`flex items-center space-x-4 py-3 pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
                 page === "Home" ? "bg-[#151720]" : ""
               }`}
             >
               <MdDashboard color="white" size={iconSize} />
-              <h1 className=" text-sm font-semibold">Home</h1>
+              <h1 className="text-sm font-semibold">Home</h1>
             </div>
           </Link>
 
