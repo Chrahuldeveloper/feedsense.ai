@@ -7,6 +7,7 @@ import { IoHappyOutline, IoSadOutline } from "react-icons/io5";
 import { TbMoodSadDizzy } from "react-icons/tb";
 import LottiePlayer from "react-lottie-player";
 import FeedbackLoader from "../app/lottie-asserts/FeedbackLoader.json";
+import ErrorLoader from "../app/lottie-asserts/ErrorLoader.json";
 import { IoIosStarOutline, IoMdStar } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -28,7 +29,8 @@ const Form = () => {
   const [selectedEmotion, setSelectedEmotion] = useState<number | null>(null);
   const [selectedRating, setSelectedRating] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-  const [feedbackStatus, setFeedbackStatus] = useState<string>("");
+
+  const [error, seterror] = useState<boolean>(true);
 
   const [feedback, setFeedback] = useState<Feedback>({
     emotion: "",
@@ -40,7 +42,6 @@ const Form = () => {
 
   const saveFeedBack = async () => {
     setLoading(true);
-    setFeedbackStatus("Saving feedback...");
     try {
       const isSubscribed = await db.checkifSubscribed(
         userID.toString(),
@@ -52,28 +53,29 @@ const Form = () => {
           feedback: feedback.feedback,
           Rating: selectedRating,
         };
-        await db.saveFeedback(
+        const returndata = await db.saveFeedback(
           userID.toString(),
           websiteID.toString(),
           savefeedback
         );
-        setFeedbackStatus("Feedback saved successfully!");
+
+        if (returndata === undefined) {
+          seterror(true);
+        }
+
         setFeedback({ emotion: "", feedback: "", Rating: 0 });
         setSelectedEmotion(null);
         setSelectedRating(0);
       } else {
         toast("You are not subscribed to this website.");
-        setFeedbackStatus("");
       }
     } catch (error) {
       console.log(error);
-      setFeedbackStatus("Failed to save feedback.");
+      seterror(true);
     } finally {
       setLoading(false);
     }
   };
-
-  console.log(feedbackStatus);
 
   const emotions: Emotion[] = [
     { title: "Happy", emoji: <IoHappyOutline size={32} color="#c1d0d5" /> },
@@ -84,6 +86,24 @@ const Form = () => {
   return (
     <div className="flex justify-center p-5 pt-5">
       <div className="rounded-lg shadow-lg w-full max-w-lg sm:max-w-lg lg:max-w-xl border-[1px] bg-[#121212] border-[#282e32]">
+        {error ? (
+          <>
+            <div className="fixed inset-0 z-50 flex items-center justify-center h-full bg-black bg-opacity-70 blur-xs">
+              <div className="max-w-xs mx-auto -mt-10 text-center flex flex-col items-center space-y-3">
+                <LottiePlayer
+                  loop
+                  animationData={ErrorLoader}
+                  play
+                  className="w-36 lg:w-52"
+                />
+                <p className="text-white text-sm">
+                  Website Stoppped Collecting Feedbacks
+                </p>
+              </div>
+            </div>
+          </>
+        ) : null}
+
         {loading ? (
           <>
             <div className="fixed inset-0 z-50 flex items-center justify-center h-full bg-black bg-opacity-70 blur-xs">

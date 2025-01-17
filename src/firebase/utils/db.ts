@@ -397,7 +397,7 @@ export default class dbService {
             );
           }
         } else {
-          console.error("Website not found with the specified name");
+          return;
         }
       } else {
         console.error("User not found");

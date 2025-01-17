@@ -277,7 +277,6 @@ const Page = () => {
             </div>
 
             {/* Feedback Table */}
-
             <table className="border-[1px] border-[#15171b] md:mx-auto w-[98vw] md:w-[60vw] mt-7 divide-y divide-[#15171b] overflow-hidden">
               <thead className="bg-[#111115] border-[1px] border-[#15171b]">
                 <tr>
