@@ -64,6 +64,7 @@ export default function Footer() {
               <p className="font-semibold cursor-pointer">
                 chrahulofficial@gmail.com
               </p>
+              <p className="font-semibold cursor-pointer">Hyderabad,India</p>
             </div>
 
             <div className="flex flex-col items-center justify-center gap-5">
