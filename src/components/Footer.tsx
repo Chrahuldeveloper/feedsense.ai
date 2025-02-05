@@ -44,23 +44,16 @@ export default function Footer() {
             </div>
 
             <div className="space-y-5 text-sm">
-              <h2 className="text-lg font-semibold ">Support</h2>
-              <p
-                onClick={() => {
-                  setistoggle(true);
-                }}
-                className="font-semibold cursor-pointer"
-              >
+              <h2 className="text-lg font-semibold">Support</h2>
+              <p>
+              <Link
+                href="https://merchant.razorpay.com/policy/P8XFEmJQOPeGVU/terms"
+                onClick={() => {}}
+                className="font-semibold cursor-pointer "
+                >
                 Terms and Conditions
-              </p>
-              <p
-                className="font-semibold cursor-pointer"
-                onClick={() => {
-                  setisprivacy(true);
-                }}
-              >
-                Privacy Policy
-              </p>
+              </Link>
+                </p>
               <p className="font-semibold cursor-pointer">
                 chrahulofficial@gmail.com
               </p>

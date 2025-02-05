@@ -7,6 +7,7 @@ import { MdOutlineAttachMoney } from "react-icons/md";
 import ModelLogout from "./ModelLogout";
 import Link from "next/link";
 import { CgWebsite } from "react-icons/cg";
+import { IoMdHelpCircle } from "react-icons/io";
 
 interface props {
   page: string;
@@ -52,8 +53,8 @@ const SideBar: React.FC<props> = ({ page }) => {
                 page === "Contact" ? "bg-[#151720]" : ""
               }`}
             >
-              <IoIosCall color="white" size={iconSize} />
-              <h1 className="text-white text-sm font-semibold">Contact</h1>
+              <IoMdHelpCircle color="white" size={iconSize} />
+              <h1 className="text-white text-sm font-semibold">Help</h1>
             </div>
           </Link>
 

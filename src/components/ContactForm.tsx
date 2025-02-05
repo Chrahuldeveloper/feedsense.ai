@@ -45,7 +45,7 @@ const ContactForm = () => {
           <div className="bg-[#111115] p-8  w-[95vw] md:w-[40vw] mx-auto border-[#15171b] border-[1px] shadow-2xl">
             <div>
               <h1 className="text-slate-300 text-2xl font-semibold">
-                Contact Us
+                Reach out to us
               </h1>
             </div>
 
