@@ -30,7 +30,7 @@ const Form = () => {
   const [selectedRating, setSelectedRating] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [error, seterror] = useState<boolean>(true);
+  const [error, seterror] = useState<boolean>(false);
 
   const [feedback, setFeedback] = useState<Feedback>({
     emotion: "",
