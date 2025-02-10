@@ -46,18 +46,20 @@ export default function Footer() {
             <div className="space-y-5 text-sm">
               <h2 className="text-lg font-semibold">Support</h2>
               <p>
-              <Link
-                href="https://merchant.razorpay.com/policy/P8XFEmJQOPeGVU/terms"
-                onClick={() => {}}
-                className="font-semibold cursor-pointer "
+                <Link
+                  href="https://merchant.razorpay.com/policy/P8XFEmJQOPeGVU/terms"
+                  onClick={() => {}}
+                  className="font-semibold cursor-pointer "
                 >
-                Terms and Conditions
-              </Link>
-                </p>
+                  Terms and Conditions
+                </Link>
+              </p>
               <p className="font-semibold cursor-pointer">
                 chrahulofficial@gmail.com
               </p>
-              <p className="font-semibold cursor-pointer">Hyderabad,India</p>
+              <p className="font-semibold cursor-pointer">
+                Hyderabad Medchal 501401,India{" "}
+              </p>
             </div>
 
             <div className="flex flex-col items-center justify-center gap-5">
