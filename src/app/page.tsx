@@ -3,9 +3,7 @@
 import Navbar from "@/components/Navbar";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { FaCode, FaXTwitter } from "react-icons/fa6";
-import { FiInstagram } from "react-icons/fi";
-import { FaFacebookF } from "react-icons/fa";
+import { FaCode } from "react-icons/fa6";
 import Cookies from "js-cookie";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -266,7 +264,7 @@ export default function Page() {
       </div>
 
       <div className="fixed bottom-10 right-10 ">
-        <Link href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/feedsense AI">
+        <Link href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/feedsenseai">
           <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
             <MdSettingsSuggest
               size={47}
