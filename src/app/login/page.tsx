@@ -9,7 +9,8 @@ import Cookies from "js-cookie";
 import SendEmail from "../../emailJs/Email";
 import Loader from "../../components/Loader";
 import Image from "next/image";
-
+import LottiePlayer from "react-lottie-player";
+import Login from "../lottie-asserts/Login.json";
 interface UserData {
   email: string;
   password: string;
@@ -112,7 +113,16 @@ export default function LoginPage() {
             </div>
           )}
 
-          <div className="space-y-6 my-8">
+          <div>
+            <LottiePlayer
+              loop
+              animationData={Login}
+              play
+              className="w-72 mx-auto"
+            />
+          </div>
+
+          {/* <div className="space-y-6 my-8">
             <div className="space-y-2">
               <label
                 htmlFor="email"
@@ -167,9 +177,8 @@ export default function LoginPage() {
             >
               Login
             </button>
-          </div>
-          <div className="flex flex-col items-center justify-between mt-4 text-sm text-slate-400">
-            <p>--------------------Or login with--------------------</p>
+          </div> */}
+          <div className="flex flex-col items-center justify-between mt-2 text-sm text-slate-400">
             <button
               onClick={googleSignIn}
               className="flex w-full justify-center items-center space-x-2 text-white bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 py-2 px-4 rounded-lg mt-5"
