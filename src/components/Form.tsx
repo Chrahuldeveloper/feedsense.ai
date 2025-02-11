@@ -53,15 +53,11 @@ const Form = () => {
           feedback: feedback.feedback,
           Rating: selectedRating,
         };
-        const returndata = await db.saveFeedback(
+        await db.saveFeedback(
           userID.toString(),
           websiteID.toString(),
           savefeedback
         );
-
-        if (returndata === undefined) {
-          seterror(true);
-        }
 
         setFeedback({ emotion: "", feedback: "", Rating: 0 });
         setSelectedEmotion(null);
