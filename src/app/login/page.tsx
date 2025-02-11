@@ -2,65 +2,68 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "../../firebase/Firebase";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import { GoogleAuthProvider, UserCredential } from "firebase/auth";
-import { Mail, Lock } from "lucide-react";
+// import { Mail, Lock } from "lucide-react";
 import Cookies from "js-cookie";
 import SendEmail from "../../emailJs/Email";
 import Loader from "../../components/Loader";
 import Image from "next/image";
-import LottiePlayer from "react-lottie-player";
+import dynamic from "next/dynamic";
 import Login from "../lottie-asserts/Login.json";
-interface UserData {
-  email: string;
-  password: string;
-}
+// interface UserData {
+//   email: string;
+//   password: string;
+// }
 
 type ErrorMessage = string;
 
 export default function LoginPage() {
+  const LottiePlayer = dynamic(() => import("react-lottie-player"), {
+    ssr: false,
+  });
   const navigate = useRouter();
   const provider = new GoogleAuthProvider();
 
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<ErrorMessage>("");
 
-  const [data, setData] = useState<UserData>({
-    email: "",
-    password: "",
-  });
+  // const [data, setData] = useState<UserData>({
+  //   email: "",
+  //   password: "",
+  // });
 
   const Email = new SendEmail();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleSubmit = async (): Promise<void> => {
-    if (Object.values(data).every((i) => i !== "")) {
-      setIsLoading(true);
-      try {
-        const userCredential: UserCredential = await signInWithEmailAndPassword(
-          auth,
-          data.email,
-          data.password
-        );
-        const user = userCredential.user;
-        console.log(user);
-        const message = `Thank you for logging in ${user.displayName}! If you need any help navigating your account or have questions, we&apos;re just a message away.`;
-        Email.sendLoginEmail(
-          user.email!.toString(),
-          user.displayName!.toString(),
-          message
-        );
-        Cookies.set("auth-token", "authenticated", { expires: 1 });
-        navigate.push("/dashboard");
-      } catch (error: unknown) {
-        setError(true);
-        setIsLoading(false);
-        setErrorMessage("Invalid credentials.");
-      }
-    } else {
-      alert("Enter all the details");
-    }
-  };
+  // const handleSubmit = async (): Promise<void> => {
+  //   if (Object.values(data).every((i) => i !== "")) {
+  //     setIsLoading(true);
+  //     try {
+  //       const userCredential: UserCredential = await signInWithEmailAndPassword(
+  //         auth,
+  //         data.email,
+  //         data.password
+  //       );
+  //       const user = userCredential.user;
+  //       console.log(user);
+  //       const message = `Thank you for logging in ${user.displayName}! If you need any help navigating your account or have questions, we&apos;re just a message away.`;
+  //       Email.sendLoginEmail(
+  //         user.email!.toString(),
+  //         user.displayName!.toString(),
+  //         message
+  //       );
+  //       Cookies.set("auth-token", "authenticated", { expires: 1 });
+  //       navigate.push("/dashboard");
+  //     } catch (error: unknown) {
+  //       setError(true);
+  //       setIsLoading(false);
+  //       setErrorMessage("Invalid credentials.");
+  //     }
+  //   } else {
+  //     alert("Enter all the details");
+  //   }
+  // };
 
   const googleSignIn = async (): Promise<void> => {
     setIsLoading(true);
@@ -98,28 +101,28 @@ export default function LoginPage() {
         <div className="absolute bottom-1/4 right-1/4 w-[700px] h-[700px] bg-blue-600 rounded-full opacity-10 blur-[130px]" />
       </div>
 
-      <div className="relative z-10 flex items-center justify-center min-h-screen pt-14">
+      <div className="relative z-10 flex items-center justify-center min-h-screen pt-7">
         <div className="bg-[#121212] p-8 rounded-lg w-full max-w-md mx-auto border-[#282e32] border-[1px] shadow-2xl">
-          <div className="space-y-6 text-center">
-            <h1 className="text-3xl font-bold text-white">Welcome back</h1>
-            <p className="text-sm font-semibold text-slate-400">
-              Sign in or Login to your account
-            </p>
-          </div>
-
           {error && (
             <div>
               <h1 className="text-red-500 text-center mt-5">{errorMessage}</h1>
             </div>
           )}
 
-          <div>
+          <div className="-mt-7">
             <LottiePlayer
               loop
               animationData={Login}
               play
               className="w-72 mx-auto"
             />
+          </div>
+
+          <div className="space-y-6 text-center">
+            <h1 className="text-3xl font-bold text-white">Welcome back</h1>
+            <p className="text-sm font-semibold text-slate-400">
+              Sign in or Login to your account
+            </p>
           </div>
 
           {/* <div className="space-y-6 my-8">
