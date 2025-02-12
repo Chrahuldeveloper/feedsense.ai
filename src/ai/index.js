@@ -15,7 +15,7 @@ const feedbackHandler = {
       const feedback = await request.json();
 
       const taskInput = {
-        prompt: `You are an AI tool specialized in analyzing user feedback to generate precise and impactful website improvement suggestions. Your task is to provide a concise (10-15 characters) and highly relevant suggestion based on the feedback given. Focus on clarity, usability, and direct action. Avoid vague responses. Ensure the suggestion is specific and immediately applicable. Feedback: "${feedback.message}"  Generate an actionable suggestion:`,
+        prompt: `Analyze the user feedback and generate a precise, impactful website improvement suggestion (10-15 characters). Focus on usability, clarity, and user experience. Ensure the suggestion addresses the core issue and provides meaningful guidance. Feedback: "${feedback.message}" Suggestion:`,
       };
 
       const aiResponse = await env.AI.run(
