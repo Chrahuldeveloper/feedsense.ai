@@ -127,7 +127,7 @@ const Table = () => {
       {/* {loading && <Loader message="loading" />} */}
       <div className="md:ml-44">
         <nav className="md:hidden bg-[#111115] p-7 w-screen border-b-[1px] border-[#15171b] flex justify-between items-center">
-          <h1 className="text-xl font-semibold text-slate-300">FeedSense.ai</h1>
+          <h1 className="text-xl font-semibold text-slate-300">FeedSenseai</h1>
           <CiMenuFries
             size={26}
             color="white"
@@ -164,7 +164,7 @@ const Table = () => {
             </div>
           ) : (
             <div className="overflow-x-scroll pt-5">
-              <table className="w-[78vw] mx-auto divide-y rounded-xl divide-[#15171b] border-[1px] border-[#15171b]">
+              <table className="w-[70vw] mx-auto divide-y overflow-x-scroll rounded-xl divide-[#15171b] border-[1px] border-[#15171b]">
                 <thead className="bg-[#111115]">
                   <tr className="cursor-pointer">
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
