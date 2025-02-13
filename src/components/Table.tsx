@@ -127,7 +127,7 @@ const Table = () => {
       {/* {loading && <Loader message="loading" />} */}
       <div className="md:ml-44">
         <nav className="md:hidden bg-[#111115] p-7 w-screen border-b-[1px] border-[#15171b] flex justify-between items-center">
-          <h1 className="text-xl font-semibold text-slate-300">FeedSenseai</h1>
+          <h1 className="text-xl font-semibold text-slate-300">FeedSense.ai</h1>
           <CiMenuFries
             size={26}
             color="white"
@@ -163,8 +163,8 @@ const Table = () => {
               </p>
             </div>
           ) : (
-            <div className="overflow-x-scroll pt-5">
-              <table className=" w-[40vw] md:w-full mx-auto divide-y overflow-x-scroll rounded-xl divide-[#15171b] border-[1px] border-[#15171b]">
+            <div className="overflow-x-auto  pt-5">
+              <table className="w-[89vw] mx-auto  md:min-w-full divide-y rounded-xl divide-[#15171b] border-[1px] border-[#15171b]">
                 <thead className="bg-[#111115]">
                   <tr className="cursor-pointer">
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
@@ -173,7 +173,7 @@ const Table = () => {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                       Name
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs hidden md:block font-medium text-gray-400 uppercase tracking-wider">
                       Feedbacks
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
@@ -199,7 +199,7 @@ const Table = () => {
                       <td className="px-8 py-4 whitespace-nowrap text-sm text-slate-300 font-semibold">
                         {site?.name}
                       </td>
-                      <td className="px-10 py-4 whitespace-nowrap text-sm text-slate-300">
+                      <td className="px-10 py-4 whitespace-nowrap text-sm text-slate-300 hidden md:block">
                         {site?.feedback && site.feedback.length > 0
                           ? site.feedback.length
                           : 0}
