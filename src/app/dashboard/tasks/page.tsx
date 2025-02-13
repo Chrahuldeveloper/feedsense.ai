@@ -125,7 +125,7 @@ const Page = () => {
         <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl">
           {/* User Info */}
           <div className="overflow-x-auto rounded-xl my-12">
-            <div className="flex mx-auto items-center justify-between w-[90vw] md:w-[60vw] bg-[#111115] px-4 py-2 border-[1px] border-[#0e1012]">
+            <div className="flex mx-auto items-center justify-between w-[80vw]  md:w-[60vw] bg-[#111115] px-4 py-2 border-[1px] border-[#0e1012]">
               <div className="flex items-center gap-5">
                 <Image
                   src={getImage}
@@ -147,21 +147,21 @@ const Page = () => {
               <thead className="bg-[#111115]">
                 <tr>
                   <th
-                    className={`py-4 px-6 text-center text-xs font-medium text-gray-400 uppercase ${
+                    className={`py-4 px-4 text-center text-xs font-medium text-gray-400 uppercase ${
                       getPlan === "Basic" ? "blur-md cursor-not-allowed" : ""
                     }`}
                   >
                     S.No
                   </th>
                   <th
-                    className={`py-4 px-6 text-center text-xs font-medium text-gray-400 uppercase ${
+                    className={`py-4 px-4 text-center text-xs font-medium text-gray-400 uppercase ${
                       getPlan === "Basic" ? "blur-md cursor-not-allowed" : ""
                     }`}
                   >
                     Analysis
                   </th>
                   <th
-                    className={`py-4 px-6 text-center text-xs font-medium text-gray-400 uppercase ${
+                    className={`py-4 px-4 text-center text-xs font-medium text-gray-400 uppercase ${
                       getPlan === "Basic" ? "blur-md cursor-not-allowed" : ""
                     }`}
                   >
@@ -186,21 +186,21 @@ const Page = () => {
                         }`}
                       >
                         <td
-                          className={`py-4 px-6 text-center text-xs text-gray-300 ${
+                          className={`py-4 px-4 text-center text-xs text-gray-300 ${
                             getPlan === "Basic" ? "blur-md" : ""
                           }`}
                         >
                           {idx + 1}
                         </td>
                         <td
-                          className={`py-4 px-12 lg:pl-48 text-left text-xs text-gray-300 ${
+                          className={`py-4 px-10 lg:pl-48 text-left text-xs text-gray-300 ${
                             getPlan === "Basic" ? "blur-md" : ""
                           }`}
                         >
                           {site?.parsedFeedback?.response?.replace(/"/g, "") ||
                             "No analysis available"}
                         </td>
-                        <td className="py-4 px-6 text-center text-xs text-gray-300">
+                        <td className="py-4 px-4 text-center text-xs text-gray-300">
                           <select
                             className={`bg-[#111115] border-[1px] border-[#222529] text-gray-300 text-xs rounded px-4 py-2 outline-none ${
                               getPlan === "Basic"
@@ -277,7 +277,7 @@ const Page = () => {
             </div>
 
             {/* Feedback Table */}
-            <table className="border-[1px] border-[#15171b] md:mx-auto w-[98vw] md:w-[60vw] mt-7 divide-y divide-[#15171b] overflow-hidden">
+            <table className="border-[1px] border-[#15171b] md:mx-auto w-[80vw] md:w-[60vw] mt-7 divide-y divide-[#15171b] overflow-scroll">
               <thead className="bg-[#111115] border-[1px] border-[#15171b]">
                 <tr>
                   <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
@@ -297,7 +297,7 @@ const Page = () => {
                   </th> */}
                 </tr>
               </thead>
-              <tbody className="bg-[#111115] border-[1px] border-[#15171b]">
+              <tbody className="bg-[#111115] border-[1px] border-[#15171b] overflow-scroll">
                 {websites.length > 0 ? (
                   websites.map((site, idx) => (
                     <tr
