@@ -124,7 +124,7 @@ const Navbar = () => {
                 <h1 className="text-white text-sm font-semibold">Contact</h1>
               </div>
             </Link>
-            {userSession !== null ? (
+            {userSession === null ? (
               <Link href="/login">
                 <div>
                   <button className="text-white text-sm font-semibold flex items-center gap-5">

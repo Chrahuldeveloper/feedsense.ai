@@ -20,7 +20,7 @@ const SideBar: React.FC<props> = ({ page }) => {
 
   return (
     <>
-      <aside className=" bg-[#111115] w-[60vw] lg:w-[15vw] h-full space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-[#15171b]">
+      <aside className=" bg-[#111115] w-[80vw] lg:w-[15vw] h-full space-y-10 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-[#15171b]">
         <div className="flex flex-col space-y-6 pt-7">
           {/* Home */}
           <Link href="/dashboard">
