@@ -186,14 +186,14 @@ const Page = () => {
                         }`}
                       >
                         <td
-                          className={`py-4 px-4 text-center text-xs text-gray-300 ${
+                          className={`py-4 px-4 text-center text-[11px] text-gray-300 ${
                             getPlan === "Basic" ? "blur-md" : ""
                           }`}
                         >
                           {idx + 1}
                         </td>
                         <td
-                          className={`py-4 px-10 lg:pl-48 text-left text-xs text-gray-300 ${
+                          className={`py-4 px-10 lg:pl-48 text-left text-[11px] text-gray-300 ${
                             getPlan === "Basic" ? "blur-md" : ""
                           }`}
                         >
@@ -202,7 +202,7 @@ const Page = () => {
                         </td>
                         <td className="py-4 px-4 text-center text-xs text-gray-300">
                           <select
-                            className={`bg-[#111115] border-[1px] border-[#222529] text-gray-300 text-xs rounded px-4 py-2 outline-none ${
+                            className={`bg-[#111115] border-[1px] border-[#222529] text-gray-300 text-[11px] rounded px-3 py-2 outline-none ${
                               getPlan === "Basic"
                                 ? "blur-md cursor-not-allowed"
                                 : ""
@@ -269,7 +269,7 @@ const Page = () => {
             </table>
 
             {/* Bar Chart */}
-            <div className="w-[90vw] md:w-[60vw] mx-auto mb-5 bg-[#111115] p-4 my-10">
+            <div className="w-[100vw] md:w-[60vw] mx-auto mb-5 bg-[#111115] p-4 my-10">
               <h2 className="text-gray-300 text-lg font-semibold mb-4">
                 Feedback Analytics
               </h2>
@@ -277,19 +277,19 @@ const Page = () => {
             </div>
 
             {/* Feedback Table */}
-            <table className="border-[1px] border-[#15171b] md:mx-auto w-[80vw] md:w-[60vw] mt-7 divide-y divide-[#15171b] overflow-scroll">
+            <table className="border-[1px] border-[#15171b] md:mx-auto w-[100vw] md:w-[60vw] mx-auto mt-7 divide-y divide-[#15171b] ">
               <thead className="bg-[#111115] border-[1px] border-[#15171b]">
                 <tr>
-                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
+                  <th className="py-3 px-5 md:px-9 text-left text-[10px] font-medium text-gray-400 uppercase">
                     S.NO
                   </th>
-                  <th className="py-3 px-5 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
+                  <th className="py-3 px-5 md:px-9 text-left text-[10px] font-medium text-gray-400 uppercase">
                     Rating
                   </th>
-                  <th className="py-3 px-3 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
+                  <th className="py-3 px-3 md:px-9 text-left text-[10px] font-medium text-gray-400 uppercase">
                     Emotion
                   </th>
-                  <th className="py-3 px-3 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
+                  <th className="py-3 px-3 md:px-9 text-left text-[10px] font-medium text-gray-400 uppercase">
                     User Feedback
                   </th>
                   {/* <th className="py-3 px-3 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
@@ -304,16 +304,16 @@ const Page = () => {
                       key={idx}
                       className="hover:bg-[#0c0d12] transition-colors duration-300 ease-in-out cursor-pointer font-semibold"
                     >
-                      <td className="py-5 px-12 text-xs text-gray-300">
+                      <td className="py-5 px-12 text-[10px] text-gray-300">
                         {idx + 1}
                       </td>
-                      <td className="py-5 px-12 text-xs text-gray-300">
+                      <td className="py-5 px-12 text-[10px] text-gray-300">
                         {site.Rating}
                       </td>
-                      <td className="py-5 px-9 text-xs text-gray-300">
+                      <td className="py-5 px-9 text-[10px] text-gray-300">
                         {site.emotion}
                       </td>
-                      <td className="py-5 px-9 w-72 text-xs text-gray-300">
+                      <td className="py-5 px-9 w-72 text-[10px] text-gray-300">
                         {site.feedback}
                       </td>
                       {/* <td
