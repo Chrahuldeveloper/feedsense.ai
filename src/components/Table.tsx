@@ -163,7 +163,7 @@ const Table = () => {
               </p>
             </div>
           ) : (
-            <div className="overflow-x-auto pt-5">
+            <div className="overflow-x-scroll pt-5">
               <table className="w-[78vw] mx-auto divide-y rounded-xl divide-[#15171b] border-[1px] border-[#15171b]">
                 <thead className="bg-[#111115]">
                   <tr className="cursor-pointer">
