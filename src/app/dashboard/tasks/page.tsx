@@ -125,7 +125,7 @@ const Page = () => {
         <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl">
           {/* User Info */}
           <div className="overflow-x-auto rounded-xl my-12">
-            <div className="flex mx-auto items-center justify-between w-[80vw]  md:w-[60vw] bg-[#111115] px-4 py-2 border-[1px] border-[#0e1012]">
+            <div className="flex mx-auto items-center justify-between w-full md:w-[60vw] bg-[#111115] px-4 py-2 border-[1px] border-[#0e1012]">
               <div className="flex items-center gap-5">
                 <Image
                   src={getImage}
