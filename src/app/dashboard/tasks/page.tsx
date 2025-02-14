@@ -182,7 +182,7 @@ const Page = () => {
                         className={`transition-colors duration-300 ease-in-out font-semibold ${
                           getPlan === "Basic"
                             ? "cursor-not-allowed"
-                            : "hover:bg-[#0c0d12]"
+                            : "hover:bg-[#15161d]"
                         }`}
                       >
                         <td
