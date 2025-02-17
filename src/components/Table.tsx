@@ -189,7 +189,7 @@ const Table = () => {
                     >
                       <td className="px-8 py-4 whitespace-nowrap">
                         <Image
-                          className="h-14 w-14 rounded-full object-cover border-[1px] border-[#15171b]"
+                          className="h-16 w-16 rounded-full object-cover border-[1px] border-[#15171b]"
                           src={site?.image}
                           alt="Profile"
                           width={48}
