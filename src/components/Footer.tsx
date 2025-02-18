@@ -54,6 +54,14 @@ export default function Footer() {
                   Terms and Conditions
                 </Link>
               </p>
+              <p
+                onClick={() => {
+                  setisprivacy(true);
+                }}
+                className="font-semibold cursor-pointer "
+              >
+                Privacy Policy
+              </p>
               <p className="font-semibold cursor-pointer">
                 chrahulofficial@gmail.com
               </p>
@@ -64,7 +72,7 @@ export default function Footer() {
 
             <div className="flex flex-col items-center justify-center gap-5">
               <h2 className="text-lg font-semibold ">Follow Us</h2>
-            <FaXTwitter size={22} className="hover:text-gray-400" />
+              <FaXTwitter size={22} className="hover:text-gray-400" />
               <FiInstagram size={22} className="hover:text-gray-400" />
               <FaFacebookF size={22} className="hover:text-gray-400" />
             </div>
