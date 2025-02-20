@@ -199,7 +199,7 @@ const Table = () => {
                       <td className="px-8 py-4 whitespace-nowrap text-sm text-slate-300 font-semibold">
                         {site?.name}
                       </td>
-                      <td className="px-10 py-4 whitespace-nowrap text-sm text-slate-300 hidden md:block">
+                      <td className="px-10 py-10 whitespace-nowrap text-sm text-slate-300 hidden md:block">
                         {site?.feedback && site.feedback.length > 0
                           ? site.feedback.length
                           : 0}
