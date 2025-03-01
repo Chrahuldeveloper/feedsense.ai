@@ -22,6 +22,7 @@ import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import Loader from "@/components/Loader";
 import { FaRegCircleStop } from "react-icons/fa6";
+import ModelLogout from "@/components/ModelLogout";
 
 ChartJS.register(
   CategoryScale,
@@ -104,6 +105,8 @@ const Page = () => {
       },
     ],
   };
+
+  const [toggleLogout, setToggleLogout] = useState(false);
 
   return (
     <>
@@ -341,9 +344,14 @@ const Page = () => {
           </div>
         </div>
       </div>
-
       {/* Mobile Sidebar */}
-      {toggle && <MobileSideBar setToggle={setToggle} />}
+      {toggle && (
+        <MobileSideBar
+          setToggle={setToggle}
+          setToggleLogout={setToggleLogout}
+        />
+      )}
+      {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
     </>
   );
 };

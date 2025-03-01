@@ -15,6 +15,7 @@ import Image from "next/image";
 import { FaRegCopy } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ModelLogout from "./ModelLogout";
 // import { useRouter } from "next/navigation";
 
 interface Website {
@@ -244,6 +245,9 @@ const AddIntegration: React.FC = () => {
     }
   };
 
+
+    const [toggleLogout, setToggleLogout] = useState(false);
+
   return (
     <>
       {(fetchingData || savingData || deleting) && <Loader message="Loading" />}
@@ -257,7 +261,15 @@ const AddIntegration: React.FC = () => {
             onClick={() => setToggle(true)}
           />
         </nav>
-        {toggle && <MobileSideBar setToggle={setToggle} />}
+        {toggle && (
+          <MobileSideBar
+            setToggle={setToggle}
+            setToggleLogout={setToggleLogout}
+          />
+        )}
+
+{toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
+
 
         <div className="text-slate-300 flex flex-col md:flex-row items-center gap-8 md:gap-12 md:mt-14 justify-center">
           <div className="md:ml-52">
