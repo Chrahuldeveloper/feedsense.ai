@@ -114,10 +114,17 @@ const Page = () => {
 
   const handlePayment = async () => {
     try {
+      if (!user) {
+        alert("please login to proceed");
+      }
+
       setIsLoading(true);
-      const orderID = await axios.post("https://feedsenseai.vercel.app/api/subscribe", {
-        amount: currentPlan.price * 100,
-      });
+      const orderID = await axios.post(
+        "https://feedsenseai.vercel.app/api/subscribe",
+        {
+          amount: currentPlan.price * 100,
+        }
+      );
 
       const data = orderID.data;
 
