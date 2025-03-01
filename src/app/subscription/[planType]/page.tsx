@@ -115,7 +115,7 @@ const Page = () => {
   const handlePayment = async () => {
     try {
       setIsLoading(true);
-      const orderID = await axios.post("http://localhost:3000/api/subscribe", {
+      const orderID = await axios.post("https://feedsenseai.vercel.app/api/subscribe", {
         amount: currentPlan.price * 100,
       });
 
