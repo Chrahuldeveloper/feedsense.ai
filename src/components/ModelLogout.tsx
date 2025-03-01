@@ -19,6 +19,7 @@ const ModelLogout: React.FC<ModelLogoutProps> = ({ settoggle }) => {
       setisloading(true);
       await auth.signOut();
       console.log("logout sucessful");
+      localStorage.setItem("authstate", "false");
       navigate.push("/login");
     } catch (error) {
       setisloading(false);

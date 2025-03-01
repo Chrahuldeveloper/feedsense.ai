@@ -112,59 +112,61 @@ const Page = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const authState = localStorage.getItem("authstate");
+
   const handlePayment = async () => {
     try {
-      if (!user) {
-        alert("please login to proceed");
-      }
-
-      setIsLoading(true);
-      const orderID = await axios.post(
-        "https://feedsenseai.vercel.app/api/subscribe",
-        {
-          amount: currentPlan.price * 100,
-        }
-      );
-
-      const data = orderID.data;
-
-      const options: RazorpayOptions = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID as string,
-        amount: currentPlan.price * 100,
-        currency: "INR",
-        name: "TASKFEED",
-        description: "TEST TRANSACTION",
-        order_id: data.orderId,
-        handler: async (response: RazorpayResponse) => {
-          try {
-            console.log("Payment is successful", response);
-            const today = new Date();
-            const formattedDate = `${String(today.getDate()).padStart(
-              2,
-              "0"
-            )}/${String(today.getMonth() + 1).padStart(2, "0")}/${String(
-              today.getFullYear()
-            ).slice(-2)}`;
-
-            await db.subscribe(user!.uid, currentPlan.name, formattedDate);
-            navigate.push("/dashboard");
-          } catch (error) {
-            console.log(error);
-            setIsLoading(false);
+      if (authState == "true") {
+        setIsLoading(true);
+        const orderID = await axios.post(
+          "https://feedsenseai.vercel.app/api/subscribe",
+          {
+            amount: currentPlan.price * 100,
           }
-        },
-        prefill: {
-          name: "Rahul",
-          email: "chrahulofficial@gmail.com",
-          contact: "8317680338",
-        },
-        theme: {
-          color: "#3399cc",
-        },
-      };
+        );
 
-      const rzp1 = new window.Razorpay(options);
-      rzp1.open();
+        const data = orderID.data;
+
+        const options: RazorpayOptions = {
+          key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID as string,
+          amount: currentPlan.price * 100,
+          currency: "INR",
+          name: "TASKFEED",
+          description: "TEST TRANSACTION",
+          order_id: data.orderId,
+          handler: async (response: RazorpayResponse) => {
+            try {
+              console.log("Payment is successful", response);
+              const today = new Date();
+              const formattedDate = `${String(today.getDate()).padStart(
+                2,
+                "0"
+              )}/${String(today.getMonth() + 1).padStart(2, "0")}/${String(
+                today.getFullYear()
+              ).slice(-2)}`;
+
+              await db.subscribe(user!.uid, currentPlan.name, formattedDate);
+              navigate.push("/dashboard");
+            } catch (error) {
+              console.log(error);
+              setIsLoading(false);
+            }
+          },
+          prefill: {
+            name: "Rahul",
+            email: "chrahulofficial@gmail.com",
+            contact: "8317680338",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        };
+
+        const rzp1 = new window.Razorpay(options);
+        rzp1.open();
+      } else {
+        alert("please login");
+      }
     } catch (error) {
       console.log(error);
       setIsLoading(false);

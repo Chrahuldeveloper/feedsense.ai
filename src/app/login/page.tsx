@@ -80,6 +80,7 @@ export default function LoginPage() {
         user.displayName!.toString(),
         message
       );
+      localStorage.setItem("authstate", "true");
       Cookies.set("auth-token", "authenticated", { expires: 1 });
       navigate.push("/dashboard");
     } catch (error: unknown) {

@@ -68,7 +68,7 @@ export default function PricingPage() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8 px-6 md:px-10 pb-14 justify-center my-24">
+        <div className="flex flex-col md:flex-row gap-8 px-6 md:px-10 pb-14 justify-center my-24 ">
           {Plans.map((plan, idx) => (
             <div
               key={idx}
