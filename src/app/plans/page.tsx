@@ -20,7 +20,7 @@ export default function PricingPage() {
         "3 website widgets",
       ],
       Bill: "Billed monthly",
-      para: "That's less than $0.34/day ≈ 2 coffees per month",
+      para: "That's less than ₹12/day ≈ 2 coffees per month",
     },
     {
       name: "Pro",
@@ -34,7 +34,7 @@ export default function PricingPage() {
         "Incentivise Users",
       ],
       Bill: "Billed once every 5 months",
-      para: "That's $30/month ≈ $1/day ≈ 6 coffees per month",
+      para: "That's ₹540/month ≈ ₹18/day ≈ 6 coffees per month",
     },
   ];
 
