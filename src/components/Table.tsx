@@ -5,7 +5,6 @@ import { CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
 import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
-import Loader from "./Loader";
 import Analytics from "./Analytics";
 import { CgProfile } from "react-icons/cg";
 import { FaRegCircleStop } from "react-icons/fa6";
@@ -15,6 +14,7 @@ import { db } from "../firebase/Firebase";
 import Image from "next/image";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import ModelLogout from "./ModelLogout";
 
 interface WebsiteData {
   name: string;
@@ -122,6 +122,8 @@ const Table = () => {
 
   const [toggle, setToggle] = useState(false);
 
+  const [toggleLogout, setToggleLogout] = useState(false);
+
   return (
     <>
       {/* {loading && <Loader message="loading" />} */}
@@ -145,7 +147,9 @@ const Table = () => {
           </div>
         </div>
 
-        {toggle && <MobileSideBar setToggle={setToggle} />}
+        {toggle && <MobileSideBar setToggle={setToggle} setToggleLogout={setToggleLogout}/>}
+
+        {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
         <div className="w-full md:w-[70vw] px-2 py-14 mx-auto rounded-xl">
           {loading ? (

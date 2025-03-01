@@ -9,9 +9,13 @@ import Link from "next/link";
 
 interface MobileSideBarProps {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
+  setToggleLogout: (value: boolean) => void;
 }
 
-const MobileSideBar: React.FC<MobileSideBarProps> = ({ setToggle }) => {
+const MobileSideBar: React.FC<MobileSideBarProps> = ({
+  setToggle,
+  setToggleLogout,
+}) => {
   return (
     <aside className="bg-[#111115] py-6 w-[70vw] h-full fixed top-0 left-0 md:hidden space-y-10 px-10 border-r-[1px] border-[#272b2f]">
       <div className="flex justify-end cursor-pointer">
@@ -50,7 +54,12 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({ setToggle }) => {
         </div>
       </Link>
 
-      <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer">
+      <div
+        className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer"
+        onClick={() => {
+          setToggleLogout(true);
+        }}
+      >
         <IoLogOut size={22} color="white" cursor={"pointer"} />
         <h1 className="text-slate-300 font-semibold text-sm ">LogOut</h1>
       </div>
