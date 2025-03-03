@@ -5,7 +5,7 @@ import { auth } from "../../firebase/Firebase";
 import { signInWithPopup } from "firebase/auth";
 import { GoogleAuthProvider, UserCredential } from "firebase/auth";
 // import { Mail, Lock } from "lucide-react";
-import Cookies from "../../../node_modules/@types/js-cookie";
+import Cookies from "js-cookie";
 import SendEmail from "../../emailJs/Email";
 import Loader from "../../components/Loader";
 import Image from "next/image";

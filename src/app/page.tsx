@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FaCode } from "react-icons/fa6";
-import Cookies from "../../node_modules/@types/js-cookie";
+import Cookies from "js-cookie";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { MdSettingsSuggest } from "react-icons/md";
