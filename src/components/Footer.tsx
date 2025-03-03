@@ -1,8 +1,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import { FaFacebookF, FaXTwitter } from "react-icons/fa6";
 import TermsConditions from "./TermsConditions";
-import { FiInstagram } from "react-icons/fi";
+import { FaDiscord } from "react-icons/fa";
 import Privacy from "./Privacy";
 
 export default function Footer() {
@@ -48,7 +47,6 @@ export default function Footer() {
               <p>
                 <Link
                   href="https://merchant.razorpay.com/policy/P8XFEmJQOPeGVU/terms"
-                  onClick={() => {}}
                   className="font-semibold cursor-pointer "
                 >
                   Terms and Conditions
@@ -72,9 +70,9 @@ export default function Footer() {
 
             <div className="flex flex-col items-center justify-center gap-5">
               <h2 className="text-lg font-semibold ">Follow Us</h2>
-              <FaXTwitter size={22} className="hover:text-gray-400" />
-              <FiInstagram size={22} className="hover:text-gray-400" />
-              <FaFacebookF size={22} className="hover:text-gray-400" />
+              <Link href="https://discord.gg/ERRX9mBZ">
+                <FaDiscord size={22} className="hover:text-gray-400" />
+              </Link>
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@ import "highlight.js/styles/github.css";
 import dbService from "../firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import cache from "../cache/cache";
-import Loader from "../components/Loader";
+import Loader from "./Loader";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebase/Firebase";
 import Image from "next/image";

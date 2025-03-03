@@ -3,7 +3,7 @@
 // import { db } from "../Firebase";
 import { signOut } from "firebase/auth";
 import { auth } from "../Firebase";
-import Cookies from "js-cookie";
+import Cookies from "../../../node_modules/@types/js-cookie";
 
 class authService {
   // async checkUser(jwt: any) {

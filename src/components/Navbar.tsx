@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { CiMenuFries } from "react-icons/ci";
-import Cookies from "js-cookie";
+import Cookies from "../../node_modules/@types/js-cookie";
 import { CiHome } from "react-icons/ci";
 import { FcAbout } from "react-icons/fc";
 import { FaMoneyCheckAlt } from "react-icons/fa";
