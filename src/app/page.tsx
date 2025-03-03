@@ -147,21 +147,6 @@ export default function Page() {
           </div>
         </div>
 
-        <a
-          href="https://www.producthunt.com/posts/feedsense-ai?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-feedsense&#0045;ai"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="z-50"
-        >
-          <img
-            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=910181&theme=light&t=1740939579258"
-            alt="FeedSense&#0046;ai - Build&#0032;What&#0032;Users&#0032;Truly&#0032;Need&#0032;–&#0032;Don’t&#0032;Waste&#0032;Time&#0032;or&#0032;Resources | Product Hunt"
-            style={{ width: "250px", height: "54px" }}
-            width="250"
-            height="54"
-          />
-        </a>
-
         <p className="bg-white p-2 rounded-full text-[11px] font-semibold">
           AI Powered Feedback Collection & Prioritization Technology
         </p>

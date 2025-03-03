@@ -16,7 +16,6 @@ import { FaRegCopy } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ModelLogout from "./ModelLogout";
-// import { useRouter } from "next/navigation";
 
 interface Website {
   id: string;
@@ -61,7 +60,6 @@ const AddIntegration: React.FC = () => {
 
   const [lastWebsiteId, setLastWebsiteId] = useState<string | null>(null);
 
-  // const router = useRouter();
 
   console.log(showCode);
 
@@ -267,8 +265,8 @@ const AddIntegration: React.FC = () => {
             setToggleLogout={setToggleLogout}
           />
         )}
-
-{toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
+    
+       {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
 
         <div className="text-slate-300 flex flex-col md:flex-row items-center gap-8 md:gap-12 md:mt-14 justify-center">
