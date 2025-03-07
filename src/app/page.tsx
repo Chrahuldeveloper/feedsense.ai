@@ -179,7 +179,7 @@ export default function Page() {
           data-aos="fade-up"
           data-aos-duration="2000"
           data-aos-easing="ease-in-out"
-          data-aos-once="false"
+          data-aos-once="true"
           src="https://firebasestorage.googleapis.com/v0/b/notes-app-e3995.appspot.com/o/TaskFeed-10-24-2024_09_01_PM.png?alt=media&token=48ce631d-3bd7-4df3-a7c1-6147d9503532"
           alt="Centralized Feedback Visualization"
           className="lg:max-w-5xl mx-auto"

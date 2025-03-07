@@ -331,7 +331,6 @@ export default class dbService {
     data: Feedback
   ): Promise<void> {
     try {
-      // decodeURIComponent(websiteName.toString())
       console.log(data, decodeURIComponent(websiteName.toString()), userID);
       const userDocRef = doc(db, "USERS", userID);
       const docSnap = await getDoc(userDocRef);
@@ -463,6 +462,27 @@ export default class dbService {
         return currentDate > purchasedDate;
       } else {
         console.error("User does not exist");
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  async availFreeOffer(user: string): Promise<boolean> {
+    try {
+      const userDocRef = doc(db, "USERS", user);
+      const docSnap = await getDoc(userDocRef);
+
+      if (docSnap.exists()) {
+        await updateDoc(userDocRef, {
+          subscription: "Pro",
+        });
+        alert("free taken");
+        return true;
+      } else {
+        console.log("User does not exist");
         return false;
       }
     } catch (error) {
