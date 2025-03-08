@@ -12,7 +12,7 @@ import Celebrate from "../lottie-asserts/Celebrate.json";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LottiePlayer from "react-lottie-player";
-
+import Loader from "../../components/Loader";
 export default function PricingPage() {
   const db = new dbService();
 
@@ -23,6 +23,8 @@ export default function PricingPage() {
   const { user, loading }: { user: User | null; loading: boolean } = useAuth();
 
   const navigate = useRouter();
+
+  const [isloading, setisloading] = useState<boolean>(false);
 
   const [Offer, setOffer] = useState<boolean>(false);
 
@@ -113,6 +115,8 @@ export default function PricingPage() {
           </div>
         ) : null}
 
+        {isloading ? <Loader message="Grabing the offer for you" /> : null}
+
         <div className="flex flex-col md:flex-row gap-8 px-6 md:px-10 pb-14 justify-center my-24 ">
           {Plans.map((plan, idx) => {
             return (
@@ -152,15 +156,18 @@ export default function PricingPage() {
                         alert("please login");
                       }
                       try {
+                        setisloading(true);
                         const offer = await db.availFreeOffer(user!.uid);
                         setOffer(offer);
-                        toast("congratulations you have grabbed the offer 🎉");
+                        toast("Congratulations you have grabbed the offer 🎉");
                         const pushtimeout = setTimeout(() => {
                           navigate.push("/dashboard");
-                        }, 2000);
+                        }, 1000);
+                        setisloading(false);
                         return () => clearTimeout(pushtimeout);
                       } catch (error) {
                         console.log(error);
+                        setisloading(false);
                       }
                     }}
                     className="w-full bg-gradient-to-r from-[#23282c] via-[#131414] to-[#23282c] mt-4 text-white py-3 font-semibold rounded-lg hover:shadow-lg transition-shadow duration-200 shadow-xl text-sm"

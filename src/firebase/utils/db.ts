@@ -479,7 +479,6 @@ export default class dbService {
         await updateDoc(userDocRef, {
           subscription: "Pro",
         });
-        alert("free taken");
         localStorage.setItem("paid", "true");
         return true;
       } else {
