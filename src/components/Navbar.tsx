@@ -17,6 +17,12 @@ const Navbar = () => {
 
   const [toogle, settoogle] = useState<boolean>(false);
 
+  const [paid, setPaid] = useState<string | null>(null);
+
+  useEffect(() => {
+    setPaid(localStorage.getItem("paid"));
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -61,9 +67,11 @@ const Navbar = () => {
           <Link href={"/about"}>
             <li className="cursor-pointer font-semibold text-sm">About</li>
           </Link>
-          <Link href="/plans">
-            <li className="cursor-pointer font-semibold text-sm">Plans</li>
-          </Link>
+          {paid !== "true" ? (
+            <Link href="/plans">
+              <li className="cursor-pointer font-semibold text-sm">Plans</li>
+            </Link>
+          ) : null}
           <Link href={"/contactUs"}>
             <li className="cursor-pointer font-semibold text-sm">Contact</li>
           </Link>
@@ -110,14 +118,14 @@ const Navbar = () => {
                 <h1 className="text-white text-sm font-semibold">About</h1>
               </div>
             </Link>
-
-            <Link href="/plans">
-              <div className="flex items-center gap-5">
-                <FaMoneyCheckAlt size={22} color="white" />
-                <h1 className="text-white text-sm font-semibold">Plans</h1>
-              </div>
-            </Link>
-
+            {paid !== "true" ? (
+              <Link href="/plans">
+                <div className="flex items-center gap-5">
+                  <FaMoneyCheckAlt size={22} color="white" />
+                  <h1 className="text-white text-sm font-semibold">Plans</h1>
+                </div>
+              </Link>
+            ) : null}
             <Link href="/contactUs">
               <div className="flex items-center gap-5">
                 <IoCallOutline size={22} color="white" />

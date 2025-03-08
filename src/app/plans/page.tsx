@@ -1,12 +1,17 @@
 "use client";
 import Navbar from "@/components/Navbar";
-import React from "react";
+import React, { useState } from "react";
 import { TiTickOutline } from "react-icons/ti";
 // import Link from "next/link";
 import { IoIosStarOutline } from "react-icons/io";
 import Footer from "@/components/Footer";
 import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
+import { useRouter } from "next/navigation";
+import Celebrate from "../lottie-asserts/Celebrate.json";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import LottiePlayer from "react-lottie-player";
 
 export default function PricingPage() {
   const db = new dbService();
@@ -16,6 +21,10 @@ export default function PricingPage() {
   }
 
   const { user, loading }: { user: User | null; loading: boolean } = useAuth();
+
+  const navigate = useRouter();
+
+  const [Offer, setOffer] = useState<boolean>(false);
 
   const Plans = [
     {
@@ -91,6 +100,19 @@ export default function PricingPage() {
           </div>
         </div>
 
+        {Offer ? (
+          <div className="fixed inset-0 z-50 flex items-center justify-center h-full bg-black bg-opacity-70 blur-xs">
+            <div className="max-w-xs mx-auto -mt-10">
+              <LottiePlayer
+                loop
+                animationData={Celebrate}
+                play
+                className="w-36 lg:w-96"
+              />
+            </div>
+          </div>
+        ) : null}
+
         <div className="flex flex-col md:flex-row gap-8 px-6 md:px-10 pb-14 justify-center my-24 ">
           {Plans.map((plan, idx) => {
             return (
@@ -124,16 +146,26 @@ export default function PricingPage() {
                 <div className="p-6 mt-auto">
                   {/* <Link href={`/subscription/${plan.name}`}> */}
                   <button
-                    onClick={() => {
+                    onClick={async () => {
                       console.log(user);
                       if (user!.uid === null) {
                         alert("please login");
                       }
-                      db.availFreeOffer(user!.uid);
+                      try {
+                        const offer = await db.availFreeOffer(user!.uid);
+                        setOffer(offer);
+                        toast("congratulations you have grabbed the offer 🎉");
+                        const pushtimeout = setTimeout(() => {
+                          navigate.push("/dashboard");
+                        }, 2000);
+                        return () => clearTimeout(pushtimeout);
+                      } catch (error) {
+                        console.log(error);
+                      }
                     }}
                     className="w-full bg-gradient-to-r from-[#23282c] via-[#131414] to-[#23282c] mt-4 text-white py-3 font-semibold rounded-lg hover:shadow-lg transition-shadow duration-200 shadow-xl text-sm"
                   >
-                    Get Started
+                    Grab Now
                   </button>
                   {/* </Link> */}
                 </div>
@@ -142,6 +174,8 @@ export default function PricingPage() {
           })}
         </div>
       </div>
+
+      <ToastContainer theme="dark" toastClassName={"custom-toast"} />
 
       <Footer />
     </div>

@@ -480,6 +480,7 @@ export default class dbService {
           subscription: "Pro",
         });
         alert("free taken");
+        localStorage.setItem("paid", "true");
         return true;
       } else {
         console.log("User does not exist");
