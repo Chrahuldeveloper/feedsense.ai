@@ -8,7 +8,6 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
-import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -18,6 +17,7 @@ import {
   ArcElement,
   BarElement,
 } from "chart.js";
+import { Bar } from "react-chartjs-2";
 import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import Loader from "@/components/Loader";

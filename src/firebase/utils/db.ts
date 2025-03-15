@@ -479,7 +479,6 @@ export default class dbService {
         await updateDoc(userDocRef, {
           subscription: "Pro",
         });
-        localStorage.setItem("paid", "true");
         return true;
       } else {
         console.log("User does not exist");

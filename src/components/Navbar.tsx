@@ -20,7 +20,8 @@ const Navbar = () => {
   const [paid, setPaid] = useState<string | null>(null);
 
   useEffect(() => {
-    setPaid(localStorage.getItem("paid"));
+    const getsubstatus = localStorage.getItem("paid");
+    setPaid(getsubstatus);
   }, []);
 
   useEffect(() => {
