@@ -24,7 +24,6 @@ export default function page() {
 
   const [isloading, setisloading] = useState<boolean>(false);
 
-
   const Plans = [
     {
       name: "Pro",
@@ -132,7 +131,8 @@ export default function page() {
                     ))}
                   </ul>
                   <div className="p-6 mt-auto">
-                    <Link href={`/subscription/${plan.name}`}>
+                    {/* <Link href={`/subscription/${plan.name}`}> */}
+                    <>
                       <button
                         onClick={async () => {
                           console.log(user);
@@ -162,7 +162,7 @@ export default function page() {
                       >
                         Grab Now
                       </button>
-                    </Link>
+                    </>
                   </div>
                 </div>
               );
