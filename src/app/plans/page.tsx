@@ -149,11 +149,10 @@ export default function page() {
                               toast(
                                 "Congratulations you have grabbed the offer 🎉"
                               );
+                              setisloading(false);
                               const pushtimeout = setTimeout(() => {
                                 navigate.push("/dashboard");
                               }, 2000);
-                              setisloading(false);
-                              return () => clearTimeout(pushtimeout);
                             } catch (error) {
                               console.log(error);
                               setisloading(false);
