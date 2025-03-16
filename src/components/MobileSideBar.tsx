@@ -17,7 +17,7 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({
   setToggleLogout,
 }) => {
   return (
-    <aside className="bg-[#111115] py-6 w-[70vw] h-full fixed top-0 left-0 md:hidden space-y-10 px-10 border-r-[1px] border-[#272b2f]">
+    <aside className="bg-[#151923] py-6 w-[70vw] h-full fixed top-0 left-0 md:hidden space-y-10 px-10 border-r-[1px] border-[#272b2f]">
       <div className="flex justify-end cursor-pointer">
         <RxCross2
           size={23}
