@@ -10,6 +10,8 @@ import FeedbackLoader from "../app/lottie-asserts/FeedbackLoader.json";
 import ErrorLoader from "../app/lottie-asserts/ErrorLoader.json";
 import { IoIosStarOutline, IoMdStar } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 interface Feedback {
   emotion: string;

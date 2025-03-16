@@ -9,8 +9,10 @@ import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Loader from "../../components/Loader";
-import Link from "next/link";
+// import Link from "next/link";
 export default function page() {
   const db = new dbService();
 
@@ -149,7 +151,7 @@ export default function page() {
                               );
                               const pushtimeout = setTimeout(() => {
                                 navigate.push("/dashboard");
-                              }, 1000);
+                              }, 2000);
                               setisloading(false);
                               return () => clearTimeout(pushtimeout);
                             } catch (error) {
