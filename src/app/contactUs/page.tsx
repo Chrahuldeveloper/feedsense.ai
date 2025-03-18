@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Footer from "@/components/Footer";
 import React from "react";
@@ -6,7 +6,7 @@ import React from "react";
 const page = () => {
   return (
     <>
-      <div className="bg-[#0f1113] w-full overflow-hidden min-h-screen relative">
+      <div className="bg-[#1a1f2c] w-full overflow-hidden min-h-screen relative">
         <div className="absolute inset-0 bg-[#000000] opacity-95"></div>
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-1/2 right-96 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500 rounded-full opacity-20 blur-[120px]" />
@@ -14,7 +14,7 @@ const page = () => {
           <div className="absolute bottom-1/4 right-1/4 w-[700px] h-[700px] bg-blue-600 rounded-full opacity-10 blur-[130px]" />
         </div>
 
-        <div className="relative z-10 bg-[#121212] p-8 rounded-lg w-[80vw] md:w-[35vw] mx-auto border-[#282e32] border-[1px] shadow-2xl mt-10 md:mt-10">
+        <div className="relative z-10 bg-[#151923] p-8 rounded-lg w-[80vw] md:w-[35vw] mx-auto border-[#282e32] border-[1px] shadow-2xl mt-10 md:mt-10">
           <div>
             <h1 className="text-white text-2xl font-semibold">Contact Us</h1>
           </div>
@@ -32,7 +32,7 @@ const page = () => {
                   id="name"
                   name="name"
                   type="text"
-                  className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-4 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+                  className="bg-[#20242e] border-[1px] border-[#282e32] pl-4 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="Enter your name"
                   required
                 />
@@ -48,7 +48,7 @@ const page = () => {
                   id="email"
                   name="email"
                   type="email"
-                  className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-4 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+                  className="bg-[#20242e] border-[1px] border-[#282e32] pl-4 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="Enter your email"
                   required
                 />
@@ -64,7 +64,7 @@ const page = () => {
                 <textarea
                   id="message"
                   name="message"
-                  className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-4 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+                  className="bg-[#20242e] border-[1px] border-[#282e32] pl-4 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="Enter your message"
                   rows={8}
                   required

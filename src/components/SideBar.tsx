@@ -20,6 +20,9 @@ const SideBar: React.FC<props> = ({ page }) => {
   return (
     <>
       <aside className=" bg-[#151923] w-[60vw] lg:w-[15vw] h-full space-y-4 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-gray-900">
+        <div>
+          <h1 className="text-cyan-500 font-bold text-xl">FeedSenseAI</h1>
+        </div>
         <div className="flex flex-col space-y-6 pt-7">
           {/* Home */}
           <Link href="/dashboard">
@@ -76,9 +79,7 @@ const SideBar: React.FC<props> = ({ page }) => {
             }`}
             onClick={() => settoggle(true)}
           >
-            <IoLogOut
-              size={iconSize}
-            />
+            <IoLogOut size={iconSize} />
             <button className="  text-sm font-semibold ">Logout</button>
           </div>
         </div>
