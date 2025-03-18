@@ -47,12 +47,12 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({
         </div>
       </Link>
 
-      <Link href="/plans">
+      {/* <Link href="/plans">
         <div className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer">
           <MdOutlineAttachMoney size={22} color="white" cursor={"pointer"} />
           <h1 className="text-slate-300 font-semibold text-sm ">Subcription</h1>
         </div>
-      </Link>
+      </Link> */}
 
       <div
         className="flex items-center space-x-2.5 w-32 justify-between cursor-pointer"

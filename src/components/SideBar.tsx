@@ -61,7 +61,7 @@ const SideBar: React.FC<props> = ({ page }) => {
           </Link>
 
           {/* Subscription */}
-          <Link href="/plans">
+          {/* <Link href="/plans">
             <div
               className={`flex items-center hover:bg-slate-800 space-x-4 py-1  pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
                 page === "Subscription" ? "bg-[#242737]" : ""
@@ -70,7 +70,7 @@ const SideBar: React.FC<props> = ({ page }) => {
               <MdOutlineAttachMoney color="white" size={iconSize} />
               <h1 className="text-white text-sm font-semibold">Subscription</h1>
             </div>
-          </Link>
+          </Link> */}
 
           {/* Logout */}
           <div
