@@ -37,7 +37,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
     datasets: [
       {
         label: "My First Dataset",
-        data: [totalWebsites, totalFeedback],
+        data: [ 10,  10],
         backgroundColor: ["#00a3ff", "#9f7aea"],
       },
     ],

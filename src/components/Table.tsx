@@ -156,8 +156,14 @@ const Table = () => {
 
         {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
-        <div className="flex justify-center items-start md:flex-row flex-col mt-10 gap-8">
-          <div className="w-[100vw] md:w-[30vw] ">
+        <div className="p-5">
+          <h1 className="text-xl text-gray-300 md:px-20 font-semibold mt-3">
+            DashBoard OverView
+          </h1>
+        </div>
+
+        <div className="flex justify-center items-start md:flex-row flex-col gap-4">
+          <div className="w-[100vw] md:w-[40vw] ">
             <Analytics
               totalWebsites={infodata.totalWebsites}
               totalFeedback={infodata.totalFeedback}
@@ -165,11 +171,13 @@ const Table = () => {
             />
           </div>
 
-          <div className="w-full md:w-[35vw]  py-7 md:h-[70vh] rounded-lg">
+          <div className="w-full md:w-[40vw]  py-7 md:h-[70vh] rounded-lg">
             {loading ? (
-              <SkeletonTheme baseColor="#151923" highlightColor="#151923">
-                <Skeleton count={1} height={300} className="my-2" />
-              </SkeletonTheme>
+              <div className="h-[67vh]">
+                <SkeletonTheme baseColor="#151923" highlightColor="#151923">
+                  <Skeleton count={1} height={300} className="my-2" />
+                </SkeletonTheme>
+              </div>
             ) : 0 === 0 ? (
               <div className="space-y-6 text-center bg-[#151923] pt-28 border-[1px] border-[#15171b] p-10 md:h-[67vh] rounded-lg">
                 <FaRegCircleStop size={23} color="white" className="mx-auto" />
