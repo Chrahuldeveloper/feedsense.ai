@@ -157,7 +157,7 @@ const Table = () => {
         {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
         <div className="p-5">
-          <h1 className="text-xl text-gray-300 md:px-20 font-semibold mt-3">
+          <h1 className="text-xl md:text-2xl text-gray-300 md:px-20 font-semibold mt-3">
             DashBoard OverView
           </h1>
         </div>
