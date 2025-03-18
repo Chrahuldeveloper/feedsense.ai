@@ -99,8 +99,7 @@ const Page = () => {
     datasets: [
       {
         label: "My First Dataset",
-        // HappyCount, NeutralCount, SadCount
-        data: [50, 20, 30],
+        data: [HappyCount || 0, NeutralCount || 0, SadCount || 0],
         backgroundColor: ["#00a3ff", "#9f7aea", "#fc8181"],
         hoverOffset: 4,
       },
