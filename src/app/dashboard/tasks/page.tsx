@@ -158,7 +158,7 @@ const Page = () => {
                     site?.parsedFeedback?.response ? (
                       <div
                         key={idx}
-                        className={`transition-colors flex items-center justify-evenly duration-300 ease-in-out font-semibold ${
+                        className={`transition-colors flex flex-row items-center justify-evenly duration-300 ease-in-out font-semibold ${
                           getPlan === "Basic" ? "cursor-not-allowed" : ""
                         }`}
                       >
@@ -224,17 +224,14 @@ const Page = () => {
                     ) : null
                   )
                 ) : (
-                  <tr>
-                    <td
-                      colSpan={3}
-                      className="py-10 text-center text-slate-300 bg-[#151923]"
-                    >
+                  <div>
+                    <div className="py-10 text-center text-slate-300 bg-[#151923]">
                       <div className="flex flex-col items-center gap-5">
                         <FaRegCircleStop size={25} color="#9ca3af" />
                         <p className="font-semibold">No Analysis Yet</p>
                       </div>
-                    </td>
-                  </tr>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
@@ -247,8 +244,6 @@ const Page = () => {
                 <Doughnut data={analytics} className="w-96 mx-auto p-10" />
               </div>
 
-
-              
               <div className="bg-[#151923] p-4 space-y-3 h-[66vh] overflow-y-scroll rounded-lg   md:w-[35vw]">
                 {websites.length > 0 ? (
                   websites.map((site, idx) => (
@@ -272,7 +267,7 @@ const Page = () => {
                   ))
                 ) : (
                   <div>
-                    <div  className="py-5 text-center text-slate-300">
+                    <div className="py-5 text-center text-slate-300">
                       <div className="flex flex-col items-center gap-5">
                         <FaRegCircleStop size={25} color="#9ca3af" />
                         <p className="font-semibold">No Feedbacks Yet</p>

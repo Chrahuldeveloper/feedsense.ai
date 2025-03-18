@@ -128,7 +128,7 @@ const Table = () => {
     <>
       {/* {loading && <Loader message="loading" />} */}
       <div className="md:ml-44">
-        <nav className="md:hidden bg-[#111115] p-7 w-screen border-b-[1px] border-[#15171b] flex justify-between items-center">
+        <nav className="md:hidden bg-[#151923] p-7 w-screen border-b-[1px] border-[#15171b] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">FeedSense.ai</h1>
           <CiMenuFries
             size={26}
@@ -138,7 +138,7 @@ const Table = () => {
           />
         </nav>
 
-        <div className="bg-[#111115] w-screen px-14 py-8 pt-5 md:-ml-36 hidden md:block border-b-[1px] border-[#15171b]">
+        <div className="bg-[#151923] w-screen px-14 py-8 pt-5 md:-ml-36 hidden md:block border-b-[1px] border-[#15171b]">
           <div className="flex justify-end gap-x-3 items-center pt-2">
             <CgProfile size={23} color="white" />
             <h1 className="text-slate-300 text-lg ">
@@ -147,96 +147,86 @@ const Table = () => {
           </div>
         </div>
 
-        {toggle && <MobileSideBar setToggle={setToggle} setToggleLogout={setToggleLogout}/>}
+        {toggle && (
+          <MobileSideBar
+            setToggle={setToggle}
+            setToggleLogout={setToggleLogout}
+          />
+        )}
 
         {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
-        <div className="w-full md:w-[70vw] px-2 py-14 mx-auto rounded-xl">
-          {loading ? (
-            <SkeletonTheme baseColor="#111115" highlightColor="#444">
-              <Skeleton count={1} height={300} className="my-2" />
-            </SkeletonTheme>
-          ) : websitedata.length === 0 ? (
-            <div className="space-y-6 text-center bg-[#111115] rounded-lg border-[1px] border-[#15171b] p-10">
-              <FaRegCircleStop size={23} color="white" className="mx-auto" />
-              <p className="text-lg font-semibold text-white">
-                No websites connected yet
-              </p>
-              <p className="text-xs text-slate-200">
-                Add your first website to get started
-              </p>
-            </div>
-          ) : (
-            <div className="  pt-5">
-              <table className="w-[89vw] mx-auto md:w-[70vw] divide-y rounded-xl divide-[#15171b] border-[1px] border-[#15171b]">
-                <thead className="bg-[#111115]">
-                  <tr className="cursor-pointer">
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Logo
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Name
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs hidden md:block font-medium text-gray-400 uppercase tracking-wider">
-                      Feedbacks
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-[#111115] divide-y divide-[#15171b]">
-                  {websitedata?.map((site, idx) => (
-                    <tr
-                      key={idx}
-                      className="hover:bg-[#15161d] transition-colors duration-300 ease-in-out cursor-pointer"
-                    >
-                      <td className="px-8 py-4 whitespace-nowrap">
-                        <Image
-                          className="h-16 w-16 rounded-full object-cover border-[1px] border-[#15171b]"
-                          src={site?.image}
-                          alt="Profile"
-                          width={48}
-                          height={48}
-                        />
-                      </td>
-                      <td className="px-8 py-4 whitespace-nowrap text-sm text-slate-300 font-semibold">
-                        {site?.name}
-                      </td>
-                      <td className="px-10 py-10 whitespace-nowrap text-sm text-slate-300 hidden md:block">
-                        {site?.feedback && site.feedback.length > 0
-                          ? site.feedback.length
-                          : 0}
-                      </td>
-                      <td className="px-2 py-4 whitespace-nowrap text-sm text-slate-300">
-                        <Link
-                          href={{
-                            pathname: "/dashboard/tasks",
-                            query: {
-                              feedback: JSON.stringify(site?.feedback || []),
-                              name: site?.name,
-                              image: site?.image,
-                              Plan: plan?.subscription,
-                              TotalFeedback: site!.feedback!.length,
-                            },
-                          }}
+        <div className="flex justify-center items-start md:flex-row flex-col mt-10 gap-8">
+          <div className="w-[100vw] md:w-[30vw] ">
+            <Analytics
+              totalWebsites={infodata.totalWebsites}
+              totalFeedback={infodata.totalFeedback}
+              loading={loading}
+            />
+          </div>
+
+          <div className="w-full md:w-[35vw]  py-7 md:h-[70vh] rounded-lg">
+            {loading ? (
+              <SkeletonTheme baseColor="#151923" highlightColor="#151923">
+                <Skeleton count={1} height={300} className="my-2" />
+              </SkeletonTheme>
+            ) : 0 === 0 ? (
+              <div className="space-y-6 text-center bg-[#151923] pt-28 border-[1px] border-[#15171b] p-10 md:h-[67vh] rounded-lg">
+                <FaRegCircleStop size={23} color="white" className="mx-auto" />
+                <p className="text-lg font-semibold text-white">
+                  No websites connected yet
+                </p>
+                <p className="text-xs text-slate-200">
+                  Add your first website to get started
+                </p>
+              </div>
+            ) : (
+              <div className="pt-3  bg-[#151923] md:h-[67vh] rounded-lg">
+                <div>
+                  <div className="">
+                    <div className="flex flex-col  p-8">
+                      {websitedata?.map((site, idx) => (
+                        <div
+                          key={idx}
+                          className="rounded-lg flex items-center gap-8 justify-around"
                         >
-                          <button className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-600 text-xs text-white px-6 py-2 rounded-lg transition-colors duration-200 cursor-pointer font-semibold">
-                            View
-                          </button>
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-          <Analytics
-            totalWebsites={infodata.totalWebsites}
-            totalFeedback={infodata.totalFeedback}
-            loading={loading}
-          />
+                          <div className="flex gap-4 items-center">
+                            <Image
+                              className="w-14 h-14 rounded-full object-cover border border-[#22252a]"
+                              src={site?.image}
+                              alt="Profile"
+                              width={48}
+                              height={48}
+                            />
+
+                            <h1 className="text-sm text-slate-300 font-semibold my-2.5">
+                              {site?.name}
+                            </h1>
+                          </div>
+                          <Link
+                            href={{
+                              pathname: "/dashboard/tasks",
+                              query: {
+                                feedback: JSON.stringify(site?.feedback || []),
+                                name: site?.name,
+                                image: site?.image,
+                                Plan: plan?.subscription,
+                                TotalFeedback: site?.feedback?.length ?? 0,
+                              },
+                            }}
+                          >
+                            <button className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-white px-8 py-1.5 rounded-lg text-xs font-semibold transition duration-200 hover:bg-blue-700 w-full my-3">
+                              View
+                            </button>
+                          </Link>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

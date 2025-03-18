@@ -19,13 +19,13 @@ const SideBar: React.FC<props> = ({ page }) => {
 
   return (
     <>
-      <aside className=" bg-[#151923] w-[60vw] lg:w-[15vw] h-full space-y-4 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-[#15171b]">
+      <aside className=" bg-[#151923] w-[60vw] lg:w-[15vw] h-full space-y-4 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-gray-900">
         <div className="flex flex-col space-y-6 pt-7">
           {/* Home */}
           <Link href="/dashboard">
             <div
-              className={`flex hover:bg-slate-800 items-center space-x-4 py-1.5 pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
-                page === "Home" ? "bg-[#151720]" : ""
+              className={`flex hover:bg-slate-800 items-center space-x-4 py-1 pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
+                page === "Home" ? "bg-[#242737]" : ""
               }`}
             >
               <MdDashboard color="white" size={iconSize} />
@@ -36,8 +36,8 @@ const SideBar: React.FC<props> = ({ page }) => {
           {/* Integrate */}
           <Link href="/dashboard/integrate">
             <div
-              className={`flex hover:bg-slate-800 items-center space-x-4 py-1.5 pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
-                page === "Integrate" ? "bg-[#151720]" : ""
+              className={`flex hover:bg-slate-800 items-center space-x-4 py-1 pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
+                page === "Integrate" ? "bg-[#242737]" : ""
               }`}
             >
               <CgWebsite color="white" size={iconSize} />
@@ -48,8 +48,8 @@ const SideBar: React.FC<props> = ({ page }) => {
           {/* Contact */}
           <Link href="/dashboard/contact">
             <div
-              className={`flex items-center hover:bg-slate-800 space-x-4 py-1.5 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
-                page === "Contact" ? "bg-[#151720]" : ""
+              className={`flex items-center hover:bg-slate-800 space-x-4  py-1 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
+                page === "Contact" ? "bg-[#242737]" : ""
               }`}
             >
               <IoMdHelpCircle color="white" size={iconSize} />
@@ -60,8 +60,8 @@ const SideBar: React.FC<props> = ({ page }) => {
           {/* Subscription */}
           <Link href="/plans">
             <div
-              className={`flex items-center hover:bg-slate-800 space-x-4 py-1.5  pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
-                page === "Subscription" ? "bg-[#151720]" : ""
+              className={`flex items-center hover:bg-slate-800 space-x-4 py-1  pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
+                page === "Subscription" ? "bg-[#242737]" : ""
               }`}
             >
               <MdOutlineAttachMoney color="white" size={iconSize} />
@@ -70,17 +70,16 @@ const SideBar: React.FC<props> = ({ page }) => {
           </Link>
 
           {/* Logout */}
-
           <div
-            className={`flex items-center hover:bg-slate-800 space-x-4 py-1.5 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out  text-gray-300 rounded-lg ${
-              page === "Logout" ? "bg-[#151720]" : ""
+            className={`flex absolute bottom-3 items-center hover:bg-red-600 space-x-4 py-1 cursor-pointer pr-16 pl-5 transition duration-200 ease-in-out  text-red-500 hover:text-white rounded-lg ${
+              page === "Logout" ? "bg-red-400" : ""
             }`}
             onClick={() => settoggle(true)}
           >
-            <IoLogOut size={iconSize} color="white" />
-            <button className="text-white text-sm font-semibold ">
-              Logout
-            </button>
+            <IoLogOut
+              size={iconSize}
+            />
+            <button className="  text-sm font-semibold ">Logout</button>
           </div>
         </div>
       </aside>

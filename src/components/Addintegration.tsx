@@ -60,7 +60,6 @@ const AddIntegration: React.FC = () => {
 
   const [lastWebsiteId, setLastWebsiteId] = useState<string | null>(null);
 
-
   console.log(showCode);
 
   const db = useMemo(() => new dbService(), []);
@@ -243,14 +242,13 @@ const AddIntegration: React.FC = () => {
     }
   };
 
-
-    const [toggleLogout, setToggleLogout] = useState(false);
+  const [toggleLogout, setToggleLogout] = useState(false);
 
   return (
     <>
       {(fetchingData || savingData || deleting) && <Loader message="Loading" />}
       <div className="md:ml-80">
-        <nav className="md:hidden bg-[#0e0f12] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
+        <nav className="md:hidden bg-[#151923] p-7 w-screen border-b-[1px] border-[#151923] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
           <CiMenuFries
             size={26}
@@ -265,14 +263,13 @@ const AddIntegration: React.FC = () => {
             setToggleLogout={setToggleLogout}
           />
         )}
-    
-       {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
+        {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
         <div className="text-slate-300 flex flex-col md:flex-row items-center gap-8 md:gap-12 md:mt-14 justify-center">
           <div className="md:ml-52">
-            <div className="bg-[#0e0f12] w-[96vw] shadow-2xl  md:w-[45vw] mx-auto h-[80vh] overflow-y-scroll mt-7 border-[1px] border-[#15171b]">
-              <div className="space-y-3 border-b-[1px] border-[#15171b] bg-[#131417] p-5 text-slate-300">
+            <div className="bg-[#151923] rounded-lg w-[96vw] shadow-2xl  md:w-[45vw] mx-auto h-[80vh] overflow-y-scroll mt-7 border-[1px] border-[#151923]">
+              <div className="space-y-3 border-b-[1px] border-[#151923] bg-[#20242e] p-5 text-slate-300">
                 <h1 className="text-xl font-semibold ">
                   Welcome to Integration
                 </h1>
@@ -346,7 +343,7 @@ const AddIntegration: React.FC = () => {
                       <input
                         type="text"
                         placeholder="Website Name"
-                        className="bg-[#0c0c0c] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                        className="bg-[#20242e] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
                         value={websiteDataInput.name}
                         onChange={(e) =>
                           setWebsiteDataInput((prev) => ({
@@ -358,7 +355,7 @@ const AddIntegration: React.FC = () => {
                       <input
                         type="text"
                         placeholder="Website URL"
-                        className="bg-[#0c0c0c] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                        className="bg-[#20242e] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
                         value={websiteDataInput.url}
                         onChange={(e) =>
                           setWebsiteDataInput((prev) => ({
@@ -368,7 +365,7 @@ const AddIntegration: React.FC = () => {
                         }
                       />
                       <select
-                        className="bg-[#0c0c0c] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                        className="bg-[#20242e] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
                         value={websiteDataInput.type}
                         onChange={(e) =>
                           setWebsiteDataInput((prev) => ({
@@ -509,7 +506,6 @@ const AddIntegration: React.FC = () => {
           </div>
         </div>
       </div>
-
       <ToastContainer theme="dark" toastClassName={"custom-toast"} />
     </>
   );
