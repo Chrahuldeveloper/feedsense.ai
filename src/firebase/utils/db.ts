@@ -70,7 +70,12 @@ export default class dbService {
         await updateDoc(userDocRef, {
           websites: userWebsites,
         });
-        console.log("Feedback updated successfully");
+
+
+
+
+
+
         cache.set(user.uid, userWebsites);
       }
     } catch (error) {
@@ -262,7 +267,12 @@ export default class dbService {
 
   async fetchDashboardDetails(
     user: string
-  ): Promise<{ totalWebsites: number; totalFeedback: number } | null> {
+  ): Promise<{
+    totalWebsites: number;
+    totalFeedback: number;
+    totalTasksFinished: number;
+    totalIncompleteTasks: number;
+  } | null> {
     try {
       const cachedDashboard = cache.get(`${user}-dashboard`);
 
@@ -283,7 +293,15 @@ export default class dbService {
         );
         const totalWebsites = websites.length;
 
-        const dashboardDetails = { totalWebsites, totalFeedback };
+        const totalTasksFinished = 0;
+        const totalIncompleteTasks = 0;
+
+        const dashboardDetails = {
+          totalWebsites,
+          totalFeedback,
+          totalTasksFinished,
+          totalIncompleteTasks,
+        };
         cache.set(`${user}-dashboard`, dashboardDetails);
         return dashboardDetails;
       } else {

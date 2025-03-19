@@ -48,7 +48,6 @@ const ContactForm = () => {
                 Reach out to us
               </h1>
             </div>
-
             <div className="space-y-6 mt-8">
               <div className="space-y-2">
                 <label
@@ -86,7 +85,6 @@ const ContactForm = () => {
                   required
                 />
               </div>
-
               <div className="space-y-2">
                 <label
                   htmlFor="message"
@@ -115,7 +113,6 @@ const ContactForm = () => {
           </div>
         </div>
       </div>
-
       <ToastContainer theme="dark" toastClassName={"custom-toast"} />
     </>
   );

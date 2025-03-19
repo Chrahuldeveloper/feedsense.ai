@@ -12,9 +12,9 @@ import cache from "../cache/cache";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/Firebase";
 import Image from "next/image";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 import ModelLogout from "./ModelLogout";
+import Loader from "./Loader";
+import { BiMessageRounded } from "react-icons/bi";
 
 interface WebsiteData {
   name: string;
@@ -27,6 +27,8 @@ interface WebsiteData {
 interface InfoData {
   totalWebsites: string;
   totalFeedback: string;
+  totalTasksFinished: string;
+  totalIncompleteTasks: string;
 }
 
 interface Plan {
@@ -45,6 +47,8 @@ const Table = () => {
   const [infodata, setInfodata] = useState<InfoData>({
     totalWebsites: "0",
     totalFeedback: "0",
+    totalTasksFinished: "0",
+    totalIncompleteTasks: "0",
   });
   const [plan, setPlan] = useState<Plan | null>(null);
 
@@ -109,6 +113,10 @@ const Table = () => {
           setInfodata({
             totalWebsites: websiteInfoData?.totalWebsites?.toString() || "0",
             totalFeedback: websiteInfoData?.totalFeedback?.toString() || "0",
+            totalTasksFinished:
+              websiteInfoData?.totalTasksFinished?.toString() || "0",
+            totalIncompleteTasks:
+              websiteInfoData?.totalIncompleteTasks?.toString() || "0",
           });
         } else {
           console.error("No data returned for dashboard details.");
@@ -138,12 +146,17 @@ const Table = () => {
           />
         </nav>
 
-        <div className="bg-[#151923] w-screen px-14 py-8 pt-5 md:-ml-36 hidden md:block border-b-[1px] border-[#15171b]">
-          <div className="flex justify-end gap-x-3 items-center pt-2">
-            <CgProfile size={23} color="white" />
-            <h1 className="text-slate-300 text-lg ">
-              {user?.displayName || "User"}
-            </h1>
+        <div className="bg-[#151923] w-screen px-14 py-3 pt-5 md:-ml-36 hidden md:block border-b-[1px] border-[#15171b]">
+          <div className="flex justify-end gap-x-3 items-center pb-2">
+            <div className="space-y-1">
+              <h1 className="text-slate-300">{user?.displayName || "User"}</h1>
+              <p className="text-[10px] text-slate-300">Admin</p>
+            </div>
+            <CgProfile
+              size={30}
+              color="#00a3ff"
+              className="w-10 p-2 h-10 rounded-full bg-[#13293c]"
+            />
           </div>
         </div>
 
@@ -162,6 +175,53 @@ const Table = () => {
           </h1>
         </div>
 
+        <div className="w-[80vw] mx-auto justify-center flex flex-col md:flex-row gap-8">
+          <div className="bg-[#151923] p-5 rounded-lg w-[17vw] flex justify-evenly gap-5 cursor-pointer">
+            <BiMessageRounded
+              size={30}
+              color="#00a3ff"
+              className="w-10 p-2 h-10 rounded-full bg-[#13293c]"
+            />
+            <div className="space-y-2">
+              <h1 className=" font-bold text-slate-300">Total TotalWebsites</h1>
+              <p className="text-sm text-gray-300">{infodata.totalWebsites}</p>
+            </div>
+          </div>
+          <div className="bg-[#151923] p-5 rounded-lg w-[17vw] flex justify-evenly gap-5 cursor-pointer">
+            <BiMessageRounded
+              size={30}
+              color="#00a3ff"
+              className="w-10 p-2 h-10 rounded-full bg-[#13293c]"
+            />
+            <div className="space-y-2">
+              <h1 className=" font-bold text-slate-300">Total Feedback</h1>
+              <p className="text-sm text-gray-300">{infodata.totalFeedback}</p>
+            </div>
+          </div>
+          <div className="bg-[#151923] p-5 rounded-lg w-[17vw] flex justify-evenly gap-5 cursor-pointer">
+            <BiMessageRounded
+              size={30}
+              color="#00a3ff"
+              className="w-10 p-2 h-10 rounded-full bg-[#13293c]"
+            />
+            <div className="space-y-2">
+              <h1 className=" font-bold text-slate-300">Total TasksFinished</h1>
+              <p className="text-sm text-gray-300">{infodata.totalFeedback}</p>
+            </div>
+          </div>
+          <div className="bg-[#151923] p-5 rounded-lg w-[17vw] flex justify-evenly gap-5 cursor-pointer">
+            <BiMessageRounded
+              size={30}
+              color="#00a3ff"
+              className="w-10 p-2 h-10 rounded-full bg-[#13293c]"
+            />
+            <div className="space-y-2">
+              <h1 className=" font-bold text-slate-300">Tasks to Finish</h1>
+              <p className="text-sm text-gray-300">{infodata.totalFeedback}</p>
+            </div>
+          </div>
+        </div>
+
         <div className="flex justify-center items-start md:flex-row flex-col gap-4">
           <div className="w-[100vw] md:w-[40vw] ">
             <Analytics
@@ -170,13 +230,10 @@ const Table = () => {
               loading={loading}
             />
           </div>
-
           <div className="w-full md:w-[40vw]  py-7 md:h-[70vh] rounded-lg">
             {loading ? (
-              <div className="h-[67vh]">
-                <SkeletonTheme baseColor="#151923" highlightColor="#151923">
-                  <Skeleton count={1} height={300} className="my-2" />
-                </SkeletonTheme>
+              <div>
+                <Loader message="please wait" />
               </div>
             ) : 0 === 0 ? (
               <div className="space-y-6 text-center bg-[#151923] pt-28 border-[1px] border-[#15171b] p-10 md:h-[67vh] rounded-lg">

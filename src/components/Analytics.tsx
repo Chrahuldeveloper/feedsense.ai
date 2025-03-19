@@ -9,7 +9,6 @@ import {
   BarElement,
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import "react-loading-skeleton/dist/skeleton.css";
 import Loader from "./Loader";
 
 ChartJS.register(

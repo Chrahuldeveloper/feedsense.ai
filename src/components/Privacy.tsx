@@ -3,7 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 interface props {
   setisprivacy: (value: boolean) => void;
 }
-const Privacy: React.FC<props> = ({setisprivacy}) => {
+const Privacy: React.FC<props> = ({ setisprivacy }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center h-full bg-black bg-opacity-75 backdrop-blur-sm">
       <div className="p-6 max-w-4xl mx-auto bg-[#121212] rounded-lg shadow-md h-[90vh] overflow-y-scroll">

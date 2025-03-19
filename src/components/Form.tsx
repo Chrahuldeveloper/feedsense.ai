@@ -28,9 +28,9 @@ const Form = () => {
 
   const [selectedEmotion, setSelectedEmotion] = useState<number | null>(null);
   const [selectedRating, setSelectedRating] = useState<number>(0);
-  const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+
+  const [error, seterror] = useState<boolean>(false);
 
   const [feedback, setFeedback] = useState<Feedback>({
     emotion: "",
@@ -67,7 +67,7 @@ const Form = () => {
       }
     } catch (error) {
       console.log(error);
-      setError(true);
+      seterror(true);
     } finally {
       setLoading(false);
     }
@@ -78,6 +78,8 @@ const Form = () => {
     { title: "Neutral", emoji: <IoSadOutline size={32} color="#c1d0d5" /> },
     { title: "Sad", emoji: <TbMoodSadDizzy size={32} color="#c1d0d5" /> },
   ];
+
+  const [hoveredRating, setHoveredRating] = useState<number | null>(null);
 
   return (
     <div className="bg-gradient-to-b from-[#0c0c0e] via-[#1f1f21] to-[#2a2b2d] w-full h-screen">
