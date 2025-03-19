@@ -51,7 +51,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
           totalTasksFinished,
           totalIncompleteTasks,
         ],
-        backgroundColor: ["#00a3ff", "#9f7aea", "#fc8181"],
+        backgroundColor: ["#00a3ff", "#9f7aea", "#fc8181", "#06b6d4"],
       },
     ],
   };
