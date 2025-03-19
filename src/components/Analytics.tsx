@@ -23,26 +23,38 @@ ChartJS.register(
 interface AnalyticsProps {
   totalWebsites: string;
   totalFeedback: string;
+  totalTasksFinished: string;
+  totalIncompleteTasks: string;
   loading: boolean;
 }
 
 const Analytics: React.FC<AnalyticsProps> = ({
   totalWebsites,
   totalFeedback,
+  totalTasksFinished,
+  totalIncompleteTasks,
   loading,
 }) => {
   const analytics = {
-    labels: ["totalWebsites", "totalFeedback"],
+    labels: [
+      "totalWebsites",
+      "totalFeedback",
+      "totalTasksFinished",
+      "totalIncompleteTasks",
+    ],
     datasets: [
       {
         label: "My First Dataset",
-        data: [10, 10],
-        backgroundColor: ["#00a3ff", "#9f7aea"],
+        data: [
+          totalWebsites,
+          totalFeedback,
+          totalTasksFinished,
+          totalIncompleteTasks,
+        ],
+        backgroundColor: ["#00a3ff", "#9f7aea", "#fc8181"],
       },
     ],
   };
-
-  console.log(totalWebsites, totalFeedback);
 
   return (
     <div className="mt-7">

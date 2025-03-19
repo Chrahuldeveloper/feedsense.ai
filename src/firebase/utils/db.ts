@@ -71,10 +71,11 @@ export default class dbService {
           websites: userWebsites,
         });
 
+        const totalTasksFinished = findwebsite?.totalTasksFinished || 0;
 
-
-
-
+        await updateDoc(userDocRef, {
+          totalTasksFinished: totalTasksFinished + 1,
+        });
 
         cache.set(user.uid, userWebsites);
       }
@@ -265,9 +266,7 @@ export default class dbService {
     }
   }
 
-  async fetchDashboardDetails(
-    user: string
-  ): Promise<{
+  async fetchDashboardDetails(user: string): Promise<{
     totalWebsites: number;
     totalFeedback: number;
     totalTasksFinished: number;
@@ -293,8 +292,8 @@ export default class dbService {
         );
         const totalWebsites = websites.length;
 
-        const totalTasksFinished = 0;
-        const totalIncompleteTasks = 0;
+        const totalTasksFinished = docSnap.data()?.totalTasksFinished || 0;
+        const totalIncompleteTasks = totalFeedback - totalTasksFinished || 0;
 
         const dashboardDetails = {
           totalWebsites,

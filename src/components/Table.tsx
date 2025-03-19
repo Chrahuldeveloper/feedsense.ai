@@ -15,6 +15,8 @@ import Image from "next/image";
 import ModelLogout from "./ModelLogout";
 import Loader from "./Loader";
 import { BiMessageRounded } from "react-icons/bi";
+import { GoGraph } from "react-icons/go";
+import { CgNotes } from "react-icons/cg";
 
 interface WebsiteData {
   name: string;
@@ -92,9 +94,7 @@ const Table = () => {
           image: item.image || "",
           feedback: item.feedback || [],
         }));
-
         console.log(transformedData);
-
         cache.set(user.uid, transformedData);
         setWebsitedata(transformedData);
       }
@@ -177,48 +177,60 @@ const Table = () => {
 
         <div className="w-[80vw] mx-auto justify-center flex flex-col md:flex-row gap-8">
           <div className="bg-[#151923] p-5 rounded-lg w-[17vw] flex justify-evenly gap-5 cursor-pointer">
-            <BiMessageRounded
-              size={30}
-              color="#00a3ff"
-              className="w-10 p-2 h-10 rounded-full bg-[#13293c]"
-            />
-            <div className="space-y-2">
-              <h1 className=" font-bold text-slate-300">Total TotalWebsites</h1>
+            <div className="space-y-3">
+              <h1 className=" font-semibold text-slate-300 text-sm">
+                Total TotalWebsites
+              </h1>
               <p className="text-sm text-gray-300">{infodata.totalWebsites}</p>
             </div>
+            <BiMessageRounded
+              size={33}
+              color="#00a3ff"
+              className="w-12 p-2 h-12 rounded-full bg-[#13293c]"
+            />
           </div>
           <div className="bg-[#151923] p-5 rounded-lg w-[17vw] flex justify-evenly gap-5 cursor-pointer">
-            <BiMessageRounded
-              size={30}
-              color="#00a3ff"
-              className="w-10 p-2 h-10 rounded-full bg-[#13293c]"
-            />
-            <div className="space-y-2">
-              <h1 className=" font-bold text-slate-300">Total Feedback</h1>
+            <div className="space-y-3">
+              <h1 className=" font-semibold text-slate-300 text-sm">
+                Total Feedback
+              </h1>
               <p className="text-sm text-gray-300">{infodata.totalFeedback}</p>
             </div>
+            <CgNotes
+              size={26}
+              color="#c084fc"
+              className="w-12 p-2.5 h-12 rounded-full bg-[#1b1938]"
+            />
           </div>
           <div className="bg-[#151923] p-5 rounded-lg w-[17vw] flex justify-evenly gap-5 cursor-pointer">
-            <BiMessageRounded
-              size={30}
-              color="#00a3ff"
-              className="w-10 p-2 h-10 rounded-full bg-[#13293c]"
-            />
-            <div className="space-y-2">
-              <h1 className=" font-bold text-slate-300">Total TasksFinished</h1>
-              <p className="text-sm text-gray-300">{infodata.totalFeedback}</p>
+            <div className="space-y-3">
+              <h1 className=" font-semibold text-slate-300 text-sm">
+                Total TasksFinished
+              </h1>
+              <p className="text-sm text-gray-300">
+                {infodata.totalTasksFinished}
+              </p>
             </div>
+            <GoGraph
+              size={33}
+              color="green"
+              className="w-12 p-2 h-12 rounded-full bg-[#112e2d]"
+            />
           </div>
           <div className="bg-[#151923] p-5 rounded-lg w-[17vw] flex justify-evenly gap-5 cursor-pointer">
-            <BiMessageRounded
-              size={30}
-              color="#00a3ff"
-              className="w-10 p-2 h-10 rounded-full bg-[#13293c]"
-            />
-            <div className="space-y-2">
-              <h1 className=" font-bold text-slate-300">Tasks to Finish</h1>
-              <p className="text-sm text-gray-300">{infodata.totalFeedback}</p>
+            <div className="space-y-3">
+              <h1 className=" font-semibold text-slate-300 text-sm">
+                Tasks to Finish
+              </h1>
+              <p className="text-sm text-gray-300">
+                {infodata.totalIncompleteTasks}
+              </p>
             </div>
+            <BiMessageRounded
+              size={33}
+              color="#00a3ff"
+              className="w-12 p-2 h-12 rounded-full bg-[#13293c]"
+            />
           </div>
         </div>
 
@@ -227,6 +239,8 @@ const Table = () => {
             <Analytics
               totalWebsites={infodata.totalWebsites}
               totalFeedback={infodata.totalFeedback}
+              totalTasksFinished={infodata.totalTasksFinished}
+              totalIncompleteTasks={infodata.totalIncompleteTasks}
               loading={loading}
             />
           </div>
@@ -235,7 +249,7 @@ const Table = () => {
               <div>
                 <Loader message="please wait" />
               </div>
-            ) : 0 === 0 ? (
+            ) : websitedata?.length === 0 ? (
               <div className="space-y-6 text-center bg-[#151923] pt-28 border-[1px] border-[#15171b] p-10 md:h-[67vh] rounded-lg">
                 <FaRegCircleStop size={23} color="white" className="mx-auto" />
                 <p className="text-lg font-semibold text-white">
@@ -263,11 +277,10 @@ const Table = () => {
                               width={48}
                               height={48}
                             />
-
-                            <h1 className="text-sm text-slate-300 font-semibold my-2.5">
-                              {site?.name}
-                            </h1>
                           </div>
+                          <h1 className="text-sm text-slate-300 font-semibold my-2.5">
+                            {site?.name}
+                          </h1>
                           <Link
                             href={{
                               pathname: "/dashboard/tasks",
