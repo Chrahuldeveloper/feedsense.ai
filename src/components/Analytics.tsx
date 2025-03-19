@@ -9,8 +9,8 @@ import {
   BarElement,
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import Loader from "./Loader";
 
 ChartJS.register(
   CategoryScale,
@@ -37,7 +37,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
     datasets: [
       {
         label: "My First Dataset",
-        data: [ 10,  10],
+        data: [10, 10],
         backgroundColor: ["#00a3ff", "#9f7aea"],
       },
     ],
@@ -49,9 +49,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
     <div className="mt-7">
       <div className="p-4 bg-[#151923] rounded-lg border-[1px] border-[#151923]">
         {loading ? (
-          <SkeletonTheme baseColor="#151923" highlightColor="#151923">
-            <Skeleton count={1} height={300} className="my-2" />
-          </SkeletonTheme>
+          <Loader message={"Please wait"} />
         ) : (
           <>
             <h1 className="md:text-2xl text-lg font-semibold text-slate-300 px-4 md:px-8 pt-3 mb-2">
