@@ -62,6 +62,7 @@ const Page = () => {
       desc: "Implement changes based on insights, track improvements, and measure impact over time.",
     },
   ];
+
   const [hoveredIndex, setHoveredIndex] = useState<number | null>();
 
   const Plans = [
@@ -119,39 +120,37 @@ const Page = () => {
         <Navbar />
 
         <AnimatedBackground />
-        <div className="text-center relative z-10">
+        <div className="text-center relative ">
           <div className="absolute top-1/4 left-10 w-96 h-72 bg-[#172d42] opacity-40 blur-3xl rounded-full"></div>
           <div className="absolute bottom-1/3 right-20 w-60 h-60 bg-[#172d42] opacity-30 blur-3xl rounded-full"></div>
           <div className="absolute top-10 right-40 w-32 h-72 bg-[#172d42] opacity-20 blur-2xl rounded-full"></div>
 
-          <span className="border border-blue-400 px-4 py-1 text-sm text-blue-400 rounded-full">
+          <span className="border border-blue-400 px-4 py-1 text-sm text-blue-400 rounded-full ">
             Next-Generation Feedback Analytics
           </span>
-          <h1 className="text-5xl font-bold mt-4">
+          <h1 className="text-5xl md:text-6xl font-bold mt-4">
             Turn Feedback into <br />
             <span className="text-blue-400 drop-shadow-[0_0_10px_#00bfff]">
               Actionable Insights
             </span>
             <br /> with AI
           </h1>
-          <p className="text-gray-400 max-w-2xl mx-auto mt-4">
+          <p
+            className="text-gray-400 max-w-2xl mx-auto mt-4 z-10
+"
+          >
             FeedSenseAI transforms your customer feedback into clear, actionable
             insights with powerful AI analysis. Understand sentiment, identify
             trends, and make data-driven decisions faster than ever.
           </p>
 
           <div className="mt-6 flex justify-center space-x-4">
-            <button className="bg-blue-500 px-6 py-3 text-lg font-medium rounded-lg text-white shadow-lg shadow-blue-500/50 hover:bg-blue-600 transition">
+            <button className=" cursor-pointer bg-blue-500 px-6 py-3 text-lg font-medium rounded-lg text-white shadow-lg shadow-blue-500/50 hover:bg-blue-600 transition z-10">
               Get Started Free
-            </button>
-            <button className="border border-blue-400 px-6 py-3 text-lg font-medium rounded-lg text-blue-400 hover:bg-blue-400 hover:text-white transition flex items-center space-x-2">
-              <span>Watch Demo</span>
             </button>
           </div>
         </div>
       </div>
-
-      {/* bg-blue-500 .shadow-lg shadow-blue-500/50 hover:bg-blue-600 transition*/}
 
       <div className="text-center space-y-5 mt-20">
         <h1 className="text-xl font-semibold text-[#b2ecfe] md:text-lg xl:text-5xl">
@@ -202,11 +201,12 @@ const Page = () => {
             <h1 className="text-lg text-white bg-blue-500 rounded-full p-3 w-12 h-12 text-center">
               {id + 1}
             </h1>
-
             <div className="bg-[#151923] rounded-xl w-32 h-2 mt-2 overflow-hidden">
               <div
                 className={`h-full bg-blue-500 transition-all duration-500 ${
-                  hoveredIndex === id ? "w-full" : "w-0"
+                  hoveredIndex === id || (hoveredIndex === null && id === 0)
+                    ? "w-full"
+                    : "w-0"
                 }`}
               ></div>
             </div>
@@ -367,7 +367,7 @@ const Page = () => {
                   href="mailto:hello@feedsenseai.com"
                   className="hover:text-white"
                 >
-                  📧 hello@feedsenseai.com
+                  📧chrahulofficial@gmail.com
                 </a>
               </li>
               <li>
