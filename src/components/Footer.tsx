@@ -1,83 +1,98 @@
 import Link from "next/link";
-import React, { useState } from "react";
-import TermsConditions from "./TermsConditions";
-import { FaDiscord } from "react-icons/fa";
-import Privacy from "./Privacy";
+import React from "react";
 
 export default function Footer() {
-  const [istoogle, setistoggle] = useState(false);
-
-  const [isprivacy, setisprivacy] = useState<boolean>(false);
-
   return (
     <>
-      {istoogle ? <TermsConditions setistoggle={setistoggle} /> : null}
-      {isprivacy ? <Privacy setisprivacy={setisprivacy} /> : null}
-      <footer className="bg-[#121212] text-white pt-10 px-4">
-        <div className=" mx-auto flex flex-col md:flex-row items-center justify-around">
-          <div className="text-center md:text-left mb-6 md:mb-0 space-y-5">
-            <h1 className="text-2xl font-semibold">FeedSense.Ai</h1>
-            <p className="text-sm mt-2 text-gray-400 max-w-sm">
-              Centralize and analyze feedback to continually improve your
-              websites and business services.
+      <footer className="bg-gray-900 text-gray-400 p-8">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between space-y-8 md:space-y-0">
+          <div className="md:w-1/3">
+            <h2 className="text-white text-2xl font-semibold">
+              Feed<span className="text-cyan-400">Sense</span>AI
+            </h2>
+            <p className="mt-2 text-sm">
+              Transforming feedback into actionable insights with the power of
+              artificial intelligence.
             </p>
+            <div className="flex space-x-5 mt-4">
+              <a href="#" className="hover:text-white">
+                <i className="fab fa-twitter"></i>
+              </a>
+              <a href="#" className="hover:text-white">
+                <i className="fab fa-linkedin"></i>
+              </a>
+              <a href="#" className="hover:text-white">
+                <i className="fab fa-github"></i>
+              </a>
+            </div>
           </div>
 
-          <div className="flex flex-col md:flex-row justify-center items-start gap-20">
-            <div className="flex flex-col items-center   ">
-              <div className="flex flex-col gap-5 text-sm items-center">
-                <h2 className="text-lg font-semibold ">FeedSense.AI</h2>
-                <Link href="/">
-                  <p className="font-semibold">Home</p>
-                </Link>
-                <Link href="/about">
-                  <p className="font-semibold">About</p>
-                </Link>
-                <Link href="/plans">
-                  <p className="font-semibold">Plans</p>
-                </Link>
-                <Link href="/contactUs">
-                  <p className="font-semibold">Contact</p>
-                </Link>
-              </div>
+          <div className="flex flex-col md:flex-row md:space-x-16">
+            <div>
+              <h3 className="text-white font-semibold">Company</h3>
+              <ul className="mt-2 space-y-4 text-sm">
+                <li>
+                  <Link href="/contactUs" className="hover:text-white">
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="https://merchant.razorpay.com/policy/P8XFEmJQOPeGVU/refund"
+                    className="hover:text-white"
+                  >
+                    Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="https://merchant.razorpay.com/policy/P8XFEmJQOPeGVU/terms"
+                    className="hover:text-white"
+                  >
+                    Terms of Service{" "}
+                  </Link>
+                </li>
+              </ul>
             </div>
+            <div>
+              <h3 className="text-white font-semibold mt-6 md:mt-0">Support</h3>
+              <ul className="mt-2 space-y-5 text-sm">
+                <li>
+                  <Link href="#" className="hover:text-white">
+                    Help Center
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white">
+                    Contact Us
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
 
-            <div className="space-y-5 text-sm">
-              <h2 className="text-lg font-semibold">Support</h2>
-              <p>
-                <Link
-                  href="https://merchant.razorpay.com/policy/P8XFEmJQOPeGVU/terms"
-                  className="font-semibold cursor-pointer "
+          <div>
+            <h3 className="text-white font-semibold">Contact</h3>
+            <ul className="mt-2 space-y-5 text-sm">
+              <li>
+                <a
+                  href="mailto:hello@feedsenseai.com"
+                  className="hover:text-white"
                 >
-                  Terms and Conditions
-                </Link>
-              </p>
-              <p
-                onClick={() => {
-                  setisprivacy(true);
-                }}
-                className="font-semibold cursor-pointer "
-              >
-                Privacy Policy
-              </p>
-              <p className="font-semibold cursor-pointer">
-                chrahulofficial@gmail.com
-              </p>
-              <p className="font-semibold cursor-pointer">
-                Hyderabad Medchal 501401,India{" "}
-              </p>
-            </div>
-
-            <div className="flex flex-col items-center justify-center gap-5">
-              <h2 className="text-lg font-semibold ">Follow Us</h2>
-              <Link href="https://discord.gg/ERRX9mBZ">
-                <FaDiscord size={22} className="hover:text-gray-400" />
-              </Link>
-            </div>
+                  📧 chrahulofficial@gmail.com
+                </a>
+              </li>
+              <li>
+                <a href="91+8317680338" className="hover:text-white">
+                  📞 8317680338
+                </a>
+              </li>
+              <li>📍 Hyderabad 501401,India</li>
+            </ul>
           </div>
         </div>
-        <div className="text-center text-xs text-gray-500 py-5 pt-16">
-          © {new Date().getFullYear()} FeedSense Ai. All rights reserved.
+        <div className="border-t border-gray-700 mt-8 pt-4 text-sm text-center">
+          <p>© 2025 FeedSenseAI. All rights reserved.</p>
         </div>
       </footer>
     </>

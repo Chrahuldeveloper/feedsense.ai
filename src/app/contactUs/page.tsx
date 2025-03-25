@@ -6,12 +6,13 @@ import React from "react";
 const page = () => {
   return (
     <>
-      <div className="bg-[#1a1f2c] w-full overflow-hidden min-h-screen relative">
-        <div className="absolute inset-0 bg-[#000000] opacity-95"></div>
+      <div className="bg-[#1c2031] w-full overflow-hidden min-h-screen relative">
+        <div className="absolute inset-0 bg-[#1c2031] opacity-95"></div>
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/2 right-96 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500 rounded-full opacity-20 blur-[120px]" />
-          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-blue-500 rounded-full opacity-15 blur-[100px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[700px] h-[700px] bg-blue-600 rounded-full opacity-10 blur-[130px]" />
+          <div className="absolute top-1/4 left-10 w-96 h-72 bg-[#172d42] opacity-40 blur-3xl rounded-full"></div>
+          <div className="absolute bottom-1/3 right-20 w-60 h-60 bg-[#172d42] opacity-30 blur-3xl rounded-full"></div>
+          <div className="absolute top-10 right-40 w-32 h-72 bg-[#172d42] opacity-20 blur-2xl rounded-full"></div>
+          <div className="absolute inset-0 bg-grid bg-opacity-10 pointer-events-none"></div>
         </div>
 
         <div className="relative z-10 bg-[#151923] p-8 rounded-lg w-[80vw] md:w-[35vw] mx-auto border-[#282e32] border-[1px] shadow-2xl mt-10 md:mt-10">

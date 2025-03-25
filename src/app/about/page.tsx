@@ -15,35 +15,37 @@ export default function page() {
 
   const data = [
     {
-      icon: <GoGoal size={24} color="white" />,
+      icon: <GoGoal size={24} color="#00a3ff" />,
       tittle: "Customer-Centric",
-      para: "We believe in putting customers first and building solutions that truly serve their needs.",
+      para: "We prioritize user feedback, ensuring businesses gain valuable insights to enhance their products.",
     },
     {
-      icon: <TbBulb size={24} color="white" />,
+      icon: <TbBulb size={24} color="#00a3ff" />,
       tittle: "Innovation",
-      para: "We constantly push boundaries to create better ways of handling customer feedback.",
+      para: "We leverage AI to transform raw feedback into actionable insights, driving smarter decisions.",
     },
     {
-      icon: <FaHandshake size={24} color="white" />,
+      icon: <FaHandshake size={24} color="#00a3ff" />,
       tittle: "Collaboration",
-      para: "We believe great products are built through effective team collaboration and shared insights.",
+      para: "We enable teams to work efficiently by centralizing and analyzing feedback for data-driven improvements.",
     },
     {
-      icon: <AiFillThunderbolt size={24} color="white" />,
+      icon: <AiFillThunderbolt size={24} color="#00a3ff" />,
       tittle: "Efficiency",
-      para: "We strive to make product development more efficient and feedback-driven.",
+      para: "Our AI-powered platform streamlines feedback analysis, reducing guesswork and saving time.",
     },
   ];
+  
 
   return (
-    <div className="bg-[#0e0f12] w-full flex flex-col min-h-screen overflow-x-clip">
+    <div className="bg-[#1c2031] w-full flex flex-col min-h-screen overflow-x-clip">
       <Navbar />
 
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95vw] h-[30vh] bg-blue-600 rounded-full opacity-20 blur-[120px]" />
-        <div className="absolute top-1/4 left-1/4 w-[60vw] h-[30vh] bg-blue-500 rounded-full opacity-15 blur-[100px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[70vw] h-[30vh] bg-blue-400 rounded-full opacity-10 blur-[130px]" />
+        <div className="absolute top-1/4 left-10 w-96 h-72 bg-[#172d42] opacity-40 blur-3xl rounded-full"></div>
+        <div className="absolute bottom-1/3 right-20 w-60 h-60 bg-[#172d42] opacity-30 blur-3xl rounded-full"></div>
+        <div className="absolute top-10 right-40 w-32 h-72 bg-[#172d42] opacity-20 blur-2xl rounded-full"></div>
+        <div className="absolute inset-0 bg-grid bg-opacity-10 pointer-events-none"></div>
       </div>
 
       <div className="relative z-10">
@@ -86,11 +88,11 @@ export default function page() {
           Our Journey ✨
         </h1>
 
-        <div className="flex items-center md:items-start justify-center md:flex-row flex-col gap-6 pt-10">
+        <div className="flex flex-col items-center justify-center gap-6 pt-10">
           {data.map((i, id) => {
             return (
               <React.Fragment key={id}>
-                <div className="bg-[#17171c] p-5 rounded-lg max-w-xs border-[1px] border-[#15171b] cursor-pointer shadow-xl">
+                <div className="bg-[#1a2030] max-w-xl p-5 rounded-lg border-[1px] border-[#2f3a49] cursor-pointer shadow-xl">
                   {i.icon}
                   <div className="space-y-3 mt-3">
                     <h1 className="text-white font-semibold">{i.tittle}</h1>

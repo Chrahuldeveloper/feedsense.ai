@@ -2,6 +2,7 @@
 
 import AnimatedBackground from "@/background/AnimatedBackground";
 import Navbar from "@/components/Navbar";
+import Link from "next/link";
 import React, { useState } from "react";
 import { LuBrain } from "react-icons/lu";
 import { TiTickOutline } from "react-icons/ti";
@@ -210,7 +211,6 @@ const Page = () => {
                 }`}
               ></div>
             </div>
-
             <h1 className="text-gray-300 mt-2">{i.title}</h1>
           </div>
         ))}
@@ -293,7 +293,7 @@ const Page = () => {
               Transforming feedback into actionable insights with the power of
               artificial intelligence.
             </p>
-            <div className="flex space-x-4 mt-4">
+            <div className="flex space-x-5 mt-4">
               <a href="#" className="hover:text-white">
                 <i className="fab fa-twitter"></i>
               </a>
@@ -309,51 +309,42 @@ const Page = () => {
           <div className="flex flex-col md:flex-row md:space-x-16">
             <div>
               <h3 className="text-white font-semibold">Company</h3>
-              <ul className="mt-2 space-y-2 text-sm">
+              <ul className="mt-2 space-y-4 text-sm">
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <Link href="/contactUs" className="hover:text-white">
                     About Us
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
-                    Careers
-                  </a>
+                  <Link
+                    href="https://merchant.razorpay.com/policy/P8XFEmJQOPeGVU/refund"
+                    className="hover:text-white"
+                  >
+                    Policy
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Press
-                  </a>
+                  <Link
+                    href="https://merchant.razorpay.com/policy/P8XFEmJQOPeGVU/terms"
+                    className="hover:text-white"
+                  >
+                    Terms of Service{" "}
+                  </Link>
                 </li>
               </ul>
             </div>
             <div>
               <h3 className="text-white font-semibold mt-6 md:mt-0">Support</h3>
-              <ul className="mt-2 space-y-2 text-sm">
+              <ul className="mt-2 space-y-5 text-sm">
                 <li>
-                  <a href="#" className="hover:text-white">
+                  <Link href="#" className="hover:text-white">
                     Help Center
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white">
-                    Documentation
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    API Status
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
+                  <Link href="#" className="hover:text-white">
                     Contact Us
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -361,38 +352,26 @@ const Page = () => {
 
           <div>
             <h3 className="text-white font-semibold">Contact</h3>
-            <ul className="mt-2 space-y-2 text-sm">
+            <ul className="mt-2 space-y-5 text-sm">
               <li>
                 <a
                   href="mailto:hello@feedsenseai.com"
                   className="hover:text-white"
                 >
-                  📧chrahulofficial@gmail.com
+                  📧 chrahulofficial@gmail.com
                 </a>
               </li>
               <li>
-                <a href="tel:+15551234567" className="hover:text-white">
-                  📞 +1 (555) 123-4567
+                <a href="91+8317680338" className="hover:text-white">
+                  📞 8317680338
                 </a>
               </li>
-              <li>📍 350 Innovation Drive, San Francisco, CA 94105</li>
+              <li>📍 Hyderabad 501401,India</li>
             </ul>
           </div>
         </div>
-
         <div className="border-t border-gray-700 mt-8 pt-4 text-sm text-center">
           <p>© 2025 FeedSenseAI. All rights reserved.</p>
-          <div className="flex justify-center space-x-4 mt-2">
-            <a href="#" className="hover:text-white">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-white">
-              Terms of Service
-            </a>
-            <a href="#" className="hover:text-white">
-              Cookie Policy
-            </a>
-          </div>
         </div>
       </footer>
     </div>
