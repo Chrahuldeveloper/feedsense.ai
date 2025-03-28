@@ -191,8 +191,8 @@ const Table = () => {
         </div>
 
         <div className="w-[80vw] mx-auto justify-center flex flex-col md:flex-row gap-8">
-          <div className="bg-[#151923] p-5 rounded-lg w-[17vw] flex justify-evenly gap-5 cursor-pointer">
-            <div className="space-y-3">
+          <div className="bg-[#151923] p-5 rounded-lg w-[60vw] mx-auto lg:w-[17vw] flex justify-evenly gap-5 cursor-pointer">
+            <div className="space-y-3 order-2">
               <h1 className=" font-semibold text-slate-300 text-sm">
                 Total TotalWebsites
               </h1>
@@ -201,11 +201,11 @@ const Table = () => {
             <BiMessageRounded
               size={33}
               color="#00a3ff"
-              className="w-12 p-2 h-12 rounded-full bg-[#13293c]"
+              className=" w-12 p-2 h-12 rounded-full bg-[#13293c]"
             />
           </div>
-          <div className="bg-[#151923] p-5 rounded-lg w-[17vw] flex justify-evenly gap-5 cursor-pointer">
-            <div className="space-y-3">
+          <div className="bg-[#151923] p-5 rounded-lg lg:w-[17vw] w-[60vw] mx-auto flex justify-evenly gap-5 cursor-pointer">
+            <div className="space-y-3 order-2">
               <h1 className=" font-semibold text-slate-300 text-sm">
                 Total Feedback
               </h1>
@@ -217,8 +217,8 @@ const Table = () => {
               className="w-12 p-2.5 h-12 rounded-full bg-[#1b1938]"
             />
           </div>
-          <div className="bg-[#151923] p-5 rounded-lg w-[17vw] flex justify-evenly gap-5 cursor-pointer">
-            <div className="space-y-3">
+          <div className="bg-[#151923] p-5 rounded-lg w-[60vw] mx-auto lg:w-[17vw] flex justify-evenly gap-5 cursor-pointer">
+            <div className="space-y-3 order-2">
               <h1 className=" font-semibold text-slate-300 text-sm">
                 Total TasksFinished
               </h1>
@@ -232,8 +232,8 @@ const Table = () => {
               className="w-12 p-2 h-12 rounded-full bg-[#112e2d]"
             />
           </div>
-          <div className="bg-[#151923] p-5 rounded-lg w-[17vw] flex justify-evenly gap-5 cursor-pointer">
-            <div className="space-y-3">
+          <div className="bg-[#151923] p-5 rounded-lg lg:w-[17vw] w-[60vw] mx-auto flex justify-evenly gap-5 cursor-pointer">
+            <div className="space-y-3 order-2">
               <h1 className=" font-semibold text-slate-300 text-sm">
                 Tasks to Finish
               </h1>
