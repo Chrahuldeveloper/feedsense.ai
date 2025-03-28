@@ -76,14 +76,16 @@ const Table = () => {
 
   useEffect(() => {
     const fetchWebsites = async () => {
-      if (!loading && user) {
-        const cachedData = cache.get(user.uid);
-        if (cachedData) {
-          console.log("Fetched Websites Data from Cache:", cachedData.value);
-          setWebsitedata(cachedData.value);
-          return;
-        }
+      if (!user || loading) return;
 
+      const cachedData = cache.get(`${user.uid}_websites`);
+      if (cachedData) {
+        console.log("Fetched Websites Data from Cache:", cachedData.value);
+        setWebsitedata(cachedData.value);
+        return;
+      }
+
+      try {
         const data = await db1.fetchWebsites(user);
         console.log("Fetched Websites Data from Firestore:", data);
 
@@ -94,32 +96,45 @@ const Table = () => {
           image: item.image || "",
           feedback: item.feedback || [],
         }));
-        console.log(transformedData);
-        cache.set(user.uid, transformedData);
+
+        cache.set(`${user.uid}_websites`, transformedData);
         setWebsitedata(transformedData);
+      } catch (error) {
+        console.error("Error fetching websites:", error);
       }
     };
+
     fetchWebsites();
   }, [loading, user, db1]);
 
   useEffect(() => {
     const fetchDetails = async () => {
-      try {
-        const websiteInfoData = await db1.fetchDashboardDetails(
-          user!.uid.toString()
+      if (!user || loading) return;
+
+      const cachedDetails = cache.get(`${user.uid}_dashboard`);
+      if (cachedDetails) {
+        console.log(
+          "Fetched Dashboard Details from Cache:",
+          cachedDetails.value
         );
+        setInfodata(cachedDetails.value);
+        return;
+      }
+
+      try {
+        const websiteInfoData = await db1.fetchDashboardDetails(user.uid);
         if (websiteInfoData) {
           console.log("Fetched Dashboard Details:", websiteInfoData);
-          setInfodata({
+          const newInfo = {
             totalWebsites: websiteInfoData?.totalWebsites?.toString() || "0",
             totalFeedback: websiteInfoData?.totalFeedback?.toString() || "0",
             totalTasksFinished:
               websiteInfoData?.totalTasksFinished?.toString() || "0",
             totalIncompleteTasks:
               websiteInfoData?.totalIncompleteTasks?.toString() || "0",
-          });
-        } else {
-          console.error("No data returned for dashboard details.");
+          };
+          cache.set(`${user.uid}_dashboard`, newInfo);
+          setInfodata(newInfo);
         }
       } catch (error) {
         console.error("Error fetching dashboard details:", error);

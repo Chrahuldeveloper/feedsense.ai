@@ -293,7 +293,11 @@ export default class dbService {
         const totalWebsites = websites.length;
 
         const totalTasksFinished = docSnap.data()?.totalTasksFinished || 0;
-        const totalIncompleteTasks = totalFeedback - totalTasksFinished || 0;
+        let totalIncompleteTasks = totalFeedback - totalTasksFinished || 0;
+
+        if (totalIncompleteTasks < 0) {
+          totalIncompleteTasks = 0;
+        }
 
         const dashboardDetails = {
           totalWebsites,
