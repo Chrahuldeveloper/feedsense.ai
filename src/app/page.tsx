@@ -3,11 +3,17 @@
 import AnimatedBackground from "@/background/AnimatedBackground";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LuBrain } from "react-icons/lu";
 import { TiTickOutline } from "react-icons/ti";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Page = () => {
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   const data = [
     {
       icon: <LuBrain size={25} color="#00a3ff" />,
@@ -121,7 +127,14 @@ const Page = () => {
         <Navbar />
 
         <AnimatedBackground />
-        <div className="text-center relative ">
+        <div
+          className="text-center relative "
+          data-aos="fade-up"
+          data-aos-offset="200"
+          data-aos-delay="50"
+          data-aos-duration="1000"
+          data-aos-easing="ease-in-out"
+        >
           <div className="absolute top-1/4 left-10 w-96 h-72 bg-[#172d42] opacity-40 blur-3xl rounded-full"></div>
           <div className="absolute bottom-1/3 right-20 w-60 h-60 bg-[#172d42] opacity-30 blur-3xl rounded-full"></div>
           <div className="absolute top-10 right-40 w-32 h-72 bg-[#172d42] opacity-20 blur-2xl rounded-full"></div>
@@ -136,10 +149,7 @@ const Page = () => {
             </span>
             <br /> with AI
           </h1>
-          <p
-            className="text-gray-400 max-w-2xl mx-auto mt-4 z-10
-"
-          >
+          <p className="text-gray-400 max-w-2xl mx-auto mt-4 z-10">
             FeedSenseAI transforms your customer feedback into clear, actionable
             insights with powerful AI analysis. Understand sentiment, identify
             trends, and make data-driven decisions faster than ever.
@@ -167,7 +177,15 @@ const Page = () => {
         {data.map((_, id) => {
           return (
             <div key={id}>
-              <div className="space-y-3 rounded-lg p-6 border-[1px] border-[#2f3a49] bg-[#1a2030] max-w-md cursor-pointer shadow-xl hover:shadow-cyan-800 duration-300 ease-in-out">
+              <div
+                data-aos="fade-up"
+                data-aos-offset="200"
+                data-aos-delay="50"
+                data-aos-duration="1000"
+                data-aos-easing="ease-in-out"
+                data-aos-once="true"
+                className="space-y-3 rounded-lg p-6 border-[1px] border-[#2f3a49] bg-[#1a2030] max-w-md cursor-pointer shadow-xl hover:shadow-cyan-800 duration-300 ease-in-out"
+              >
                 <div className="bg-[#142346] p-3 rounded-lg w-14 flex justify-center">
                   {_.icon}
                 </div>
@@ -195,7 +213,7 @@ const Page = () => {
         {list.map((i, id) => (
           <div
             key={id}
-            className="flex flex-col items-center cursor-pointer"
+            className="flex flex-col items-center cursor-pointer "
             onMouseEnter={() => setHoveredIndex(id)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
@@ -216,7 +234,15 @@ const Page = () => {
         ))}
       </div>
 
-      <div className="bg-[#1a2030] p-5 rounded-xl max-w-3xl border-[1px] border-[#2f3a49] mx-auto h-[30vh] mt-10 flex items-center justify-center">
+      <div
+        data-aos="fade-up"
+        data-aos-offset="200"
+        data-aos-delay="50"
+        data-aos-duration="1000"
+        data-aos-easing="ease-in-out"
+        data-aos-once="true"
+        className="bg-[#1a2030] hidden p-5 rounded-xl max-w-md md:max-w-3xl border-[1px] border-[#2f3a49] mx-auto h-[30vh] mt-10 md:flex items-center justify-center"
+      >
         <div className="flex flex-col justify-center items-center gap-6">
           <div className="bg-[#142346] p-3 rounded-lg w-14 flex justify-center">
             {hoveredIndex !== null && hoveredIndex !== undefined
@@ -229,6 +255,33 @@ const Page = () => {
               : data[0]?.desc}
           </p>
         </div>
+      </div>
+
+      <div className="flex flex-col justify-center items-center md:hidden">
+        {list.map((i, id) => {
+          return (
+            <div key={id}>
+              <div
+                data-aos="fade-up"
+                data-aos-offset="200"
+                data-aos-delay="50"
+                data-aos-duration="1000"
+                data-aos-easing="ease-in-out"
+                data-aos-once="true"
+                className="bg-[#1a2030]  p-5 rounded-xl max-w-md md:max-w-3xl border-[1px] border-[#2f3a49] mx-auto h-[30vh] mt-10 md:flex items-center justify-center hover:shadow-cyan-800 duration-300 ease-in-out cursor-pointer"
+              >
+                <div className="flex flex-col justify-center items-center gap-6">
+                  <div className="bg-[#142346] p-3 rounded-lg w-14 flex justify-center">
+                    {i.icon}
+                  </div>
+                  <p className="text-gray-300 text-center px-6 max-w-md">
+                    {i.desc}
+                  </p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <div className="text-center space-y-5 mt-20">
@@ -245,6 +298,12 @@ const Page = () => {
           return (
             <div
               key={idx}
+              data-aos="fade-up"
+              data-aos-offset="200"
+              data-aos-delay="50"
+              data-aos-duration="1000"
+              data-aos-easing="ease-in-out"
+              data-aos-once="true"
               className="relative flex flex-col rounded-lg  bg-gradient-to-r from-[#1a202f] via-[#1a202f] to-[#1a202f] border-t-4 border-t-cyan-500  transform transition-transform duration-300 hover:scale-105 w-full max-w-md cursor-pointer shadow-2xl"
             >
               {plan.name === "Pro" && (
