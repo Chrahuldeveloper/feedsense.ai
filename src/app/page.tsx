@@ -13,6 +13,7 @@ import { FiMessageCircle } from "react-icons/fi";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { BsGraphUpArrow } from "react-icons/bs";
 import { IoIosTimer } from "react-icons/io";
+import { MdSettingsSuggest } from "react-icons/md";
 
 const Page = () => {
   useEffect(() => {
@@ -168,8 +169,6 @@ const Page = () => {
         </div>
       </div>
 
-      
-
       <div className="text-center space-y-5 mt-20">
         <h1 className="text-xl font-semibold text-[#b2ecfe] md:text-lg xl:text-5xl">
           Powerful Features
@@ -206,8 +205,6 @@ const Page = () => {
         })}
       </div>
 
-      
-
       <div className="text-center space-y-5 mt-20">
         <h1 className="text-xl font-semibold text-[#b2ecfe] md:text-lg xl:text-5xl">
           How It Works
@@ -217,7 +214,6 @@ const Page = () => {
           business insights.
         </p>
       </div>
-
 
       <div className="md:flex justify-center hidden  gap-12 items-center mt-5">
         {list.map((i, id) => (
@@ -350,6 +346,18 @@ const Page = () => {
             </div>
           );
         })}
+      </div>
+
+      <div className="fixed bottom-10 right-10">
+        <Link href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/feedsenseai">
+          <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
+            <MdSettingsSuggest
+              size={47}
+              color="white"
+              className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 rounded-full p-3"
+            />
+          </button>
+        </Link>
       </div>
 
       <footer className="bg-gray-900 text-gray-400 p-8">
