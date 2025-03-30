@@ -91,7 +91,7 @@ const Navbar = () => {
       </nav>
 
       {toogle ? (
-        <nav className="bg-[#111115] w-[100vw]  h-[40vh] space-y-10 px-5 block md:hidden  left-0  bottom-0 border-r-[1px] border-[#15171b] z-[70] fixed top-0">
+        <nav className="bg-[#151a24] w-[100vw]  h-[40vh] space-y-10 px-5 block md:hidden  left-0  bottom-0 border-r-[1px] border-[#15171b] z-[70] fixed top-0">
           <div className="flex flex-col space-y-7 mt-5">
             <div className="flex justify-between items-center">
               <Link href="/">

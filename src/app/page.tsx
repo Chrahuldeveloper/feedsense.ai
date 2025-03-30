@@ -168,6 +168,8 @@ const Page = () => {
         </div>
       </div>
 
+      
+
       <div className="text-center space-y-5 mt-20">
         <h1 className="text-xl font-semibold text-[#b2ecfe] md:text-lg xl:text-5xl">
           Powerful Features
@@ -189,7 +191,7 @@ const Page = () => {
                 data-aos-duration="1000"
                 data-aos-easing="ease-in-out"
                 data-aos-once="true"
-                className="space-y-3 rounded-lg p-6 border-[1px] border-[#2f3a49] bg-[#1a2030] max-w-md cursor-pointer shadow-xl hover:shadow-cyan-800 duration-300 ease-in-out"
+                className="space-y-3 rounded-lg p-6 border-[1px] border-[#2f3a49] bg-[#1a2030] max-w-md cursor-pointer shadow-xl hover:shadow-cyan-800 duration-500 ease-in-out"
               >
                 <div className="bg-[#142346] p-3 rounded-lg w-14 flex justify-center">
                   {_.icon}
@@ -204,6 +206,8 @@ const Page = () => {
         })}
       </div>
 
+      
+
       <div className="text-center space-y-5 mt-20">
         <h1 className="text-xl font-semibold text-[#b2ecfe] md:text-lg xl:text-5xl">
           How It Works
@@ -213,6 +217,7 @@ const Page = () => {
           business insights.
         </p>
       </div>
+
 
       <div className="md:flex justify-center hidden  gap-12 items-center mt-5">
         {list.map((i, id) => (
