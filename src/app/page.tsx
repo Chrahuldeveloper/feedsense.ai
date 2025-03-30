@@ -8,6 +8,11 @@ import { LuBrain } from "react-icons/lu";
 import { TiTickOutline } from "react-icons/ti";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { GoGraph } from "react-icons/go";
+import { FiMessageCircle } from "react-icons/fi";
+import { AiOutlineThunderbolt } from "react-icons/ai";
+import { BsGraphUpArrow } from "react-icons/bs";
+import { IoIosTimer } from "react-icons/io";
 
 const Page = () => {
   useEffect(() => {
@@ -21,27 +26,27 @@ const Page = () => {
       desc: "Advanced machine learning algorithms that analyze feedback and extract actionable insights.",
     },
     {
-      icon: <LuBrain size={25} color="#00a3ff" />,
+      icon: <GoGraph size={25} color="#00a3ff" />,
       title: "Trend Identification",
       desc: "Automatically identify emerging patterns and trends across all customer feedback channels.",
     },
     {
-      icon: <LuBrain size={25} color="#00a3ff" />,
+      icon: <FiMessageCircle size={25} color="#00a3ff" />,
       title: "Sentiment Analysis",
       desc: "Understand the emotional tone behind feedback to gauge customer satisfaction .",
     },
     {
-      icon: <LuBrain size={25} color="#00a3ff" />,
+      icon: <AiOutlineThunderbolt size={25} color="#00a3ff" />,
       title: "Real-Time Alerts",
       desc: "Receive instant notifications about critical feedback that requires immediate attention.",
     },
     {
-      icon: <LuBrain size={25} color="#00a3ff" />,
+      icon: <BsGraphUpArrow size={25} color="#00a3ff" />,
       title: "Custom Dashboards",
       desc: "Create personalized dashboards to track the metrics that matter most to your business.",
     },
     {
-      icon: <LuBrain size={25} color="#00a3ff" />,
+      icon: <IoIosTimer size={25} color="#00a3ff" />,
       title: "In-Depth Reports",
       desc: "Generate comprehensive reports with visual data representations for stakeholder presentations.",
     },
@@ -54,17 +59,17 @@ const Page = () => {
       desc: "Connect your feedback channels, including survey responses, app reviews, support tickets, and social mentions.",
     },
     {
-      icon: <LuBrain size={35} color="#00a3ff" />,
+      icon: <GoGraph size={35} color="#00a3ff" />,
       title: "AI Processing",
       desc: "Our AI engine analyzes the feedback, categorizes issues, detects sentiment, and identifies actionable insights.",
     },
     {
-      icon: <LuBrain size={35} color="#00a3ff" />,
+      icon: <AiOutlineThunderbolt size={35} color="#00a3ff" />,
       title: "Generate Insights",
       desc: "View detailed dashboards showing trends, sentiment analysis, and prioritized action items.",
     },
     {
-      icon: <LuBrain size={35} color="#00a3ff" />,
+      icon: <BsGraphUpArrow size={35} color="#00a3ff" />,
       title: "Take Action",
       desc: "Implement changes based on insights, track improvements, and measure impact over time.",
     },
