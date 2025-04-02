@@ -178,7 +178,7 @@ const Form = () => {
                         setSelectedEmotion(idx);
                         setFeedback({ ...feedback, emotion: emotion.title });
                       }}
-                      className={`cursor-pointer p-2 rounded-full w-20 ${
+                      className={`cursor-pointer p-2 rounded-full w-24 ${
                         selectedEmotion === idx ? "bg-[#282e32] " : ""
                       }`}
                     >
