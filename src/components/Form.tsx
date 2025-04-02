@@ -182,7 +182,7 @@ const Form = () => {
                         selectedEmotion === idx ? "bg-[#282e32]" : ""
                       }`}
                     >
-                      <div className="flex flex-col items-center space-y-2.5 transition ease-in-out duration-300 hover:bg-stone-900 p-3 rounded-lg">
+                      <div className="flex flex-col items-center space-y-2.5 transition ease-in-out duration-300  p-3 rounded-lg">
                         {emotion.emoji}
                         <p className="text-xs text-gray-300 font-semibold">
                           {emotion.title}
