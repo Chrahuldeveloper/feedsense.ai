@@ -178,8 +178,8 @@ const Form = () => {
                         setSelectedEmotion(idx);
                         setFeedback({ ...feedback, emotion: emotion.title });
                       }}
-                      className={`cursor-pointer p-2 rounded-full ${
-                        selectedEmotion === idx ? "bg-[#282e32]" : ""
+                      className={`cursor-pointer p-2 rounded-full w-10 h-10 ${
+                        selectedEmotion === idx ? "bg-[#282e32] " : ""
                       }`}
                     >
                       <div className="flex flex-col items-center space-y-2.5 transition ease-in-out duration-300  p-3 rounded-lg">
