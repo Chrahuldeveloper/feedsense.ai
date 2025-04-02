@@ -178,7 +178,7 @@ const Form = () => {
                         setSelectedEmotion(idx);
                         setFeedback({ ...feedback, emotion: emotion.title });
                       }}
-                      className={`cursor-pointer p-2 rounded-full w-10 h-10 ${
+                      className={`cursor-pointer p-2 rounded-full w-10 ${
                         selectedEmotion === idx ? "bg-[#282e32] " : ""
                       }`}
                     >
@@ -194,7 +194,7 @@ const Form = () => {
               </div>
 
               {/* Submit Button */}
-              <div className="mt-4 p-5">
+              <div className="mt-5 p-5">
                 <button
                   onClick={saveFeedBack}
                   className="text-black  flex items-center justify-center gap-3 font-semibold px-4 py-2 rounded-lg w-full bg-slate-50 text-sm"
