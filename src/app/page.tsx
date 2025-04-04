@@ -14,6 +14,7 @@ import { AiOutlineThunderbolt } from "react-icons/ai";
 import { BsGraphUpArrow } from "react-icons/bs";
 import { IoIosTimer } from "react-icons/io";
 import { MdSettingsSuggest } from "react-icons/md";
+import Cookies from "js-cookie";
 
 const Page = () => {
   useEffect(() => {
@@ -77,6 +78,13 @@ const Page = () => {
   ];
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>();
+
+  const [userSession, setUserSession] = useState<string | null>(null);
+
+  useEffect(() => {
+    const token = Cookies.get("auth-token");
+    setUserSession(token ?? null);
+  }, []);
 
   const Plans = [
     {
@@ -162,9 +170,19 @@ const Page = () => {
           </p>
 
           <div className="mt-6 flex justify-center space-x-4">
-            <button className=" cursor-pointer bg-blue-500 px-6 py-3 text-lg font-medium rounded-lg text-white shadow-lg shadow-blue-500/50 hover:bg-blue-600 transition z-10">
-              Get Started Free
-            </button>
+            {userSession === null ? (
+              <Link href="/login">
+                <button className=" cursor-pointer bg-blue-500 px-6 py-3 text-lg font-medium rounded-lg text-white shadow-lg shadow-blue-500/50 hover:bg-blue-600 transition z-10">
+                  Get Started Free
+                </button>
+              </Link>
+            ) : (
+              <Link href="/dashboard">
+                <li className=" cursor-pointer bg-blue-500 px-6 py-3 text-lg font-medium rounded-lg text-white shadow-lg shadow-blue-500/50 hover:bg-blue-600 transition z-10">
+                  Your Account
+                </li>
+              </Link>
+            )}
           </div>
         </div>
       </div>
