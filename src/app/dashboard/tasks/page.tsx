@@ -147,93 +147,65 @@ const Page = () => {
             </div>
 
             <div className="border rounded-lg border-[#1a1f2c] md:mx-auto w-[100vw] md:w-[73vw] mt-7 divide-y divide-[#151923] overflow-hidden">
-              <div
-                className={`bg-[#151923] rounded-lg  ${
+  <div className={`bg-[#151923] rounded-lg ${getPlan === "Basic" ? "blur-md cursor-not-allowed" : ""}`}>
+    {websites.length > 0 ? (
+      websites.map((site, idx) =>
+        site?.parsedFeedback?.response ? (
+          <div
+            key={idx}
+            className={`flex items-center justify-between px-4 py-3 font-semibold transition-colors duration-300 ease-in-out ${
+              getPlan === "Basic" ? "cursor-not-allowed" : ""
+            }`}
+          >
+            {/* Index */}
+            <h1 className="text-sm text-gray-300 w-6 text-center">{idx + 1}</h1>
+
+            {/* Feedback Text (Centered) */}
+            <h1 className={`flex-1 text-sm text-gray-300 text-center px-4 ${getPlan === "Basic" ? "blur-md" : ""}`}>
+              {site?.parsedFeedback?.response?.replace(/"/g, "") || "No analysis available"}
+            </h1>
+
+            {/* Status Dropdown */}
+            <div className="text-xs text-gray-300">
+              <select
+                className={`bg-[#1a1f2c] border border-[#222529] text-gray-300 text-sm rounded px-3 py-2 outline-none ${
                   getPlan === "Basic" ? "blur-md cursor-not-allowed" : ""
                 }`}
+                defaultValue="Pending"
+                disabled={getPlan === "Basic"}
+                onChange={async (e) => {
+                  const status = e.target.value;
+                  if (status === "Completed") {
+                    try {
+                      setisloading(true);
+                      await db.handleStatusChange(user!, idx, status, site?.parsedFeedback?.response);
+                      setWebsites((prev) => prev.filter((_, i) => i !== idx));
+                    } catch (error) {
+                      console.error("Error updating status:", error);
+                    } finally {
+                      setisloading(false);
+                    }
+                  }
+                }}
               >
-                {websites.length > 0 ? (
-                  websites.map((site, idx) =>
-                    site?.parsedFeedback?.response ? (
-                      <div
-                        key={idx}
-                        className={`transition-colors flex flex-row items-center justify-evenly duration-300 ease-in-out font-semibold ${
-                          getPlan === "Basic" ? "cursor-not-allowed" : ""
-                        }`}
-                      >
-                        <h1 className="text-sm text-gray-300">{idx + 1}</h1>
-                        <h1
-                          className={`py-4 px-10 lg:pl-48 text-left text-sm text-gray-300 ${
-                            getPlan === "Basic" ? "blur-md" : ""
-                          }`}
-                        >
-                          {site?.parsedFeedback?.response?.replace(/"/g, "") ||
-                            "No analysis available"}
-                        </h1>
-                        <div className="py-4 px-4 text-center text-xs text-gray-300">
-                          <select
-                            className={`bg-[#1a1f2c] border-[1px] border-[#222529] text-gray-300 text-sm rounded px-3 py-2 outline-none ${
-                              getPlan === "Basic"
-                                ? "blur-md cursor-not-allowed"
-                                : ""
-                            }`}
-                            defaultValue="Pending"
-                            disabled={getPlan === "Basic"}
-                            onChange={async (e) => {
-                              const status = e.target.value;
-                              if (status === "Completed") {
-                                try {
-                                  setisloading(true);
-                                  await db.handleStatusChange(
-                                    user!,
-                                    idx,
-                                    status,
-                                    site?.parsedFeedback?.response
-                                  );
-
-                                  setWebsites((prev) =>
-                                    prev.filter((_, i) => i !== idx)
-                                  );
-                                } catch (error) {
-                                  console.error(
-                                    "Error updating status:",
-                                    error
-                                  );
-                                } finally {
-                                  setisloading(false);
-                                }
-                              }
-                            }}
-                          >
-                            <option
-                              value="Completed"
-                              className="hover:bg-[#222529] text-gray-300 px-4 py-2 cursor-pointer"
-                            >
-                              Completed
-                            </option>
-                            <option
-                              value="Pending"
-                              className="hover:bg-[#222529] text-gray-300 px-4 py-2 cursor-pointer"
-                            >
-                              Pending
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                    ) : null
-                  )
-                ) : (
-                  <div>
-                    <div className="py-10 text-center text-slate-300 bg-[#151923]">
-                      <div className="flex flex-col items-center gap-5">
-                        <FaRegCircleStop size={25} color="#9ca3af" />
-                        <p className="font-semibold">No Analysis Yet</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+              </select>
             </div>
+          </div>
+        ) : null
+      )
+    ) : (
+      <div className="py-10 text-center text-slate-300 bg-[#151923]">
+        <div className="flex flex-col items-center gap-5">
+          <FaRegCircleStop size={25} color="#9ca3af" />
+          <p className="font-semibold">No Analysis Yet</p>
+        </div>
+      </div>
+    )}
+  </div>
+</div>
+
 
             <div className="flex justify-center items-center md:flex-row flex-col md:items-start md:space-x-8  my-10">
               <div className=" mb-5 bg-[#151923] p-4  w-full md:w-[35vw] rounded-lg">
