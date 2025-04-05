@@ -363,7 +363,8 @@ const Page = () => {
                 <>
                   <button
                     onClick={() => {
-                      db.availFreeOffer(user!.uid);
+                 const res =    db.availFreeOffer(user!.uid);
+                 console.log(res)
                     }}
                     className="w-full  bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600   transitionmt-4 text-white py-3 font-semibold rounded-lg  transition-shadow duration-200 shadow-xl text-sm"
                   >
