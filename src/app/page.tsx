@@ -424,7 +424,7 @@ const Page = () => {
         </Link>
       </div>
 
-      <footer className="bg-gray-900 text-gray-400 p-8">
+      <footer className="bg-gray-900 text-gray-400 p-8 mt-10">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between space-y-8 md:space-y-0">
           <div className="md:w-1/3">
             <h2 className="text-white text-2xl font-semibold">
