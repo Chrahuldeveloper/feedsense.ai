@@ -15,6 +15,12 @@ import { BsGraphUpArrow } from "react-icons/bs";
 import { IoIosTimer } from "react-icons/io";
 import { MdSettingsSuggest } from "react-icons/md";
 import Cookies from "js-cookie";
+import dbService from "@/firebase/utils/db";
+import useAuth from "@/hooks/CurrentUser";
+
+interface User {
+  uid: string;
+}
 
 const Page = () => {
   useEffect(() => {
@@ -85,6 +91,13 @@ const Page = () => {
     const token = Cookies.get("auth-token");
     setUserSession(token ?? null);
   }, []);
+
+  const { user, loading } = useAuth() as {
+    user: User | null;
+    loading: boolean;
+  };
+
+  const db = new dbService();
 
   const Plans = [
     {
@@ -348,10 +361,16 @@ const Page = () => {
               <div className="px-7 mt-auto">
                 {/* <Link href={`/subscription/${plan.name}`}> */}
                 <>
-                  <button className="w-full  bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600   transitionmt-4 text-white py-3 font-semibold rounded-lg  transition-shadow duration-200 shadow-xl text-sm">
+                  <button
+                    onClick={() => {
+                      db.availFreeOffer(user!.uid);
+                    }}
+                    className="w-full  bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600   transitionmt-4 text-white py-3 font-semibold rounded-lg  transition-shadow duration-200 shadow-xl text-sm"
+                  >
                     Grab Now
                   </button>
                 </>
+                {/* </Link> */}
               </div>
               <ul className="space-y-4 text-slate-300 p-6 flex-grow bg-[#181c2b] mt-5 border-t-[1px] border-[#2f3a49]">
                 {plan.features.map((feature, index) => (
