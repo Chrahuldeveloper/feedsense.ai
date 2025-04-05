@@ -342,7 +342,11 @@ const Page = () => {
         })}
       </div>
 
-      <div className="text-center space-y-5 mt-20">
+      <div
+        className={` ${
+          offer === "true" ? "hidden" : "block"
+        } text-center space-y-5 mt-20`}
+      >
         <h1 className="text-xl font-semibold text-[#b2ecfe] md:text-lg xl:text-5xl">
           Simple, Transparent Pricing
         </h1>
