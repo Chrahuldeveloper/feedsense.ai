@@ -89,10 +89,16 @@ const Page = () => {
 
   const [userSession, setUserSession] = useState<string | null>(null);
 
+  const [offer, setoffer] = useState<string | null>();
+
   useEffect(() => {
     const token = Cookies.get("auth-token");
     setUserSession(token ?? null);
-  }, []);
+
+    const getOfferStatus = localStorage.getItem("offerGrabbed");
+
+    setoffer(getOfferStatus);
+  }, [offer]);
 
   const { user, loading } = useAuth() as {
     user: User | null;
@@ -345,7 +351,11 @@ const Page = () => {
         </p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8 px-6 md:px-10 pb-14 justify-center mt-16">
+      <div
+        className={`flex flex-col md:flex-row gap-8 px-6 md:px-10 pb-14 justify-center mt-16  ${
+          offer === "true" ? "hidden" : "block"
+        }  `}
+      >
         {Plans.map((plan, idx) => {
           return (
             <div
