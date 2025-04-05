@@ -17,6 +17,8 @@ import { MdSettingsSuggest } from "react-icons/md";
 import Cookies from "js-cookie";
 import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface User {
   uid: string;
@@ -143,8 +145,20 @@ const Page = () => {
     // },
   ];
 
+  const handleAvailOffer = async () => {
+    try {
+      const res = await db.availFreeOffer(user!.uid);
+      console.log(res);
+      return toast("Congratulations you have grabbed the free offer!");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="w-screen h-full bg-[#1c2031]">
+      <ToastContainer theme="dark" toastClassName={"custom-toast"} />
+
       <div className="relative min-h-screen bg-[#1c2031] text-white flex flex-col items-center justify-center px-6 overflow-hidden">
         <div className="absolute top-1/4 left-10 w-96 h-72 bg-[#172d42] opacity-40 blur-3xl rounded-full"></div>
         <div className="absolute bottom-1/3 right-20 w-60 h-60 bg-[#172d42] opacity-30 blur-3xl rounded-full"></div>
@@ -362,10 +376,7 @@ const Page = () => {
                 {/* <Link href={`/subscription/${plan.name}`}> */}
                 <>
                   <button
-                    onClick={() => {
-                 const res =    db.availFreeOffer(user!.uid);
-                 console.log(res)
-                    }}
+                    onClick={handleAvailOffer}
                     className="w-full  bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600   transitionmt-4 text-white py-3 font-semibold rounded-lg  transition-shadow duration-200 shadow-xl text-sm"
                   >
                     Grab Now
