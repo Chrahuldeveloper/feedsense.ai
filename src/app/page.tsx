@@ -98,7 +98,7 @@ const Page = () => {
     const getOfferStatus = localStorage.getItem("offerGrabbed");
 
     setoffer(getOfferStatus);
-  }, [offer]);
+  }, []);
 
   const { user, loading } = useAuth() as {
     user: User | null;
