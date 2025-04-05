@@ -149,6 +149,7 @@ const Page = () => {
     try {
       const res = await db.availFreeOffer(user!.uid);
       console.log(res);
+      localStorage.setItem("offerGrabbed", res.toString());
       return toast("Congratulations you have grabbed the free offer!");
     } catch (error) {
       console.log(error);
