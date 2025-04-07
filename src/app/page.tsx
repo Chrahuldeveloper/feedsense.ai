@@ -442,12 +442,20 @@ const Page = () => {
               <div className="px-7 mt-auto">
                 {/* <Link href={`/subscription/${plan.name}`}> */}
                 <>
-                  <button
-                    onClick={handleAvailOffer}
-                    className="w-full  bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600   transitionmt-4 text-white py-3 font-semibold rounded-lg  transition-shadow duration-200 shadow-xl text-sm"
-                  >
-                    Grab Now
-                  </button>
+                  {user?.uid ? (
+                    <button
+                      onClick={handleAvailOffer}
+                      className="w-full  bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600   transitionmt-4 text-white py-3 font-semibold rounded-lg  transition-shadow duration-200 shadow-xl text-sm"
+                    >
+                      Grab Now
+                    </button>
+                  ) : (
+                    <Link href="/login">
+                      <button className="w-full  bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600   transitionmt-4 text-white py-3 font-semibold rounded-lg  transition-shadow duration-200 shadow-xl text-sm">
+                        Login
+                      </button>
+                    </Link>
+                  )}
                 </>
                 {/* </Link> */}
               </div>
