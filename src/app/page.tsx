@@ -17,8 +17,8 @@ import { MdSettingsSuggest } from "react-icons/md";
 import Cookies from "js-cookie";
 import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
-import LottiePlayer from "react-lottie-player";
-import Celebrate from "../app/lottie-asserts/Celebrate.json";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface User {
   uid: string;
@@ -89,8 +89,6 @@ const Page = () => {
 
   const [userSession, setUserSession] = useState<string | null>(null);
 
-  const [toggle, settoggle] = useState<boolean | null>();
-
   const [offer, setoffer] = useState<string | null>();
 
   useEffect(() => {
@@ -158,7 +156,7 @@ const Page = () => {
       const res = await db.availFreeOffer(user!.uid);
       console.log(res);
       localStorage.setItem("offerGrabbed", res.toString());
-      settoggle(true);
+      return toast("Congratulations you have grabbed the free offer!");
     } catch (error) {
       console.log(error);
     }
@@ -166,57 +164,7 @@ const Page = () => {
 
   return (
     <div className="w-screen h-full bg-[#1c2031]">
-      {toggle ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center h-full bg-black bg-opacity-70">
-          <div className="relative w-[70vw] bg-transparent flex flex-col items-center justify-center">
-            <div className="flex flex-wrap justify-center mt-20 gap-4">
-              <LottiePlayer
-                loop
-                animationData={Celebrate}
-                play
-                className="w-60"
-              />
-              <LottiePlayer
-                loop
-                animationData={Celebrate}
-                play
-                className="w-60"
-              />
-              <LottiePlayer
-                loop
-                animationData={Celebrate}
-                play
-                className="w-60"
-              />
-              <LottiePlayer
-                loop
-                animationData={Celebrate}
-                play
-                className="w-60"
-              />
-            </div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#151923] border border-[#15171b] text-slate-300 text-base font-medium px-6 py-5 rounded-xl shadow-2xl z-10 w-[85vw] md:w-[60vw] lg:w-[40vw] xl:w-[30vw]">
-              <div className="text-center">
-                <h1 className="text-xl font-bold mb-2">🎉 Offer Unlocked!</h1>
-                <p className="text-sm text-slate-400">
-                  You’ve officially grabbed the exclusive FeedSensei deal. Let
-                  the insights begin!
-                </p>
-              </div>
-              <div className="flex justify-end mt-6">
-                <button
-                  onClick={() => {
-                    settoggle(false);
-                  }}
-                  className="text-gray-300 text-xs bg-[#20242e] hover:bg-[#2a2f3b] transition-all duration-200 px-6 py-2 rounded-md font-semibold shadow-sm"
-                >
-                  Got it
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
+      <ToastContainer theme="dark" toastClassName={"custom-toast"} />
 
       <div className="relative min-h-screen bg-[#1c2031] text-white flex flex-col items-center justify-center px-6 overflow-hidden">
         <div className="absolute top-1/4 left-10 w-96 h-72 bg-[#172d42] opacity-40 blur-3xl rounded-full"></div>
@@ -450,7 +398,7 @@ const Page = () => {
                       Grab Now
                     </button>
                   ) : (
-                    <Link href="/login">
+                    <Link href={"/login"}>
                       <button className="w-full  bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600   transitionmt-4 text-white py-3 font-semibold rounded-lg  transition-shadow duration-200 shadow-xl text-sm">
                         Login
                       </button>
