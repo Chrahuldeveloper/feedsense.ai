@@ -12,7 +12,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Loader from "../../components/Loader";
-// import Link from "next/link";
 export default function page() {
   const db = new dbService();
 
@@ -72,7 +71,7 @@ export default function page() {
 
   return (
     <>
-      <div className="bg-[#000000] w-full min-h-screen overflow-hidden">
+      <div className="bg-[#1c2031] w-full min-h-screen overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95vw] h-[30vh] bg-blue-600 rounded-full opacity-20 blur-[120px]" />
           <div className="absolute top-1/4 left-1/4 w-[60vw] h-[30vh] bg-blue-500 rounded-full opacity-15 blur-[100px]" />
@@ -108,9 +107,8 @@ export default function page() {
               return (
                 <div
                   key={idx}
-                  className="relative flex flex-col rounded-lg border-[1px] bg-gradient-to-r from-[#000000] via-[black] to-[#1a1e21] border-[#282e32] transform transition-transform duration-300 hover:scale-105 w-full max-w-md cursor-pointer shadow-2xl"
+                  className="relative flex flex-col rounded-lg  bg-gradient-to-r from-[#1a202f] via-[#1a202f] to-[#1a202f] border-t-4 border-t-cyan-500  transform transition-transform duration-300 hover:scale-105 w-full max-w-md cursor-pointer shadow-2xl"
                 >
-                  Free Offer Ribbon
                   {plan.name === "Pro" && (
                     <div className="absolute top-0 right-0 bg-blue-500 text-white text-xs font-bold py-1 px-3 rounded-bl-lg">
                       Free Offer
@@ -159,7 +157,7 @@ export default function page() {
                             }
                           }
                         }}
-                        className="w-full bg-gradient-to-r from-[#23282c] via-[#131414] to-[#23282c] mt-4 text-white py-3 font-semibold rounded-lg hover:shadow-lg transition-shadow duration-200 shadow-xl text-sm"
+                        className="w-full  bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600   transitionmt-4 text-white py-3 font-semibold rounded-lg  transition-shadow duration-200 shadow-xl text-sm"
                       >
                         Grab Now
                       </button>
