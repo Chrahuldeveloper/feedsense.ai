@@ -147,65 +147,87 @@ const Page = () => {
             </div>
 
             <div className="border rounded-lg border-[#1a1f2c] md:mx-auto w-[100vw] md:w-[73vw] mt-7 divide-y divide-[#151923] overflow-hidden">
-  <div className={`bg-[#151923] rounded-lg ${getPlan === "Basic" ? "blur-md cursor-not-allowed" : ""}`}>
-    {websites.length > 0 ? (
-      websites.map((site, idx) =>
-        site?.parsedFeedback?.response ? (
-          <div
-            key={idx}
-            className={`flex items-center justify-between px-4 py-3 font-semibold transition-colors duration-300 ease-in-out ${
-              getPlan === "Basic" ? "cursor-not-allowed" : ""
-            }`}
-          >
-            {/* Index */}
-            <h1 className="text-sm text-gray-300 w-6 text-center">{idx + 1}</h1>
-
-            {/* Feedback Text (Centered) */}
-            <h1 className={`flex-1 text-sm text-gray-300 text-center px-4 ${getPlan === "Basic" ? "blur-md" : ""}`}>
-              {site?.parsedFeedback?.response?.replace(/"/g, "") || "No analysis available"}
-            </h1>
-
-            {/* Status Dropdown */}
-            <div className="text-xs text-gray-300">
-              <select
-                className={`bg-[#1a1f2c] border border-[#222529] text-gray-300 text-sm rounded px-3 py-2 outline-none ${
+              <div
+                className={`bg-[#151923] rounded-lg ${
                   getPlan === "Basic" ? "blur-md cursor-not-allowed" : ""
                 }`}
-                defaultValue="Pending"
-                disabled={getPlan === "Basic"}
-                onChange={async (e) => {
-                  const status = e.target.value;
-                  if (status === "Completed") {
-                    try {
-                      setisloading(true);
-                      await db.handleStatusChange(user!, idx, status, site?.parsedFeedback?.response);
-                      setWebsites((prev) => prev.filter((_, i) => i !== idx));
-                    } catch (error) {
-                      console.error("Error updating status:", error);
-                    } finally {
-                      setisloading(false);
-                    }
-                  }
-                }}
               >
-                <option value="Pending">Pending</option>
-                <option value="Completed">Completed</option>
-              </select>
-            </div>
-          </div>
-        ) : null
-      )
-    ) : (
-      <div className="py-10 text-center text-slate-300 bg-[#151923]">
-        <div className="flex flex-col items-center gap-5">
-          <FaRegCircleStop size={25} color="#9ca3af" />
-          <p className="font-semibold">No Analysis Yet</p>
-        </div>
-      </div>
-    )}
-  </div>
-</div>
+                {websites.length > 0 ? (
+                  websites.map((site, idx) =>
+                    site?.parsedFeedback?.response ? (
+                      <div
+                        key={idx}
+                        className={`flex items-center justify-between px-4 py-3 font-semibold transition-colors duration-300 ease-in-out ${
+                          getPlan === "Basic" ? "cursor-not-allowed" : ""
+                        }`}
+                      >
+                        {/* Index */}
+                        <h1 className="text-sm text-gray-300 w-6 text-center">
+                          {idx + 1}
+                        </h1>
 
+                        {/* Feedback Text (Centered) */}
+                        <h1
+                          className={`flex-1 text-sm text-gray-300 text-center px-4 ${
+                            getPlan === "Basic" ? "blur-md" : ""
+                          }`}
+                        >
+                          {site?.parsedFeedback?.response?.replace(/"/g, "") ||
+                            "No analysis available"}
+                        </h1>
+
+                        {/* Status Dropdown */}
+                        <div className="text-xs text-gray-300">
+                          <select
+                            className={`bg-[#1a1f2c] border border-[#222529] text-gray-300 text-sm rounded px-3 py-2 outline-none ${
+                              getPlan === "Basic"
+                                ? "blur-md cursor-not-allowed"
+                                : ""
+                            }`}
+                            defaultValue="Pending"
+                            disabled={getPlan === "Basic"}
+                            onChange={async (e) => {
+                              const status = e.target.value;
+                              if (status === "Completed") {
+                                try {
+                                  setisloading(true);
+                                  await db.handleStatusChange(
+                                    user!,
+                                    idx,
+                                    status,
+                                    site?.parsedFeedback?.response
+                                  );
+                                  setWebsites((prev) =>
+                                    prev.filter((_, i) => i !== idx)
+                                  );
+                                } catch (error) {
+                                  console.error(
+                                    "Error updating status:",
+                                    error
+                                  );
+                                } finally {
+                                  setisloading(false);
+                                }
+                              }
+                            }}
+                          >
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                          </select>
+                        </div>
+                      </div>
+                    ) : null
+                  )
+                ) : (
+                  <div className="py-10 text-center text-slate-300 bg-[#151923]">
+                    <div className="flex flex-col items-center gap-5">
+                      <FaRegCircleStop size={25} color="#9ca3af" />
+                      <p className="font-semibold">No Analysis Yet</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
 
             <div className="flex justify-center items-center md:flex-row flex-col md:items-start md:space-x-8  my-10">
               <div className=" mb-5 bg-[#151923] p-4  w-full md:w-[35vw] rounded-lg">
@@ -215,34 +237,32 @@ const Page = () => {
                 <Doughnut data={analytics} className="w-96 mx-auto p-10" />
               </div>
 
-              <div className="bg-[#151923] p-4 space-y-3 h-[66vh] overflow-y-scroll rounded-lg   md:w-[35vw]">
+              <div className="bg-[#151923] p-4 space-y-3 h-[53vh] overflow-y-scroll rounded-lg  md:w-[35vw]">
+                <h2 className="text-gray-300 text-lg font-semibold mb-4">
+                  User Feedback
+                </h2>
                 {websites.length > 0 ? (
                   websites.map((site, idx) => (
                     <div
                       key={idx}
-                      className=" flex items-center justify-evenly space-x-6 transition-colors duration-300 ease-in-out cursor-pointer font-semibold"
+                      className="flex items-center gap-4 px-4 py-2 transition-colors duration-300 ease-in-out cursor-pointer font-semibold"
                     >
-                      <div>
+                      <div className="flex-shrink-0">
                         <MdOutlineEventNote
-                          size={20}
-                          color="#00a3ff"
-                          className="w-10 p-2 h-10 rounded-full bg-[#13293c]"
+                          size={24}
+                          className="w-10 h-10 p-2 rounded-full bg-[#13293c] text-[#00a3ff]"
                         />
                       </div>
-                      <div className="">
-                        <div className="  text-sm text-gray-300">
-                          {site.feedback}
-                        </div>
+                      <div className="flex-1">
+                        <p className="text-sm text-gray-300">{site.feedback}</p>
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div>
-                    <div className="py-5 text-center text-slate-300">
-                      <div className="flex flex-col items-center gap-5">
-                        <FaRegCircleStop size={25} color="#9ca3af" />
-                        <p className="font-semibold">No Feedbacks Yet</p>
-                      </div>
+                  <div className="py-5 text-center text-slate-300">
+                    <div className="flex flex-col items-center gap-5">
+                      <FaRegCircleStop size={25} color="#9ca3af" />
+                      <p className="font-semibold">No Feedbacks Yet</p>
                     </div>
                   </div>
                 )}

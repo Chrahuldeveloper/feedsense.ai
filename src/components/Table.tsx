@@ -184,14 +184,14 @@ const Table = () => {
 
         {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
-        <div className="p-5">
+        <div className="p-5 md:ml-10">
           <h1 className="text-xl md:text-2xl text-gray-300 md:px-20 font-semibold mt-3">
             DashBoard OverView
           </h1>
         </div>
 
         <div className="w-[80vw] mx-auto justify-center flex flex-col md:flex-row gap-8">
-          <div className="bg-[#151923] p-5 rounded-lg w-[60vw] mx-auto lg:w-[17vw] flex justify-evenly gap-5 cursor-pointer">
+          <div className="bg-[#151923] p-5 rounded-lg w-[60vw] mx-auto lg:w-[14vw] flex justify-evenly gap-5 cursor-pointer">
             <div className="space-y-3 order-2">
               <h1 className=" font-semibold text-slate-300 text-sm">
                 Total TotalWebsites
@@ -204,7 +204,7 @@ const Table = () => {
               className=" w-12 p-2 h-12 rounded-full bg-[#13293c]"
             />
           </div>
-          <div className="bg-[#151923] p-5 rounded-lg lg:w-[17vw] w-[60vw] mx-auto flex justify-evenly gap-5 cursor-pointer">
+          <div className="bg-[#151923] p-5 rounded-lg lg:w-[14vw] w-[60vw] mx-auto flex justify-evenly gap-5 cursor-pointer">
             <div className="space-y-3 order-2">
               <h1 className=" font-semibold text-slate-300 text-sm">
                 Total Feedback
@@ -217,7 +217,7 @@ const Table = () => {
               className="w-12 p-2.5 h-12 rounded-full bg-[#1b1938]"
             />
           </div>
-          <div className="bg-[#151923] p-5 rounded-lg w-[60vw] mx-auto lg:w-[17vw] flex justify-evenly gap-5 cursor-pointer">
+          <div className="bg-[#151923] p-5 rounded-lg w-[60vw] mx-auto lg:w-[14vw] flex justify-evenly gap-5 cursor-pointer">
             <div className="space-y-3 order-2">
               <h1 className=" font-semibold text-slate-300 text-sm">
                 Total TasksFinished
@@ -232,7 +232,7 @@ const Table = () => {
               className="w-12 p-2 h-12 rounded-full bg-[#112e2d]"
             />
           </div>
-          <div className="bg-[#151923] p-5 rounded-lg lg:w-[17vw] w-[60vw] mx-auto flex justify-evenly gap-5 cursor-pointer">
+          <div className="bg-[#151923] p-5 rounded-lg lg:w-[14vw] w-[60vw] mx-auto flex justify-evenly gap-5 cursor-pointer">
             <div className="space-y-3 order-2">
               <h1 className=" font-semibold text-slate-300 text-sm">
                 Tasks to Finish
@@ -249,8 +249,8 @@ const Table = () => {
           </div>
         </div>
 
-        <div className="flex justify-center items-start md:flex-row flex-col gap-4">
-          <div className="w-[100vw] md:w-[40vw] ">
+        <div className="flex justify-center items-start md:flex-row flex-col gap-4 lg:gap-24">
+          <div className="w-[100vw] md:w-[35vw] md:ml- ">
             <Analytics
               totalWebsites={infodata.totalWebsites}
               totalFeedback={infodata.totalFeedback}
@@ -259,7 +259,7 @@ const Table = () => {
               loading={loading}
             />
           </div>
-          <div className="w-full md:w-[40vw]  py-7 md:h-[70vh] rounded-lg">
+          <div className="w-full md:w-[35vw]  py-7 md:h-[60vh] rounded-lg">
             {loading ? (
               <div>
                 <Loader message="please wait" />
@@ -275,10 +275,10 @@ const Table = () => {
                 </p>
               </div>
             ) : (
-              <div className="pt-3  bg-[#151923] md:h-[67vh] rounded-lg">
+              <div className="pt-3  bg-[#151923] md:h-[54vh]  overflow-y-scroll rounded-lg">
                 <div>
                   <div className="">
-                    <div className="flex flex-col  p-8">
+                    <div className="flex flex-col gap-5 p-8">
                       {websitedata?.map((site, idx) => (
                         <div
                           key={idx}
@@ -296,6 +296,7 @@ const Table = () => {
                           <h1 className="text-sm text-slate-300 font-semibold my-2.5">
                             {site?.name}
                           </h1>
+                          
                           <Link
                             href={{
                               pathname: "/dashboard/tasks",

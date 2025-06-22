@@ -22,11 +22,10 @@ const Page = () => {
       try {
         const feedback = await db.fetchFeedbacks(user.uid);
         console.log(feedback);
-        const data = await axios.post(
+        await axios.post(
           "http://localhost:3000/api/generateFeedback",
           { feedback }
         );
-        console.log(data.data);
       } catch (error) {
         console.error("Fetch error:", error);
       }
