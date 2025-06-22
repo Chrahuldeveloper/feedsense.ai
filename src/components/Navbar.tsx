@@ -73,9 +73,6 @@ const Navbar = () => {
               <li className="cursor-pointer font-semibold text-sm">Plans</li>
             </Link>
           ) : null}
-          <Link href={"/contactUs"}>
-            <li className="cursor-pointer font-semibold text-sm">Contact</li>
-          </Link>
           {userSession === null ? (
             <Link href="/login">
               <li className="cursor-pointer font-semibold text-sm">Login</li>
@@ -127,12 +124,6 @@ const Navbar = () => {
                 </div>
               </Link>
             ) : null}
-            <Link href="/contactUs">
-              <div className="flex items-center gap-5">
-                <IoCallOutline size={22} color="white" />
-                <h1 className="text-white text-sm font-semibold">Contact</h1>
-              </div>
-            </Link>
             {userSession === null ? (
               <Link href="/login">
                 <div>
