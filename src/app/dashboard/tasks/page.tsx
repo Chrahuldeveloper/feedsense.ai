@@ -123,7 +123,7 @@ const Page = () => {
       </nav>
 
       {/* Main Content */}
-      <div className="bg-[#1a1f2c] w-full flex overflow-x-clip">
+      <div className="bg-[#1a1f2c] h-[100vh] w-full flex overflow-x-clip">
         <SideBar page="Home" />
         <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl">
           {/* User Info */}

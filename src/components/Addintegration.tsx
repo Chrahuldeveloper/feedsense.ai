@@ -64,7 +64,6 @@ const AddIntegration: React.FC = () => {
 
   const db = useMemo(() => new dbService(), []);
 
-  const notify = () => toast("Wow so easy!");
 
   useEffect(() => {
     const fetchWebsites = async () => {
@@ -448,7 +447,7 @@ const AddIntegration: React.FC = () => {
                       Copy and paste this code into your website
                     </p>
                     <pre
-                      className="bg-[#0c0c0c] border-[1px] border-[#15171b] max-w-2xl overflow-auto text-white px-4 py-16"
+                      className="bg-[#0c0c0c]  border-[1px] border-[#15171b]  overflow-auto text-white px-4 py-16"
                       dangerouslySetInnerHTML={{ __html: highlightedCode }}
                     ></pre>
                     <div className="flex justify-end">
