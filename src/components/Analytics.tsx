@@ -51,14 +51,14 @@ const Analytics: React.FC<AnalyticsProps> = ({
           totalTasksFinished,
           totalIncompleteTasks,
         ],
-        backgroundColor: ["#00a3ff", "#9f7aea", "#fc8181", "#06b6d4"],
+        backgroundColor: ["#00d4ff", "#22c55e", "#eab308", "#ef4444"],
       },
     ],
   };
 
   return (
     <div className="mt-7">
-      <div className="p-4 bg-[#151923] rounded-lg border-[1px] border-[#151923]">
+      <div className="p-4 bg-[#161617] rounded-lg border-[1px] border-[#2c2c2d]">
         {loading ? (
           <Loader message={"Please wait"} />
         ) : (

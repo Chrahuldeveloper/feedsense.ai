@@ -19,16 +19,15 @@ const SideBar: React.FC<props> = ({ page }) => {
 
   return (
     <>
-      <aside className=" bg-[#151923] w-[60vw] lg:w-[15vw] h-full space-y-4 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-gray-900">
+      <aside className=" bg-[#0b0d0e] w-[60vw] lg:w-[15vw] h-full space-y-4 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-[#1f2327]">
         <div>
           <h1 className="text-cyan-500 font-bold text-xl">FeedSenseAI</h1>
         </div>
-        <div className="flex flex-col space-y-6 pt-7">
-          {/* Home */}
+        <div className="flex flex-col space-y-3 pt-7">
           <Link href="/dashboard">
             <div
-              className={`flex hover:bg-slate-800 items-center space-x-4 py-1 pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
-                page === "Home" ? "bg-[#242737]" : ""
+              className={`flex  hover:bg-[#09343e] border border-black border-cyan-400/20  backdrop-blur-sm  text-cyan-400 items-center space-x-4 py-1 pr-12 pl-4 transition duration-200 ease-in-out  rounded-lg ${
+                page === "Home" ? "bg-[#09343e] border border-cyan-400/20  backdrop-blur-sm  text-cyan-400 " : ""
               }`}
             >
               <MdDashboard color="white" size={iconSize} />
@@ -36,11 +35,10 @@ const SideBar: React.FC<props> = ({ page }) => {
             </div>
           </Link>
 
-          {/* Integrate */}
           <Link href="/dashboard/integrate">
             <div
-              className={`flex hover:bg-slate-800 items-center space-x-4 py-1 pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
-                page === "Integrate" ? "bg-[#242737]" : ""
+              className={`flex  hover:bg-[#09343e] border border-black border-cyan-400/20  backdrop-blur-sm  text-cyan-400  items-center space-x-4 py-1 pr-12 pl-4 transition duration-200 ease-in-out  rounded-lg ${
+                page === "Integrate" ? "bg-[#09343e] border border-cyan-400/20  backdrop-blur-sm  text-cyan-400" : ""
               }`}
             >
               <CgWebsite color="white" size={iconSize} />
@@ -48,11 +46,10 @@ const SideBar: React.FC<props> = ({ page }) => {
             </div>
           </Link>
 
-          {/* Contact */}
           <Link href="/dashboard/contact">
             <div
-              className={`flex items-center hover:bg-slate-800 space-x-4  py-1 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out text-gray-300 rounded-lg ${
-                page === "Contact" ? "bg-[#242737]" : ""
+              className={`flex items-center hover:bg-[#09343e] border border-black border-cyan-400/20  backdrop-blur-sm  text-cyan-400   space-x-4  py-1 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out  rounded-lg ${
+                page === "Contact" ? "bg-[#09343e] border border-cyan-400/20  backdrop-blur-sm  text-cyan-400" : ""
               }`}
             >
               <IoMdHelpCircle color="white" size={iconSize} />
@@ -74,7 +71,7 @@ const SideBar: React.FC<props> = ({ page }) => {
 
           {/* Logout */}
           <div
-            className={`flex absolute bottom-3 items-center hover:bg-red-600 space-x-4 py-1 cursor-pointer pr-16 pl-5 transition duration-200 ease-in-out  text-red-500 hover:text-white rounded-lg ${
+            className={`flex  items-center hover:bg-red-600 space-x-4 py-1 cursor-pointer pr-16 pl-5 transition duration-200 ease-in-out  text-red-500 hover:text-white rounded-lg ${
               page === "Logout" ? "bg-red-400" : ""
             }`}
             onClick={() => settoggle(true)}

@@ -11,12 +11,13 @@ import { FaRegCircleStop } from "react-icons/fa6";
 import cache from "../cache/cache";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/Firebase";
-import Image from "next/image";
+import { CiShare1 } from "react-icons/ci";
 import ModelLogout from "./ModelLogout";
 import Loader from "./Loader";
 import { BiMessageRounded } from "react-icons/bi";
 import { GoGraph } from "react-icons/go";
 import { CgNotes } from "react-icons/cg";
+import { CiGlobe } from "react-icons/ci";
 
 interface WebsiteData {
   name: string;
@@ -151,7 +152,7 @@ const Table = () => {
     <>
       {/* {loading && <Loader message="loading" />} */}
       <div className="md:ml-44">
-        <nav className="md:hidden bg-[#151923] p-7 w-screen border-b-[1px] border-[#15171b] flex justify-between items-center">
+        <nav className="md:hidden bg-[#0b0d0e] p-7 w-screen border-b-[1px] border-[#1f2327] flex justify-between items-center">
           <h1 className="text-xl font-semibold text-slate-300">FeedSense.ai</h1>
           <CiMenuFries
             size={26}
@@ -161,11 +162,10 @@ const Table = () => {
           />
         </nav>
 
-        <div className="bg-[#151923] w-screen px-14 py-3 pt-5 md:-ml-36 hidden md:block border-b-[1px] border-[#15171b]">
+        <div className="bg-[#0b0d0e] w-screen px-14 py-3 pt-5 md:-ml-36 hidden md:block border-b-[1px] border-[#1f2327]">
           <div className="flex justify-end gap-x-3 items-center pb-2">
             <div className="space-y-1">
               <h1 className="text-slate-300">{user?.displayName || "User"}</h1>
-              <p className="text-[10px] text-slate-300">Admin</p>
             </div>
             <CgProfile
               size={30}
@@ -184,19 +184,20 @@ const Table = () => {
 
         {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
-        <div className="p-5 md:ml-10">
-          <h1 className="text-xl md:text-2xl text-gray-300 md:px-20 font-semibold mt-3">
+        <div className="p-5 md:ml-10 md:px-20 lg:px-32 space-y-3">
+          <h1 className="text-xl md:text-2xl lg:text-3xl text-gray-300  font-semibold mt-3">
             DashBoard OverView
           </h1>
+          <p className="text-[#95a4ab]">
+            AI-powered insights from your user feedback
+          </p>
         </div>
 
-        <div className="w-[80vw] mx-auto justify-center flex flex-col md:flex-row gap-8">
-          <div className="bg-[#151923] p-5 rounded-lg w-[60vw] mx-auto lg:w-[14vw] flex justify-evenly gap-5 cursor-pointer">
-            <div className="space-y-3 order-2">
-              <h1 className=" font-semibold text-slate-300 text-sm">
-                Total TotalWebsites
-              </h1>
-              <p className="text-sm text-gray-300">{infodata.totalWebsites}</p>
+        <div className="w-[76vw] mx-auto justify-center flex flex-col md:flex-row gap-8 my-4">
+          <div className="bg-[#161617] py-5 px-5 rounded-xl w-[60vw] mx-auto lg:w-[18vw] flex justify-evenly gap-5 cursor-pointer border-[1px] border-[#2c2c2d]">
+            <div className="space-y-3 ">
+              <h1 className="  text-[#95a4ab] text-xl">Total TotalWebsites</h1>
+              <p className="text-lg text-gray-300">{infodata.totalWebsites}</p>
             </div>
             <BiMessageRounded
               size={33}
@@ -204,12 +205,10 @@ const Table = () => {
               className=" w-12 p-2 h-12 rounded-full bg-[#13293c]"
             />
           </div>
-          <div className="bg-[#151923] p-5 rounded-lg lg:w-[14vw] w-[60vw] mx-auto flex justify-evenly gap-5 cursor-pointer">
-            <div className="space-y-3 order-2">
-              <h1 className=" font-semibold text-slate-300 text-sm">
-                Total Feedback
-              </h1>
-              <p className="text-sm text-gray-300">{infodata.totalFeedback}</p>
+          <div className="bg-[#161617] py-5 px-5 rounded-xl w-[60vw] mx-auto lg:w-[18vw] flex justify-evenly gap-5 cursor-pointer border-[1px] border-[#2c2c2d]">
+            <div className="space-y-3 ">
+              <h1 className="  text-[#95a4ab] text-xl">Total Feedback</h1>
+              <p className="text-lg text-gray-300">{infodata.totalFeedback}</p>
             </div>
             <CgNotes
               size={26}
@@ -217,12 +216,10 @@ const Table = () => {
               className="w-12 p-2.5 h-12 rounded-full bg-[#1b1938]"
             />
           </div>
-          <div className="bg-[#151923] p-5 rounded-lg w-[60vw] mx-auto lg:w-[14vw] flex justify-evenly gap-5 cursor-pointer">
-            <div className="space-y-3 order-2">
-              <h1 className=" font-semibold text-slate-300 text-sm">
-                Total TasksFinished
-              </h1>
-              <p className="text-sm text-gray-300">
+          <div className="bg-[#161617] py-5 px-5 rounded-xl w-[60vw] mx-auto lg:w-[18vw] flex justify-evenly gap-5 cursor-pointer border-[1px] border-[#2c2c2d]">
+            <div className="space-y-3 ">
+              <h1 className="  text-[#95a4ab] text-xl">Total TasksFinished</h1>
+              <p className="text-lg text-gray-300">
                 {infodata.totalTasksFinished}
               </p>
             </div>
@@ -232,12 +229,10 @@ const Table = () => {
               className="w-12 p-2 h-12 rounded-full bg-[#112e2d]"
             />
           </div>
-          <div className="bg-[#151923] p-5 rounded-lg lg:w-[14vw] w-[60vw] mx-auto flex justify-evenly gap-5 cursor-pointer">
-            <div className="space-y-3 order-2">
-              <h1 className=" font-semibold text-slate-300 text-sm">
-                Tasks to Finish
-              </h1>
-              <p className="text-sm text-gray-300">
+          <div className="bg-[#161617] py-5 px-5 rounded-xl w-[60vw] mx-auto lg:w-[18vw] flex justify-evenly gap-5 cursor-pointer border-[1px] border-[#2c2c2d]">
+            <div className="space-y-3">
+              <h1 className="  text-[#95a4ab] text-xl">Tasks to Finish</h1>
+              <p className="text-lg text-gray-300">
                 {infodata.totalIncompleteTasks}
               </p>
             </div>
@@ -275,28 +270,30 @@ const Table = () => {
                 </p>
               </div>
             ) : (
-              <div className="pt-3  bg-[#151923] md:h-[54vh]  overflow-y-scroll rounded-lg">
+              <div className="pt-3  bg-[#161617] md:h-[54vh] border-[1px] border-[#2c2c2d] overflow-y-scroll rounded-lg">
                 <div>
                   <div className="">
-                    <div className="flex flex-col gap-5 p-8">
+                    <div className="flex flex-col gap-5 ">
                       {websitedata?.map((site, idx) => (
                         <div
                           key={idx}
-                          className="rounded-lg flex items-center gap-8 justify-around"
+                          className="rounded-xl flex items-center justify-between gap-8 bg-[#212223] mx-5 p-2.5"
                         >
-                          <div className="flex gap-4 items-center">
-                            <Image
-                              className="w-14 h-14 rounded-full object-cover border border-[#22252a]"
-                              src={site?.image}
-                              alt="Profile"
-                              width={48}
-                              height={48}
+                          <div className="flex items-center space-x-3">
+                            <CiGlobe
+                              size={50}
+                              color="#00a3ff"
+                              className="bg-[#13293c] backdrop-blur-sm border border-[#13293c] p-2 rounded-xl"
                             />
+                            <div className="flex flex-col">
+                              <h1 className="text-sm text-slate-300 font-semibold my-2.5">
+                                {site?.name}
+                              </h1>
+                              <p className=" bg-green-900/50 text-green-400 text-xs shadow-[0_0_6px_#22c55e55] backdrop-blur-sm border border-green-400/10 rounded-full  px-4 py-1  text-center">
+                                Active
+                              </p>
+                            </div>
                           </div>
-                          <h1 className="text-sm text-slate-300 font-semibold my-2.5">
-                            {site?.name}
-                          </h1>
-                          
                           <Link
                             href={{
                               pathname: "/dashboard/tasks",
@@ -309,9 +306,10 @@ const Table = () => {
                               },
                             }}
                           >
-                            <button className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-white px-8 py-1.5 rounded-lg text-xs font-semibold transition duration-200 hover:bg-blue-700 w-full my-3">
-                              View
-                            </button>
+                            <CiShare1
+                              size={22}
+                              color="#95a4ab"
+                            />
                           </Link>
                         </div>
                       ))}
