@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { CiMenuFries } from "react-icons/ci";
+import { CiGlobe, CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
 import { FaRegCircleStop } from "react-icons/fa6";
 import hljs from "highlight.js/lib/core";
@@ -16,6 +16,10 @@ import { FaRegCopy } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ModelLogout from "./ModelLogout";
+import { CgProfile } from "react-icons/cg";
+import { IoCodeOutline } from "react-icons/io5";
+import { BsTrash2 } from "react-icons/bs";
+import Link from "next/link";
 
 interface Website {
   id: string;
@@ -35,6 +39,7 @@ interface WebsiteDataInput {
 interface User {
   uid: string;
   email: string;
+  displayName: string;
 }
 
 const AddIntegration: React.FC = () => {
@@ -53,9 +58,7 @@ const AddIntegration: React.FC = () => {
     name: "",
     url: "",
     type: "",
-    logo: null,
   });
-  const [highlightedCode, setHighlightedCode] = useState("");
   const [highlightedCode1, setHighlightedCode1] = useState("");
 
   const [lastWebsiteId, setLastWebsiteId] = useState<string | null>(null);
@@ -63,7 +66,6 @@ const AddIntegration: React.FC = () => {
   console.log(showCode);
 
   const db = useMemo(() => new dbService(), []);
-
 
   useEffect(() => {
     const fetchWebsites = async () => {
@@ -85,18 +87,9 @@ const AddIntegration: React.FC = () => {
 
   hljs.registerLanguage("html", html);
 
-  const generateCodeToCopy = (websiteId: string) => {
-    const code = `<!-- Add this Link to your website -->\n https://feedsenseai.vercel.app/integrate/${
-      user!.uid
-    }/${websiteId}`;
-    const highlighted = hljs.highlight(code, { language: "html" }).value;
-    setHighlightedCode(highlighted);
-    setShowCode(true);
-  };
-
   const codeToCopy = (websiteId: string) => {
     const code = `
-  <!-- Make sure you have Tailwind CSS set up to use these utility classes for styling -->
+  <!-- Make sure you have Tailwind CSS & react-icons set up to use these utility classes for styling -->
   <div className="fixed bottom-10 right-10">
     <Link href="https://feedsenseai.vercel.app/integrate/${
       user!.uid
@@ -134,39 +127,16 @@ const AddIntegration: React.FC = () => {
     }
   };
 
-  const uploadLogo = (file: File) => {
-    return new Promise<string>((resolve, reject) => {
-      const storageRef = ref(storage, `website_logos/${file.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      uploadTask.on(
-        "state_changed",
-        null,
-        (error) => reject(error),
-        async () => {
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          resolve(downloadURL);
-        }
-      );
-    });
-  };
-
   const saveData = async () => {
     try {
       if (Object.values(websiteDataInput).every((i) => i !== "")) {
         if (!userLoading && user) {
           setSavingData(true);
 
-          let logoURL = "";
-          if (websiteDataInput.logo) {
-            logoURL = await uploadLogo(websiteDataInput.logo);
-          }
-
           const newWebsiteData = {
             name: websiteDataInput.name,
             url: websiteDataInput.url,
             type: websiteDataInput.type,
-            image: logoURL || "",
           };
 
           const res = await db.saveWebsite(user, newWebsiteData);
@@ -176,9 +146,8 @@ const AddIntegration: React.FC = () => {
           } else {
             setLastWebsiteId(websiteDataInput.name);
             setCurrentStep(3);
-            generateCodeToCopy(websiteDataInput.name);
             codeToCopy(websiteDataInput.name);
-            setWebsiteDataInput({ name: "", url: "", type: "", logo: null });
+            setWebsiteDataInput({ name: "", url: "", type: "" });
 
             await db.fetchWebsites(user);
             const data = (await db.fetchWebsites(user)) as Website[];
@@ -214,41 +183,204 @@ const AddIntegration: React.FC = () => {
     }
   };
 
-  const copyCodeToIntegrate = async () => {
-    try {
-      if (lastWebsiteId) {
-        await navigator.clipboard.writeText(
-          `<div className="fixed bottom-10 right-10">
-    <Link href="https://feedsenseai.vercel.app/integrate/${
-      user!.uid
-    }/${lastWebsiteId}">
-      <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
-        <MdSettingsSuggest1
-          size={47}
-          color="white"
-          className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 rounded-full p-3"
-        />
-      </button>
-    </Link>
-  </div>`
-        );
-        toast("Code Copied!");
-      } else {
-        alert("No website ID available to copy.");
-      }
-    } catch (error) {
-      console.log("Error copying code:", error);
-    }
-  };
-
   const [toggleLogout, setToggleLogout] = useState(false);
 
   return (
     <>
       {(fetchingData || savingData || deleting) && <Loader message="Loading" />}
+      <div className="md:ml-44">
+        <nav className="md:hidden bg-[#0b0d0e] p-7 w-screen border-b-[1px] border-[#1f2327] flex justify-between items-center">
+          <h1 className="text-xl font-semibold text-slate-300">FeedSense.ai</h1>
+          <CiMenuFries
+            size={26}
+            color="white"
+            className="cursor-pointer"
+            onClick={() => setToggle(true)}
+          />
+        </nav>
+        <div className="bg-[#0b0d0e] w-screen px-14 py-3 pt-5 md:-ml-36 hidden md:block border-b-[1px] border-[#1f2327]">
+          <div className="flex justify-end gap-x-3 items-center pb-2">
+            <div className="space-y-1">
+              <h1 className="text-slate-300">{user?.displayName || "User"}</h1>
+            </div>
+            <CgProfile
+              size={30}
+              color="#00a3ff"
+              className="w-10 p-2 h-10 rounded-full bg-[#13293c]"
+            />
+          </div>
+        </div>
+        <div className="p-5 md:ml-10 md:px-20 lg:px-32 space-y-3">
+          <h1 className="text-xl md:text-2xl lg:text-3xl text-gray-300  font-semibold mt-3">
+            Integrate Website
+          </h1>
+          <p className="text-[#95a4ab]">
+            Add FeedSenseAI to your website in minutes
+          </p>
+        </div>
+        {/* continue */}
+
+        <div className="flex w-[90vw] md:w-[77vw] md:flex-row flex-col mx-auto gap-10 items-center md:justify-normal justify-center my-6">
+          <div className="w-[95vw] md:w-[40vw] p-7 space-y-9 bg-[#161617] rounded-xl mt-3">
+            <div className="space-y-4 text-slate-300">
+              <div className="flex items-center space-x-3">
+                <CiGlobe
+                  size={50}
+                  color="#00a3ff"
+                  className="bg-[#13293c] backdrop-blur-sm border border-[#13293c] p-2 rounded-xl"
+                />
+                <div className="space-y-1">
+                  <h1 className="text-2xl font-semibold">Website Details</h1>
+                  <p className="text-[#95a4ab]">Configure your integration</p>
+                </div>
+              </div>
+              <input
+                type="text"
+                placeholder="Website Name"
+                className="bg-black border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                value={websiteDataInput.name}
+                onChange={(e) =>
+                  setWebsiteDataInput((prev) => ({
+                    ...prev,
+                    name: e.target.value,
+                  }))
+                }
+              />
+              <input
+                type="text"
+                placeholder="Website URL"
+                className="bg-black border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                value={websiteDataInput.url}
+                onChange={(e) =>
+                  setWebsiteDataInput((prev) => ({
+                    ...prev,
+                    url: e.target.value,
+                  }))
+                }
+              />
+              <select
+                className="bg-[#20242e] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                value={websiteDataInput.type}
+                onChange={(e) =>
+                  setWebsiteDataInput((prev) => ({
+                    ...prev,
+                    type: e.target.value,
+                  }))
+                }
+              >
+                <option value="">Select Type</option>
+                <option value="personal">Personal</option>
+                <option value="business">Business</option>
+              </select>
+
+              <div className="flex justify-center items-center space-x-6">
+                <button
+                  onClick={saveData}
+                  className="bg-[#0a758b]  text-slate-300 rounded-lg px-6 py-2 text-sm"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="w-[95vw] md:w-[40vw] p-5 space-y-9 bg-[#161617] rounded-xl mt-5 ">
+            <div className="flex items-center space-x-3 ">
+              <IoCodeOutline
+                size={50}
+                color="#00a3ff"
+                className="bg-[#13293c] backdrop-blur-sm border border-[#13293c] p-2 rounded-xl"
+              />
+              <div className="space-y-1">
+                <h1 className="text-2xl text-white font-semibold">
+                  Integration Code
+                </h1>
+                <p className="text-[#95a4ab]">Copy and paste to your website</p>
+              </div>
+            </div>
+            <div className="space-y-4 text-center  max-w-4xl mx-auto">
+              <div className="bg-[#212223]   px-4 my-3 space-y-3 rounded-lg">
+                {highlightedCode1.length != 0 ? (
+                  <>
+                    <pre
+                      className="bg-[#212223]  overflow-auto text-white px-4 py-3 h-[20vh] my-5"
+                      dangerouslySetInnerHTML={{ __html: highlightedCode1 }}
+                    ></pre>
+                    <div className="flex justify-end">
+                      <FaRegCopy
+                        size={24}
+                        className="relative bottom-14 right-5"
+                        cursor={"pointer"}
+                        onClick={copyCode}
+                        color="#95a4ab"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <div className="py-16 space-y-3">
+                    <IoCodeOutline
+                      size={40}
+                      className="mx-auto"
+                      color="#95a4ab"
+                    />
+                    <p className="text-[#95a4ab] text-sm">
+                      Fill in your website details and click "Generate
+                      Integration Code" to get started
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-[97vw] mx-auto md:w-[75vw] p-7 space-y-9 bg-[#161617] rounded-xl my-6">
+          <div className="text-sm">
+            <div className="grid grid-cols-4 text-gray-400 border-b border-gray-700 pb-2">
+              <div className="col-span-1">Website Name</div>
+              <div className="col-span-1">URL</div>
+              <div className="text-center">Status</div>
+              <div className="text-center">Actions</div>
+            </div>
+            {websitedata.map((site, idx) => (
+              <div
+                key={idx}
+                className="grid grid-cols-4 items-center py-4 border-b border-gray-800 text-sm"
+              >
+                <div className="col-span-1 text-white">{site.name}</div>
+                <div
+                  className="col-span-1 text-blue-400 truncate cursor-pointer"
+                  onClick={() => {
+                    window.open(`${site.url}`, "_blank");
+                  }}
+                >
+                  {site.url}
+                </div>
+                <div className="text-center">
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-medium bg-green-900 text-green-300 `}
+                  >
+                    {"Active"}
+                  </span>
+                </div>
+                <div className="text-center">
+                  <button
+                    onClick={() => {
+                      handleDeleteWebsite(site.name);
+                    }}
+                    className="p-2 rounded-full hover:bg-red-900/30 transition"
+                  >
+                    <BsTrash2 className="w-4 h-4 text-red-500" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <div className="md:ml-80">
         <nav className="md:hidden bg-[#151923] p-7 w-screen border-b-[1px] border-[#151923] flex justify-between items-center">
-          <h1 className="text-xl font-semibold text-slate-300">TaskFeed</h1>
+          <h1 className="text-xl font-semibold text-slate-300">FeedSense.ai</h1>
           <CiMenuFries
             size={26}
             color="white"
@@ -264,246 +396,6 @@ const AddIntegration: React.FC = () => {
         )}
 
         {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
-
-        <div className="text-slate-300 flex flex-col md:flex-row items-center gap-8 md:gap-12 md:mt-14 justify-center">
-          <div className="md:ml-52">
-            <div className="bg-[#151923] rounded-lg w-[96vw] shadow-2xl  md:w-[45vw] mx-auto h-[80vh] overflow-y-scroll mt-7 border-[1px] border-[#151923]">
-              <div className="space-y-3 border-b-[1px] border-[#151923] bg-[#20242e] p-5 text-slate-300">
-                <h1 className="text-xl font-semibold ">
-                  Welcome to Integration
-                </h1>
-                <p className="text-sm">Connect your website</p>
-              </div>
-
-              <div className="p-8">
-                {currentStep === 1 && (
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <h1 className="text-lg font-semibold">
-                        Connected Websites
-                      </h1>
-                      <button
-                        onClick={() => setCurrentStep(2)}
-                        className="text-[10px] bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-slate-300  py-2 px-4 rounded-lg"
-                      >
-                        Add Website
-                      </button>
-                    </div>
-                    {websitedata?.length === 0 ? (
-                      <div className="space-y-4 text-center pt-28">
-                        <FaRegCircleStop
-                          size={23}
-                          color="white"
-                          className="mx-auto"
-                        />
-                        <p className="text-lg font-semibold text-slate-300">
-                          No websites connected yet
-                        </p>
-                        <p className="text-sm text-slate-300">
-                          Add your first website to get started
-                        </p>
-                      </div>
-                    ) : (
-                      <div className="space-y-4 mt-5">
-                        {websitedata?.map((i) => (
-                          <div
-                            key={i.id}
-                            className="flex items-center gap-x-5 justify-between"
-                          >
-                            <Image
-                              src={i.image || "/default-image.jpg"}
-                              alt={`${i.name} logo`}
-                              width={48}
-                              height={48}
-                              className="h-12 w-12 rounded-full object-cover cursor-pointer border-[1px] border-[#15171b]"
-                            />
-                            <h1 className="text-sm font-semibold text-slate-300">
-                              {i?.name}
-                            </h1>
-                            <button
-                              onClick={() => handleDeleteWebsite(i?.name)}
-                              className="text-sm hover:text-red-500 ease-in-out duration-500 text-slate-300"
-                            >
-                              Remove
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {currentStep === 2 && (
-                  <div className="w-[85vw] md:w-[33vw] p-6 space-y-9  mx-auto ">
-                    <div className="space-y-4 text-slate-300">
-                      <h1 className="text-2xl font-semibold">
-                        Add your website
-                      </h1>
-                      <input
-                        type="text"
-                        placeholder="Website Name"
-                        className="bg-[#20242e] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
-                        value={websiteDataInput.name}
-                        onChange={(e) =>
-                          setWebsiteDataInput((prev) => ({
-                            ...prev,
-                            name: e.target.value,
-                          }))
-                        }
-                      />
-                      <input
-                        type="text"
-                        placeholder="Website URL"
-                        className="bg-[#20242e] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
-                        value={websiteDataInput.url}
-                        onChange={(e) =>
-                          setWebsiteDataInput((prev) => ({
-                            ...prev,
-                            url: e.target.value,
-                          }))
-                        }
-                      />
-                      <select
-                        className="bg-[#20242e] border-[1px] border-[#15171b] outline-none p-3 rounded-lg w-full text-sm focus:outline-none focus:border-blue-500 transition-colors"
-                        value={websiteDataInput.type}
-                        onChange={(e) =>
-                          setWebsiteDataInput((prev) => ({
-                            ...prev,
-                            type: e.target.value,
-                          }))
-                        }
-                      >
-                        <option value="">Select Type</option>
-                        <option value="personal">Personal</option>
-                        <option value="business">Business</option>
-                      </select>
-
-                      {websiteDataInput.logo ? (
-                        <div className="flex flex-col">
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) =>
-                              setWebsiteDataInput((prev) => ({
-                                ...prev,
-                                logo: e.target.files![0],
-                              }))
-                            }
-                            className="hidden"
-                            id="fileInput"
-                          />
-                          <label
-                            htmlFor="fileInput"
-                            className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-center text-slate-300 rounded-lg p-2 cursor-pointer"
-                          >
-                            Change Logo
-                          </label>
-                        </div>
-                      ) : (
-                        <div className="flex flex-col">
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) =>
-                              setWebsiteDataInput((prev) => ({
-                                ...prev,
-                                logo: e.target.files![0],
-                              }))
-                            }
-                            className="hidden"
-                            id="fileInput"
-                          />
-                          <label
-                            htmlFor="fileInput"
-                            className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-center text-sm text-slate-300 rounded-lg p-2 cursor-pointer"
-                          >
-                            Upload Logo
-                          </label>
-                        </div>
-                      )}
-
-                      <div className="flex justify-between">
-                        <button
-                          onClick={() => setCurrentStep(1)}
-                          className="bg-[#1E1E1E] border-[1px] border-[#282c34] text-slate-300 rounded-lg px-6 py-2 text-sm"
-                        >
-                          Back
-                        </button>
-                        <button
-                          onClick={saveData}
-                          className="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 text-slate-300 rounded-lg px-6 py-2 text-sm"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {currentStep === 3 && (
-                  <div className="space-y-4 text-center  max-w-4xl mx-auto">
-                    <h1 className="text-2xl font-semibold">Integration Code</h1>
-                    <p className="text-slate-400">
-                      Copy and paste this code into your website
-                    </p>
-                    <pre
-                      className="bg-[#0c0c0c]  border-[1px] border-[#15171b]  overflow-auto text-white px-4 py-16"
-                      dangerouslySetInnerHTML={{ __html: highlightedCode }}
-                    ></pre>
-                    <div className="flex justify-end">
-                      <FaRegCopy
-                        size={24}
-                        className="relative bottom-14 right-5"
-                        cursor={"pointer"}
-                        onClick={copyCode}
-                      />
-                    </div>
-                    OR
-                    <div>
-                      <pre
-                        className="bg-[#0c0c0c] border-[1px] border-[#15171b] px-4 py-10 overflow-auto text-white  "
-                        dangerouslySetInnerHTML={{
-                          __html: "npm i react-icons",
-                        }}
-                      ></pre>
-                      <div className="flex justify-end">
-                        <FaRegCopy
-                          onClick={async () => {
-                            try {
-                              await navigator.clipboard.writeText(
-                                "npm i react-icons"
-                              );
-                              toast("Code Copied!");
-                            } catch (error: any) {
-                              console.log(error);
-                            }
-                          }}
-                          size={24}
-                          className="relative bottom-10 right-5"
-                          cursor={"pointer"}
-                        />
-                      </div>
-                    </div>
-                    <div className="bg-[#0c0c0c] border-[1px] border-[#15171b]">
-                      <pre
-                        className="  overflow-auto text-white  rounded-md"
-                        dangerouslySetInnerHTML={{ __html: highlightedCode1 }}
-                      ></pre>
-                      <div className="flex justify-end">
-                        <FaRegCopy
-                          size={24}
-                          className="relative bottom-5 right-5"
-                          cursor={"pointer"}
-                          onClick={copyCodeToIntegrate}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       <ToastContainer theme="dark" toastClassName={"custom-toast"} />
     </>

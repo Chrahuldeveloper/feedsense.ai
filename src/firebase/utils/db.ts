@@ -11,7 +11,6 @@ interface Website {
   name: string;
   url: string;
   type: string;
-  image: string;
   feedback?: Feedback[];
 }
 

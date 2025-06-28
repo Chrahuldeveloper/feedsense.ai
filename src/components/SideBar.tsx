@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { MdDashboard } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
-import { MdOutlineAttachMoney } from "react-icons/md";
+// import { MdOutlineAttachMoney } from "react-icons/md";
 import ModelLogout from "./ModelLogout";
 import Link from "next/link";
 import { CgWebsite } from "react-icons/cg";
@@ -26,7 +26,7 @@ const SideBar: React.FC<props> = ({ page }) => {
         <div className="flex flex-col space-y-3 pt-7">
           <Link href="/dashboard">
             <div
-              className={`flex  hover:bg-[#09343e] border border-black border-cyan-400/20  backdrop-blur-sm  text-cyan-400 items-center space-x-4 py-1 pr-12 pl-4 transition duration-200 ease-in-out  rounded-lg ${
+              className={`flex  hover:bg-[#09343e] border border-black   backdrop-blur-sm  text-cyan-400 items-center space-x-4 py-1 pr-12 pl-4 transition duration-200 ease-in-out  rounded-lg ${
                 page === "Home" ? "bg-[#09343e] border border-cyan-400/20  backdrop-blur-sm  text-cyan-400 " : ""
               }`}
             >
@@ -37,7 +37,7 @@ const SideBar: React.FC<props> = ({ page }) => {
 
           <Link href="/dashboard/integrate">
             <div
-              className={`flex  hover:bg-[#09343e] border border-black border-cyan-400/20  backdrop-blur-sm  text-cyan-400  items-center space-x-4 py-1 pr-12 pl-4 transition duration-200 ease-in-out  rounded-lg ${
+              className={`flex  hover:bg-[#09343e] border border-black   backdrop-blur-sm  text-cyan-400  items-center space-x-4 py-1 pr-12 pl-4 transition duration-200 ease-in-out  rounded-lg ${
                 page === "Integrate" ? "bg-[#09343e] border border-cyan-400/20  backdrop-blur-sm  text-cyan-400" : ""
               }`}
             >
@@ -48,7 +48,7 @@ const SideBar: React.FC<props> = ({ page }) => {
 
           <Link href="/dashboard/contact">
             <div
-              className={`flex items-center hover:bg-[#09343e] border border-black border-cyan-400/20  backdrop-blur-sm  text-cyan-400   space-x-4  py-1 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out  rounded-lg ${
+              className={`flex items-center hover:bg-[#09343e] border border-black   backdrop-blur-sm  text-cyan-400   space-x-4  py-1 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out  rounded-lg ${
                 page === "Contact" ? "bg-[#09343e] border border-cyan-400/20  backdrop-blur-sm  text-cyan-400" : ""
               }`}
             >

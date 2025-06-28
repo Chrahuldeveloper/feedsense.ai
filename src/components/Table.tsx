@@ -184,7 +184,7 @@ const Table = () => {
 
         {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
-        <div className="p-5 md:ml-10 md:px-20 lg:px-32 space-y-3">
+        <div className="p-5 md:ml-10 md:px-20 lg:px-32 space-y-2">
           <h1 className="text-xl md:text-2xl lg:text-3xl text-gray-300  font-semibold mt-3">
             DashBoard OverView
           </h1>
@@ -260,12 +260,12 @@ const Table = () => {
                 <Loader message="please wait" />
               </div>
             ) : websitedata?.length === 0 ? (
-              <div className="space-y-6 text-center bg-[#151923] pt-28 border-[1px] border-[#15171b] p-10 md:h-[67vh] rounded-lg">
+              <div className="space-y-6 text-center bg-[#161617] pt-28 border-[1px] border-[#15171b] p-10 md:h-[54vh] rounded-lg">
                 <FaRegCircleStop size={23} color="white" className="mx-auto" />
-                <p className="text-lg font-semibold text-white">
+                <p className="text-lg  text-white">
                   No websites connected yet
                 </p>
-                <p className="text-xs text-slate-200">
+                <p className="text-xs text-[#95a4ab]">
                   Add your first website to get started
                 </p>
               </div>
@@ -289,7 +289,7 @@ const Table = () => {
                               <h1 className="text-sm text-slate-300 font-semibold my-2.5">
                                 {site?.name}
                               </h1>
-                              <p className=" bg-green-900/50 text-green-400 text-xs shadow-[0_0_6px_#22c55e55] backdrop-blur-sm border border-green-400/10 rounded-full  px-4 py-1  text-center">
+                              <p className=" bg-green-900/50 text-green-400 text-xs shadow-[0_0_6px_#22c55e55] backdrop-blur-sm border border-green-400/10 rounded-full  px-4 py-0.5  text-center">
                                 Active
                               </p>
                             </div>
