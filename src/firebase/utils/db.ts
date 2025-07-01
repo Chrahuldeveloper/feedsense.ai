@@ -39,12 +39,11 @@ export default class dbService {
 
   async handleStatusChange(
     user: any,
-    websiteId: number,
+    idx: number, 
     status: string,
     response: any
   ) {
     try {
-      console.log(user, websiteId, status, response);
 
       const userDocRef = doc(db, "USERS", user.uid);
       const docSnap = await getDoc(userDocRef);
@@ -54,32 +53,29 @@ export default class dbService {
 
         console.log(userWebsites);
 
-        const findwebsite = userWebsites.filter((website: Website, id: any) => {
-          return websiteId === id;
-        });
+        // const targetWebsite = userWebsites?.filter(
+        //   (site: Website) => site.name === idx
+        // );
 
-        console.log(findwebsite[0].feedback);
+        // if (!targetWebsite) {
+        //   throw new Error("Website not found");
+        // }
 
-        const updatedFeedbackArray = findwebsite[0].feedback.filter(
-          (feedback: any) => feedback.parsedFeedback.response !== response
-        );
+        // console.log(targetWebsite)
 
-        findwebsite[0].feedback = updatedFeedbackArray;
+        // targetWebsite.feedback = targetWebsite.feedback.filter(
+        //   (feedback: any) => feedback.parsedFeedback.response !== response
+        // );
 
-        await updateDoc(userDocRef, {
-          websites: userWebsites,
-        });
+        // await updateDoc(userDocRef, {
+        //   websites: userWebsites,
+        //   totalTasksFinished: (docSnap.data()?.totalTasksFinished || 0) + 1,
+        // });
 
-        const totalTasksFinished = findwebsite?.totalTasksFinished || 0;
-
-        await updateDoc(userDocRef, {
-          totalTasksFinished: totalTasksFinished + 1,
-        });
-
-        cache.set(user.uid, userWebsites);
+        // cache.set(user.uid, userWebsites);
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error in handleStatusChange:", error);
     }
   }
 
@@ -399,6 +395,7 @@ export default class dbService {
             );
 
             const responseData = await response.text();
+            console.log(responseData);
             const plainObject = JSON.parse(responseData);
 
             console.log("Parsed response:", plainObject);
@@ -410,7 +407,6 @@ export default class dbService {
 
             websites[websiteIndex].feedback = updatedFeedback;
             await updateDoc(userDocRef, { websites });
-
             console.log(
               "Parsed feedback added to specific feedback entry in Firestore."
             );

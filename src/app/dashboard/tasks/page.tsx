@@ -1,8 +1,8 @@
 "use client";
 
+import React, { useEffect, useState, Suspense } from "react";
 import MobileSideBar from "@/components/MobileSideBar";
 import SideBar from "@/components/SideBar";
-import React, { useEffect, useState, Suspense } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -24,6 +24,11 @@ import Loader from "@/components/Loader";
 import { FaRegCircleStop } from "react-icons/fa6";
 import ModelLogout from "@/components/ModelLogout";
 import { MdOutlineEventNote } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
+import { BiMessageRounded } from "react-icons/bi";
+import { LuBrain } from "react-icons/lu";
+import { GoGraph } from "react-icons/go";
+import { FiCheck } from "react-icons/fi";
 
 ChartJS.register(
   CategoryScale,
@@ -34,11 +39,19 @@ ChartJS.register(
   BarElement
 );
 
-const Page = () => {
-  interface User {
-    uid: string;
-  }
+interface Feedback {
+  emotion: string;
+  Rating: number;
+  feedback: string;
+  parsedFeedback?: { response: string };
+}
 
+interface User {
+  uid: string;
+  displayName: string;
+}
+
+const Page = () => {
   const searchParams = useSearchParams();
 
   const { user, loading } = useAuth() as {
@@ -46,51 +59,37 @@ const Page = () => {
     loading: boolean;
   };
 
-  interface Feedback {
-    // name: string;
-    // email: string;
-    emotion: string;
-    Rating: number;
-    feedback: string;
-    parsedFeedback?: { response: string };
-  }
-
-  const [websites, setWebsites] = useState<Feedback[]>([]);
+  const [feedbackData, setFeedbackData] = useState<Feedback[]>([]);
   const [HappyCount, setHappyCount] = useState<number>(0);
   const [NeutralCount, setNeutralCount] = useState<number>(0);
   const [SadCount, setSadCount] = useState<number>(0);
-  const [toggle, setToggle] = useState(false);
+  const [isloading, setisloading] = useState<boolean>(false);
+  const [toggleLogout, setToggleLogout] = useState(false);
 
-  const getdata = searchParams?.get("feedback")!;
+  const getdata = searchParams?.get("feedback");
   const getImage = searchParams?.get("image")!;
   const getName = searchParams?.get("name")!;
   const getPlan = searchParams?.get("Plan")!;
   const TotalFeedback = searchParams?.get("TotalFeedback")!;
 
-  console.log(TotalFeedback);
-
   const db = new dbService();
-
-  const [isloading, setisloading] = useState<boolean>(false);
 
   useEffect(() => {
     if (getdata) {
-      const data: Feedback[] = JSON.parse(getdata);
-      setWebsites(data);
+      try {
+        const data: Feedback[] = JSON.parse(getdata);
+        setFeedbackData(data);
 
-      const happy = data.filter(
-        (item) => item.emotion.toLowerCase() === "happy"
-      ).length;
-      const neutral = data.filter(
-        (item) => item.emotion.toLowerCase() === "neutral"
-      ).length;
-      const sad = data.filter(
-        (item) => item.emotion.toLowerCase() === "sad"
-      ).length;
+        const happy = data.filter((item) => item.emotion.toLowerCase() === "happy").length;
+        const neutral = data.filter((item) => item.emotion.toLowerCase() === "neutral").length;
+        const sad = data.filter((item) => item.emotion.toLowerCase() === "sad").length;
 
-      setHappyCount(happy);
-      setNeutralCount(neutral);
-      setSadCount(sad);
+        setHappyCount(happy);
+        setNeutralCount(neutral);
+        setSadCount(sad);
+      } catch (e) {
+        console.error("Error parsing feedback:", e);
+      }
     }
   }, [getdata]);
 
@@ -98,128 +97,126 @@ const Page = () => {
     labels: ["Happy", "Neutral", "Sad"],
     datasets: [
       {
-        label: "My First Dataset",
-        data: [HappyCount || 0, NeutralCount || 0, SadCount || 0],
+        label: "Feedback Summary",
+        data: [HappyCount, NeutralCount, SadCount],
         backgroundColor: ["#00a3ff", "#9f7aea", "#fc8181"],
         hoverOffset: 4,
       },
     ],
   };
 
-  const [toggleLogout, setToggleLogout] = useState(false);
-
   return (
     <>
-      {isloading ? <Loader message="Deleting..." /> : null}
-      {/* Navigation Bar */}
-      <nav className="md:hidden bg-[#151923] p-7 w-screen border-b-[1px] border-[#272b2f] flex justify-between items-center">
-        <h1 className="text-xl font-semibold text-slate-300">FeedSense.Ai</h1>
-        <CiMenuFries
-          onClick={() => setToggle(true)}
-          size={26}
-          color="#9ca3af"
-          className="cursor-pointer"
-        />
-      </nav>
-
-      {/* Main Content */}
-      <div className="bg-[#1a1f2c] h-[100vh] w-full flex overflow-x-clip">
+      {isloading && <Loader message="Deleting..." />}
+      <div className="bg-[#0b0d0d]  w-full flex overflow-x-clip">
         <SideBar page="Home" />
         <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl">
-          {/* User Info */}
+          {/* AI Insights Header */}
           <div className="overflow-x-auto rounded-xl my-12">
-            <div className="flex md:mx-auto items-center justify-between rounded-lg w-[100vw] md:w-[73vw] bg-[#151923] px-8 py-2 border-[1px] border-[#0e1012]">
-              <div className="flex items-center gap-4">
-                <Image
-                  src={getImage}
-                  alt={getName}
-                  className="w-12 h-12 rounded-full"
-                  width={48}
-                  height={48}
-                />
-                <h1 className="text-sm md:text-xl text-gray-300 font-semibold">
-                  {getName}
+            <div className="flex md:mx-auto items-center justify-center rounded-lg w-[100vw] md:w-[73vw] px-8 py-2 border-[1px] border-[#0e1012]">
+              <div className="flex flex-col items-center gap-4">
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-[#68a8fd] to-cyan-500 bg-clip-text text-transparent">
+                  AI-Powered Insights
                 </h1>
+                <p className="text-[#95a4ab]">
+                  Unlock the power of artificial intelligence to understand your users better and make data-driven decisions
+                </p>
               </div>
-              <Link href="/dashboard">
-                <RxCross2 size={25} color="#9ca3af" />
-              </Link>
             </div>
 
-            <div className="border rounded-lg border-[#1a1f2c] md:mx-auto w-[100vw] md:w-[73vw] mt-7 divide-y divide-[#151923] overflow-hidden">
-              <div
-                className={`bg-[#151923] rounded-lg ${
-                  getPlan === "Basic" ? "blur-md cursor-not-allowed" : ""
-                }`}
-              >
-                {websites.length > 0 ? (
-                  websites.map((site, idx) =>
-                    site?.parsedFeedback?.response ? (
+            {/* Feedback Counts */}
+            <div className="flex justify-center items-center flex-col md:flex-row gap-10 my-6">
+              {[
+                { title: "Happy", count: HappyCount },
+                { title: "Neutral", count: NeutralCount },
+                { title: "Sad", count: SadCount },
+              ].map(({ title, count }, idx) => (
+                <div
+                  key={title}
+                  className="bg-[#161617] py-5 px-5 rounded-xl w-[60vw] lg:w-[18vw] flex justify-evenly gap-5 cursor-pointer border-[1px] border-[#2c2c2d] hover:scale-105 ease-in-out duration-500"
+                >
+                  <div className="space-y-3">
+                    <h1 className="text-white text-xl">{title} Count</h1>
+                    <p className="text-lg text-gray-300">{count}</p>
+                  </div>
+                  <BiMessageRounded
+                    size={33}
+                    color="#00a3ff"
+                    className="w-12 p-2 h-12 rounded-full bg-[#13293c]"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* AI Feedback Analysis */}
+            <div className="w-[58vw] mx-auto p-5 rounded-xl bg-[#161617] h-[50vh]">
+              <div className="flex justify-between">
+                <div className="flex items-center space-x-3">
+                  <LuBrain size={25} color="#00a3ff" />
+                  <h1 className="font-semibold text-white">AI Insights</h1>
+                </div>
+                <div className="text-sm text-white">AI analyzing...</div>
+              </div>
+
+              <div className="flex justify-center flex-col gap-3 mt-4">
+                {feedbackData.length > 0 ? (
+                  feedbackData.map((fb, idx) =>
+                    fb?.parsedFeedback?.response ? (
                       <div
                         key={idx}
-                        className={`flex items-center justify-between px-4 py-3 font-semibold transition-colors duration-300 ease-in-out ${
-                          getPlan === "Basic" ? "cursor-not-allowed" : ""
+                        className={`bg-[#2c2016] text-[#d1d1d1] flex items-center rounded-lg p-5 gap-4 border-l-4 border-orange-500 w-full mb-4 ${
+                          getPlan === "Basic" ? "cursor-not-allowed" : "cursor-pointer"
                         }`}
                       >
-                        {/* Index */}
-                        <h1 className="text-sm text-gray-300 w-6 text-center">
-                          {idx + 1}
-                        </h1>
-
-                        {/* Feedback Text (Centered) */}
-                        <h1
-                          className={`flex-1 text-sm text-gray-300 text-center px-4 ${
-                            getPlan === "Basic" ? "blur-md" : ""
-                          }`}
-                        >
-                          {site?.parsedFeedback?.response?.replace(/"/g, "") ||
-                            "No analysis available"}
-                        </h1>
-
-                        {/* Status Dropdown */}
-                        <div className="text-xs text-gray-300">
-                          <select
-                            className={`bg-[#1a1f2c] border border-[#222529] text-gray-300 text-sm rounded px-3 py-2 outline-none ${
-                              getPlan === "Basic"
-                                ? "blur-md cursor-not-allowed"
-                                : ""
-                            }`}
-                            defaultValue="Pending"
-                            disabled={getPlan === "Basic"}
-                            onChange={async (e) => {
-                              const status = e.target.value;
-                              if (status === "Completed") {
-                                try {
-                                  setisloading(true);
-                                  await db.handleStatusChange(
-                                    user!,
-                                    idx,
-                                    status,
-                                    site?.parsedFeedback?.response
-                                  );
-                                  setWebsites((prev) =>
-                                    prev.filter((_, i) => i !== idx)
-                                  );
-                                } catch (error) {
-                                  console.error(
-                                    "Error updating status:",
-                                    error
-                                  );
-                                } finally {
-                                  setisloading(false);
-                                }
+                        <div className="bg-[#244445] p-3 rounded-md text-cyan-400 text-xl">
+                          💡
+                        </div>
+                        <div className="flex-1">
+                          <p className={`${getPlan === "Basic" ? "blur-sm" : ""}`}>
+                            {fb.parsedFeedback.response.replace(/"/g, "")}
+                          </p>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <RxCross2
+                            size={40}
+                            color="red"
+                            className="hover:bg-red-900 p-2 rounded-full cursor-pointer"
+                            onClick={() => {
+                              if (getPlan !== "Basic") {
+                                setFeedbackData((prev) => prev.filter((_, i) => i !== idx));
                               }
                             }}
-                          >
-                            <option value="Pending">Pending</option>
-                            <option value="Completed">Completed</option>
-                          </select>
+                          />
+                          <FiCheck
+                            size={40}
+                            color="green"
+                            className={`hover:bg-green-900 p-2 rounded-full cursor-pointer ${
+                              getPlan === "Basic" ? "opacity-50 cursor-not-allowed" : ""
+                            }`}
+                            onClick={async () => {
+                              if (getPlan === "Basic") return;
+                              try {
+                                setisloading(true);
+                                await db.handleStatusChange(
+                                  user!,
+                                  idx,
+                                  "Completed",
+                                  fb.parsedFeedback?.response
+                                );
+                                setFeedbackData((prev) => prev.filter((_, i) => i !== idx));
+                              } catch (error) {
+                                console.error("Error updating status:", error);
+                              } finally {
+                                setisloading(false);
+                              }
+                            }}
+                          />
                         </div>
                       </div>
                     ) : null
                   )
                 ) : (
-                  <div className="py-10 text-center text-slate-300 bg-[#151923]">
+                  <div className="py-10 text-center text-slate-300">
                     <div className="flex flex-col items-center gap-5">
                       <FaRegCircleStop size={25} color="#9ca3af" />
                       <p className="font-semibold">No Analysis Yet</p>
@@ -229,55 +226,42 @@ const Page = () => {
               </div>
             </div>
 
-            <div className="flex justify-center items-center md:flex-row flex-col md:items-start md:space-x-8  my-10">
-              <div className=" mb-5 bg-[#151923] p-4  w-full md:w-[35vw] rounded-lg">
-                <h2 className="text-gray-300 text-lg font-semibold mb-4">
-                  Sentiment Distribution
-                </h2>
-                <Doughnut data={analytics} className="w-96 mx-auto p-10" />
+            {/* Raw Feedback Section */}
+            <div className="w-[58vw] mx-auto p-5 rounded-xl bg-[#161617] h-[50vh] my-5">
+              <div className="flex justify-between">
+                <div className="flex items-center space-x-3">
+                  <GoGraph size={25} color="#00a3ff" />
+                  <h1 className="font-semibold text-white">User Feedback</h1>
+                </div>
               </div>
 
-              <div className="bg-[#151923] p-4 space-y-3 h-[53vh] overflow-y-scroll rounded-lg  md:w-[35vw]">
-                <h2 className="text-gray-300 text-lg font-semibold mb-4">
-                  User Feedback
-                </h2>
-                {websites.length > 0 ? (
-                  websites.map((site, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-4 px-4 py-2 transition-colors duration-300 ease-in-out cursor-pointer font-semibold"
-                    >
-                      <div className="flex-shrink-0">
-                        <MdOutlineEventNote
-                          size={24}
-                          className="w-10 h-10 p-2 rounded-full bg-[#13293c] text-[#00a3ff]"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm text-gray-300">{site.feedback}</p>
-                      </div>
+              {feedbackData.length > 0 ? (
+                feedbackData.map((fb, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-[#17291f] text-[#d1d1d1] flex items-center rounded-lg p-5 gap-4 border-l-4 border-orange-500 w-full cursor-pointer mt-4"
+                  >
+                    <div className="bg-[#244445] p-3 rounded-md text-cyan-400 text-xl">
+                      💡
                     </div>
-                  ))
-                ) : (
-                  <div className="py-5 text-center text-slate-300">
-                    <div className="flex flex-col items-center gap-5">
-                      <FaRegCircleStop size={25} color="#9ca3af" />
-                      <p className="font-semibold">No Feedbacks Yet</p>
+                    <div className="flex-1">
+                      <p className="text-[#b0b0b0] my-2">{fb.feedback}</p>
                     </div>
                   </div>
-                )}
-              </div>
+                ))
+              ) : (
+                <div className="py-36 text-center text-slate-300">
+                  <div className="flex flex-col items-center gap-5">
+                    <FaRegCircleStop size={25} color="#9ca3af" />
+                    <p className="font-semibold">No Feedbacks Yet</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
-      {/* Mobile Sidebar */}
-      {toggle && (
-        <MobileSideBar
-          setToggle={setToggle}
-          setToggleLogout={setToggleLogout}
-        />
-      )}
+
       {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
     </>
   );
@@ -290,67 +274,3 @@ const PageWithSuspense = () => (
 );
 
 export default PageWithSuspense;
-
-{
-  /* <table className="border-[1px] border-[#15171b] md:mx-auto w-[100vw] md:w-[60vw] mx-auto mt-7 divide-y divide-[#15171b] ">
-              <thead className="bg-[#111115] border-[1px] border-[#15171b]">
-                <tr>
-                  <th className="py-3 px-3 md:px-9 text-left text-[10px] font-medium text-gray-400 uppercase">
-                    S.NO
-                  </th>
-                  <th className="py-3 px-3 md:px-9 text-left text-[10px] font-medium text-gray-400 uppercase">
-                    Rating
-                  </th>
-                  <th className="py-3 px-3 md:px-9 text-left text-[10px] font-medium text-gray-400 uppercase">
-                    Emotion
-                  </th>
-                  <th className="py-3 px-3 md:px-9 text-left text-[10px] font-medium text-gray-400 uppercase">
-                    User Feedback
-                  </th>
-                  {/* <th className="py-3 px-3 md:px-9 text-left text-xs font-medium text-gray-400 uppercase">
-                    Analysis
-                  </th> */
-}
-//   </tr>
-//   </thead>
-//   <tbody className="bg-[#111115] border-[1px] border-[#15171b] overflow-scroll">
-//     {websites.length > 0 ? (
-//       websites.map((site, idx) => (
-//         <tr
-//           key={idx}
-//           className="hover:bg-[#0c0d12] transition-colors duration-300 ease-in-out cursor-pointer font-semibold"
-//         >
-//           <td className="py-5 px-9 text-[10px] text-gray-300">
-//             {idx + 1}
-//           </td>
-//           <td className="py-5 px-9 text-[10px] text-gray-300">
-//             {site.Rating}
-//           </td>
-//           <td className="py-5 px-9 text-[10px] text-gray-300">
-//             {site.emotion}
-//           </td>
-//           <td className="py-5 px-9 w-72 text-[10px] text-gray-300">
-//             {site.feedback}
-//           </td>
-//           {/* <td
-//             className={`py-5 px-3 text-xs text-gray-300 w-60 ${
-//               getPlan === "Basic" ? "blur-sm" : ""
-//             }`}
-//           >
-//             {site?.parsedFeedback?.response?.replace(/"/g, "") ||
-//               "No analysis available"}
-//           </td> */}
-//         </tr>
-//       ))
-//     ) : (
-//       <tr>
-//         <td colSpan={4} className="py-5 text-center text-slate-300">
-//           <div className="flex flex-col items-center gap-5">
-//             <FaRegCircleStop size={25} color="#9ca3af" />
-//             <p className="font-semibold">No Feedbacks Yet</p>
-//           </div>
-//         </td>
-//       </tr>
-//     )}
-//   </tbody>
-// </table>
