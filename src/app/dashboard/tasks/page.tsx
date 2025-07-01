@@ -80,9 +80,15 @@ const Page = () => {
         const data: Feedback[] = JSON.parse(getdata);
         setFeedbackData(data);
 
-        const happy = data.filter((item) => item.emotion.toLowerCase() === "happy").length;
-        const neutral = data.filter((item) => item.emotion.toLowerCase() === "neutral").length;
-        const sad = data.filter((item) => item.emotion.toLowerCase() === "sad").length;
+        const happy = data.filter(
+          (item) => item.emotion.toLowerCase() === "happy"
+        ).length;
+        const neutral = data.filter(
+          (item) => item.emotion.toLowerCase() === "neutral"
+        ).length;
+        const sad = data.filter(
+          (item) => item.emotion.toLowerCase() === "sad"
+        ).length;
 
         setHappyCount(happy);
         setNeutralCount(neutral);
@@ -111,7 +117,6 @@ const Page = () => {
       <div className="bg-[#0b0d0d]  w-full flex overflow-x-clip">
         <SideBar page="Home" />
         <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl">
-          {/* AI Insights Header */}
           <div className="overflow-x-auto rounded-xl my-12">
             <div className="flex md:mx-auto items-center justify-center rounded-lg w-[100vw] md:w-[73vw] px-8 py-2 border-[1px] border-[#0e1012]">
               <div className="flex flex-col items-center gap-4">
@@ -119,12 +124,12 @@ const Page = () => {
                   AI-Powered Insights
                 </h1>
                 <p className="text-[#95a4ab]">
-                  Unlock the power of artificial intelligence to understand your users better and make data-driven decisions
+                  Unlock the power of artificial intelligence to understand your
+                  users better and make data-driven decisions
                 </p>
               </div>
             </div>
 
-            {/* Feedback Counts */}
             <div className="flex justify-center items-center flex-col md:flex-row gap-10 my-6">
               {[
                 { title: "Happy", count: HappyCount },
@@ -148,7 +153,6 @@ const Page = () => {
               ))}
             </div>
 
-            {/* AI Feedback Analysis */}
             <div className="w-[58vw] mx-auto p-5 rounded-xl bg-[#161617] h-[50vh]">
               <div className="flex justify-between">
                 <div className="flex items-center space-x-3">
@@ -165,14 +169,20 @@ const Page = () => {
                       <div
                         key={idx}
                         className={`bg-[#2c2016] text-[#d1d1d1] flex items-center rounded-lg p-5 gap-4 border-l-4 border-orange-500 w-full mb-4 ${
-                          getPlan === "Basic" ? "cursor-not-allowed" : "cursor-pointer"
+                          getPlan === "Basic"
+                            ? "cursor-not-allowed"
+                            : "cursor-pointer"
                         }`}
                       >
                         <div className="bg-[#244445] p-3 rounded-md text-cyan-400 text-xl">
                           💡
                         </div>
                         <div className="flex-1">
-                          <p className={`${getPlan === "Basic" ? "blur-sm" : ""}`}>
+                          <p
+                            className={`${
+                              getPlan === "Basic" ? "blur-sm" : ""
+                            }`}
+                          >
                             {fb.parsedFeedback.response.replace(/"/g, "")}
                           </p>
                         </div>
@@ -183,7 +193,9 @@ const Page = () => {
                             className="hover:bg-red-900 p-2 rounded-full cursor-pointer"
                             onClick={() => {
                               if (getPlan !== "Basic") {
-                                setFeedbackData((prev) => prev.filter((_, i) => i !== idx));
+                                setFeedbackData((prev) =>
+                                  prev.filter((_, i) => i !== idx)
+                                );
                               }
                             }}
                           />
@@ -191,19 +203,26 @@ const Page = () => {
                             size={40}
                             color="green"
                             className={`hover:bg-green-900 p-2 rounded-full cursor-pointer ${
-                              getPlan === "Basic" ? "opacity-50 cursor-not-allowed" : ""
+                              getPlan === "Basic"
+                                ? "opacity-50 cursor-not-allowed"
+                                : ""
                             }`}
                             onClick={async () => {
                               if (getPlan === "Basic") return;
                               try {
                                 setisloading(true);
-                                await db.handleStatusChange(
-                                  user!,
-                                  idx,
-                                  "Completed",
-                                  fb.parsedFeedback?.response
+                                if (fb.parsedFeedback?.response) {
+                                  await db.handleStatusChange(
+                                    user!,
+                                    "Completed",
+                                    fb.feedback,
+                                    getName // comes from searchParams
+                                  );
+                                }
+
+                                setFeedbackData((prev) =>
+                                  prev.filter((_, i) => i !== idx)
                                 );
-                                setFeedbackData((prev) => prev.filter((_, i) => i !== idx));
                               } catch (error) {
                                 console.error("Error updating status:", error);
                               } finally {
@@ -226,7 +245,6 @@ const Page = () => {
               </div>
             </div>
 
-            {/* Raw Feedback Section */}
             <div className="w-[58vw] mx-auto p-5 rounded-xl bg-[#161617] h-[50vh] my-5">
               <div className="flex justify-between">
                 <div className="flex items-center space-x-3">

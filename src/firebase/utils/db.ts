@@ -36,44 +36,44 @@ export default class dbService {
     }
     return id;
   }
-
   async handleStatusChange(
     user: any,
-    idx: number, 
     status: string,
-    response: any
+    feedbackText: string,
+    websiteName: string
   ) {
     try {
-
       const userDocRef = doc(db, "USERS", user.uid);
       const docSnap = await getDoc(userDocRef);
 
-      if (docSnap.exists()) {
-        const userWebsites = docSnap.data()?.websites || [];
+      if (!docSnap.exists()) throw new Error("User document not found");
 
-        console.log(userWebsites);
+      const userWebsites = docSnap.data()?.websites || [];
 
-        // const targetWebsite = userWebsites?.filter(
-        //   (site: Website) => site.name === idx
-        // );
+      const website = userWebsites.find((w: any) => w.name === websiteName);
 
-        // if (!targetWebsite) {
-        //   throw new Error("Website not found");
-        // }
-
-        // console.log(targetWebsite)
-
-        // targetWebsite.feedback = targetWebsite.feedback.filter(
-        //   (feedback: any) => feedback.parsedFeedback.response !== response
-        // );
-
-        // await updateDoc(userDocRef, {
-        //   websites: userWebsites,
-        //   totalTasksFinished: (docSnap.data()?.totalTasksFinished || 0) + 1,
-        // });
-
-        // cache.set(user.uid, userWebsites);
+      if (!website || !Array.isArray(website.feedback)) {
+        throw new Error("Website or feedback array not found");
       }
+
+      const initialLength = website.feedback.length;
+
+      website.feedback = website.feedback.filter(
+        (fb: any) =>
+          fb.feedback?.trim().toLowerCase() !==
+          feedbackText.trim().toLowerCase()
+      );
+
+      if (website.feedback.length === initialLength) {
+        throw new Error("Feedback not found in this website");
+      }
+
+      await updateDoc(userDocRef, {
+        websites: userWebsites,
+        totalTasksFinished: (docSnap.data()?.totalTasksFinished || 0) + 1,
+      });
+
+      cache.set(user.uid, userWebsites);
     } catch (error) {
       console.error("Error in handleStatusChange:", error);
     }
