@@ -7,7 +7,6 @@ import html from "highlight.js/lib/languages/xml";
 import "highlight.js/styles/github.css";
 import dbService from "../firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
-import cache from "../cache/cache";
 import Loader from "./Loader";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../firebase/Firebase";
@@ -71,13 +70,8 @@ const AddIntegration: React.FC = () => {
     const fetchWebsites = async () => {
       if (!userLoading && user) {
         setFetchingData(true);
-        const cachedData = cache.get(user.uid);
-        if (cachedData) {
-          setWebsiteData(cachedData.value);
-        } else {
           const data = (await db.fetchWebsites(user)) as Website[];
           setWebsiteData(Array.isArray(data) ? data : []);
-        }
         setFetchingData(false);
       }
     };
@@ -115,10 +109,6 @@ const AddIntegration: React.FC = () => {
       await db.deleteWebsite(user!.uid, websiteName);
       setWebsiteData((prev) =>
         prev.filter((site) => site.name !== websiteName)
-      );
-      cache.set(
-        user!.uid,
-        websitedata.filter((site) => site.name !== websiteName)
       );
     } catch (error) {
       console.log("Error deleting website:", error);

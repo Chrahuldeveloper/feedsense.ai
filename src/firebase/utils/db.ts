@@ -1,6 +1,5 @@
 import { db } from "../Firebase";
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import cache from "../../cache/cache";
 
 interface User {
   uid: string;
@@ -73,7 +72,6 @@ export default class dbService {
         totalTasksFinished: (docSnap.data()?.totalTasksFinished || 0) + 1,
       });
 
-      cache.set(user.uid, userWebsites);
     } catch (error) {
       console.error("Error in handleStatusChange:", error);
     }
@@ -178,7 +176,6 @@ export default class dbService {
 
         await updateDoc(userDocRef, { websites: updatedWebsites });
         console.log("Website deleted successfully");
-        cache.set(userId, updatedWebsites);
       } else {
         console.error("User not found");
       }
@@ -230,7 +227,6 @@ export default class dbService {
         console.log("Website data saved successfully for new user");
       }
 
-      cache.set(user.uid, updatedWebsites);
     } catch (error) {
       console.error("Error saving website:", error);
     }
@@ -238,18 +234,13 @@ export default class dbService {
 
   async fetchWebsites(user: User): Promise<Website[]> {
     try {
-      const cachedWebsites = cache.get(user.uid);
 
-      if (cachedWebsites) {
-        console.log("Fetched websites from cache");
-        return cachedWebsites;
-      }
+   
       const userDocRef = doc(db, "USERS", user.uid);
       const docSnap = await getDoc(userDocRef);
 
       if (docSnap.exists()) {
         const userWebsites = docSnap.data()?.websites || [];
-        cache.set(user.uid, userWebsites);
         return userWebsites;
       } else {
         console.error("User does not exist");
@@ -268,12 +259,8 @@ export default class dbService {
     totalIncompleteTasks: number;
   } | null> {
     try {
-      const cachedDashboard = cache.get(`${user}-dashboard`);
 
-      if (cachedDashboard) {
-        console.log("Fetched dashboard details from cache");
-        return cachedDashboard;
-      }
+
 
       const userDocRef = doc(db, "USERS", user);
       const docSnap = await getDoc(userDocRef);
@@ -300,7 +287,6 @@ export default class dbService {
           totalTasksFinished,
           totalIncompleteTasks,
         };
-        cache.set(`${user}-dashboard`, dashboardDetails);
         return dashboardDetails;
       } else {
         console.error("User does not exist");
@@ -314,12 +300,8 @@ export default class dbService {
 
   async fetchFeedbacks(user: string) {
     try {
-      const cachedFeedbacks = cache.get(`${user}-feedbacks`);
 
-      if (cachedFeedbacks) {
-        console.log("Fetched feedbacks from cache");
-        return cachedFeedbacks;
-      }
+     
 
       const userDocRef = doc(db, "USERS", user);
       const docSnap = await getDoc(userDocRef);
@@ -329,7 +311,6 @@ export default class dbService {
         const allFeedbacks = websites.flatMap(
           (website: Website) => website.feedback || []
         );
-        cache.set(`${user}-feedbacks`, allFeedbacks);
         return allFeedbacks;
       } else {
         console.error("User does not exist");
@@ -373,7 +354,6 @@ export default class dbService {
           await updateDoc(userDocRef, { websites });
 
           console.log("Feedback saved successfully");
-          cache.set(userID, websites);
 
           const subscription = docSnap.data()?.subscription;
 

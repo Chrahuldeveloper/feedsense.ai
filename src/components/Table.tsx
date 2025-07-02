@@ -8,7 +8,6 @@ import useAuth from "@/hooks/CurrentUser";
 import Analytics from "./Analytics";
 import { CgProfile } from "react-icons/cg";
 import { FaRegCircleStop } from "react-icons/fa6";
-import cache from "../cache/cache";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/Firebase";
 import { CiShare1 } from "react-icons/ci";
@@ -79,13 +78,6 @@ const Table = () => {
     const fetchWebsites = async () => {
       if (!user || loading) return;
 
-      const cachedData = cache.get(`${user.uid}_websites`);
-      if (cachedData) {
-        console.log("Fetched Websites Data from Cache:", cachedData.value);
-        setWebsitedata(cachedData.value);
-        return;
-      }
-
       try {
         const data = await db1.fetchWebsites(user);
         console.log("Fetched Websites Data from Firestore:", data);
@@ -98,7 +90,6 @@ const Table = () => {
           feedback: item.feedback || [],
         }));
 
-        cache.set(`${user.uid}_websites`, transformedData);
         setWebsitedata(transformedData);
       } catch (error) {
         console.error("Error fetching websites:", error);
@@ -111,17 +102,7 @@ const Table = () => {
   useEffect(() => {
     const fetchDetails = async () => {
       if (!user || loading) return;
-
-      const cachedDetails = cache.get(`${user.uid}_dashboard`);
-      if (cachedDetails) {
-        console.log(
-          "Fetched Dashboard Details from Cache:",
-          cachedDetails.value
-        );
-        setInfodata(cachedDetails.value);
-        return;
-      }
-
+      
       try {
         const websiteInfoData = await db1.fetchDashboardDetails(user.uid);
         if (websiteInfoData) {
@@ -134,7 +115,6 @@ const Table = () => {
             totalIncompleteTasks:
               websiteInfoData?.totalIncompleteTasks?.toString() || "0",
           };
-          cache.set(`${user.uid}_dashboard`, newInfo);
           setInfodata(newInfo);
         }
       } catch (error) {
