@@ -159,6 +159,7 @@ const Table = () => {
           <MobileSideBar
             setToggle={setToggle}
             setToggleLogout={setToggleLogout}
+            Page="Home"
           />
         )}
 

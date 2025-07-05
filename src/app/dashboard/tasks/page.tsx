@@ -67,7 +67,6 @@ const Page = () => {
   const [toggleLogout, setToggleLogout] = useState(false);
 
   const getdata = searchParams?.get("feedback");
-  const getImage = searchParams?.get("image")!;
   const getName = searchParams?.get("name")!;
   const getPlan = searchParams?.get("Plan")!;
   const TotalFeedback = searchParams?.get("TotalFeedback")!;
@@ -111,9 +110,28 @@ const Page = () => {
     ],
   };
 
+  const [toggle, setToggle] = useState(true);
+
   return (
     <>
+      {toggle && (
+        <MobileSideBar
+          setToggle={setToggle}
+          setToggleLogout={setToggleLogout}
+          Page="Home"
+        />
+      )}
       {isloading && <Loader message="Deleting..." />}
+
+      <nav className="md:hidden bg-[#0b0d0e] p-7 w-screen border-b-[1px] border-[#1f2327] flex justify-between items-center">
+        <h1 className="text-xl font-semibold text-slate-300">FeedSense.ai</h1>
+        <CiMenuFries
+          size={26}
+          color="white"
+          className="cursor-pointer"
+          onClick={() => setToggle(true)}
+        />
+      </nav>
       <div className="bg-[#0b0d0d]  w-full flex overflow-x-clip">
         <SideBar page="Home" />
         <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl">
@@ -129,6 +147,10 @@ const Page = () => {
                 </p>
               </div>
             </div>
+
+            {HappyCount > 0 && NeutralCount > 0 && SadCount > 0 ? (
+              <Doughnut data={analytics} className="w-96 mx-auto p-10" />
+            ) : null}
 
             <div className="flex justify-center items-center flex-col md:flex-row gap-10 my-6">
               {[
@@ -216,7 +238,7 @@ const Page = () => {
                                     user!,
                                     "Completed",
                                     fb.feedback,
-                                    getName // comes from searchParams
+                                    getName
                                   );
                                 }
 
