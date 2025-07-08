@@ -1,16 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { CiGlobe, CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
-import { FaRegCircleStop } from "react-icons/fa6";
 import hljs from "highlight.js/lib/core";
 import html from "highlight.js/lib/languages/xml";
 import "highlight.js/styles/github.css";
 import dbService from "../firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import Loader from "./Loader";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { storage } from "../firebase/Firebase";
-import Image from "next/image";
 import { FaRegCopy } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,7 +14,6 @@ import ModelLogout from "./ModelLogout";
 import { CgProfile } from "react-icons/cg";
 import { IoCodeOutline } from "react-icons/io5";
 import { BsTrash2 } from "react-icons/bs";
-import Link from "next/link";
 
 interface Website {
   id: string;
@@ -43,7 +38,6 @@ interface User {
 
 const AddIntegration: React.FC = () => {
   const [toggle, setToggle] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1);
   const [websitedata, setWebsiteData] = useState<Website[]>([]);
   const [fetchingData, setFetchingData] = useState(true);
   const [savingData, setSavingData] = useState(false);
@@ -70,8 +64,8 @@ const AddIntegration: React.FC = () => {
     const fetchWebsites = async () => {
       if (!userLoading && user) {
         setFetchingData(true);
-          const data = (await db.fetchWebsites(user)) as Website[];
-          setWebsiteData(Array.isArray(data) ? data : []);
+        const data = (await db.fetchWebsites(user)) as Website[];
+        setWebsiteData(Array.isArray(data) ? data : []);
         setFetchingData(false);
       }
     };
@@ -135,7 +129,6 @@ const AddIntegration: React.FC = () => {
             toast("Upgrade your plan");
           } else {
             setLastWebsiteId(websiteDataInput.name);
-            setCurrentStep(3);
             codeToCopy(websiteDataInput.name);
             setWebsiteDataInput({ name: "", url: "", type: "" });
 
@@ -380,6 +373,7 @@ const AddIntegration: React.FC = () => {
         </nav>
         {toggle && (
           <MobileSideBar
+            Page="Integrate"
             setToggle={setToggle}
             setToggleLogout={setToggleLogout}
           />
