@@ -58,7 +58,7 @@ const Page = () => {
     },
     {
       icon: <HiOutlineUsers size={32} color="#06b6d4" />,
-      value: "50K+",
+      value: "30+",
       label: "Active Users",
     },
     {
