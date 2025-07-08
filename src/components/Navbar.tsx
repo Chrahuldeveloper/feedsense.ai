@@ -6,7 +6,6 @@ import Cookies from "js-cookie";
 import { CiHome } from "react-icons/ci";
 import { FcAbout } from "react-icons/fc";
 import { FaMoneyCheckAlt } from "react-icons/fa";
-import { IoCallOutline } from "react-icons/io5";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { CiLogin } from "react-icons/ci";
 import { RxCross2 } from "react-icons/rx";
@@ -42,13 +41,13 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={` border-b-[1px]  fixed flex-row top-0 left-0 w-full border-stone-900 z-50 p-3.5 flex justify-between items-center px-7 lg:px-12 transition-all duration-300 py-7 ${
-          isScrolled ? "bg-[#151a24]" : "backdrop-blur-lg"
+        className={` border-b-[1px]  fixed flex-row top-0 left-0 w-full border-stone-900 z-50 p-3.5 flex justify-around items-center px-7 lg:px-12 transition-all duration-300 py-7 ${
+          isScrolled ? "backdrop-blur-md" : "backdrop-blur-lg"
         }`}
       >
         <div>
-          <h1 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 to-cyan-500 text-transparent bg-clip-text">
-            Feedsense.ai
+          <h1 className="text-2xl font-semibold bg-gradient-to-r from-cyan-500 to-purple-500 text-transparent bg-clip-text">
+            FeedSense.ai
           </h1>
         </div>
         <div className="md:hidden">
@@ -63,23 +62,23 @@ const Navbar = () => {
         </div>
         <ul className="md:flex flex-row md:items-center gap-x-7 text-slate-300 hidden">
           <Link href="/">
-            <li className="cursor-pointer font-semibold text-sm">Home</li>
+            <li className="cursor-pointer font-semibold ">Home</li>
           </Link>
           <Link href={"/about"}>
-            <li className="cursor-pointer font-semibold text-sm">About</li>
+            <li className="cursor-pointer font-semibold ">About</li>
           </Link>
           {paid !== "true" ? (
             <Link href="/plans">
-              <li className="cursor-pointer font-semibold text-sm">Plans</li>
+              <li className="cursor-pointer font-semibold ">Plans</li>
             </Link>
           ) : null}
-          {userSession === null ? (
-            <Link href="/login">
-              <li className="cursor-pointer font-semibold text-sm">Login</li>
+          {userSession !== null ? (
+            <Link href="/login" >
+            <li className="cursor-pointer  bg-gradient-to-r from-[#00bfff] via-[#00bfff] to-[#00bfff] px-7 py-2 rounded-xl text-black">Login</li>
             </Link>
           ) : (
             <Link href="/dashboard">
-              <li className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-600 text-white py-2 px-5 w-full font-semibold rounded-lg text-xs">
+              <li className="cursor-pointer  bg-gradient-to-r from-[#00bfff] via-[#00bfff] to-[#00bfff] px-7 py-2 rounded-xl text-black">
                 Your Account
               </li>
             </Link>

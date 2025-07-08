@@ -1,24 +1,27 @@
 "use client";
 
-import AnimatedBackground from "@/background/AnimatedBackground";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { LuBrain } from "react-icons/lu";
-import { TiTickOutline } from "react-icons/ti";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { GoGraph } from "react-icons/go";
-import { FiMessageCircle } from "react-icons/fi";
-import { AiOutlineThunderbolt } from "react-icons/ai";
-import { BsGraphUpArrow } from "react-icons/bs";
-import { IoIosTimer } from "react-icons/io";
-import { MdSettingsSuggest } from "react-icons/md";
 import Cookies from "js-cookie";
 import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import img1 from "../asserts/img1.png";
+import Image from "next/image";
+import { FiMessageSquare } from "react-icons/fi";
+import { SlGraph } from "react-icons/sl";
+import { VscGraph } from "react-icons/vsc";
+import { AiOutlineThunderbolt } from "react-icons/ai";
+import { BsGraphUpArrow } from "react-icons/bs";
+import { FiCheckCircle, FiTrendingUp } from "react-icons/fi";
+import { AiOutlineStar } from "react-icons/ai";
+import { HiOutlineUsers } from "react-icons/hi2";
+import { LuBrain } from "react-icons/lu";
+import { FiArrowRight } from "react-icons/fi";
 
 interface User {
   uid: string;
@@ -29,59 +32,76 @@ const Page = () => {
     AOS.init();
   }, []);
 
-  const data = [
+  const benefits = [
     {
-      icon: <LuBrain size={25} color="#00a3ff" />,
-      title: "AI-Powered Analysis",
-      desc: "Advanced machine learning algorithms that analyze feedback and extract actionable insights.",
+      icon: <FiCheckCircle size={20} color="#22c55e" />,
+      title: "Increase User Satisfaction by 31%",
+      desc: "Our AI identifies pain points before they become problems, leading to happier users.",
     },
     {
-      icon: <GoGraph size={25} color="#00a3ff" />,
-      title: "Trend Identification",
-      desc: "Automatically identify emerging patterns and trends across all customer feedback channels.",
+      icon: <FiCheckCircle size={20} color="#06b6d4" />,
+      title: "Reduce Support Tickets by 18%",
+      desc: "Proactive insights help you fix issues before users need to contact support.",
     },
     {
-      icon: <FiMessageCircle size={25} color="#00a3ff" />,
-      title: "Sentiment Analysis",
-      desc: "Understand the emotional tone behind feedback to gauge customer satisfaction .",
-    },
-    {
-      icon: <AiOutlineThunderbolt size={25} color="#00a3ff" />,
-      title: "Real-Time Alerts",
-      desc: "Receive instant notifications about critical feedback that requires immediate attention.",
-    },
-    {
-      icon: <BsGraphUpArrow size={25} color="#00a3ff" />,
-      title: "Custom Dashboards",
-      desc: "Create personalized dashboards to track the metrics that matter most to your business.",
-    },
-    {
-      icon: <IoIosTimer size={25} color="#00a3ff" />,
-      title: "In-Depth Reports",
-      desc: "Generate comprehensive reports with visual data representations for stakeholder presentations.",
+      icon: <FiCheckCircle size={20} color="#facc15" />,
+      title: "Boost Feature Adoption by 42%",
+      desc: "Understand what users really want and deliver features they'll actually use.",
     },
   ];
 
-  const list = [
+  const stats = [
+    {
+      icon: <AiOutlineStar size={32} color="#facc15" />,
+      value: "4.9/5",
+      label: "Customer Rating",
+    },
+    {
+      icon: <HiOutlineUsers size={32} color="#06b6d4" />,
+      value: "50K+",
+      label: "Active Users",
+    },
+    {
+      icon: <FiTrendingUp size={32} color="#22c55e" />,
+      value: "89%",
+      label: "Accuracy Rate",
+    },
+    {
+      icon: <AiOutlineThunderbolt size={32} color="#a855f7" />,
+      value: "2.5x",
+      label: "Faster Insights",
+    },
+  ];
+  const features = [
     {
       icon: <LuBrain size={35} color="#00a3ff" />,
-      title: "Collect Feedback",
-      desc: "Connect your feedback channels, including survey responses, app reviews, support tickets, and social mentions.",
+      title: "AI-Powered Analysis",
+      desc: "Advanced machine learning algorithms analyze sentiment, trends, and patterns in real-time",
     },
     {
-      icon: <GoGraph size={35} color="#00a3ff" />,
-      title: "AI Processing",
-      desc: "Our AI engine analyzes the feedback, categorizes issues, detects sentiment, and identifies actionable insights.",
+      icon: <FiMessageSquare size={35} color="#00a3ff" />,
+      title: "Smart Feed Collection",
+      desc: "Seamlessly integrate with your website to collect feedback through multiple channels",
     },
     {
-      icon: <AiOutlineThunderbolt size={35} color="#00a3ff" />,
-      title: "Generate Insights",
-      desc: "View detailed dashboards showing trends, sentiment analysis, and prioritized action items.",
+      icon: <SlGraph size={35} color="#ffc107" />,
+      title: "Predictive Insights",
+      desc: "Get ahead of issues with predictive analytics and trend forecasting",
     },
     {
-      icon: <BsGraphUpArrow size={35} color="#00a3ff" />,
-      title: "Take Action",
-      desc: "Implement changes based on insights, track improvements, and measure impact over time.",
+      icon: <VscGraph size={35} color="#a259ff" />,
+      title: "Visual Dashboards",
+      desc: "Beautiful, interactive charts and graphs that make complex data easy to understand",
+    },
+    {
+      icon: <AiOutlineThunderbolt size={35} color="#ff5e5e" />,
+      title: "Real-time Alerts",
+      desc: "Instant notifications when critical feedback patterns are detected",
+    },
+    {
+      icon: <BsGraphUpArrow size={35} color="#ff9900" />,
+      title: "Actionable Recommendations",
+      desc: "AI-generated suggestions to improve user experience and satisfaction",
     },
   ];
 
@@ -163,364 +183,247 @@ const Page = () => {
   };
 
   return (
-    <div className="w-screen h-full bg-[#1c2031]">
-      <ToastContainer theme="dark" toastClassName={"custom-toast"} />
-
-      <div className="relative min-h-screen bg-[#1c2031] text-white flex flex-col items-center justify-center px-6 overflow-hidden">
-        <div className="absolute top-1/4 left-10 w-96 h-72 bg-[#172d42] opacity-40 blur-3xl rounded-full"></div>
-        <div className="absolute bottom-1/3 right-20 w-60 h-60 bg-[#172d42] opacity-30 blur-3xl rounded-full"></div>
-        <div className="absolute top-10 right-40 w-32 h-72 bg-[#172d42] opacity-20 blur-2xl rounded-full"></div>
-        <div className="absolute inset-0 bg-grid bg-opacity-10 pointer-events-none"></div>
-
-        <Navbar />
-
-        <AnimatedBackground />
-        <div
-          className="text-center relative "
-          data-aos="fade-up"
-          data-aos-offset="200"
-          data-aos-delay="50"
-          data-aos-duration="1000"
-          data-aos-easing="ease-in-out"
-        >
-          <div className="absolute top-1/4 left-10 w-96 h-72 bg-[#172d42] opacity-40 blur-3xl rounded-full"></div>
-          <div className="absolute bottom-1/3 right-20 w-60 h-60 bg-[#172d42] opacity-30 blur-3xl rounded-full"></div>
-          <div className="absolute top-10 right-40 w-32 h-72 bg-[#172d42] opacity-20 blur-2xl rounded-full"></div>
-
-          <span className="border border-blue-400 px-4 py-1 text-sm text-blue-400 rounded-full ">
-            Next-Generation Feedback Analytics
-          </span>
-          <h1 className="text-5xl md:text-6xl font-bold mt-4">
-            Turn Feedback into <br />
-            <span className="text-blue-400 drop-shadow-[0_0_10px_#00bfff]">
-              Actionable Insights
-            </span>
-            <br /> with AI
-          </h1>
-          <p className="text-gray-400 max-w-2xl mx-auto mt-4 z-10">
-            FeedSenseAI transforms your customer feedback into clear, actionable
-            insights with powerful AI analysis. Understand sentiment, identify
-            trends, and make data-driven decisions faster than ever.
-          </p>
-
-          <div className="mt-6 flex justify-center space-x-4">
-            {userSession === null ? (
-              <Link href="/login">
-                <button className=" cursor-pointer bg-blue-500 px-6 py-3 text-lg font-medium rounded-lg text-white shadow-lg shadow-blue-500/50 hover:bg-blue-600 transition z-10">
-                  Get Started Free
-                </button>
-              </Link>
-            ) : (
-              <Link href="/dashboard">
-                <li className=" cursor-pointer bg-blue-500 px-6 py-3 text-lg font-medium rounded-lg text-white shadow-lg shadow-blue-500/50 hover:bg-blue-600 transition z-10">
-                  Your Account
-                </li>
-              </Link>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <div className="text-center space-y-5 mt-20">
-        <h1 className="text-xl font-semibold text-[#b2ecfe] md:text-lg xl:text-5xl">
-          Powerful Features
+    <div className="w-screen  bg-[#0b0c0d]">
+      <Navbar />
+      <div className="text-white pt-36 text-center space-y-10">
+        <h1 className="text-3xl md:text-5xl font-bold lg:text-7xl ">
+          Transform{" "}
+          <span className="bg-gradient-to-r from-cyan-500 to-purple-500 text-transparent bg-clip-text">
+            User Feedback
+          </span>{" "}
+          <br /> Into Actionable Insights
         </h1>
-        <p className="text-gray-300">
-          Unlock the full potential of your customer feedback with our
-          comprehensive suite of AI-powered tools.
+        <p className="max-w-lg mx-auto text-gray-300">
+          Harness the power of artificial intelligence to understand your users
+          better, make data-driven decisions, and boost your product's success
+          with real-time feedback analytics.
         </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 justify-center place-items-center md:place-items-start  mt-16 gap-7 md:px-36">
-        {data.map((_, id) => {
-          return (
-            <div key={id}>
-              <div
-                data-aos="fade-up"
-                data-aos-offset="200"
-                data-aos-delay="50"
-                data-aos-duration="1000"
-                data-aos-easing="ease-in-out"
-                data-aos-once="true"
-                className="space-y-3 rounded-lg p-6 border-[1px] border-[#2f3a49] bg-[#1a2030] max-w-md cursor-pointer shadow-xl hover:shadow-cyan-800 duration-500 ease-in-out"
-              >
-                <div className="bg-[#142346] p-3 rounded-lg w-14 flex justify-center">
-                  {_.icon}
-                </div>
-                <h1 className="text-lg md:text-xl font-semibold text-white">
-                  {_.title}
-                </h1>
-                <p className=" max-w-sm text-gray-300">{_.desc}</p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="text-center space-y-5 mt-20">
-        <h1 className="text-xl font-semibold text-[#b2ecfe] md:text-lg xl:text-5xl">
-          How It Works
-        </h1>
-        <p className="text-gray-300">
-          A simple four-step process to transform your feedback into valuable
-          business insights.
-        </p>
-      </div>
-
-      <div className="md:flex justify-center hidden  gap-12 items-center mt-5">
-        {list.map((i, id) => (
-          <div
-            key={id}
-            className="flex flex-col items-center cursor-pointer "
-            onMouseEnter={() => setHoveredIndex(id)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          >
-            <h1 className="text-lg text-white bg-blue-500 rounded-full p-3 w-12 h-12 text-center">
-              {id + 1}
-            </h1>
-            <div className="bg-[#151923] rounded-xl w-32 h-2 mt-2 overflow-hidden">
-              <div
-                className={`h-full bg-blue-500 transition-all duration-500 ${
-                  hoveredIndex === id || (hoveredIndex === null && id === 0)
-                    ? "w-full"
-                    : "w-0"
-                }`}
-              ></div>
-            </div>
-            <h1 className="text-gray-300 mt-2">{i.title}</h1>
-          </div>
-        ))}
-      </div>
-
-      <div
-        data-aos="fade-up"
-        data-aos-offset="200"
-        data-aos-delay="50"
-        data-aos-duration="1000"
-        data-aos-easing="ease-in-out"
-        data-aos-once="true"
-        className="bg-[#1a2030] hidden p-5 rounded-xl max-w-md md:max-w-3xl border-[1px] border-[#2f3a49] mx-auto h-[30vh] mt-10 md:flex items-center justify-center"
-      >
-        <div className="flex flex-col justify-center items-center gap-6">
-          <div className="bg-[#142346] p-3 rounded-lg w-14 flex justify-center">
-            {hoveredIndex !== null && hoveredIndex !== undefined
-              ? data[hoveredIndex]?.icon
-              : data[0]?.icon}
-          </div>
-          <p className="text-gray-300 text-center px-6 max-w-md">
-            {hoveredIndex !== null && hoveredIndex !== undefined
-              ? data[hoveredIndex]?.desc
-              : data[0]?.desc}
-          </p>
-        </div>
-      </div>
-
-      <div className="flex flex-col justify-center items-center md:hidden">
-        {list.map((i, id) => {
-          return (
-            <div key={id}>
-              <div
-                data-aos="fade-up"
-                data-aos-offset="200"
-                data-aos-delay="50"
-                data-aos-duration="1000"
-                data-aos-easing="ease-in-out"
-                data-aos-once="true"
-                className="bg-[#1a2030]  p-5 rounded-xl max-w-md md:max-w-3xl border-[1px] border-[#2f3a49] mx-auto h-[30vh] mt-10 md:flex items-center justify-center hover:shadow-cyan-800 duration-300 ease-in-out cursor-pointer"
-              >
-                <div className="flex flex-col justify-center items-center gap-6">
-                  <div className="bg-[#142346] p-3 rounded-lg w-14 flex justify-center">
-                    {i.icon}
-                  </div>
-                  <p className="text-gray-300 text-center px-6 max-w-md">
-                    {i.desc}
-                  </p>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <div
-        className={` ${
-          offer === "true" ? "hidden" : "block"
-        } text-center space-y-5 mt-20`}
-      >
-        <h1 className="text-xl font-semibold text-[#b2ecfe] md:text-lg xl:text-5xl">
-          Simple, Transparent Pricing
-        </h1>
-        <p className="text-gray-300">
-          Choose the plan that best fits your needs. No hidden fees.
-        </p>
-      </div>
-
-      <div
-        className={`flex flex-col md:flex-row gap-8 px-6 md:px-10 pb-14 justify-center mt-16  ${
-          offer === "true" ? "hidden" : "block"
-        }  `}
-      >
-        {Plans.map((plan, idx) => {
-          return (
-            <div
-              key={idx}
-              data-aos="fade-up"
-              data-aos-offset="200"
-              data-aos-delay="50"
-              data-aos-duration="1000"
-              data-aos-easing="ease-in-out"
-              data-aos-once="true"
-              className="relative flex flex-col rounded-lg  bg-gradient-to-r from-[#1a202f] via-[#1a202f] to-[#1a202f] border-t-4 border-t-cyan-500  transform transition-transform duration-300 hover:scale-105 w-full max-w-md cursor-pointer shadow-2xl"
-            >
-              {plan.name === "Pro" && (
-                <div className="absolute top-0 right-0 bg-cyan-500 text-white text-xs font-bold py-1 px-3 rounded-bl-lg">
-                  Free Offer
-                </div>
-              )}
-              <div className="p-6 space-y-3.5 rounded-t-lg">
-                <h1 className="text-white text-xl font-bold">{plan.name}</h1>
-                <p className="text-3xl font-bold text-slate-200">
-                  {plan.price}
-                </p>
-                <p className="text-slate-300">
-                  Perfect for small businesses looking to improve customer
-                  experience.
-                </p>
-              </div>
-              <div className="px-7 mt-auto">
-                {/* <Link href={`/subscription/${plan.name}`}> */}
-                <>
-                  {user?.uid ? (
-                    <button
-                      onClick={handleAvailOffer}
-                      className="w-full  bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600   transitionmt-4 text-white py-3 font-semibold rounded-lg  transition-shadow duration-200 shadow-xl text-sm"
-                    >
-                      Grab Now
-                    </button>
-                  ) : (
-                    <Link href={"/login"}>
-                      <button className="w-full  bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600   transitionmt-4 text-white py-3 font-semibold rounded-lg  transition-shadow duration-200 shadow-xl text-sm">
-                        Login
-                      </button>
-                    </Link>
-                  )}
-                </>
-                {/* </Link> */}
-              </div>
-              <ul className="space-y-4 text-slate-300 p-6 flex-grow bg-[#181c2b] mt-5 border-t-[1px] border-[#2f3a49]">
-                {plan.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <TiTickOutline size={20} color="#00a3ff" />
-                    <span className=" text-sm">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="fixed bottom-10 right-10">
-        <Link href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/feedsenseai">
-          <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
-            <MdSettingsSuggest
-              size={47}
-              color="white"
-              className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 rounded-full p-3"
-            />
+        <div>
+          <button className="cursor-pointer  bg-gradient-to-r from-[#00bfff] via-[#00bfff] to-[#00bfff] px-7 py-2 rounded-xl text-black ">
+            Get Started
           </button>
-        </Link>
+        </div>
+        <div className="flex justify-center">
+          <div className="relative group w-fit">
+            <div
+              className="absolute inset-0 rounded-xl bg-gradient-to-r
+                    from-cyan-400 via-sky-400 to-purple-600
+                    opacity-40 blur-md transition
+                    group-hover:opacity-70 group-hover:blur-lg"
+            />
+            <Image
+              src={img1}
+              alt="img1"
+              width={1000}
+              height={550}
+              className="relative rounded-xl cursor-pointer"
+              priority
+            />
+          </div>
+        </div>
       </div>
 
-      <footer className="bg-gray-900 text-gray-400 p-8 mt-10">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between space-y-8 md:space-y-0">
-          <div className="md:w-1/3">
-            <h2 className="text-white text-2xl font-semibold">
-              Feed<span className="text-cyan-400">Sense</span>AI
+      <div className="flex flex-col justify-center items-center py-12 bg-[#0b0c0d] min-h-screen text-white">
+        <h1 className="text-3xl font-semibold mb-2 text-white">
+          Powerful Features for{" "}
+          <span className="bg-gradient-to-r from-cyan-500 to-purple-500 text-transparent bg-clip-text">
+            Smart Analytics
+          </span>
+        </h1>
+        <p className="text-gray-300 mb-10 text-center max-w-xl">
+          Everything you need to understand, analyze, and act on user feedback
+          in real-time
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+          {features.map((item, index) => (
+            <div
+              key={index}
+              className="bg-[#0e0f11] p-6 rounded-xl max-w-sm text-white border border-[#1c1d20] hover:shadow-lg transition"
+            >
+              <div className="mb-4">{item.icon}</div>
+              <h2 className="text-lg font-semibold mb-2">{item.title}</h2>
+              <p className="text-sm text-gray-300">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <section className="w-[100vw] mx-auto bg-[#0b0c0d] text-white py-16 ">
+        <div className="container mx-auto px-6 flex flex-col gap-14 lg:flex-row">
+          <div className="flex-1 max-w-xl">
+            <h2 className="text-3xl font-semibold mb-4">
+              Why Choose{" "}
+              <span className="bg-gradient-to-r from-cyan-500 to-purple-500 text-transparent bg-clip-text">
+                FeedSenseAI?
+              </span>
             </h2>
-            <p className="mt-2 text-sm">
-              Transforming feedback into actionable insights with the power of
-              artificial intelligence.
+            <p className="text-gray-300 mb-8">
+              Join hundreds of companies that trust FeedSenseAI to transform
+              their user feedback into business growth.
             </p>
-            <div className="flex space-x-5 mt-4">
-              <a href="#" className="hover:text-white">
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="#" className="hover:text-white">
-                <i className="fab fa-linkedin"></i>
-              </a>
-              <a href="#" className="hover:text-white">
-                <i className="fab fa-github"></i>
-              </a>
-            </div>
-          </div>
 
-          <div className="flex flex-col md:flex-row md:space-x-16">
-            <div>
-              <h3 className="text-white font-semibold">Company</h3>
-              <ul className="mt-2 space-y-4 text-sm">
-                <li>
-                  <Link href="/contactUs" className="hover:text-white">
-                    About Us
-                  </Link>
+            <ul className="space-y-6">
+              {benefits.map((b, idx) => (
+                <li key={idx} className="flex items-start max-w-md gap-3">
+                  {b.icon}
+                  <div>
+                    <h3 className="font-medium">{b.title}</h3>
+                    <p className="text-gray-400 text-sm">{b.desc}</p>
+                  </div>
                 </li>
-                <li>
-                  <Link
-                    href="https://merchant.razorpay.com/policy/P8XFEmJQOPeGVU/refund"
-                    className="hover:text-white"
-                  >
-                    Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="https://merchant.razorpay.com/policy/P8XFEmJQOPeGVU/terms"
-                    className="hover:text-white"
-                  >
-                    Terms of Service{" "}
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-white font-semibold mt-6 md:mt-0">Support</h3>
-              <ul className="mt-2 space-y-5 text-sm">
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Help Center
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Contact Us
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-white font-semibold">Contact</h3>
-            <ul className="mt-2 space-y-5 text-sm">
-              <li>
-                <a
-                  href="mailto:hello@feedsenseai.com"
-                  className="hover:text-white"
-                >
-                  📧 chrahulofficial@gmail.com
-                </a>
-              </li>
-              <li>
-                <a href="91+8317680338" className="hover:text-white">
-                  📞 8317680338
-                </a>
-              </li>
-              <li>📍 Hyderabad 501401,India</li>
+              ))}
             </ul>
           </div>
+
+          <div className="flex-1  grid grid-cols-2  mx-auto gap-6">
+            {stats.map((s, idx) => (
+              <div
+                key={idx}
+                className="bg-[#0e0f11] rounded-xl p-8 flex flex-col items-center text-center border border-[#1c1d20] "
+              >
+                <div className="mb-4">{s.icon}</div>
+                <p className="text-2xl font-semibold mb-1">{s.value}</p>
+                <p className="text-gray-400 text-sm">{s.label}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="border-t border-gray-700 mt-8 pt-4 text-sm text-center">
-          <p>© 2025 FeedSenseAI. All rights reserved.</p>
+      </section>
+
+      <section className="w-full flex justify-center py-20 bg-[#0b0c0d]">
+        <div className="relative max-w-3xl w-full group">
+          <div
+            className="absolute inset-0 rounded-2xl bg-gradient-to-r
+                     from-cyan-400 via-sky-400 to-purple-600
+                     opacity-40 blur-md transition
+                     group-hover:opacity-70 group-hover:blur-lg"
+          />
+
+          <div
+            className="relative rounded-2xl p-10 bg-[#0e0f11]/90 text-center
+                     border border-transparent backdrop-blur-sm"
+          >
+            <h2 className="text-3xl font-semibold mb-4 text-white">
+              Ready to Transform Your{" "}
+              <span className="bg-gradient-to-r from-cyan-500 to-purple-500 text-transparent bg-clip-text">
+                User Feedback?
+              </span>
+            </h2>
+
+            <p className="text-gray-300 mb-10 max-w-2xl mx-auto">
+              Join thousands of companies using FeedSenseAI to make smarter,
+              data‑driven decisions. Start your free trial today and see the
+              difference AI can make.
+            </p>
+
+            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6">
+              <button
+                className="inline-flex items-center justify-center gap-2
+                               bg-[#00c3ff] hover:bg-[#00b4eb] text-black
+                               font-medium rounded-md px-6 py-3 shadow-lg transition"
+              >
+                Start Free Trial
+              </button>
+            </div>
+
+            <p className="text-gray-400 text-sm">
+              No credit card required • 14‑day free trial • Cancel anytime
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <footer className="w-full bg-[#0b0c0d] border-t border-[#1c1d20] py-16 text-gray-300">
+        <div className="container mx-auto px-6 grid gap-12 lg:grid-cols-4">
+          <div>
+            <div className="flex items-center gap-2 mb-4 text-white">
+              <LuBrain size={24} color="#00c3ff" />
+              <h3 className="text-xl font-semibold">
+                <span className="bg-gradient-to-r from-cyan-500 to-purple-500 text-transparent bg-clip-text">
+                  FeedSenseAI
+                </span>
+              </h3>
+            </div>
+            <p className="max-w-xs">
+              Transform user feedback into actionable insights with the power of
+              AI.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-10 lg:col-span-3 lg:grid-cols-3">
+            <ul className="space-y-3">
+              <h4 className="font-medium text-white mb-2">Product</h4>
+              <li>
+                <a href="#" className="hover:text-white">
+                  Dashboard
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white">
+                  Feedback
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white">
+                  Insights
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white">
+                  Integration
+                </a>
+              </li>
+            </ul>
+
+            <ul className="space-y-3">
+              <h4 className="font-medium text-white mb-2">Company</h4>
+              <li>
+                <a href="#" className="hover:text-white">
+                  About
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white">
+                  Careers
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white">
+                  Contact
+                </a>
+              </li>
+            </ul>
+
+            <ul className="space-y-3">
+              <h4 className="font-medium text-white mb-2">Support</h4>
+              <li>
+                <a href="#" className="hover:text-white">
+                  Help Center
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white">
+                  Documentation
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white">
+                  API Reference
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white">
+                  Status
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </footer>
     </div>

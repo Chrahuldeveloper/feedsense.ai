@@ -19,14 +19,14 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({
 }) => {
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 md:hidden">
-      <aside className="bg-[#161617] py-6 w-[50vw] h-full fixed top-0 left-0 md:hidden space-y-10 border-r-[1px] border-[#272b2f] z-50 px-4">
+      <aside className="bg-[#161617] py-6 w-[50vw] h-full fixed top-0 left-0 md:hidden space-y-3 border-r-[1px] border-[#272b2f] z-50 px-4">
         <div className="flex justify-end cursor-pointer">
           <RxCross2 size={23} color="white" onClick={() => setToggle(false)} />
         </div>
 
         <Link href="/dashboard">
           <div
-            className={`flex items-center space-x-6  cursor-pointer my-10 hover:bg-[#09343e] transition duration-200 ease-in-out rounded-lg w-48 px-5 py-2 ${
+            className={`flex items-center space-x-6  cursor-pointer my-5 hover:bg-[#09343e] transition duration-200 ease-in-out rounded-lg w-48 px-5 py-2 ${
               Page === "Home"
                 ? "bg-[#09343e] border border-cyan-400/20  backdrop-blur-sm  text-cyan-400"
                 : ""
@@ -39,7 +39,7 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({
 
         <Link href="/dashboard/integrate">
           <div
-            className={`flex items-center space-x-6  cursor-pointer my-10 hover:bg-[#09343e] transition duration-200 ease-in-out rounded-lg w-48 px-5 py-2 ${
+            className={`flex items-center space-x-6  cursor-pointer my-5 hover:bg-[#09343e] transition duration-200 ease-in-out rounded-lg w-48 px-5 py-2 ${
               Page === "Integrate"
                 ? "bg-[#09343e] border border-cyan-400/20  backdrop-blur-sm  text-cyan-400"
                 : ""
@@ -52,7 +52,8 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({
 
         <Link href="/dashboard/contact">
           <div
-            className={`flex items-center space-x-6  cursor-pointer my-10 hover:bg-[#09343e] transition duration-200 ease-in-out rounded-lg w-48 px-5 py-2 ${
+            className={`flex items-center space-x-6  cursor-pointer my-5 hover:bg-[#09343e] transition duration-200 ease-in-out rounded-Rocky trains his friend, Apollo Creed, for a match against Drago, an indestructible Russian boxer. But when Apollo is killed in the ring during the match, he vows to avenge his friend's death.
+lg w-48 px-5 py-2 ${
               Page === "Help"
                 ? "bg-[#09343e] border border-cyan-400/20  backdrop-blur-sm  text-cyan-400"
                 : ""
@@ -64,7 +65,7 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({
         </Link>
 
         <div
-          className={`flex items-center space-x-6  cursor-pointer my-10 hover:bg-red-600 transition duration-200 ease-in-out rounded-lg w-48 px-5 py-2 text-red-500 hover:text-white ${
+          className={`flex items-center space-x-6  cursor-pointer my-5 hover:bg-red-600 transition duration-200 ease-in-out rounded-lg w-48 px-5 py-2 text-red-500 hover:text-white ${
             Page === "Logout" ? "bg-red-400" : ""
           }`}
           onClick={() => setToggleLogout(true)}

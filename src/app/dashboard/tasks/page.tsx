@@ -175,7 +175,7 @@ const Page = () => {
               ))}
             </div>
 
-            <div className="w-[58vw] mx-auto p-5 rounded-xl bg-[#161617] h-[50vh]">
+            <div className="w-[86vw] md:w-[70vw] lg:w-[58vw] mx-auto p-5 rounded-xl bg-[#161617] h-[50vh]">
               <div className="flex justify-between">
                 <div className="flex items-center space-x-3">
                   <LuBrain size={25} color="#00a3ff" />
@@ -267,7 +267,7 @@ const Page = () => {
               </div>
             </div>
 
-            <div className="w-[58vw] mx-auto p-5 rounded-xl bg-[#161617] h-[50vh] my-5">
+            <div className="w-[86vw] md:w-[70vw] lg:w-[58vw] mx-auto p-5 rounded-xl bg-[#161617] h-[50vh] my-5">
               <div className="flex justify-between">
                 <div className="flex items-center space-x-3">
                   <GoGraph size={25} color="#00a3ff" />
