@@ -193,7 +193,7 @@ const AddIntegration: React.FC = () => {
             />
           </div>
         </div>
-        <div className="p-5 md:ml-10 md:px-20 lg:px-32 space-y-3">
+        <div className="p-5 md:ml-10 md:px-20 lg:px-28 space-y-3">
           <h1 className="text-xl md:text-2xl lg:text-3xl text-gray-300  font-semibold mt-3">
             Integrate Website
           </h1>
@@ -333,7 +333,11 @@ const AddIntegration: React.FC = () => {
                 <div
                   className="col-span-1 text-blue-400 truncate cursor-pointer"
                   onClick={() => {
-                    window.open(`${site.url}`, "_blank");
+                    const url = site.url!.match(/^https?:\/\//)
+                      ? site.url
+                      : `https://${site.url}`;
+
+                    window.open(url, "_blank", "noopener,noreferrer");
                   }}
                 >
                   {site.url}
