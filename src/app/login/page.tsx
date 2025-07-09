@@ -4,17 +4,13 @@ import { useRouter } from "next/navigation";
 import { auth } from "../../firebase/Firebase";
 import { signInWithPopup } from "firebase/auth";
 import { GoogleAuthProvider, UserCredential } from "firebase/auth";
-// import { Mail, Lock } from "lucide-react";
 import Cookies from "js-cookie";
 import SendEmail from "../../emailJs/Email";
 import Loader from "../../components/Loader";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import Login from "../lottie-asserts/Login.json";
-// interface UserData {
-//   email: string;
-//   password: string;
-// }
+import { PiGoogleChromeLogo } from "react-icons/pi";
 
 type ErrorMessage = string;
 
@@ -28,42 +24,8 @@ export default function LoginPage() {
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<ErrorMessage>("");
 
-  // const [data, setData] = useState<UserData>({
-  //   email: "",
-  //   password: "",
-  // });
-
   const Email = new SendEmail();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  // const handleSubmit = async (): Promise<void> => {
-  //   if (Object.values(data).every((i) => i !== "")) {
-  //     setIsLoading(true);
-  //     try {
-  //       const userCredential: UserCredential = await signInWithEmailAndPassword(
-  //         auth,
-  //         data.email,
-  //         data.password
-  //       );
-  //       const user = userCredential.user;
-  //       console.log(user);
-  //       const message = `Thank you for logging in ${user.displayName}! If you need any help navigating your account or have questions, we&apos;re just a message away.`;
-  //       Email.sendLoginEmail(
-  //         user.email!.toString(),
-  //         user.displayName!.toString(),
-  //         message
-  //       );
-  //       Cookies.set("auth-token", "authenticated", { expires: 1 });
-  //       navigate.push("/dashboard");
-  //     } catch (error: unknown) {
-  //       setError(true);
-  //       setIsLoading(false);
-  //       setErrorMessage("Invalid credentials.");
-  //     }
-  //   } else {
-  //     alert("Enter all the details");
-  //   }
-  // };
 
   const googleSignIn = async (): Promise<void> => {
     setIsLoading(true);
@@ -92,113 +54,40 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="bg-[#1c2031] w-full overflow-hidden min-h-screen relative">
-      {/* {error && <ErrorModel message={errorMessage} setError={setError} />} */}
-      {isLoading && <Loader message="Loading" />}
-
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-10 w-96 h-72 bg-[#172d42] opacity-40 blur-3xl rounded-full"></div>
-        <div className="absolute bottom-1/3 right-20 w-60 h-60 bg-[#172d42] opacity-30 blur-3xl rounded-full"></div>
-        <div className="absolute top-10 right-40 w-32 h-72 bg-[#172d42] opacity-20 blur-2xl rounded-full"></div>
-        <div className="absolute inset-0 bg-grid bg-opacity-10 pointer-events-none"></div>
-      </div>
-
-      <div className="relative z-10 flex items-center justify-center min-h-screen pt-7">
-        <div className="bg-[#111827] p-8 rounded-lg w-full max-w-md mx-auto border-[#282e32] border-[1px] shadow-2xl">
-          {error && (
-            <div>
-              <h1 className="text-red-500 text-center mt-5">{errorMessage}</h1>
-            </div>
-          )}
-
-          <div className="-mt-7">
-            <LottiePlayer
-              loop
-              animationData={Login}
-              play
-              className="w-72 mx-auto"
-            />
-          </div>
-
-          <div className="space-y-6 text-center">
-            <h1 className="text-3xl font-bold text-white">Welcome back</h1>
-            <p className="text-sm font-semibold text-slate-400">
-              Sign in or Login to your account
-            </p>
-          </div>
-
-          {/* <div className="space-y-6 my-8">
-            <div className="space-y-2">
-              <label
-                htmlFor="email"
-                className="text-sm font-medium text-slate-300"
-              >
-                Email
-              </label>
-              <div className="relative">
-                <Mail
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"
-                  size={18}
-                />
-                <input
-                  id="email"
-                  type="email"
-                  value={data.email}
-                  onChange={(e) => setData({ ...data, email: e.target.value })}
-                  autoComplete="email"
-                  className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-10 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
-                  placeholder="Enter your email"
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label
-                htmlFor="password"
-                className="text-sm font-medium text-slate-300"
-              >
-                Password
-              </label>
-              <div className="relative">
-                <Lock
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"
-                  size={18}
-                />
-                <input
-                  id="password"
-                  type="password"
-                  value={data.password}
-                  onChange={(e) =>
-                    setData({ ...data, password: e.target.value })
-                  }
-                  autoComplete="current-password"
-                  className="bg-[#1E1E1E] border-[1px] border-[#282e32] pl-10 pr-4 py-2 w-full rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
-                  placeholder="Enter your password"
-                />
-              </div>
-            </div>
-            <button
-              onClick={handleSubmit}
-              className="w-full py-2 px-4 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-600 text-white rounded-lg  transition-colors mt-4"
-            >
-              Login
-            </button>
-          </div> */}
-          <div className="flex flex-col items-center justify-between mt-2 text-sm text-slate-400">
-            <button
-              onClick={googleSignIn}
-              className="flex w-full justify-center items-center space-x-2 text-white bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 py-2 px-4 rounded-lg mt-5"
-            >
-              <Image
-                className="w-6 h-6 mr-2"
-                src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                alt="Google logo"
-                width={24}
-                height={24}
-              />
-              <span>Sign in with Google</span>
-            </button>
+    <div className="min-h-screen bg-gradient-to-br from-[#172038] to-black flex items-center justify-center px-4">
+      <div className="bg-[##0e0f11] border border-[#282e32] shadow-2xl rounded-xl p-8 w-full max-w-md text-center relative z-10">
+        <div className="mb-6 flex justify-center">
+          <div className="w-12 h-12 rounded-full bg-[#0f172a] flex items-center justify-center shadow-[0_0_15px_2px_rgba(0,255,255,0.4)]">
+            <PiGoogleChromeLogo size={28} color="#00bfff" />
           </div>
         </div>
+
+        <h1 className="text-white text-xl md:text-2xl lg:text-3xl font-semibold mb-4">
+          Welcome to FeedSenseAI
+        </h1>
+        <p className="text-gray-400 text-sm mb-6">
+          Sign in with Google to access your feedback analytics dashboard
+        </p>
+
+        <button
+          onClick={googleSignIn}
+          className="w-full flex items-center justify-center bg-[#00b4ff] hover:bg-[#00a2e3] transition-colors  py-2 rounded-lg text-sm font-medium shadow-lg text-black"
+        >
+          <Image
+            className="w-5 h-5 mr-2"
+            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+            alt="Google logo"
+            width={20}
+            height={20}
+          />
+          Continue with Google
+        </button>
+
+        <p className="text-gray-500 text-xs mt-8 ">
+          By signing in, you agree to our{" "}
+          <span className="underline cursor-pointer">Terms of Service</span> and{" "}
+          <span className="underline cursor-pointer">Privacy Policy</span>
+        </p>
       </div>
     </div>
   );

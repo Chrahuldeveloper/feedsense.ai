@@ -105,7 +105,6 @@ const Page = () => {
     },
   ];
 
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>();
 
   const [userSession, setUserSession] = useState<string | null>(null);
 
