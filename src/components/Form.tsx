@@ -62,7 +62,7 @@ const Form = () => {
         setSelectedEmotion(null);
         setSelectedRating(0);
       } else {
-        toast("You are not subscribed to this website.");
+        toast("The website is Not subscribed to Feedsenseai.");
       }
     } catch (error) {
       console.log(error);
