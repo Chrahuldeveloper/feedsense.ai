@@ -1,118 +1,164 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
-import React from "react";
-import { GoGoal } from "react-icons/go";
-import { TbBulb } from "react-icons/tb";
-import { FaHandshake } from "react-icons/fa";
-import { AiFillThunderbolt } from "react-icons/ai";
 import Footer from "@/components/Footer";
-import useAuth from "@/hooks/CurrentUser";
-import Link from "next/link";
+import React from "react";
 
-export default function page() {
-  const { user, loading } = useAuth();
-
-  const data = [
-    {
-      icon: <GoGoal size={24} color="#00a3ff" />,
-      tittle: "Customer-Centric",
-      para: "We prioritize user feedback, ensuring businesses gain valuable insights to enhance their products.",
-    },
-    {
-      icon: <TbBulb size={24} color="#00a3ff" />,
-      tittle: "Innovation",
-      para: "We leverage AI to transform raw feedback into actionable insights, driving smarter decisions.",
-    },
-    {
-      icon: <FaHandshake size={24} color="#00a3ff" />,
-      tittle: "Collaboration",
-      para: "We enable teams to work efficiently by centralizing and analyzing feedback for data-driven improvements.",
-    },
-    {
-      icon: <AiFillThunderbolt size={24} color="#00a3ff" />,
-      tittle: "Efficiency",
-      para: "Our AI-powered platform streamlines feedback analysis, reducing guesswork and saving time.",
-    },
-  ];
-  
-
+const Page = () => {
   return (
-    <div className="bg-[#1c2031] w-full flex flex-col min-h-screen overflow-x-clip">
+    <div className="w-screen min-h-screen bg-[#0b0c0d] text-white">
       <Navbar />
 
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-10 w-96 h-72 bg-[#172d42] opacity-40 blur-3xl rounded-full"></div>
-        <div className="absolute bottom-1/3 right-20 w-60 h-60 bg-[#172d42] opacity-30 blur-3xl rounded-full"></div>
-        <div className="absolute top-10 right-40 w-32 h-72 bg-[#172d42] opacity-20 blur-2xl rounded-full"></div>
-        <div className="absolute inset-0 bg-grid bg-opacity-10 pointer-events-none"></div>
-      </div>
-
-      <div className="relative z-10">
-        <Navbar />
-        <div className="max-w-5xl  mx-auto relative mt-36 p-5 lg:p-0">
-          <div className="text-center space-y-5">
-            <p className="bg-white p-2 rounded-full flex items-center justify-center gap-2 text-[11px] font-semibold w-44 mx-auto text-xs">
-              Our Story
-            </p>
-            <h1 className="text-3xl lg:text-5xl text-center font-semibold text-white leading-8 z-50">
-              Transforming{" "}
-              <span className=" font-bold bg-gradient-to-r from-blue-500 to-cyan-500 text-transparent bg-clip-text">
-                Ideas
-              </span>{" "}
-              Into Reality ✨
-            </h1>
-            <p className="text-[#a2a2a2] max-w-xl mx-auto text-center z-50 text-sm md:text-base">
-              We're a passionate team of innovators dedicated to building
-              solutions that make a difference. Since 2020, we've been helping
-              businesses transform their digital presence.
-            </p>
-            <button className="bg-white text-black py-2 px-8 md:px-16 lg:px-20 font-semibold rounded-lg text-sm">
-              <Link href={`${user ? "/dashboard" : "/login"}`} className="">
-                Get Started
-              </Link>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className=" p-5 w-full mx-auto my-28 space-y-8">
-        <p className="bg-white p-2 rounded-full flex items-center justify-center gap-2 text-[11px] font-semibold w-44 mx-auto text-xs">
-          Our Values
-        </p>
-        <h1 className="text-3xl lg:text-4xl text-center font-semibold text-white leading-8 z-50 ">
-          The Principles That{" "}
-          <span className=" font-bold bg-gradient-to-r from-blue-500 to-cyan-500 text-transparent bg-clip-text">
-            Guide
-          </span>{" "}
-          Our Journey ✨
+      <section className="px-6 md:px-20 py-32 text-center">
+        <h1 className="text-4xl font-bold mb-4">
+          About{" "}
+          <span className="bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">
+            FeedSenseAI
+          </span>
         </h1>
+        <p className="text-gray-300 max-w-2xl mx-auto">
+          We're on a mission to transform how businesses understand and act on
+          user feedback through the power of artificial intelligence.
+        </p>
+      </section>
 
-        <div className="flex flex-col items-center justify-center gap-6 pt-10">
-          {data.map((i, id) => {
-            return (
-              <React.Fragment key={id}>
-                <div className="bg-[#1a2030] max-w-xl p-5 rounded-lg border-[1px] border-[#2f3a49] cursor-pointer shadow-xl">
-                  {i.icon}
-                  <div className="space-y-3 mt-3">
-                    <h1 className="text-white font-semibold">{i.tittle}</h1>
-                    <p className="text-slate-300 text-sm">{i.para}</p>
-                  </div>
-                </div>
-              </React.Fragment>
-            );
-          })}
-        </div>
+      <section className="grid md:grid-cols-2 gap-10 px-6 md:px-20 pb-20 lg:w-[80vw] lg:mx-auto">
         <div>
-          <p className="text-white text-center max-w-sm mx-auto">
-            <i>
-              "We believe that the best products are built when teams truly
-              understand and act on their customers' needs."
-            </i>
+          <h2 className="text-2xl font-semibold mb-4">Our Story</h2>
+          <p className="text-gray-400 mb-4">
+            Founded in 2023, FeedSenseAI was born from a simple frustration:
+            businesses were drowning in user feedback but struggling to extract
+            meaningful insights that could drive real change.
+          </p>
+          <p className="text-gray-400 mb-4">
+            Our team of AI researchers, product managers, and engineers came
+            together to solve this problem by creating the most advanced
+            feedback analysis platform on the market.
+          </p>
+          <p className="text-gray-400">
+            Today, we help over 500 companies worldwide turn their user feedback
+            into actionable insights that improve user satisfaction and drive
+            business growth.
           </p>
         </div>
-      </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-[#0e0f10] border border-[#1e1e1e] rounded-lg p-6 text-center">
+            <div className="text-cyan-400 text-3xl mb-2">👥</div>
+            <p className="text-xl font-semibold">500+</p>
+            <p className="text-sm text-gray-400">Companies Trust Us</p>
+          </div>
+
+          <div className="bg-[#0e0f10] border border-[#1e1e1e] rounded-lg p-6 text-center">
+            <div className="text-green-400 text-3xl mb-2">💬</div>
+            <p className="text-xl font-semibold">10M+</p>
+            <p className="text-sm text-gray-400">Feedback Analyzed</p>
+          </div>
+
+          <div className="bg-[#0e0f10] border border-[#1e1e1e] rounded-lg p-6 text-center">
+            <div className="text-yellow-400 text-3xl mb-2">🎯</div>
+            <p className="text-xl font-semibold">98%</p>
+            <p className="text-sm text-gray-400">Accuracy Rate</p>
+          </div>
+
+          <div className="bg-[#0e0f10] border border-[#1e1e1e] rounded-lg p-6 text-center">
+            <div className="text-purple-400 text-3xl mb-2">🏅</div>
+            <p className="text-xl font-semibold">4.9/5</p>
+            <p className="text-sm text-gray-400">Customer Rating</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 md:px-20 py-20 bg-[#0b0c0d] text-white">
+        <div className="text-center mb-12 ">
+          <h2 className="text-3xl font-bold mb-2">Our Values</h2>
+          <p className="text-gray-400">
+            The principles that guide everything we do
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-5 lg:px-32  justify-center ">
+          <div className="bg-[#0e0f10] border border-[#1e1e1e] p-6 rounded-xl max-w-md mx-auto space-y-3 hover:scale-105 ease-in-out duration-300">
+            <div className="w-10 h-10 rounded-md bg-cyan-500 flex items-center justify-center mb-4">
+              <span className="text-white text-xl">🧠</span>
+            </div>
+            <h3 className="font-semibold text-lg mb-2 md:text-xl lg:text-2xl">Innovation First</h3>
+            <p className="text-gray-400 ">
+              We constantly push the boundaries of what's possible with AI to
+              deliver cutting-edge solutions.
+            </p>
+          </div>
+
+          <div className="bg-[#0e0f10] border border-[#1e1e1e] p-6 rounded-xl max-w-md mx-auto space-y-3 hover:scale-105 ease-in-out duration-300">
+            <div className="w-10 h-10 rounded-md bg-green-500 flex items-center justify-center mb-4">
+              <span className="text-white text-xl">👥</span>
+            </div>
+            <h3 className="font-semibold text-lg md:text-xl lg:text-2xl mb-2">Customer Success</h3>
+            <p className="text-gray-400 ">
+              Your success is our success. We're committed to helping you
+              achieve your goals with our platform.
+            </p>
+          </div>
+
+          <div className="bg-[#0e0f10] border border-[#1e1e1e] p-6 rounded-xl max-w-md mx-auto space-y-3 hover:scale-105 ease-in-out duration-300">
+            <div className="w-10 h-10 rounded-md bg-purple-500 flex items-center justify-center mb-4">
+              <span className="text-white text-xl">⚡</span>
+            </div>
+            <h3 className="font-semibold text-lg md:text-xl mb-2 lg:text-2xl">Speed & Reliability</h3>
+            <p className="text-gray-400 ">
+              We deliver fast, reliable insights you can trust to make critical
+              business decisions.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="w-full flex justify-center py-20 bg-[#0b0c0d]">
+        <div className="relative max-w-3xl w-full group">
+          <div
+            className="absolute inset-0 rounded-2xl bg-gradient-to-r
+                     from-cyan-400 via-sky-400 to-purple-600
+                     opacity-40 blur-md transition
+                     group-hover:opacity-70 group-hover:blur-lg"
+          />
+
+          <div
+            className="relative rounded-2xl p-10 bg-[#0e0f11]/90 text-center
+                     border border-transparent backdrop-blur-sm"
+          >
+            <h2 className="text-3xl font-semibold mb-4 text-white">
+              Ready to Transform Your{" "}
+              <span className="bg-gradient-to-r from-cyan-500 to-purple-500 text-transparent bg-clip-text">
+                User Feedback?
+              </span>
+            </h2>
+
+            <p className="text-gray-300 mb-10 max-w-2xl mx-auto">
+              Join thousands of companies using FeedSenseAI to make smarter,
+              data‑driven decisions. Start your free trial today and see the
+              difference AI can make.
+            </p>
+
+            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6">
+              <button
+                className="inline-flex items-center justify-center gap-2
+                               bg-[#00c3ff] hover:bg-[#00b4eb] text-black
+                               font-medium rounded-md px-6 py-3 shadow-lg transition"
+              >
+                Start Free Trial
+              </button>
+            </div>
+
+            <p className="text-gray-400 text-sm">
+              No credit card required • 14‑day free trial • Cancel anytime
+            </p>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
-}
+};
+
+export default Page;
