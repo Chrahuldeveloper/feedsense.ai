@@ -25,47 +25,31 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-10 lg:col-span-3 lg:grid-cols-3">
             <ul className="space-y-3">
               <h4 className="font-medium text-white mb-2">Product</h4>
-              <li>
-                <a href="#" className="hover:text-white">
-                  Dashboard
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">
-                  Feedback
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">
-                  Insights
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">
-                  Integration
-                </a>
-              </li>
+              <li className="hover:text-white">Dashboard</li>
+              <li className="hover:text-white">Feedback</li>
+              <li className="hover:text-white">Insights</li>
+              <li className="hover:text-white">Integration</li>
             </ul>
 
             <ul className="space-y-3">
               <h4 className="font-medium text-white mb-2">Company</h4>
               <li>
-                <a href="#" className="hover:text-white">
+                <a href="/about" className="hover:text-white">
                   About
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a href="#" className="hover:text-white">
                   Blog
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a href="#" className="hover:text-white">
                   Careers
                 </a>
-              </li>
+              </li> */}
               <li>
-                <a href="#" className="hover:text-white">
+                <a href="/contactUs" className="hover:text-white">
                   Contact
                 </a>
               </li>
@@ -74,23 +58,8 @@ export default function Footer() {
             <ul className="space-y-3">
               <h4 className="font-medium text-white mb-2">Support</h4>
               <li>
-                <a href="#" className="hover:text-white">
+                <a href="/contactUs" className="hover:text-white">
                   Help Center
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">
-                  Documentation
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">
-                  API Reference
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">
-                  Status
                 </a>
               </li>
             </ul>
