@@ -9,7 +9,6 @@ import SendEmail from "../../emailJs/Email";
 import Loader from "../../components/Loader";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import Login from "../lottie-asserts/Login.json";
 import { PiGoogleChromeLogo } from "react-icons/pi";
 
 type ErrorMessage = string;
@@ -55,6 +54,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#172038] to-black flex items-center justify-center px-4">
+      {error ? <p>Error while signing in</p> : null}
       <div className="bg-[##0e0f11] border border-[#282e32] shadow-2xl rounded-xl p-8 w-full max-w-md text-center relative z-10">
         <div className="mb-6 flex justify-center">
           <div className="w-12 h-12 rounded-full bg-[#0f172a] flex items-center justify-center shadow-[0_0_15px_2px_rgba(0,255,255,0.4)]">
