@@ -8,8 +8,19 @@ const Contact = () => {
   return (
     <div className="w-screen min-h-screen bg-[#0b0c0d] text-white">
       <Navbar />
-
-      <div className="px-4 md:px-20 py-32 grid md:grid-cols-2 gap-10">
+      <div className="space-y-5 pt-36 flex flex-col justify-center items-center">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-2 text-white">
+          Get in
+          <span className="bg-gradient-to-r from-cyan-500 to-purple-500 text-transparent bg-clip-text">
+            Touch
+          </span>
+        </h1>
+        <p className="text-gray-300 mb-10 text-center max-w-xl">
+          Have questions about FeedSenseAI? We're here to help you transform
+          your user feedback into actionable insights.
+        </p>
+      </div>
+      <div className="px-4 md:px-20 py-28 grid md:grid-cols-2 gap-10 lg:w-[80vw] lg:mx-auto">
         <div className="bg-[#141519] p-6 md:p-10 rounded-xl">
           <h2 className="text-2xl font-semibold mb-2">Send us a message</h2>
           <p className="text-sm text-gray-400 mb-6">

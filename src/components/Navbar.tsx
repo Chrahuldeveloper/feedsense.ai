@@ -73,8 +73,10 @@ const Navbar = () => {
             </Link>
           ) : null}
           {userSession !== null ? (
-            <Link href="/login" >
-            <li className="cursor-pointer  bg-gradient-to-r from-[#00bfff] via-[#00bfff] to-[#00bfff] px-7 py-2 rounded-xl text-black">Login</li>
+            <Link href="/login">
+              <li className="cursor-pointer  bg-gradient-to-r from-[#00bfff] via-[#00bfff] to-[#00bfff] px-7 py-2 rounded-xl text-black">
+                Login
+              </li>
             </Link>
           ) : (
             <Link href="/dashboard">
