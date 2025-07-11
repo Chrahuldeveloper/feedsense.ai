@@ -25,54 +25,23 @@ export default function page() {
 
   const [isloading, setisloading] = useState<boolean>(false);
 
-  const Plans = [
-    {
-      name: "Pro",
-      price: "Free",
-      features: [
-        "Unlimited feedback entries",
-        "Automated task generation from feedback",
-        "Priority Support",
-        "Analytics",
-        "Unlimited websites",
-        "Incentivise Users",
-      ],
-      // Bill: "Billed once every 5 months",
-      // para: "That's ₹540/month ≈ ₹18/day ≈ 6 coffees per month",
-    },
-    // {
-    //   name: "Basic",
-    //   price: "₹450",
-    //   features: [
-    //     "Collect up to 100 feedback",
-    //     "Priority Support",
-    //     "Analytics",
-    //     "Only 3 websites integration",
-    //     "Incentivise Users",
-    //   ],
-    //   Bill: "Billed monthly",
-    //   para: "That's less than ₹12/day ≈ 2 coffees per month",
-    // },
-    // {
-    //   name: "Pro",
-    //   price: "₹2700",
-    //   features: [
-    //     "Unlimited feedback entries",
-    //     "Automated task generation from feedback",
-    //     "Priority Support",
-    //     "Analytics",
-    //     "Unlimited websites",
-    //     "Incentivise Users",
-    //   ],
-    //   Bill: "Billed once every 5 months",
-    //   para: "That's ₹540/month ≈ ₹18/day ≈ 6 coffees per month",
-    // },
-  ];
-
   return (
-    <div className="w-screen  bg-[#0b0c0d] h-screen">
+    <div className="w-screen min-h-screen bg-[#0b0c0d] ">
       <Navbar />
-      <div className="flex flex-col md:flex-row justify-center gap-6 px-6 pt-36 ">
+      <section className="px-6 md:px-20   py-20 text-center ">
+        <h1 className="text-4xl text-white font-bold mb-4">
+          About{" "}
+          <span className="bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">
+            FeedSenseAI
+          </span>
+        </h1>
+        <p className="text-gray-300 max-w-2xl mx-auto">
+          We're on a mission to transform how businesses understand and act on
+          user feedback through the power of artificial intelligence.
+        </p>
+      </section>
+
+      <div className="flex flex-col md:flex-row justify-center gap-6 px-6  py-7">
         {[
           {
             name: "Starter",
