@@ -106,7 +106,6 @@ const Page = () => {
     },
   ];
 
-
   const [userSession, setUserSession] = useState<string | null>(null);
 
   const [offer, setoffer] = useState<string | null>();
@@ -333,8 +332,7 @@ const Page = () => {
           </div>
         </div>
       </section>
-
-      <Footer/>
+      <Footer />
     </div>
   );
 };

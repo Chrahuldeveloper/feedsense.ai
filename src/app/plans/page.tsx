@@ -70,38 +70,121 @@ export default function page() {
   ];
 
   return (
-    <>
-      <div className="bg-[#1c2031] w-full min-h-screen overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95vw] h-[30vh] bg-blue-600 rounded-full opacity-20 blur-[120px]" />
-          <div className="absolute top-1/4 left-1/4 w-[60vw] h-[30vh] bg-blue-500 rounded-full opacity-15 blur-[100px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[70vw] h-[30vh] bg-blue-400 rounded-full opacity-10 blur-[130px]" />
-        </div>
-
-        <div className="relative z-10">
-          <Navbar />
-          <div className="max-w-5xl  mx-auto relative mt-36 p-5 lg:p-0">
-            <div className="text-center space-y-5">
-              <p className="bg-white p-2 rounded-full flex items-center justify-center gap-2 text-[11px] font-semibold w-56 mx-auto text-xs">
-                <IoIosStarOutline size={20} color="black" />
-                LIMITED-TIME OFFER
-              </p>
-              <h1 className="text-3xl lg:text-5xl text-center font-semibold text-white leading-8 z-50">
-                Be Among the First <br />{" "}
-                <span className="font-bold bg-gradient-to-r from-blue-500 to-cyan-500 text-transparent bg-clip-text">
-                  100 Users & Get It Free for Life!
-                </span>{" "}
-              </h1>
-              <p className="text-[#a2a2a2] max-w-xl mx-auto text-center z-50 text-sm md:text-base">
-                The first 100 users will enjoy <b>FeedSense.AI</b> for{" "}
-                <b>free forever</b> Don't miss out—secure your lifetime access
-                now!
-              </p>
+    <div className="w-screen  bg-[#0b0c0d] h-screen">
+      <Navbar />
+      <div className="flex flex-col md:flex-row justify-center gap-6 px-6 pt-36 ">
+        {[
+          {
+            name: "Starter",
+            price: "$29",
+            desc: "Perfect for small teams getting started with AI feedback analysis",
+            features: [
+              { label: "Up to 1,000 feedback entries/month", available: true },
+              { label: "Basic sentiment analysis", available: true },
+              { label: "Simple dashboard", available: true },
+              { label: "Email support", available: true },
+              { label: "1 website integration", available: true },
+              { label: "Basic reporting", available: true },
+              { label: "Advanced AI insights", available: false },
+              { label: "Real-time alerts", available: false },
+              { label: "API access", available: false },
+              { label: "Custom integrations", available: false },
+              { label: "Priority support", available: false },
+              { label: "White-label options", available: false },
+            ],
+            highlight: false,
+          },
+          {
+            name: "Professional",
+            price: "$99",
+            desc: "Advanced features for growing businesses and teams",
+            features: [
+              { label: "Up to 10,000 feedback entries/month", available: true },
+              { label: "Advanced sentiment analysis", available: true },
+              { label: "Interactive dashboard", available: true },
+              { label: "Priority email support", available: true },
+              { label: "Up to 5 website integrations", available: true },
+              { label: "Advanced reporting & analytics", available: true },
+              { label: "Advanced AI insights", available: true },
+              { label: "Real-time alerts", available: true },
+              { label: "API access", available: true },
+              { label: "Custom integrations", available: false },
+              { label: "Priority support", available: false },
+              { label: "White-label options", available: false },
+            ],
+            highlight: true,
+          },
+          {
+            name: "Enterprise",
+            price: "$299",
+            desc: "Complete solution for large organizations with custom needs",
+            features: [
+              { label: "Unlimited feedback entries", available: true },
+              { label: "Advanced sentiment analysis", available: true },
+              { label: "Custom dashboard", available: true },
+              { label: "24/7 phone & email support", available: true },
+              { label: "Unlimited website integrations", available: true },
+              { label: "Custom reporting & analytics", available: true },
+              { label: "Advanced AI insights", available: true },
+              { label: "Real-time alerts", available: true },
+              { label: "Full API access", available: true },
+              { label: "Custom integrations", available: true },
+              { label: "Priority support", available: true },
+              { label: "White-label options", available: true },
+            ],
+            highlight: false,
+          },
+        ].map((plan, i) => (
+          <div
+            key={i}
+            className={`relative w-full max-w-sm bg-[#0e0f11] rounded-xl border border-[#2a2a2a] shadow-xl ${
+              plan.highlight ? "border-cyan-500 scale-105" : ""
+            } transition-all duration-300`}
+          >
+            {plan.highlight && (
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                Most Popular
+              </div>
+            )}
+            <div className="flex flex-col p-6 space-y-4">
+              <div className="flex flex-col items-start space-y-2">
+                <h3 className="text-white text-xl font-semibold">
+                  {plan.name}
+                </h3>
+                <p className="text-gray-400 text-sm">{plan.desc}</p>
+                <p className="text-3xl font-bold text-white">
+                  {plan.price}
+                  <span className="text-sm text-gray-400">/month</span>
+                </p>
+              </div>
+              <button className="bg-white text-black text-sm font-semibold py-2 rounded-md hover:bg-gray-100 transition">
+                Start Free Trial
+              </button>
+              <ul className="pt-4 space-y-3 text-sm">
+                {plan.features.map((f, idx) => (
+                  <li
+                    key={idx}
+                    className={`flex items-start gap-2 ${
+                      f.available ? "text-white" : "text-gray-500 line-through"
+                    }`}
+                  >
+                    <TiTickOutline
+                      className={`min-w-[20px] ${
+                        f.available ? "text-green-400" : "text-gray-600"
+                      }`}
+                      size={20}
+                    />
+                    {f.label}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
+        ))}
+      </div>
 
+      {/* 
           {isloading ? <Loader message="Grabing the offer for you" /> : null}
-
           <div className="flex flex-col md:flex-row gap-8 px-6 md:px-10 pb-14 justify-center my-24 ">
             {Plans.map((plan, idx) => {
               return (
@@ -132,7 +215,7 @@ export default function page() {
                   </ul>
                   <div className="p-6 mt-auto">
                     {/* <Link href={`/subscription/${plan.name}`}> */}
-                    <>
+      {/* <>
                       <button
                         onClick={async () => {
                           console.log(user);
@@ -163,14 +246,10 @@ export default function page() {
                       </button>
                     </>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <ToastContainer theme="dark" toastClassName={"custom-toast"} />
-        <Footer />
-      </div>
-    </>
+                </div> */}
+      {/* <ToastContainer theme="dark" toastClassName={"custom-toast"} />
+        <Footer /> */}
+      {/* </div> */}
+    </div>
   );
 }
