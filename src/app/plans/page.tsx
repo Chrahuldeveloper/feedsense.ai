@@ -2,13 +2,11 @@
 import Navbar from "@/components/Navbar";
 import React, { useState } from "react";
 import { TiTickOutline } from "react-icons/ti";
-// import Link from "next/link";
-import { IoIosStarOutline } from "react-icons/io";
 import Footer from "@/components/Footer";
 import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Loader from "../../components/Loader";
@@ -44,7 +42,7 @@ export default function page() {
       <div className="flex flex-col md:flex-row justify-center gap-6 px-6  pb-28">
         {[
           {
-            name: "Starter",
+            name: "Basic",
             price: "$29",
             desc: "Perfect for small teams getting started with AI feedback analysis",
             features: [
@@ -63,28 +61,9 @@ export default function page() {
             highlight: false,
           },
           {
-            name: "Professional",
+            name: "Pro",
             price: "$99",
             desc: "Advanced features for growing businesses and teams",
-            features: [
-              { label: "Up to 10,000 feedback entries/month", available: true },
-              { label: "Advanced sentiment analysis", available: true },
-              { label: "Interactive dashboard", available: true },
-              { label: "Priority email support", available: true },
-              { label: "Up to 5 website integrations", available: true },
-              { label: "Advanced reporting & analytics", available: true },
-              { label: "Advanced AI insights", available: true },
-              { label: "Real-time alerts", available: true },
-              { label: "API access", available: true },
-              { label: "Custom integrations", available: false },
-              { label: "Priority support", available: false },
-            ],
-            highlight: true,
-          },
-          {
-            name: "Enterprise",
-            price: "$299",
-            desc: "Complete solution for large organizations with custom needs",
             features: [
               { label: "Unlimited feedback entries", available: true },
               { label: "Advanced sentiment analysis", available: true },
@@ -98,7 +77,7 @@ export default function page() {
               { label: "Custom integrations", available: true },
               { label: "Priority support", available: true },
             ],
-            highlight: false,
+            highlight: true,
           },
         ].map((plan, i) => (
           <div
@@ -108,14 +87,14 @@ export default function page() {
             } transition-all duration-300`}
           >
             {plan.highlight && (
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-cyan-600 text-white text-xs font-bold px-3 py-1 rounded-full">
                 Most Popular
               </div>
             )}
             <div className="flex flex-col p-6 space-y-4">
               <div className="flex flex-col items-start space-y-2">
-                <h3 className="text-white text-xl font-semibold">
-                  {plan.name}
+                <h3 className="text-white text-xl font-bold">
+                  {plan.name.toUpperCase()}
                 </h3>
                 <p className="text-gray-400 text-sm">{plan.desc}</p>
                 <p className="text-3xl font-bold text-white">

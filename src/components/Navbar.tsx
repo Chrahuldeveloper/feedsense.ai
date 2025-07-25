@@ -67,9 +67,9 @@ const Navbar = () => {
           <Link href={"/about"}>
             <li className="cursor-pointer font-semibold ">About</li>
           </Link>
-            <Link href="/plans">
-              <li className="cursor-pointer font-semibold ">Plans</li>
-            </Link>
+          <Link href="/plans">
+            <li className="cursor-pointer font-semibold ">Plans</li>
+          </Link>
           {userSession !== null ? (
             <Link href="/login">
               <li className="cursor-pointer  bg-gradient-to-r from-[#00bfff] via-[#00bfff] to-[#00bfff] px-7 py-2 rounded-xl text-black">

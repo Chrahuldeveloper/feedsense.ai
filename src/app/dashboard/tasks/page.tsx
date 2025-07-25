@@ -23,12 +23,13 @@ import useAuth from "@/hooks/CurrentUser";
 import Loader from "@/components/Loader";
 import { FaRegCircleStop } from "react-icons/fa6";
 import ModelLogout from "@/components/ModelLogout";
-import { MdOutlineEventNote } from "react-icons/md";
+import { MdOutlineEventNote, MdOutlineSentimentNeutral } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { BiMessageRounded } from "react-icons/bi";
 import { LuBrain } from "react-icons/lu";
 import { GoGraph } from "react-icons/go";
 import { FiCheck } from "react-icons/fi";
+import { IoMdHappy, IoMdSad } from "react-icons/io";
 
 ChartJS.register(
   CategoryScale,
@@ -154,10 +155,40 @@ const Page = () => {
 
             <div className="flex justify-center items-center flex-col md:flex-row gap-10 my-6">
               {[
-                { title: "Happy", count: HappyCount },
-                { title: "Neutral", count: NeutralCount },
-                { title: "Sad", count: SadCount },
-              ].map(({ title, count }, idx) => (
+                {
+                  title: "Happy",
+                  count: HappyCount,
+                  icon: (
+                    <IoMdHappy
+                      size={33}
+                      color="#00a3ff"
+                      className="w-12 p-2 h-12 rounded-full bg-[#13293c]"
+                    />
+                  ),
+                },
+                {
+                  title: "Neutral",
+                  count: NeutralCount,
+                  icon: (
+                    <MdOutlineSentimentNeutral
+                      size={33}
+                      color="#00a3ff"
+                      className="w-12 p-2 h-12 rounded-full bg-[#13293c]"
+                    />
+                  ),
+                },
+                {
+                  title: "Sad",
+                  count: SadCount,
+                  icon: (
+                    <IoMdSad
+                      size={33}
+                      color="#00a3ff"
+                      className="w-12 p-2 h-12 rounded-full bg-[#13293c]"
+                    />
+                  ),
+                },
+              ].map(({ title, count, icon }, idx) => (
                 <div
                   key={title}
                   className="bg-[#161617] py-5 px-5 rounded-xl w-[60vw] lg:w-[18vw] flex justify-evenly gap-5 cursor-pointer border-[1px] border-[#2c2c2d] hover:scale-105 ease-in-out duration-500"
@@ -166,11 +197,7 @@ const Page = () => {
                     <h1 className="text-white text-xl">{title} Count</h1>
                     <p className="text-lg text-gray-300">{count}</p>
                   </div>
-                  <BiMessageRounded
-                    size={33}
-                    color="#00a3ff"
-                    className="w-12 p-2 h-12 rounded-full bg-[#13293c]"
-                  />
+                  {icon}
                 </div>
               ))}
             </div>
