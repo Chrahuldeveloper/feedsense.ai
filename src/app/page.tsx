@@ -106,80 +106,9 @@ const Page = () => {
     },
   ];
 
-  const [userSession, setUserSession] = useState<string | null>(null);
+  
+ 
 
-  const [offer, setoffer] = useState<string | null>();
-
-  useEffect(() => {
-    const token = Cookies.get("auth-token");
-    setUserSession(token ?? null);
-
-    const getOfferStatus = localStorage.getItem("offerGrabbed");
-
-    setoffer(getOfferStatus);
-  }, []);
-
-  const { user, loading } = useAuth() as {
-    user: User | null;
-    loading: boolean;
-  };
-
-  const db = new dbService();
-
-  const Plans = [
-    {
-      name: "Pro",
-      price: "Free",
-      features: [
-        "Unlimited feedback entries",
-        "Automated task generation from feedback",
-        "Priority Support",
-        "Analytics",
-        "Unlimited websites",
-        "Incentivise Users",
-      ],
-      // Bill: "Billed once every 5 months",
-      // para: "That's ₹540/month ≈ ₹18/day ≈ 6 coffees per month",
-    },
-    // {
-    //   name: "Basic",
-    //   price: "₹450",
-    //   features: [
-    //     "Collect up to 100 feedback",
-    //     "Priority Support",
-    //     "Analytics",
-    //     "Only 3 websites integration",
-    //     "Incentivise Users",
-    //   ],
-    //   Bill: "Billed monthly",
-    //   para: "That's less than ₹12/day ≈ 2 coffees per month",
-    // },
-    // {
-    //   name: "Pro",
-    //   price: "₹2700",
-    //   features: [
-    //     "Unlimited feedback entries",
-    //     "Automated task generation from feedback",
-    //     "Priority Support",
-    //     "Analytics",
-    //     "Unlimited websites",
-    //     "Incentivise Users",
-    //   ],
-    //   Bill: "Billed once every 5 months",
-    //   para: "That's ₹540/month ≈ ₹18/day ≈ 6 coffees per month",
-    // },
-  ];
-
-  const handleAvailOffer = async () => {
-    try {
-      const res = await db.availFreeOffer(user!.uid);
-      console.log(res);
-      localStorage.setItem("offerGrabbed", res.toString());
-      return toast("Congratulations you have grabbed the free offer!");
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <div className="w-screen  bg-[#0b0c0d]">
@@ -248,7 +177,7 @@ const Page = () => {
         </div>
       </div>
 
-      <section className="w-[100vw] mx-auto bg-[#0b0c0d] text-white py-16 ">
+      <section className="w-[80vw] mx-auto bg-[#0b0c0d] text-white py-16 ">
         <div className="container mx-auto px-6 flex flex-col gap-14 lg:flex-row">
           <div className="flex-1 max-w-xl">
             <h2 className="text-3xl font-semibold mb-4">

@@ -67,11 +67,9 @@ const Navbar = () => {
           <Link href={"/about"}>
             <li className="cursor-pointer font-semibold ">About</li>
           </Link>
-          {paid !== "true" ? (
             <Link href="/plans">
               <li className="cursor-pointer font-semibold ">Plans</li>
             </Link>
-          ) : null}
           {userSession !== null ? (
             <Link href="/login">
               <li className="cursor-pointer  bg-gradient-to-r from-[#00bfff] via-[#00bfff] to-[#00bfff] px-7 py-2 rounded-xl text-black">
@@ -80,7 +78,7 @@ const Navbar = () => {
             </Link>
           ) : (
             <Link href="/dashboard">
-              <li className="cursor-pointer  bg-gradient-to-r from-[#00bfff] via-[#00bfff] to-[#00bfff] px-7 py-2 rounded-xl text-black">
+              <li className="cursor-pointer text-[#00bfff]  rounded-xl font-semibold">
                 Your Account
               </li>
             </Link>
