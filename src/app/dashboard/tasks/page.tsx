@@ -90,9 +90,9 @@ const Page = () => {
           (item) => item.emotion.toLowerCase() === "sad"
         ).length;
 
-        setHappyCount(10);
-        setNeutralCount(10);
-        setSadCount(10);
+        setHappyCount(happy);
+        setNeutralCount(neutral);
+        setSadCount(sad);
       } catch (e) {
         console.error("Error parsing feedback:", e);
       }
@@ -137,7 +137,7 @@ const Page = () => {
         <SideBar page="Home" />
         <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl">
           <div className="overflow-x-auto rounded-xl my-12">
-            <div className="flex md:mx-auto  rounded-lg w-[100vw] md:w-[73vw] px-8 py-2 border-[1px] border-[#0e1012]">
+            <div className="flex md:mx-auto   w-[100vw] md:w-[73vw] px-8 py-2 border-[1px] border-[#0e1012]">
               <div className="flex flex-col  gap-4">
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-[#68a8fd] to-cyan-500 bg-clip-text text-transparent">
                   AI-Powered Insights
@@ -149,10 +149,8 @@ const Page = () => {
               </div>
             </div>
 
-           
-
-            <div className="flex flex-col lg:flex-row justify-center items-center lg:ml-28">
-              <div className="w-[86vw] md:w-[70vw] lg:w-[36vw] mx-auto p-5 rounded-xl bg-[#161617] h-[50vh]">
+            <div className="flex flex-col lg:flex-row justify-center px-3 items-center lg:ml-24">
+              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw] mx-auto p-5  bg-[#161617] h-[50vh]">
                 <div className="flex justify-between">
                   <div className="flex items-center space-x-3">
                     <LuBrain size={25} color="#00a3ff" />
@@ -237,7 +235,7 @@ const Page = () => {
                       ) : null
                     )
                   ) : (
-                    <div className="py-10 text-center text-slate-300">
+                    <div className="py-24 text-center text-slate-300">
                       <div className="flex flex-col items-center gap-5">
                         <FaRegCircleStop size={25} color="#9ca3af" />
                         <p className="font-semibold">No Analysis Yet</p>
@@ -247,7 +245,7 @@ const Page = () => {
                 </div>
               </div>
 
-              <div className="w-[86vw] md:w-[70vw] lg:w-[36vw] mx-auto p-5 rounded-xl bg-[#161617] h-[50vh] my-5">
+              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw] mx-auto p-5  bg-[#161617] h-[50vh] my-5">
                 <div className="flex justify-between">
                   <div className="flex items-center space-x-3">
                     <GoGraph size={25} color="#00a3ff" />
@@ -270,7 +268,7 @@ const Page = () => {
                     </div>
                   ))
                 ) : (
-                  <div className="py-36 text-center text-slate-300">
+                  <div className="py-24 text-center text-slate-300">
                     <div className="flex flex-col items-center gap-5">
                       <FaRegCircleStop size={25} color="#9ca3af" />
                       <p className="font-semibold">No Feedbacks Yet</p>
@@ -278,23 +276,36 @@ const Page = () => {
                   </div>
                 )}
               </div>
-
-
-
-
-
-
             </div>
-               <div className="flex flex-col lg:flex-row justify-between items-center lg:ml-28 ">
-              <div className="w-[86vw] md:w-[70vw] lg:w-[36vw]  mx-auto  p-5 rounded-xl bg-[#161617] h-[50vh]">
+            <div className="flex flex-col lg:flex-row justify-between items-center px-3 lg:ml-24 ">
+              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw]  mx-auto  p-5  bg-[#161617] h-[50vh]">
+                <div className="flex items-center space-x-3">
+                  <LuBrain size={25} color="#00a3ff" />
+                  <h1 className="font-semibold text-white">AI Insights</h1>
+                </div>
                 {HappyCount > 0 && NeutralCount > 0 && SadCount > 0 ? (
                   <Doughnut data={analytics} className="w-96 mx-auto p-10" />
-                ) : null}
+                ) : (
+                  <div className="py-24 text-center text-slate-300">
+                    <div className="flex flex-col items-center gap-5">
+                      <FaRegCircleStop size={25} color="#9ca3af" />
+                      <p className="font-semibold">No Feedbacks Yet</p>
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="w-[86vw] md:w-[70vw] lg:w-[36vw]  mx-auto  p-5 rounded-xl bg-[#161617] h-[50vh]">
-                <h1 className="text-gray-300">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum magni laboriosam perspiciatis nesciunt optio nihil cumque quod quam perferendis tempore fugiat libero repellat nam omnis natus fugit, cum animi magnam.
-                </h1>
+              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw]  mx-auto  p-5  bg-[#161617] h-[50vh]">
+                <div className="flex items-center space-x-3">
+                  <LuBrain size={25} color="#00a3ff" />
+                  <h1 className="font-semibold text-white">AI Summary</h1>
+                </div>
+                <h1 className="text-gray-300 mt-5"></h1>
+                <div className="py-24 text-center text-slate-300">
+                  <div className="flex flex-col items-center gap-5">
+                    <FaRegCircleStop size={25} color="#9ca3af" />
+                    <p className="font-semibold">No Feedbacks Yet</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
