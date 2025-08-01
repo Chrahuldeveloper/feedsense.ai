@@ -41,7 +41,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={` border-b-[1px]  fixed flex-row top-0 left-0 w-full border-stone-900 z-50  flex justify-around items-center px-4 lg:px-12 transition-all duration-300 py-7 ${
+        className={` border-b-[1px]  md:px-0 fixed flex-row top-0 left-0 w-full border-stone-900 z-50  justify-between flex md:justify-around items-center px-10 lg:px-12 transition-all duration-300 py-7 ${
           isScrolled ? "backdrop-blur-md" : "backdrop-blur-lg"
         }`}
       >
@@ -70,7 +70,7 @@ const Navbar = () => {
           <Link href="/plans">
             <li className="cursor-pointer font-semibold ">Plans</li>
           </Link>
-          {userSession !== null ? (
+          {userSession === null ? (
             <Link href="/login">
               <li className="cursor-pointer  bg-gradient-to-r from-[#00bfff] via-[#00bfff] to-[#00bfff] px-7 py-2 rounded-xl text-black">
                 Login
@@ -78,9 +78,9 @@ const Navbar = () => {
             </Link>
           ) : (
             <Link href="/dashboard">
-              <li className="cursor-pointer text-[#00bfff]  rounded-xl font-semibold">
+              <button className="cursor-pointer text-[#00bfff]  rounded-xl font-semibold">
                 Your Account
-              </li>
+              </button>
             </Link>
           )}
         </ul>
