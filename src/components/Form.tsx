@@ -35,52 +35,16 @@ type Feature = Bug;
 
 const Form = () => {
   const { userID, websiteID } = useParams();
-
   const [selectedEmotion, setSelectedEmotion] = useState<number | null>(null);
   const [selectedRating, setSelectedRating] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-
   const [error, seterror] = useState<boolean>(false);
-
   const [feedback, setFeedback] = useState<Feedback>({
     emotion: "",
     feedback: "",
     Rating: 0,
   });
-
   const db = new dbService();
-
-  const saveFeedBack = async () => {
-    setLoading(true);
-    try {
-      const isSubscribed = await db.checkifSubscribed(
-        userID.toString(),
-        decodeURIComponent(websiteID.toString())
-      );
-      if (isSubscribed) {
-        const savefeedback = {
-          emotion: feedback.emotion,
-          feedback: feedback.feedback,
-          Rating: selectedRating,
-        };
-        await db.saveFeedback(
-          userID.toString(),
-          websiteID.toString(),
-          savefeedback
-        );
-        setFeedback({ emotion: "", feedback: "", Rating: 0 });
-        setSelectedEmotion(null);
-        setSelectedRating(0);
-      } else {
-        toast("The website is Not subscribed to Feedsenseai.");
-      }
-    } catch (error) {
-      console.log(error);
-      seterror(true);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const emotions: Emotion[] = [
     { title: "Happy", emoji: <IoHappyOutline size={32} color="#c1d0d5" /> },
@@ -130,6 +94,93 @@ const Form = () => {
     tittle: "",
     desc: "",
   });
+
+  const saveFeedBack = async () => {
+    setLoading(true);
+    try {
+      const isSubscribed = await db.checkifSubscribed(
+        userID.toString(),
+        decodeURIComponent(websiteID.toString())
+      );
+      if (isSubscribed) {
+        const savefeedback = {
+          emotion: feedback.emotion,
+          feedback: feedback.feedback,
+          Rating: selectedRating,
+        };
+        await db.saveFeedback(
+          userID.toString(),
+          websiteID.toString(),
+          savefeedback
+        );
+        setFeedback({ emotion: "", feedback: "", Rating: 0 });
+        setSelectedEmotion(null);
+        setSelectedRating(0);
+      } else {
+        toast("The website is Not subscribed to Feedsenseai.");
+      }
+    } catch (error) {
+      console.log(error);
+      seterror(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const saveBug = async () => {
+    try {
+      const isSubscribed = await db.checkifSubscribed(
+        userID.toString(),
+        decodeURIComponent(websiteID.toString())
+      );
+      if (isSubscribed) {
+        await db.saveBug(userID.toString(), websiteID.toString(), bug);
+        setbug({
+          desc: "",
+          tittle: "",
+          email: "",
+          priority: "",
+        });
+      } else {
+        toast("The website is Not subscribed to Feedsenseai.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const saveFeature = async () => {
+    try {
+      const isSubscribed = await db.checkifSubscribed(
+        userID.toString(),
+        decodeURIComponent(websiteID.toString())
+      );
+
+      if (isSubscribed) {
+        await db.saveFeature(userID.toString(), websiteID.toString(), feature);
+        setfeature({
+          desc: "",
+          tittle: "",
+          email: "",
+          priority: "",
+        });
+      } else {
+        toast("The website is Not subscribed to Feedsenseai.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const saveSectionData = () => {
+    if (selectedSection === "General Feedback") {
+      saveFeedBack();
+    } else if (selectedSection === "Bug Report") {
+      saveBug();
+    } else {
+      saveFeature();
+    }
+  };
 
   return (
     <div className="bg-gradient-to-b from-[#0c0c0e] via-[#1f1f21] to-[#2a2b2d] w-full ">
@@ -201,7 +252,6 @@ const Form = () => {
 
               {selectedSection === "General Feedback" ? (
                 <>
-                  {/* Star Rating */}
                   <div className="space-y-2.5 mt-4 px-5">
                     <div className="flex justify-between items-center text-sm">
                       <h1 className="text-gray-300 font-semibold">Rate Us</h1>
@@ -228,7 +278,6 @@ const Form = () => {
                     </div>
                   </div>
 
-                  {/* Feedback Textarea */}
                   <div className="space-y-2.5 mt-7 px-5">
                     <textarea
                       value={feedback.feedback}
@@ -285,6 +334,9 @@ const Form = () => {
                         placeholder="
                         Email."
                         value={bug.email}
+                        onChange={(e) => {
+                          setbug({ ...bug, email: e.target.value });
+                        }}
                         className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
                       />
                     </div>
@@ -341,6 +393,9 @@ const Form = () => {
                       <input
                         type="text"
                         value={bug.tittle}
+                        onChange={(e) => {
+                          setbug({ ...bug, tittle: e.target.value });
+                        }}
                         placeholder="
                         Brief description of the bug."
                         className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
@@ -353,6 +408,9 @@ const Form = () => {
                         cols={10}
                         rows={8}
                         value={bug.desc}
+                        onChange={(e) => {
+                          setbug({ ...bug, desc: e.target.value });
+                        }}
                         placeholder="
                           Please describe the bug in detail, including steps to reproduce.."
                         className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
@@ -370,6 +428,9 @@ const Form = () => {
                         placeholder="
                         Email."
                         value={feature.email}
+                        onChange={(e) => {
+                          setbug({ ...feature, email: e.target.value });
+                        }}
                         className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
                       />
                     </div>
@@ -399,7 +460,10 @@ const Form = () => {
                                 onClick={() => {
                                   setSelected(priority);
                                   setOpen(false);
-                                  setfeature({...feature,priority:priority.name})
+                                  setfeature({
+                                    ...feature,
+                                    priority: priority.name,
+                                  });
                                 }}
                                 className={`flex items-center space-x-2 px-4 py-3 cursor-pointer hover:bg-[#1f2937] transition ${
                                   selected.name === priority.name
@@ -426,6 +490,9 @@ const Form = () => {
                       <input
                         type="text"
                         value={feature.tittle}
+                        onChange={(e) => {
+                          setbug({ ...feature, tittle: e.target.value });
+                        }}
                         placeholder="
                         Brief description of the bug."
                         className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
@@ -437,6 +504,9 @@ const Form = () => {
                         cols={10}
                         rows={8}
                         value={feature.desc}
+                        onChange={(e) => {
+                          setbug({ ...feature, desc: e.target.value });
+                        }}
                         placeholder="
                           Please describe the bug in detail, including steps to reproduce.."
                         className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
@@ -446,10 +516,9 @@ const Form = () => {
                 </>
               )}
 
-              {/* Submit Button */}
               <div className="my-3 p-5">
                 <button
-                  onClick={saveFeedBack}
+                  onClick={saveSectionData}
                   className="text-black  flex items-center justify-center gap-3 font-semibold px-4 py-2 rounded-lg w-full bg-slate-50 text-sm"
                 >
                   <h1>Share Insights</h1>

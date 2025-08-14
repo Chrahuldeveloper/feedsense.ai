@@ -24,7 +24,67 @@ interface ContactData {
   email: string;
   message: string;
 }
+
+interface Bug {
+  email: string;
+  priority: string;
+  tittle: string;
+  desc: string;
+}
+
+type Feature = Bug;
+
 export default class dbService {
+  async saveBug(userID: string, websiteName: string, data: Bug) {
+    try {
+      const userDocRef = doc(db, "USERS", userID);
+      const docSnap = await getDoc(userDocRef);
+
+      if (!docSnap.exists()) throw new Error("User document not found");
+
+      const userWebsites = docSnap.data()?.websites || [];
+
+      const updatedWebsites = userWebsites.map((w: any) => {
+        if (w.name === websiteName) {
+          const websiteBugs = w.bugs || [];
+          return { ...w, bugs: [...websiteBugs, data] };
+        }
+        return w;
+      });
+
+      await updateDoc(userDocRef, {
+        websites: updatedWebsites,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async saveFeature(userID: string, websiteName: string, data: Feature) {
+    try {
+      const userDocRef = doc(db, "USERS", userID);
+      const docSnap = await getDoc(userDocRef);
+
+      if (!docSnap.exists()) throw new Error("User document not found");
+
+      const userWebsites = docSnap.data()?.websites || [];
+
+      const updatedWebsites = userWebsites.map((w: any) => {
+        if (w.name === websiteName) {
+          const websiteFeatures = w.features || [];
+          return { ...w, bugs: [...websiteFeatures, data] };
+        }
+        return w;
+      });
+
+      await updateDoc(userDocRef, {
+        websites: updatedWebsites,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async genrateId(length: number): Promise<string> {
     const letters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -71,7 +131,6 @@ export default class dbService {
         websites: userWebsites,
         totalTasksFinished: (docSnap.data()?.totalTasksFinished || 0) + 1,
       });
-
     } catch (error) {
       console.error("Error in handleStatusChange:", error);
     }
@@ -226,7 +285,6 @@ export default class dbService {
         updatedWebsites = [websiteDataWithId];
         console.log("Website data saved successfully for new user");
       }
-
     } catch (error) {
       console.error("Error saving website:", error);
     }
@@ -234,8 +292,6 @@ export default class dbService {
 
   async fetchWebsites(user: User): Promise<Website[]> {
     try {
-
-   
       const userDocRef = doc(db, "USERS", user.uid);
       const docSnap = await getDoc(userDocRef);
 
@@ -259,9 +315,6 @@ export default class dbService {
     totalIncompleteTasks: number;
   } | null> {
     try {
-
-
-
       const userDocRef = doc(db, "USERS", user);
       const docSnap = await getDoc(userDocRef);
 
@@ -300,9 +353,6 @@ export default class dbService {
 
   async fetchFeedbacks(user: string) {
     try {
-
-     
-
       const userDocRef = doc(db, "USERS", user);
       const docSnap = await getDoc(userDocRef);
 
