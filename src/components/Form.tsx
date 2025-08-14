@@ -11,6 +11,7 @@ import { IoIosStarOutline, IoMdStar } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaTelegramPlane } from "react-icons/fa";
+import { IoBugOutline } from "react-icons/io5";
 
 interface Feedback {
   emotion: string;
@@ -22,6 +23,15 @@ interface Emotion {
   title: string;
   emoji: JSX.Element;
 }
+
+interface Bug {
+  email: string;
+  priority: string;
+  tittle: string;
+  desc: string;
+}
+
+type Feature = Bug;
 
 const Form = () => {
   const { userID, websiteID } = useParams();
@@ -80,8 +90,49 @@ const Form = () => {
 
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
 
+  const sections = [
+    {
+      image: <IoBugOutline size={24} color="white" />,
+      tittle: "General Feedback",
+    },
+    {
+      image: <IoBugOutline size={24} color="white" />,
+      tittle: "Bug Report",
+    },
+    {
+      image: <IoBugOutline size={24} color="white" />,
+      tittle: "Feature Request",
+    },
+  ];
+
+  const [selectedSection, setselectedSection] =
+    useState<string>("General Feedback");
+
+  const priorities = [
+    { name: "Low Priority", color: "bg-green-500" },
+    { name: "Medium Priority", color: "bg-yellow-500" },
+    { name: "High Priority", color: "bg-red-500" },
+  ];
+
+  const [selected, setSelected] = useState(priorities[1]);
+  const [open, setOpen] = useState(false);
+
+  const [bug, setbug] = useState<Bug>({
+    email: "",
+    priority: "",
+    tittle: "",
+    desc: "",
+  });
+
+  const [feature, setfeature] = useState<Feature>({
+    email: "",
+    priority: "",
+    tittle: "",
+    desc: "",
+  });
+
   return (
-    <div className="bg-gradient-to-b from-[#0c0c0e] via-[#1f1f21] to-[#2a2b2d] w-full h-screen">
+    <div className="bg-gradient-to-b from-[#0c0c0e] via-[#1f1f21] to-[#2a2b2d] w-full ">
       <div className="flex justify-center p-5 pt-5">
         <div className="rounded-xl shadow-lg w-full max-w-lg sm:max-w-lg lg:max-w-xl border-[0.8px] border-[#121212]">
           {error && (
@@ -124,77 +175,279 @@ const Form = () => {
                 </p>
               </div>
 
-              {/* Star Rating */}
-              <div className="space-y-2.5 mt-4 px-5">
-                <div className="flex justify-between items-center text-sm">
-                  <h1 className="text-gray-300 font-semibold">Rate Us</h1>
-                  <p className="text-gray-300 font-semibold">
-                    {selectedRating} out of 5 stars
-                  </p>
-                </div>
-                <div className="flex items-center gap-5">
-                  {[1, 2, 3, 4, 5].map((i) => (
+              <div className="flex items-center space-x-7 justify-center">
+                {sections.map((i, id) => {
+                  return (
                     <div
-                      key={i}
-                      onMouseEnter={() => setHoveredRating(i)}
-                      onMouseLeave={() => setHoveredRating(null)}
-                      onClick={() => setSelectedRating(i)}
-                      className="cursor-pointer"
-                    >
-                      {i <= (hoveredRating ?? selectedRating) ? (
-                        <IoMdStar size={24} color="gold" />
-                      ) : (
-                        <IoIosStarOutline size={24} color="white" />
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Feedback Textarea */}
-              <div className="space-y-2.5 mt-7 px-5">
-                <textarea
-                  value={feedback.feedback}
-                  placeholder="Feedback"
-                  onChange={(e) =>
-                    setFeedback({ ...feedback, feedback: e.target.value })
-                  }
-                  cols={20}
-                  rows={5}
-                  className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
-                />
-              </div>
-
-              {/* Emotions */}
-              <div className="mt-6 space-y-2.5 px-5">
-                <h1 className="font-semibold text-white text-sm">
-                  How was your experience*
-                </h1>
-                <div className="flex items-center justify-center space-x-5 mt-4">
-                  {emotions.map((emotion, idx) => (
-                    <div
-                      key={idx}
+                      key={id}
                       onClick={() => {
-                        setSelectedEmotion(idx);
-                        setFeedback({ ...feedback, emotion: emotion.title });
+                        setselectedSection(i.tittle);
                       }}
-                      className={`cursor-pointer p-2 rounded-full transition-all duration-200 ${
-                        selectedEmotion === idx ? "bg-[#282e32] w-32" : "w-28"
-                      }`}
                     >
-                      <div className="flex flex-col items-center space-y-2.5 transition ease-in-out duration-300  p-3 rounded-lg">
-                        {emotion.emoji}
-                        <p className="text-xs text-gray-300 font-semibold">
-                          {emotion.title}
-                        </p>
+                      <div
+                        className={`flex justify-center items-center space-x-2 cursor-pointer  rounded-lg px-3 py-2 text-gray-300 bg-[#0e1522] text-center my-4  ${
+                          selectedSection === i.tittle
+                            ? "border-[1px] border-blue-600 text-blue-600"
+                            : ""
+                        } `}
+                      >
+                        {i.image}
+                        <h1 className="text-white text-xs">{i.tittle}</h1>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
 
+              {selectedSection === "General Feedback" ? (
+                <>
+                  {/* Star Rating */}
+                  <div className="space-y-2.5 mt-4 px-5">
+                    <div className="flex justify-between items-center text-sm">
+                      <h1 className="text-gray-300 font-semibold">Rate Us</h1>
+                      <p className="text-gray-300 font-semibold">
+                        {selectedRating} out of 5 stars
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-5">
+                      {[1, 2, 3, 4, 5].map((i) => (
+                        <div
+                          key={i}
+                          onMouseEnter={() => setHoveredRating(i)}
+                          onMouseLeave={() => setHoveredRating(null)}
+                          onClick={() => setSelectedRating(i)}
+                          className="cursor-pointer"
+                        >
+                          {i <= (hoveredRating ?? selectedRating) ? (
+                            <IoMdStar size={24} color="gold" />
+                          ) : (
+                            <IoIosStarOutline size={24} color="white" />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Feedback Textarea */}
+                  <div className="space-y-2.5 mt-7 px-5">
+                    <textarea
+                      value={feedback.feedback}
+                      placeholder="Feedback"
+                      onChange={(e) =>
+                        setFeedback({ ...feedback, feedback: e.target.value })
+                      }
+                      cols={20}
+                      rows={5}
+                      className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
+                    />
+                  </div>
+
+                  {/* Emotions */}
+                  <div className="mt-6 space-y-2.5 px-5">
+                    <h1 className="font-semibold text-white text-sm">
+                      How was your experience*
+                    </h1>
+                    <div className="flex items-center justify-center space-x-5 mt-4">
+                      {emotions.map((emotion, idx) => (
+                        <div
+                          key={idx}
+                          onClick={() => {
+                            setSelectedEmotion(idx);
+                            setFeedback({
+                              ...feedback,
+                              emotion: emotion.title,
+                            });
+                          }}
+                          className={`cursor-pointer flex items-center justify-center w-16 h-16 p-3 rounded-lg transition-all duration-200 ${
+                            selectedEmotion === idx
+                              ? "bg-[#0e1522] border-[1px] border-blue-600"
+                              : ""
+                          }`}
+                        >
+                          <div className="flex flex-col items-center space-y-1">
+                            {emotion.emoji}
+                            <p className="text-xs text-gray-300 font-semibold">
+                              {emotion.title}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : selectedSection === "Bug Report" ? (
+                <>
+                  <div className="flex flex-col justify-center px-10 space-y-6 my-3">
+                    <div className="space-y-2">
+                      <h1 className="text-white">Email*</h1>
+                      <input
+                        type="text"
+                        placeholder="
+                        Email."
+                        value={bug.email}
+                        className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <h1 className="text-white">Priority</h1>
+
+                      <div className="relative w-full">
+                        <div
+                          className="flex items-center justify-between bg-[#131314] border border-[#282e32] rounded-xl px-4 py-3 cursor-pointer hover:border-blue-400 transition"
+                          onClick={() => setOpen(!open)}
+                        >
+                          <div className="flex items-center space-x-2">
+                            <span
+                              className={`w-3 h-3 rounded-full ${selected.color}`}
+                            ></span>
+                            <span className="text-white">{selected.name}</span>
+                          </div>
+                          <span className="text-gray-400">▼</span>
+                        </div>
+
+                        {open && (
+                          <div className="absolute bottom-full mb-1 w-full bg-[#131314] border border-[#282e32] rounded-xl shadow-lg z-10">
+                            {priorities.map((priority, idx) => (
+                              <div
+                                key={idx}
+                                onClick={() => {
+                                  setSelected(priority);
+                                  setOpen(false);
+                                  setbug({ ...bug, priority: priority.name });
+                                }}
+                                className={`flex items-center space-x-2 px-4 py-3 cursor-pointer hover:bg-[#1f2937] transition ${
+                                  selected.name === priority.name
+                                    ? "bg-[#1f2937]"
+                                    : ""
+                                }`}
+                              >
+                                <span
+                                  className={`w-3 h-3 rounded-full ${priority.color}`}
+                                ></span>
+                                <span className="text-white">
+                                  {priority.name}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <h1 className="text-white">Tittle*</h1>
+
+                      <input
+                        type="text"
+                        value={bug.tittle}
+                        placeholder="
+                        Brief description of the bug."
+                        className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <h1 className="text-white">Description*</h1>
+
+                      <textarea
+                        cols={10}
+                        rows={8}
+                        value={bug.desc}
+                        placeholder="
+                          Please describe the bug in detail, including steps to reproduce.."
+                        className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
+                      ></textarea>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex flex-col justify-center px-10 space-y-6 my-3">
+                    <div className="space-y-2">
+                      <h1 className="text-white">Email*</h1>
+                      <input
+                        type="text"
+                        placeholder="
+                        Email."
+                        value={feature.email}
+                        className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <h1 className="text-white">Priority</h1>
+
+                      <div className="relative w-full">
+                        <div
+                          className="flex items-center justify-between bg-[#131314] border border-[#282e32] rounded-xl px-4 py-3 cursor-pointer hover:border-blue-400 transition"
+                          onClick={() => setOpen(!open)}
+                        >
+                          <div className="flex items-center space-x-2">
+                            <span
+                              className={`w-3 h-3 rounded-full ${selected.color}`}
+                            ></span>
+                            <span className="text-white">{selected.name}</span>
+                          </div>
+                          <span className="text-gray-400">▼</span>
+                        </div>
+
+                        {open && (
+                          <div className="absolute bottom-full mb-1 w-full bg-[#131314] border border-[#282e32] rounded-xl shadow-lg z-10">
+                            {priorities.map((priority, idx) => (
+                              <div
+                                key={idx}
+                                onClick={() => {
+                                  setSelected(priority);
+                                  setOpen(false);
+                                  setfeature({...feature,priority:priority.name})
+                                }}
+                                className={`flex items-center space-x-2 px-4 py-3 cursor-pointer hover:bg-[#1f2937] transition ${
+                                  selected.name === priority.name
+                                    ? "bg-[#1f2937]"
+                                    : ""
+                                }`}
+                              >
+                                <span
+                                  className={`w-3 h-3 rounded-full ${priority.color}`}
+                                ></span>
+                                <span className="text-white">
+                                  {priority.name}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <h1 className="text-white">Tittle*</h1>
+
+                      <input
+                        type="text"
+                        value={feature.tittle}
+                        placeholder="
+                        Brief description of the bug."
+                        className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <h1 className="text-white">Description*</h1>
+                      <textarea
+                        cols={10}
+                        rows={8}
+                        value={feature.desc}
+                        placeholder="
+                          Please describe the bug in detail, including steps to reproduce.."
+                        className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
+                      ></textarea>
+                    </div>
+                  </div>
+                </>
+              )}
+
               {/* Submit Button */}
-              <div className="mt-5 p-5">
+              <div className="my-3 p-5">
                 <button
                   onClick={saveFeedBack}
                   className="text-black  flex items-center justify-center gap-3 font-semibold px-4 py-2 rounded-lg w-full bg-slate-50 text-sm"

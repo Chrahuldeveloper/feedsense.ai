@@ -281,7 +281,7 @@ const Page = () => {
               <div className="w-[86vw] md:w-[70vw] lg:w-[40vw]  mx-auto  p-5  bg-[#161617] h-[50vh]">
                 <div className="flex items-center space-x-3">
                   <LuBrain size={25} color="#00a3ff" />
-                  <h1 className="font-semibold text-white">AI Insights</h1>
+                  <h1 className="font-semibold text-white">Bugs Reported</h1>
                 </div>
                 {HappyCount > 0 && NeutralCount > 0 && SadCount > 0 ? (
                   <Doughnut data={analytics} className="w-96 mx-auto p-10" />
@@ -289,7 +289,7 @@ const Page = () => {
                   <div className="py-24 text-center text-slate-300">
                     <div className="flex flex-col items-center gap-5">
                       <FaRegCircleStop size={25} color="#9ca3af" />
-                      <p className="font-semibold">No Feedbacks Yet</p>
+                      <p className="font-semibold">No Bugs Reported</p>
                     </div>
                   </div>
                 )}
@@ -297,13 +297,13 @@ const Page = () => {
               <div className="w-[86vw] md:w-[70vw] lg:w-[40vw]  mx-auto  p-5  bg-[#161617] h-[50vh]">
                 <div className="flex items-center space-x-3">
                   <LuBrain size={25} color="#00a3ff" />
-                  <h1 className="font-semibold text-white">AI Summary</h1>
+                  <h1 className="font-semibold text-white">Feature Requests</h1>
                 </div>
                 <h1 className="text-gray-300 mt-5"></h1>
                 <div className="py-24 text-center text-slate-300">
                   <div className="flex flex-col items-center gap-5">
                     <FaRegCircleStop size={25} color="#9ca3af" />
-                    <p className="font-semibold">No Feedbacks Yet</p>
+                    <p className="font-semibold">No Feedbacks Requests</p>
                   </div>
                 </div>
               </div>

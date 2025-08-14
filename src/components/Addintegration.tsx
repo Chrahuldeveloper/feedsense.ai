@@ -151,11 +151,24 @@ const AddIntegration: React.FC = () => {
 
   const copyCode = async () => {
     try {
+
+
       if (lastWebsiteId) {
         await navigator.clipboard.writeText(
-          `https://feedsenseai.vercel.app/integrate/${
-            user!.uid
-          }/${lastWebsiteId}"`
+          `     <!-- Make sure you have Tailwind CSS & react-icons set up to use these utility classes for styling -->
+  <div className="fixed bottom-10 right-10">
+    <Link href="https://feedsenseai.vercel.app/integrate/${
+      user!.uid
+    }/${lastWebsiteId}">
+      <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
+        <MdSettingsSuggest
+          size={47}
+          color="white"
+          className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 rounded-full p-3"
+        />
+      </button>
+    </Link>
+  </div>`
         );
         toast("Code Copied!");
       } else {
