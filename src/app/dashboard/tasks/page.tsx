@@ -61,9 +61,9 @@ const Page = () => {
   };
 
   const [feedbackData, setFeedbackData] = useState<Feedback[]>([]);
-  const [HappyCount, setHappyCount] = useState<number>(0);
-  const [NeutralCount, setNeutralCount] = useState<number>(0);
-  const [SadCount, setSadCount] = useState<number>(0);
+  const [HappyCount, setHappyCount] = useState<number>(10);
+  const [NeutralCount, setNeutralCount] = useState<number>(10);
+  const [SadCount, setSadCount] = useState<number>(10);
   const [isloading, setisloading] = useState<boolean>(false);
   const [toggleLogout, setToggleLogout] = useState(false);
 
@@ -90,9 +90,9 @@ const Page = () => {
           (item) => item.emotion.toLowerCase() === "sad"
         ).length;
 
-        setHappyCount(happy);
-        setNeutralCount(neutral);
-        setSadCount(sad);
+        setHappyCount(10);
+        setNeutralCount(10);
+        setSadCount(10);
       } catch (e) {
         console.error("Error parsing feedback:", e);
       }
@@ -104,7 +104,7 @@ const Page = () => {
     datasets: [
       {
         label: "Feedback Summary",
-        data: [HappyCount, NeutralCount, SadCount],
+        data: [10, 10, 20],
         backgroundColor: ["white", "#00bfff", "#3c4a5a"],
         hoverOffset: 4,
       },
@@ -112,6 +112,28 @@ const Page = () => {
   };
 
   const [toggle, setToggle] = useState(true);
+
+  const dummyData = [
+    {
+      tittle: "LOGIN SYSTEM IS NOT WORKING",
+      email: "chrahulofficial@gmail.com",
+      desc: "Solve the api issue of the login page please",
+      priority: "High Priority",
+    },
+
+    {
+      tittle: "LOGIN SYSTEM IS NOT WORKING",
+      email: "chrahulofficial@gmail.com",
+      desc: "Solve the api issue of the login page please",
+      priority: "Low Priority",
+    },
+    {
+      tittle: "LOGIN SYSTEM IS NOT WORKING",
+      email: "chrahulofficial@gmail.com",
+      desc: "Solve the api issue of the login page please",
+      priority: "Medium Priority",
+    },
+  ];
 
   return (
     <>
@@ -147,6 +169,12 @@ const Page = () => {
                   users better and make data-driven decisions
                 </p>
               </div>
+            </div>
+
+            <div className="">
+              {HappyCount > 0 && NeutralCount > 0 && SadCount > 0 ? (
+                <Doughnut data={analytics} className="w-96 mx-auto p-10" />
+              ) : null}
             </div>
 
             <div className="flex flex-col lg:flex-row justify-center px-3 items-center lg:ml-24">
@@ -278,13 +306,53 @@ const Page = () => {
               </div>
             </div>
             <div className="flex flex-col lg:flex-row justify-between items-center px-3 lg:ml-24 ">
-              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw]  mx-auto  p-5  bg-[#161617] h-[50vh]">
+              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw]  mx-auto  p-5  bg-[#161617] h-[50vh] overflow-y-scroll">
                 <div className="flex items-center space-x-3">
                   <LuBrain size={25} color="#00a3ff" />
                   <h1 className="font-semibold text-white">Bugs Reported</h1>
                 </div>
-                {HappyCount > 0 && NeutralCount > 0 && SadCount > 0 ? (
-                  <Doughnut data={analytics} className="w-96 mx-auto p-10" />
+                {dummyData.length > 0 ? (
+                  <div className="">
+                    {dummyData.map((i, id) => (
+                      <div
+                        key={id}
+                        className={`w-full my-5 rounded-xl p-5 text-white shadow-lg border-l-8 border-orange-500 bg-[#3a2516] cursor-pointer`}
+                      >
+                        <div className="flex items-center gap-2 text-orange-400 font-semibold">
+                          <span>⚠</span>
+                          <span>{i.priority.replace(" Priority", "")}</span>
+                        </div>
+
+                        <div className="flex items-center gap-3 mt-3">
+                          <div className="bg-red-500 w-10 h-10 flex items-center justify-center rounded-full font-bold">
+                            {i.email[0].toUpperCase()}
+                          </div>
+                          <div>
+                            <h2 className="font-semibold">
+                              {i.email.split("@")[0]}
+                            </h2>
+                            <div className="flex gap-2 mt-1">
+                              <span className="bg-red-600 text-xs px-2 py-1 rounded-full">
+                                Open
+                              </span>
+                              <span className="bg-blue-700 text-xs px-2 py-1 rounded-full">
+                                Bug
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <h3 className="mt-4 font-bold text-lg">{i.tittle}</h3>
+                        <p className="text-sm mt-2 text-gray-300">{i.desc}</p>
+
+                        <div className="flex justify-between mt-5 text-sm text-gray-400">
+                          <span className="bg-gray-700 px-3 py-1 rounded-full text-xs">
+                            Chrome
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 ) : (
                   <div className="py-24 text-center text-slate-300">
                     <div className="flex flex-col items-center gap-5">

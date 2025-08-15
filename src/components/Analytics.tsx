@@ -57,8 +57,8 @@ const Analytics: React.FC<AnalyticsProps> = ({
   };
 
   return (
-    <div className="mt-7">
-      <div className="p-4 bg-[#161617] rounded-lg border-[1px] border-[#2c2c2d]">
+    <div className="my-7">
+      <div className="p-4 bg-[#161617] rounded-lg border-[1px] border-[#2c2c2d] h-[60vh] ">
         {loading ? (
           <Loader message={"Please wait"} />
         ) : (
@@ -66,7 +66,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
             <h1 className="md:text-2xl text-lg font-semibold text-slate-300 px-4 md:px-8 pt-3 mb-2">
               Your Analytics
             </h1>
-            <Doughnut data={analytics} className="w-96 mx-auto p-10" />
+            <Doughnut data={analytics} className="w-96 mx-auto p-7 h-36" />
           </>
         )}
       </div>

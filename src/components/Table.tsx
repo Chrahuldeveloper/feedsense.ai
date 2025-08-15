@@ -241,7 +241,7 @@ const Table = () => {
                 <Loader message="please wait" />
               </div>
             ) : websitedata?.length === 0 ? (
-              <div className="space-y-6 text-center bg-[#161617] pt-28 border-[1px] border-[#15171b] p-10 md:h-[54vh] rounded-lg">
+              <div className="space-y-6 text-center bg-[#161617] pt-28 border-[1px] border-[#15171b] p-10 md:h-[60vh] rounded-lg">
                 <FaRegCircleStop size={23} color="white" className="mx-auto" />
                 <p className="text-lg  text-white">
                   No websites connected yet
@@ -251,7 +251,7 @@ const Table = () => {
                 </p>
               </div>
             ) : (
-              <div className="pt-3  bg-[#161617] md:h-[54vh] border-[1px] border-[#2c2c2d] overflow-y-scroll rounded-lg">
+              <div className="pt-3  bg-[#161617] md:h-[60vh] border-[1px] border-[#2c2c2d] overflow-y-scroll rounded-lg">
                 <div>
                   <div className="">
                     <div className="flex flex-col gap-5 ">
