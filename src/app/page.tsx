@@ -106,10 +106,11 @@ const Page = () => {
     },
   ];
 
-  
- 
-
-
+  const [userSession, setUserSession] = useState<string | null>(null);
+  useEffect(() => {
+    const token = Cookies.get("auth-token");
+    setUserSession(token ?? null);
+  }, []);
   return (
     <div className="w-screen  bg-[#0b0c0d]">
       <Navbar />
@@ -127,9 +128,11 @@ const Page = () => {
           with real-time feedback analytics.
         </p>
         <div>
-          <button className="cursor-pointer  bg-gradient-to-r from-[#00bfff] via-[#00bfff] to-[#00bfff] px-7 py-2 rounded-xl text-black ">
-            Get Started
-          </button>
+          <Link href={`${userSession === null ? "/login" : "/dashboard"}`}>
+            <button className="cursor-pointer font-semibold bg-gradient-to-r from-[#00bfff] via-[#00bfff] to-[#00bfff] px-7 py-2 rounded-xl text-black ">
+              Get Started
+            </button>
+          </Link>
         </div>
         <div className="flex justify-center">
           <div className="relative group w-fit">
