@@ -171,8 +171,8 @@ const Page = () => {
         <SideBar page="Home" />
         <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl">
           <div className="overflow-x-auto rounded-xl my-12">
-            <div className="flex md:mx-auto   w-[100vw] md:w-[73vw] px-8 py-2 border-[1px] border-[#0e1012]">
-              <div className="flex flex-col  gap-4">
+            <div className="flex md:mx-auto w-[100vw] md:w-[73vw] py-2 border-[1px] border-[#0e1012]">
+              <div className="flex flex-col gap-4">
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-[#68a8fd] to-cyan-500 bg-clip-text text-transparent">
                   AI-Powered Insights
                 </h1>

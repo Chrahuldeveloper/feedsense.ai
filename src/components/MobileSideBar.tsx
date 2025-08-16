@@ -52,8 +52,7 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({
 
         <Link href="/dashboard/contact">
           <div
-            className={`flex items-center space-x-6  cursor-pointer my-5 hover:bg-[#09343e] transition duration-200 ease-in-out rounded-Rocky trains his friend, Apollo Creed, for a match against Drago, an indestructible Russian boxer. But when Apollo is killed in the ring during the match, he vows to avenge his friend's death.
-lg w-48 px-5 py-2 ${
+            className={`flex items-center space-x-6  cursor-pointer my-5 hover:bg-[#09343e] transition duration-200 ease-in-out rounded-lg w-48 px-5 py-2 ${
               Page === "Help"
                 ? "bg-[#09343e] border border-cyan-400/20  backdrop-blur-sm  text-cyan-400"
                 : ""
