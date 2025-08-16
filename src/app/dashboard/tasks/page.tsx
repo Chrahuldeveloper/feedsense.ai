@@ -167,11 +167,11 @@ const Page = () => {
           onClick={() => setToggle(true)}
         />
       </nav>
-      <div className="bg-[#0b0d0d]  w-full flex overflow-x-clip">
+      <div className="bg-[#0b0d0d] w-full flex overflow-x-clip">
         <SideBar page="Home" />
         <div className="md:w-[100vw] mx-auto md:ml-44 space-y-16 rounded-xl">
           <div className="overflow-x-auto rounded-xl my-12">
-            <div className="flex md:mx-auto w-[100vw] md:w-[73vw] py-2 border-[1px] border-[#0e1012]">
+            <div className="flex md:mx-auto w-[100vw] md:w-[73vw] py-4 px-10 lg:px-0 border-[1px] border-[#0e1012]">
               <div className="flex flex-col gap-4">
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-[#68a8fd] to-cyan-500 bg-clip-text text-transparent">
                   AI-Powered Insights
@@ -190,7 +190,7 @@ const Page = () => {
             </div>
 
             <div className="flex flex-col lg:flex-row justify-center px-3 items-center lg:ml-24">
-              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw] mx-auto p-5  bg-[#161617] h-[50vh]">
+              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw] mx-auto p-5  bg-[#161617] h-[50vh] overflow-y-scroll">
                 <div className="flex justify-between">
                   <div className="flex items-center space-x-3">
                     <LuBrain size={25} color="#00a3ff" />
@@ -205,13 +205,13 @@ const Page = () => {
                       fb?.parsedFeedback?.response ? (
                         <div
                           key={idx}
-                          className={`bg-[#2c2016] text-[#d1d1d1] flex items-center rounded-lg p-5 gap-4 border-l-4 border-orange-500 w-full mb-4 ${
+                          className={`bg-[#2c2016] text-[#d1d1d1] flex items-start rounded-lg p-5 gap-4 border-l-8 border-orange-500 w-full mb-4 ${
                             getPlan === "Basic"
                               ? "cursor-not-allowed"
                               : "cursor-pointer"
                           }`}
                         >
-                          <div className="bg-[#244445] p-3 rounded-md text-cyan-400 text-xl">
+                          <div className="bg-red-500 p-3 rounded-md text-cyan-400 text-xl">
                             💡
                           </div>
                           <div className="flex-1">
@@ -285,7 +285,7 @@ const Page = () => {
                 </div>
               </div>
 
-              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw] mx-auto p-5  bg-[#161617] h-[50vh] my-5">
+              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw] mx-auto p-5  bg-[#161617] h-[50vh] overflow-y-scroll my-5">
                 <div className="flex justify-between">
                   <div className="flex items-center space-x-3">
                     <GoGraph size={25} color="#00a3ff" />
@@ -297,7 +297,7 @@ const Page = () => {
                   feedbackData.map((fb, idx) => (
                     <div
                       key={idx}
-                      className="bg-[#17291f] text-[#d1d1d1] flex items-center rounded-lg p-5 gap-4 border-l-4 border-orange-500 w-full cursor-pointer mt-4"
+                      className="bg-[#17291f] text-[#d1d1d1] flex items-center rounded-lg p-5 gap-4 border-l-8 border-green-500 w-full cursor-pointer mt-4"
                     >
                       <div className="bg-[#244445] p-3 rounded-md text-cyan-400 text-xl">
                         💡

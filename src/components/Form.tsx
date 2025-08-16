@@ -394,7 +394,7 @@ const Form = () => {
                         type="text"
                         value={bug.tittle}
                         onChange={(e) => {
-                          setbug({ ...bug, tittle: e.target.value });
+                          setfeature({ ...bug, tittle: e.target.value });
                         }}
                         placeholder="
                         Brief description of the bug."
@@ -429,7 +429,7 @@ const Form = () => {
                         Email."
                         value={feature.email}
                         onChange={(e) => {
-                          setbug({ ...feature, email: e.target.value });
+                          setfeature({ ...feature, email: e.target.value });
                         }}
                         className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
                       />
@@ -491,7 +491,7 @@ const Form = () => {
                         type="text"
                         value={feature.tittle}
                         onChange={(e) => {
-                          setbug({ ...feature, tittle: e.target.value });
+                          setfeature({ ...feature, tittle: e.target.value });
                         }}
                         placeholder="
                         Brief description of the bug."
@@ -505,7 +505,7 @@ const Form = () => {
                         rows={8}
                         value={feature.desc}
                         onChange={(e) => {
-                          setbug({ ...feature, desc: e.target.value });
+                          setfeature({ ...feature, desc: e.target.value });
                         }}
                         placeholder="
                           Please describe the bug in detail, including steps to reproduce.."
