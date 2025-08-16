@@ -142,6 +142,36 @@ const Page = () => {
     }
   };
 
+  const bugDelete = async (tittle: string) => {
+    try {
+      if (user) {
+        const updatedBugList = await db.deleteBug(
+          user?.uid.toString(),
+          getName,
+          tittle
+        );
+        setbugsdata(updatedBugList);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const featureDelete = async (tittle: string) => {
+    try {
+      if (user) {
+        const updatedsetfeatureList = await db.deleteFeature(
+          user?.uid.toString(),
+          getName,
+          tittle
+        );
+        setfeaturedata(updatedsetfeatureList);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getBugsData();
     getsetFeatureData();
@@ -358,7 +388,12 @@ const Page = () => {
                         <p className="text-sm mt-2 text-gray-300">{i.desc}</p>
 
                         <div className="flex justify-between mt-5 text-sm text-gray-400">
-                          <span className="bg-red-500 font-semibold text-white  px-3 py-1 rounded-full text-xs">
+                          <span
+                            onClick={() => {
+                              bugDelete(i.tittle);
+                            }}
+                            className="bg-red-500 font-semibold text-white  px-3 py-1 rounded-full text-xs"
+                          >
                             Close
                           </span>
                         </div>
@@ -414,7 +449,12 @@ const Page = () => {
                         <p className="text-sm mt-2 text-gray-300">{i.desc}</p>
 
                         <div className="flex justify-between mt-5 text-sm text-gray-400">
-                          <span className="bg-red-500 font-semibold text-white px-3 py-1 rounded-full text-xs">
+                          <span
+                            onClick={() => {
+                              featureDelete(i.tittle);
+                            }}
+                            className="bg-red-500 font-semibold text-white px-3 py-1 rounded-full text-xs"
+                          >
                             Close
                           </span>
                         </div>

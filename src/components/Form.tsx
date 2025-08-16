@@ -389,7 +389,6 @@ const Form = () => {
 
                     <div className="space-y-2">
                       <h1 className="text-white">Tittle*</h1>
-
                       <input
                         type="text"
                         value={bug.tittle}
@@ -403,7 +402,6 @@ const Form = () => {
                     </div>
                     <div className="space-y-2">
                       <h1 className="text-white">Description*</h1>
-
                       <textarea
                         cols={10}
                         rows={8}

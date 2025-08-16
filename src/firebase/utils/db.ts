@@ -35,6 +35,40 @@ interface Bug {
 type Feature = Bug;
 
 export default class dbService {
+  async deleteBug(userId: string, websiteName: string, bugTittle: string) {
+    const userDocRef = doc(db, "USERS", userId);
+    const docSnap = await getDoc(userDocRef);
+    if (!docSnap.exists()) throw new Error("User document not found");
+    const websites = docSnap.data()?.websites || [];
+    const website = websites.filter((site: any) => site.name === websiteName);
+    if (website.length === 0) throw new Error("Website not found");
+    const bugs = website[0].bugs || [];
+    const updatedBugs = bugs.filter((bug: any) => bug.tittle !== bugTittle);
+    website[0].bugs = updatedBugs;
+    await updateDoc(userDocRef, { websites });
+    return updatedBugs;
+  }
+
+  async deleteFeature(
+    userId: string,
+    websiteName: string,
+    featureTittle: string
+  ) {
+    const userDocRef = doc(db, "USERS", userId);
+    const docSnap = await getDoc(userDocRef);
+    if (!docSnap.exists()) throw new Error("User document not found");
+    const websites = docSnap.data()?.websites || [];
+    const website = websites.filter((site: any) => site.name === websiteName);
+    if (website.length === 0) throw new Error("Website not found");
+    const features = website[0].features || [];
+    const updatedFeatures = features.filter(
+      (feature: any) => feature.tittle !== featureTittle
+    );
+    website[0].features = updatedFeatures;
+    await updateDoc(userDocRef, { websites });
+    return updatedFeatures;
+  }
+
   async getBugs(userId: string, websiteName: string) {
     try {
       const userDocRef = doc(db, "USERS", userId);

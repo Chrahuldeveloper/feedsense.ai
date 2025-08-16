@@ -8,7 +8,6 @@ import useAuth from "@/hooks/CurrentUser";
 import { useRouter } from "next/navigation";
 import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import Loader from "../../components/Loader";
 export default function page() {
   const db = new dbService();
