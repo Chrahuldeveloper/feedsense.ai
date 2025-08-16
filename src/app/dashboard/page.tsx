@@ -15,10 +15,11 @@ const Page = () => {
 
   const db = useMemo(() => new dbService(), []);
 
+  console.log(user);
+
   useEffect(() => {
     const fetchFeedbackTasks = async () => {
       if (!user?.uid) return;
-
       try {
         const feedback = await db.fetchFeedbacks(user.uid);
         console.log(feedback);
@@ -30,7 +31,6 @@ const Page = () => {
         console.error("Fetch error:", error);
       }
     };
-
     if (user?.uid) {
       fetchFeedbackTasks();
     }

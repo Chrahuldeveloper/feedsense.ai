@@ -52,26 +52,33 @@ interface User {
   displayName: string;
 }
 
+interface Bug {
+  email: string;
+  priority: string;
+  tittle: string;
+  desc: string;
+}
+
+type Feature = Bug;
+
 const Page = () => {
   const searchParams = useSearchParams();
-
   const { user, loading } = useAuth() as {
     user: User | null;
     loading: boolean;
   };
-
   const [feedbackData, setFeedbackData] = useState<Feedback[]>([]);
-  const [HappyCount, setHappyCount] = useState<number>(10);
-  const [NeutralCount, setNeutralCount] = useState<number>(10);
-  const [SadCount, setSadCount] = useState<number>(10);
+  const [HappyCount, setHappyCount] = useState<number>(0);
+  const [NeutralCount, setNeutralCount] = useState<number>(0);
+  const [SadCount, setSadCount] = useState<number>(0);
   const [isloading, setisloading] = useState<boolean>(false);
   const [toggleLogout, setToggleLogout] = useState(false);
-
+  const [toggle, setToggle] = useState(true);
+  const [bugsdata, setbugsdata] = useState<Bug[]>([]);
+  const [featuredata, setfeaturedata] = useState<Feature[]>([]);
   const getdata = searchParams?.get("feedback");
   const getName = searchParams?.get("name")!;
   const getPlan = searchParams?.get("Plan")!;
-  const TotalFeedback = searchParams?.get("TotalFeedback")!;
-
   const db = new dbService();
 
   useEffect(() => {
@@ -90,9 +97,9 @@ const Page = () => {
           (item) => item.emotion.toLowerCase() === "sad"
         ).length;
 
-        setHappyCount(10);
-        setNeutralCount(10);
-        setSadCount(10);
+        setHappyCount(happy);
+        setNeutralCount(neutral);
+        setSadCount(sad);
       } catch (e) {
         console.error("Error parsing feedback:", e);
       }
@@ -104,36 +111,41 @@ const Page = () => {
     datasets: [
       {
         label: "Feedback Summary",
-        data: [10, 10, 20],
+        data: [HappyCount, NeutralCount, SadCount],
         backgroundColor: ["white", "#00bfff", "#3c4a5a"],
         hoverOffset: 4,
       },
     ],
   };
 
-  const [toggle, setToggle] = useState(true);
+  const getBugsData = async () => {
+    try {
+      if (user) {
+        const getBugs = await db.getBugs(user?.uid.toString(), getName);
+        console.log(getBugs);
+        setbugsdata(getBugs);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const dummyData = [
-    {
-      tittle: "LOGIN SYSTEM IS NOT WORKING",
-      email: "chrahulofficial@gmail.com",
-      desc: "Solve the api issue of the login page please",
-      priority: "High Priority",
-    },
+  const getsetFeatureData = async () => {
+    try {
+      if (user) {
+        const getFeatures = await db.getFeatures(user?.uid.toString(), getName);
+        console.log(getFeatures);
+        setfeaturedata(getFeatures);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    {
-      tittle: "LOGIN SYSTEM IS NOT WORKING",
-      email: "chrahulofficial@gmail.com",
-      desc: "Solve the api issue of the login page please",
-      priority: "Low Priority",
-    },
-    {
-      tittle: "LOGIN SYSTEM IS NOT WORKING",
-      email: "chrahulofficial@gmail.com",
-      desc: "Solve the api issue of the login page please",
-      priority: "Medium Priority",
-    },
-  ];
+  useEffect(() => {
+    getBugsData();
+    getsetFeatureData();
+  }, [user]);
 
   return (
     <>
@@ -311,9 +323,9 @@ const Page = () => {
                   <LuBrain size={25} color="#00a3ff" />
                   <h1 className="font-semibold text-white">Bugs Reported</h1>
                 </div>
-                {dummyData.length > 0 ? (
+                {bugsdata?.length > 0 ? (
                   <div className="">
-                    {dummyData.map((i, id) => (
+                    {bugsdata?.map((i, id) => (
                       <div
                         key={id}
                         className={`w-full my-5 rounded-xl p-5 text-white shadow-lg border-l-8 border-orange-500 bg-[#3a2516] cursor-pointer`}
@@ -332,10 +344,10 @@ const Page = () => {
                               {i.email.split("@")[0]}
                             </h2>
                             <div className="flex gap-2 mt-1">
-                              <span className="bg-red-600 text-xs px-2 py-1 rounded-full">
+                              <span className="bg-red-600 text-xs px-4 py-1.5 rounded-full font-semibold">
                                 Open
                               </span>
-                              <span className="bg-blue-700 text-xs px-2 py-1 rounded-full">
+                              <span className="bg-[#09343e] text-cyan-400 text-xs px-4 py-1.5 rounded-full font-semibold">
                                 Bug
                               </span>
                             </div>
@@ -346,8 +358,8 @@ const Page = () => {
                         <p className="text-sm mt-2 text-gray-300">{i.desc}</p>
 
                         <div className="flex justify-between mt-5 text-sm text-gray-400">
-                          <span className="bg-gray-700 px-3 py-1 rounded-full text-xs">
-                            Chrome
+                          <span className="bg-red-500 font-semibold text-white  px-3 py-1 rounded-full text-xs">
+                            Close
                           </span>
                         </div>
                       </div>
@@ -362,18 +374,61 @@ const Page = () => {
                   </div>
                 )}
               </div>
-              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw]  mx-auto  p-5  bg-[#161617] h-[50vh]">
+              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw]  mx-auto  p-5  bg-[#161617] h-[50vh] overflow-y-scroll">
                 <div className="flex items-center space-x-3">
                   <LuBrain size={25} color="#00a3ff" />
                   <h1 className="font-semibold text-white">Feature Requests</h1>
                 </div>
-                <h1 className="text-gray-300 mt-5"></h1>
-                <div className="py-24 text-center text-slate-300">
-                  <div className="flex flex-col items-center gap-5">
-                    <FaRegCircleStop size={25} color="#9ca3af" />
-                    <p className="font-semibold">No Feedbacks Requests</p>
+                {featuredata?.length > 0 ? (
+                  <div className="">
+                    {featuredata?.map((i, id) => (
+                      <div
+                        key={id}
+                        className={`w-full my-5 rounded-xl p-5 text-white shadow-lg border-l-8 border-yellow-500 bg-[#211f16] cursor-pointer`}
+                      >
+                        <div className="flex items-center gap-2 text-orange-400 font-semibold">
+                          <span>⚠</span>
+                          <span>{i.priority.replace(" Priority", "")}</span>
+                        </div>
+
+                        <div className="flex items-center gap-3 mt-3">
+                          <div className="bg-red-500 w-10 h-10 flex items-center justify-center rounded-full font-bold">
+                            {i.email[0].toUpperCase()}
+                          </div>
+                          <div>
+                            <h2 className="font-semibold">
+                              {i.email.split("@")[0]}
+                            </h2>
+                            <div className="flex gap-2 mt-1">
+                              <span className="bg-red-600 text-xs px-4 py-1.5 rounded-full font-semibold">
+                                Open
+                              </span>
+                              <span className="bg-[#09343e] text-cyan-400  text-xs  px-4 py-1.5 rounded-full font-semibold">
+                                Feature
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <h3 className="mt-4 font-bold text-lg">{i.tittle}</h3>
+                        <p className="text-sm mt-2 text-gray-300">{i.desc}</p>
+
+                        <div className="flex justify-between mt-5 text-sm text-gray-400">
+                          <span className="bg-red-500 font-semibold text-white px-3 py-1 rounded-full text-xs">
+                            Close
+                          </span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
+                ) : (
+                  <div className="py-24 text-center text-slate-300">
+                    <div className="flex flex-col items-center gap-5">
+                      <FaRegCircleStop size={25} color="#9ca3af" />
+                      <p className="font-semibold">No Feature Requests</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

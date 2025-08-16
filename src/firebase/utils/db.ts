@@ -35,15 +35,38 @@ interface Bug {
 type Feature = Bug;
 
 export default class dbService {
+  async getBugs(userId: string, websiteName: string) {
+    try {
+      const userDocRef = doc(db, "USERS", userId);
+      const docSnap = await getDoc(userDocRef);
+      if (!docSnap.exists()) throw new Error("User document not found");
+      const websites = docSnap.data()?.websites || [];
+      const website = websites.filter((site: any) => site.name === websiteName);
+      return website[0].bugs;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getFeatures(userId: string, websiteName: string) {
+    try {
+      const userDocRef = doc(db, "USERS", userId);
+      const docSnap = await getDoc(userDocRef);
+      if (!docSnap.exists()) throw new Error("User document not found");
+      const websites = docSnap.data()?.websites || [];
+      const website = websites.filter((site: any) => site.name === websiteName);
+      return website[0].features;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async saveBug(userID: string, websiteName: string, data: Bug) {
     try {
       const userDocRef = doc(db, "USERS", userID);
       const docSnap = await getDoc(userDocRef);
-
       if (!docSnap.exists()) throw new Error("User document not found");
-
       const userWebsites = docSnap.data()?.websites || [];
-
       const updatedWebsites = userWebsites.map((w: any) => {
         if (w.name === websiteName) {
           const websiteBugs = w.bugs || [];
@@ -51,7 +74,6 @@ export default class dbService {
         }
         return w;
       });
-
       await updateDoc(userDocRef, {
         websites: updatedWebsites,
       });
@@ -64,19 +86,15 @@ export default class dbService {
     try {
       const userDocRef = doc(db, "USERS", userID);
       const docSnap = await getDoc(userDocRef);
-
       if (!docSnap.exists()) throw new Error("User document not found");
-
       const userWebsites = docSnap.data()?.websites || [];
-
       const updatedWebsites = userWebsites.map((w: any) => {
         if (w.name === websiteName) {
           const websiteFeatures = w.features || [];
-          return { ...w, bugs: [...websiteFeatures, data] };
+          return { ...w, features: [...websiteFeatures, data] };
         }
         return w;
       });
-
       await updateDoc(userDocRef, {
         websites: updatedWebsites,
       });
