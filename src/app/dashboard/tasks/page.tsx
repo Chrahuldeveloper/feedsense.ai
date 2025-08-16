@@ -5,9 +5,7 @@ import MobileSideBar from "@/components/MobileSideBar";
 import SideBar from "@/components/SideBar";
 import { CiMenuFries } from "react-icons/ci";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 import { RxCross2 } from "react-icons/rx";
-import Image from "next/image";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,13 +21,9 @@ import useAuth from "@/hooks/CurrentUser";
 import Loader from "@/components/Loader";
 import { FaRegCircleStop } from "react-icons/fa6";
 import ModelLogout from "@/components/ModelLogout";
-import { MdOutlineEventNote, MdOutlineSentimentNeutral } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
-import { BiMessageRounded } from "react-icons/bi";
 import { LuBrain } from "react-icons/lu";
 import { GoGraph } from "react-icons/go";
 import { FiCheck } from "react-icons/fi";
-import { IoMdHappy, IoMdSad } from "react-icons/io";
 
 ChartJS.register(
   CategoryScale,
