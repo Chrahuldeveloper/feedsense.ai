@@ -121,30 +121,35 @@ const Page = () => {
   const getBugsData = async () => {
     try {
       if (user) {
+        setisloading(true);
         const getBugs = await db.getBugs(user?.uid.toString(), getName);
         console.log(getBugs);
         setbugsdata(getBugs);
       }
     } catch (error) {
       console.log(error);
+      setisloading(false);
     }
   };
 
   const getsetFeatureData = async () => {
     try {
       if (user) {
+        setisloading(true);
         const getFeatures = await db.getFeatures(user?.uid.toString(), getName);
         console.log(getFeatures);
         setfeaturedata(getFeatures);
       }
     } catch (error) {
       console.log(error);
+      setisloading(false);
     }
   };
 
   const bugDelete = async (tittle: string) => {
     try {
       if (user) {
+        setisloading(true);
         const updatedBugList = await db.deleteBug(
           user?.uid.toString(),
           getName,
@@ -154,12 +159,14 @@ const Page = () => {
       }
     } catch (error) {
       console.log(error);
+      setisloading(false);
     }
   };
 
   const featureDelete = async (tittle: string) => {
     try {
       if (user) {
+        setisloading(true);
         const updatedsetfeatureList = await db.deleteFeature(
           user?.uid.toString(),
           getName,
@@ -169,6 +176,7 @@ const Page = () => {
       }
     } catch (error) {
       console.log(error);
+      setisloading(false);
     }
   };
 
