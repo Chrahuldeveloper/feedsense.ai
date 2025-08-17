@@ -63,7 +63,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
           <Loader message={"Please wait"} />
         ) : (
           <>
-            <h1 className="md:text-2xl text-lg font-semibold text-slate-300 px-4 md:px-8 pt-3 mb-2">
+            <h1 className="md:text-2xl text-lg font-semibold text-slate-300 px-4 md:px-8 pt-3 ">
               Your Analytics
             </h1>
             <Doughnut data={analytics} className="w-96 mx-auto p-7 h-36" />
