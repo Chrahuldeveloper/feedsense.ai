@@ -115,7 +115,6 @@ const Page = () => {
   const getBugsData = async () => {
     try {
       if (user) {
-        setisloading(true);
         const getBugs = await db.getBugs(user?.uid.toString(), getName);
         console.log(getBugs);
         setbugsdata(getBugs);
@@ -129,10 +128,10 @@ const Page = () => {
   const getsetFeatureData = async () => {
     try {
       if (user) {
-        setisloading(true);
         const getFeatures = await db.getFeatures(user?.uid.toString(), getName);
         console.log(getFeatures);
         setfeaturedata(getFeatures);
+
       }
     } catch (error) {
       console.log(error);
