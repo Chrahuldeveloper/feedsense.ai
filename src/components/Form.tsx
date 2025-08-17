@@ -393,7 +393,7 @@ const Form = () => {
                         type="text"
                         value={bug.tittle}
                         onChange={(e) => {
-                          setfeature({ ...bug, tittle: e.target.value });
+                          setbug({ ...bug, tittle: e.target.value });
                         }}
                         placeholder="
                         Brief description of the bug."
