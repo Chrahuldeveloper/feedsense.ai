@@ -150,6 +150,7 @@ const Page = () => {
           tittle
         );
         setbugsdata(updatedBugList);
+                setisloading(false);
       }
     } catch (error) {
       console.log(error);
@@ -167,6 +168,8 @@ const Page = () => {
           tittle
         );
         setfeaturedata(updatedsetfeatureList);
+                        setisloading(false);
+
       }
     } catch (error) {
       console.log(error);
