@@ -7,7 +7,7 @@ export default class SendEmail {
         "service_e0jwhmo",
         "template_jqe4nwi",
         {
-          from_name: "TaskFeed",
+          from_name: "Feedsenseai",
           to_name: UserName,
           from_email: "chrahulofficial@gmail.com",
           to_email: userEmail,
