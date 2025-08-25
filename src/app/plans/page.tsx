@@ -106,7 +106,7 @@ export default function page() {
                     }
                     try {
                       setisloading(true);
-                      await db.availFreeOffer(user!.uid);
+                      // await db.availFreeOffer(user!.uid);
                       localStorage.setItem("paid", "true");
                       toast("Congratulations you have grabbed the offer 🎉");
                       setisloading(false);
