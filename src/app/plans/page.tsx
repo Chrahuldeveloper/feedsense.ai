@@ -1,26 +1,12 @@
 "use client";
 import Navbar from "@/components/Navbar";
-import React, { useState } from "react";
+import React from "react";
 import { TiTickOutline } from "react-icons/ti";
 import Footer from "@/components/Footer";
-import dbService from "@/firebase/utils/db";
-import useAuth from "@/hooks/CurrentUser";
 import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
-import Loader from "../../components/Loader";
 export default function page() {
-  const db = new dbService();
-
-  interface User {
-    uid: string;
-  }
-
-  const { user, loading }: { user: User | null; loading: boolean } = useAuth();
-
   const navigate = useRouter();
-
-  const [isloading, setisloading] = useState<boolean>(false);
-
   return (
     <div className="w-screen min-h-screen bg-[#0b0c0d] ">
       <Navbar />
@@ -48,7 +34,6 @@ export default function page() {
               { label: "Email support", available: true },
               { label: "3 website integration", available: true },
               { label: "Basic reporting", available: true },
-              { label: "Advanced AI insights", available: false },
             ],
             highlight: false,
           },
@@ -119,8 +104,6 @@ export default function page() {
           </div>
         ))}
       </div>
-      {isloading ? <Loader message="Grabing the offer for you" /> : null}
-
       <Footer />
     </div>
   );

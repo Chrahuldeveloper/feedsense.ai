@@ -1,6 +1,6 @@
 "use client";
 import Bill from "@/components/Bill";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Script from "next/script";
 import axios from "axios";
@@ -32,7 +32,7 @@ interface SubscriptionPlan {
   id: number;
   name: string;
   price: number;
-  displayPrice: string;
+  desc: string;
   features: string[];
 }
 
@@ -68,26 +68,26 @@ const Page = () => {
     {
       id: 1,
       name: "Basic",
-      price: 450,
-      displayPrice: "₹450/month",
+      price: 400,
+      desc: "Perfect for small teams getting started with AI feedback analysis",
       features: [
-        "Collect up to 100 feedback",
+        "Simple dashboard",
         "Email support",
-        "Analytics",
-        "Only 3 websites integration",
+        "3 website integration",
+        "Basic reporting",
       ],
     },
     {
       id: 2,
       name: "Pro",
-      price: 2000,
-      displayPrice: "₹2000 for 4 months",
+      price: 4000,
+      desc: "Perfect for small teams getting started with AI feedback analysis",
       features: [
         "Unlimited feedback entries",
-        "Automated task generation from feedback",
-        "Priority email support",
-        "Analytics",
-        "Unlimited websites",
+        "Email support",
+        "Unlimited website integrations",
+        "Advanced AI insights",
+        "Priority support",
       ],
     },
   ];
@@ -108,11 +108,14 @@ const Page = () => {
     loading: boolean;
   };
 
-  console.log(loading);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const authState = localStorage.getItem("authstate");
+  const [authState, setAuthState] = useState<string | null>(null);
+
+  useEffect(() => {
+    const state = localStorage.getItem("authstate");
+    setAuthState(state);
+  }, []);
 
   const handlePayment = async () => {
     try {
@@ -124,14 +127,12 @@ const Page = () => {
             amount: currentPlan.price * 100,
           }
         );
-
         const data = orderID.data;
-
         const options: RazorpayOptions = {
-          key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID as string,
+          key: process.env.RAZORPAY_KEY_ID as string,
           amount: currentPlan.price * 100,
           currency: "INR",
-          name: "TASKFEED",
+          name: "FeedsenseAi",
           description: "TEST TRANSACTION",
           order_id: data.orderId,
           handler: async (response: RazorpayResponse) => {
@@ -144,7 +145,6 @@ const Page = () => {
               )}/${String(today.getMonth() + 1).padStart(2, "0")}/${String(
                 today.getFullYear()
               ).slice(-2)}`;
-
               await db.subscribe(user!.uid, currentPlan.name, formattedDate);
               navigate.push("/dashboard");
             } catch (error) {
@@ -161,7 +161,6 @@ const Page = () => {
             color: "#3399cc",
           },
         };
-
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
       } else {
@@ -180,9 +179,7 @@ const Page = () => {
   return (
     <div className="bg-[#111115] w-screen min-h-screen overflow-x-clip">
       {isLoading ? <Loader message="Please wait" /> : null}
-
       {istoggle ? <TermsConditions setistoggle={setistoggle} /> : null}
-
       <div className="flex justify-between w-[76vw] mx-auto pt-8 pb-10">
         <h1 className="text-gray-300  text-xl">Change Plan</h1>
         <Link href={"/dashboard"}>
@@ -232,7 +229,6 @@ const Page = () => {
                     </span>
                   )}
                 </h1>
-                <p className="text-slate-300">{itm.displayPrice}</p>
               </div>
             ))}
           </div>
