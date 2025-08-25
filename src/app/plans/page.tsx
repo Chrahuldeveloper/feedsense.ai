@@ -6,7 +6,6 @@ import Footer from "@/components/Footer";
 import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import { useRouter } from "next/navigation";
-import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/Loader";
 export default function page() {
@@ -42,34 +41,27 @@ export default function page() {
         {[
           {
             name: "Basic",
-            price: "$29",
+            price: "$5",
             desc: "Perfect for small teams getting started with AI feedback analysis",
             features: [
-              { label: "Up to 1,000 feedback entries/month", available: true },
-              { label: "Basic sentiment analysis", available: true },
               { label: "Simple dashboard", available: true },
               { label: "Email support", available: true },
-              { label: "1 website integration", available: true },
+              { label: "3 website integration", available: true },
               { label: "Basic reporting", available: true },
               { label: "Advanced AI insights", available: false },
-              { label: "Custom integrations", available: false },
-              { label: "Priority support", available: false },
             ],
             highlight: false,
           },
           {
             name: "Pro",
-            price: "$99",
+            price: "$50",
             desc: "Advanced features for growing businesses and teams",
             features: [
               { label: "Unlimited feedback entries", available: true },
+              { label: "Email support", available: true },
               { label: "Advanced sentiment analysis", available: true },
-              { label: "Custom dashboard", available: true },
-              { label: "24/7 phone & email support", available: true },
               { label: "Unlimited website integrations", available: true },
-              { label: "Custom reporting & analytics", available: true },
-              { label: "Advanced AI insights", available: true },
-              { label: "Custom integrations", available: true },
+              { label: "Adavance Feedback analytics", available: true },
               { label: "Priority support", available: true },
             ],
             highlight: true,
@@ -99,25 +91,7 @@ export default function page() {
               </div>
               <button
                 onClick={async () => {
-                  console.log(user);
-                  if (!loading) {
-                    if (user!.uid === null) {
-                      alert("please login");
-                    }
-                    try {
-                      setisloading(true);
-                      // await db.availFreeOffer(user!.uid);
-                      localStorage.setItem("paid", "true");
-                      toast("Congratulations you have grabbed the offer 🎉");
-                      setisloading(false);
-                      setTimeout(() => {
-                        navigate.push("/dashboard");
-                      }, 2000);
-                    } catch (error) {
-                      console.log(error);
-                      setisloading(false);
-                    }
-                  }
+                 navigate.push(`/subscription/${plan.name}`)
                 }}
                 className="bg-white text-black text-sm font-semibold py-2 rounded-md hover:bg-gray-100 transition"
               >
@@ -151,3 +125,4 @@ export default function page() {
     </div>
   );
 }
+

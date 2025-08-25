@@ -198,7 +198,7 @@ export default class dbService {
     }
   }
 
-  async checkifSubscribed(
+  async checkifSubscribed( 
     userId: string,
     websiteName: string
   ): Promise<boolean> {
