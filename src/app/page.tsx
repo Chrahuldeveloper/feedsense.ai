@@ -19,7 +19,7 @@ import { AiOutlineStar } from "react-icons/ai";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { LuBrain } from "react-icons/lu";
 import Footer from "@/components/Footer";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/navigation'
 
 interface User {
   uid: string;
