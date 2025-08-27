@@ -175,10 +175,13 @@ const Table = () => {
         </div>
 
         <div className="w-[76vw] mx-auto justify-center flex flex-col md:flex-row gap-8 my-4">
-          <div className="bg-[#161617] py-5 px-5 rounded-xl w-[60vw] mx-auto lg:w-[18vw] flex justify-evenly gap-5 cursor-pointer border-[1px] border-[#2c2c2d]">
-            <div className="space-y-3 ">
-              <h1 className="  text-[#95a4ab] text-xl">Total TotalWebsites</h1>
+          <div className="bg-[#161617] py-5 px- rounded-xl w-[60vw] mx-auto lg:w-[18vw] flex justify-around gap-5 cursor-pointer border-[1px] border-[#2c2c2d]">
+            <div className="space-y-3.5 ">
+              <h1 className="  text-[#95a4ab] text-xl">TotalWebsites</h1>
               <p className="text-lg text-gray-300">{infodata.totalWebsites}</p>
+              <span className="text-sm text-gray-500 font-semibold ">
+                Latest updated
+              </span>
             </div>
             <BiMessageRounded
               size={33}
@@ -186,10 +189,13 @@ const Table = () => {
               className=" w-12 p-2 h-12 rounded-full bg-[#13293c]"
             />
           </div>
-          <div className="bg-[#161617] py-5 px-5 rounded-xl w-[60vw] mx-auto lg:w-[18vw] flex justify-evenly gap-5 cursor-pointer border-[1px] border-[#2c2c2d]">
-            <div className="space-y-3 ">
-              <h1 className="  text-[#95a4ab] text-xl">Total Feedback</h1>
+          <div className="bg-[#161617] py-5 px- rounded-xl w-[60vw] mx-auto lg:w-[18vw] flex justify-around gap-5 cursor-pointer border-[1px] border-[#2c2c2d]">
+            <div className="space-y-3.5 ">
+              <h1 className="  text-[#95a4ab] text-xl">Feedbacks</h1>
               <p className="text-lg text-gray-300">{infodata.totalFeedback}</p>
+              <span className="text-sm text-gray-500 font-semibold ">
+                Latest updated
+              </span>
             </div>
             <CgNotes
               size={26}
@@ -197,12 +203,15 @@ const Table = () => {
               className="w-12 p-2.5 h-12 rounded-full bg-[#1b1938]"
             />
           </div>
-          <div className="bg-[#161617] py-5 px-5 rounded-xl w-[60vw] mx-auto lg:w-[18vw] flex justify-evenly gap-5 cursor-pointer border-[1px] border-[#2c2c2d]">
-            <div className="space-y-3 ">
-              <h1 className="  text-[#95a4ab] text-xl">Total TasksFinished</h1>
+          <div className="bg-[#161617] py-5 px-3 rounded-xl w-[60vw] mx-auto lg:w-[18vw] flex justify-around gap-5 cursor-pointer border-[1px] border-[#2c2c2d]">
+            <div className="space-y-3.5 ">
+              <h1 className="  text-[#95a4ab] text-xl">Completed</h1>
               <p className="text-lg text-gray-300">
                 {infodata.totalTasksFinished}
               </p>
+              <span className="text-sm text-gray-500 font-semibold ">
+                Latest updated
+              </span>
             </div>
             <GoGraph
               size={33}
@@ -210,12 +219,15 @@ const Table = () => {
               className="w-12 p-2 h-12 rounded-full bg-[#112e2d]"
             />
           </div>
-          <div className="bg-[#161617] py-5 px-5 rounded-xl w-[60vw] mx-auto lg:w-[18vw] flex justify-evenly gap-5 cursor-pointer border-[1px] border-[#2c2c2d]">
-            <div className="space-y-3">
-              <h1 className="  text-[#95a4ab] text-xl">Tasks to Finish</h1>
+          <div className="bg-[#161617] py-5 px-3 rounded-xl w-[60vw] mx-auto lg:w-[18vw] flex justify-evenly gap-5 cursor-pointer border-[1px] border-[#2c2c2d]">
+            <div className="space-y-3.5">
+              <h1 className="  text-[#95a4ab] text-xl">Pending</h1>
               <p className="text-lg text-gray-300">
                 {infodata.totalIncompleteTasks}
               </p>
+              <span className="text-sm text-gray-500 font-semibold ">
+                Latest updated
+              </span>
             </div>
             <BiMessageRounded
               size={33}

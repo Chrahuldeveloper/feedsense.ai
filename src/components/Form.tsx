@@ -172,13 +172,21 @@ const Form = () => {
     }
   };
 
-  const saveSectionData = () => {
-    if (selectedSection === "General Feedback") {
-      saveFeedBack();
-    } else if (selectedSection === "Bug Report") {
-      saveBug();
-    } else {
-      saveFeature();
+  const saveSectionData = async () => {
+    try {
+      if (selectedSection === "General Feedback") {
+        await saveFeedBack();
+      } else if (selectedSection === "Bug Report") {
+        setLoading(true);
+        await saveBug();
+        setLoading(false);
+      } else {
+        setLoading(true);
+        await saveFeature();
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

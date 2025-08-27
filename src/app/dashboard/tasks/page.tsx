@@ -224,7 +224,7 @@ const Page = () => {
             </div>
 
             <div className="flex flex-col lg:flex-row justify-center px-3 items-center lg:ml-24">
-              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw] mx-auto p-5  bg-[#161617] h-[50vh] overflow-y-scroll">
+              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw] rounded-lg mx-auto p-5  bg-[#161617] h-[50vh] overflow-y-scroll">
                 <div className="flex justify-between">
                   <div className="flex items-center space-x-3">
                     <LuBrain size={25} color="#00a3ff" />
@@ -319,7 +319,7 @@ const Page = () => {
                 </div>
               </div>
 
-              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw] mx-auto p-5  bg-[#161617] h-[50vh] overflow-y-scroll my-5">
+              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw] rounded-lg mx-auto p-5  bg-[#161617] h-[50vh] overflow-y-scroll my-5">
                 <div className="flex justify-between">
                   <div className="flex items-center space-x-3">
                     <GoGraph size={25} color="#00a3ff" />
@@ -352,7 +352,7 @@ const Page = () => {
               </div>
             </div>
             <div className="flex flex-col lg:flex-row justify-between items-center px-3 lg:ml-24 ">
-              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw]  mx-auto  p-5  bg-[#161617] h-[50vh] overflow-y-scroll">
+              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw] rounded-lg  mx-auto  p-5  bg-[#161617] h-[50vh] overflow-y-scroll">
                 <div className="flex items-center space-x-3">
                   <LuBrain size={25} color="#00a3ff" />
                   <h1 className="font-semibold text-white">Bugs Reported</h1>
@@ -413,7 +413,7 @@ const Page = () => {
                   </div>
                 )}
               </div>
-              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw]  mx-auto  p-5  bg-[#161617] h-[50vh] overflow-y-scroll">
+              <div className="w-[86vw] md:w-[70vw] lg:w-[40vw] rounded-lg mx-auto  p-5  bg-[#161617] h-[50vh] overflow-y-scroll">
                 <div className="flex items-center space-x-3">
                   <LuBrain size={25} color="#00a3ff" />
                   <h1 className="font-semibold text-white">Feature Requests</h1>
