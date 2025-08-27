@@ -6,9 +6,6 @@ import React, { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Cookies from "js-cookie";
-import dbService from "@/firebase/utils/db";
-import useAuth from "@/hooks/CurrentUser";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import img1 from "../asserts/img1.png";
 import Image from "next/image";
@@ -21,8 +18,8 @@ import { FiCheckCircle, FiTrendingUp } from "react-icons/fi";
 import { AiOutlineStar } from "react-icons/ai";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { LuBrain } from "react-icons/lu";
-import { FiArrowRight } from "react-icons/fi";
 import Footer from "@/components/Footer";
+import { useRouter } from "next/router";
 
 interface User {
   uid: string;
@@ -111,6 +108,9 @@ const Page = () => {
     const token = Cookies.get("auth-token");
     setUserSession(token ?? null);
   }, []);
+
+  const navigate = useRouter();
+
   return (
     <div className="w-screen  bg-[#0b0c0d]">
       <Navbar />
@@ -250,11 +250,14 @@ const Page = () => {
 
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6">
               <button
+                onClick={() => {
+                  navigate.push("/plans");
+                }}
                 className="inline-flex items-center justify-center gap-2
                                bg-[#00c3ff] hover:bg-[#00b4eb] text-black
                                font-medium rounded-md px-6 py-3 shadow-lg transition"
               >
-                Start Free Trial
+                Start Now
               </button>
             </div>
 
