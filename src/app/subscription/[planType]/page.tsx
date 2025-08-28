@@ -123,13 +123,12 @@ const Page = () => {
         setIsLoading(true);
         const orderID = await axios.post(
           "https://feedsenseai.vercel.app/api/subscribe",
-          {
-            amount: currentPlan.price * 100,
-          }
+          { amount: currentPlan.price * 100 },
+          { headers: { "Content-Type": "application/json" } }
         );
         const data = orderID.data;
         const options: RazorpayOptions = {
-          key: process.env.RAZORPAY_KEY_ID as string,
+          key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID as string,
           amount: currentPlan.price * 100,
           currency: "INR",
           name: "FeedsenseAi",
@@ -173,6 +172,7 @@ const Page = () => {
       setIsLoading(false);
     }
   };
+
 
   const [istoggle, setistoggle] = useState(false);
 
