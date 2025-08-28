@@ -48,6 +48,7 @@ export default function page() {
               { label: "Unlimited website integrations", available: true },
               { label: "Adavance Feedback analytics", available: true },
               { label: "Priority support", available: true },
+              { label: "Add Developers Email", available: true },
             ],
             highlight: true,
           },
