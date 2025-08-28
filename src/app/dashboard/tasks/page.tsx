@@ -131,7 +131,6 @@ const Page = () => {
         const getFeatures = await db.getFeatures(user?.uid.toString(), getName);
         console.log(getFeatures);
         setfeaturedata(getFeatures);
-
       }
     } catch (error) {
       console.log(error);
@@ -149,7 +148,7 @@ const Page = () => {
           tittle
         );
         setbugsdata(updatedBugList);
-                setisloading(false);
+        setisloading(false);
       }
     } catch (error) {
       console.log(error);
@@ -167,8 +166,7 @@ const Page = () => {
           tittle
         );
         setfeaturedata(updatedsetfeatureList);
-                        setisloading(false);
-
+        setisloading(false);
       }
     } catch (error) {
       console.log(error);
