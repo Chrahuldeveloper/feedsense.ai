@@ -63,6 +63,7 @@ interface RazorpayResponse {
 const Page = () => {
   const { planType } = useParams();
   const navigate = useRouter();
+  const [istoggle, setistoggle] = useState(false);
 
   const subscriptionPlans: SubscriptionPlan[] = [
     {
@@ -173,15 +174,12 @@ const Page = () => {
     }
   };
 
-
-  const [istoggle, setistoggle] = useState(false);
-
   return (
     <div className="bg-[#111115] w-screen min-h-screen overflow-x-clip">
       {isLoading ? <Loader message="Please wait" /> : null}
       {istoggle ? <TermsConditions setistoggle={setistoggle} /> : null}
       <div className="flex justify-between w-[76vw] mx-auto pt-8 pb-10">
-        <h1 className="text-gray-300  text-xl">Change Plan</h1>
+        <h1 className="text-gray-300  text-xl">Buy Plan</h1>
         <Link href={"/dashboard"}>
           <RxCross2 size={24} color="white" />
         </Link>
