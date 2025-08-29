@@ -27,7 +27,7 @@ export default function page() {
         {[
           {
             name: "Basic",
-            price: "$5",
+            price: "₹499",
             desc: "Perfect for small teams getting started with AI feedback analysis",
             features: [
               { label: "Simple dashboard", available: true },
@@ -39,7 +39,7 @@ export default function page() {
           },
           {
             name: "Pro",
-            price: "$50",
+            price: "₹1499",
             desc: "Advanced features for growing businesses and teams",
             features: [
               { label: "Unlimited feedback entries", available: true },
