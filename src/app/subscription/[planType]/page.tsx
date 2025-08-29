@@ -68,7 +68,7 @@ const Page = () => {
     {
       id: 1,
       name: "Basic",
-      price: 400,
+      price: 499,
       desc: "Perfect for small teams getting started with AI feedback analysis",
       features: [
         "Simple dashboard",
@@ -80,7 +80,7 @@ const Page = () => {
     {
       id: 2,
       name: "Pro",
-      price: 4000,
+      price: 1499,
       desc: "Perfect for small teams getting started with AI feedback analysis",
       features: [
         "Unlimited feedback entries",
