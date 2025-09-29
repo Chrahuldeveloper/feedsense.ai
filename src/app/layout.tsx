@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-
+import { Analytics } from "@vercel/analytics/next";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -19,8 +19,6 @@ export const metadata: Metadata = {
     "Centralize and analyze feedback across multiple websites with AI-powered insights. Easily collect user input, prioritize improvements, and enhance user experience from one dashboard",
 };
 
-
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -32,6 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
