@@ -63,7 +63,7 @@ export default function LoginPage() {
         </div>
 
         <h1 className="text-white text-xl md:text-2xl lg:text-3xl font-semibold mb-4">
-          Welcome to FeedSenseAI
+          Welcome to FeedSenseAi
         </h1>
         <p className="text-gray-400 text-sm mb-6">
           Sign in with Google to access your feedback analytics dashboard
