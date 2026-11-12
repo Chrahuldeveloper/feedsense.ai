@@ -5,7 +5,7 @@ No more guesswork—understand what your users want and make smarter product dec
 
 ---
 
-## 🚀 Features  
+## Features  
 - **Smart Feedback Analysis** – AI groups and summarizes user feedback into key themes.  
 - **Actionable Insights** – Converts suggestions, complaints, and ideas into clear tasks.  
 - **Seamless Collection** – Embed a customizable feedback form directly into your website.  
@@ -14,7 +14,7 @@ No more guesswork—understand what your users want and make smarter product dec
 
 ---
 
-## 📦 Installation  
+##  Installation  
 ```bash
 # Clone the repo
 git clone https://github.com/Chrahuldeveloper/feedsense.ai.git
