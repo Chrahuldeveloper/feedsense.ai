@@ -44,7 +44,7 @@ const Page = () => {
   }, [user?.uid, db]);
 
   return (
-    <div className="bg-[#0b0d0d] w-full flex min-h-screen overflow-x-clip">
+    <div className="flex min-h-screen w-full overflow-x-clip bg-[#06080b] text-slate-200 antialiased">
       <SideBar page="Home" />
       <Table />
     </div>

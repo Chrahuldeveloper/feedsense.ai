@@ -2,11 +2,31 @@
 import React, { useState } from "react";
 import { MdDashboard } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
-// import { MdOutlineAttachMoney } from "react-icons/md";
 import ModelLogout from "./ModelLogout";
 import Link from "next/link";
 import { CgWebsite } from "react-icons/cg";
 import { IoMdHelpCircle } from "react-icons/io";
+import { HiOutlineSparkles } from "react-icons/hi2";
+
+const Theme = () => (
+  <style>{`
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+.fs-root{font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+@keyframes fs-drift-a{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(60px,30px,0) scale(1.15)}}
+@keyframes fs-drift-b{0%,100%{transform:translate3d(0,0,0) scale(1.1)}50%{transform:translate3d(-50px,-30px,0) scale(0.95)}}
+@keyframes fs-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fs-sheen{from{background-position:200% 0}to{background-position:-200% 0}}
+.fs-drift-a{animation:fs-drift-a 14s ease-in-out infinite}
+.fs-drift-b{animation:fs-drift-b 18s ease-in-out infinite}
+.fs-rise{animation:fs-rise .7s cubic-bezier(.2,.7,.2,1) both}
+.fs-gradient-text{background:linear-gradient(110deg,#ffffff 15%,#67e8f9 50%,#c4b5fd 85%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fs-btn{background-image:linear-gradient(110deg,#22d3ee 0%,#818cf8 50%,#22d3ee 100%);background-size:200% 100%}
+.fs-btn:hover{animation:fs-sheen 2.4s linear infinite}
+.fs-grid{background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:44px 44px}
+@media (prefers-reduced-motion:reduce){.fs-drift-a,.fs-drift-b,.fs-rise,.fs-btn:hover{animation:none!important}}
+`}</style>
+);
+
 
 interface props {
   page: string;
@@ -15,58 +35,103 @@ interface props {
 const SideBar: React.FC<props> = ({ page }) => {
   const [toggle, settoggle] = useState(false);
 
-  const iconSize = 24;
+  const iconSize = 20;
+
+  const links = [
+    { href: "/dashboard", key: "Home", label: "Home", icon: MdDashboard },
+    {
+      href: "/dashboard/integrate",
+      key: "Integrate",
+      label: "Integrate",
+      icon: CgWebsite,
+    },
+    {
+      href: "/dashboard/contact",
+      key: "Contact",
+      label: "Help",
+      icon: IoMdHelpCircle,
+    },
+  ];
 
   return (
     <>
-      <aside className=" bg-[#0b0d0e] w-[60vw] lg:w-[15vw] h-full space-y-4 px-5 py-6 hidden md:block fixed left-0 top-0 bottom-0 border-r-[1px] border-[#1f2327]">
-        <div>
-          <h1 className="text-cyan-500 font-bold text-xl">FeedSenseAI</h1>
-        </div>
-        <div className="flex flex-col space-y-3 pt-7">
-          <Link href="/dashboard">
-            <div
-              className={`flex  hover:bg-[#09343e] border border-none   backdrop-blur-sm  text-cyan-400 items-center space-x-4 py-1 pr-12 pl-4 transition duration-200 ease-in-out  rounded-lg ${
-                page === "Home" ? "bg-[#09343e] border border-cyan-400/20  backdrop-blur-sm  text-cyan-400 " : ""
-              }`}
-            >
-              <MdDashboard color="white" size={iconSize} />
-              <h1 className="text-sm font-semibold">Home</h1>
-            </div>
-          </Link>
+      <Theme />
+      <aside className="fs-root fixed bottom-0 left-0 top-0 z-40 hidden w-64 flex-col overflow-hidden border-r border-white/[0.07] bg-[#07090d]/90 px-4 py-6 backdrop-blur-2xl md:flex">
+        <div className="pointer-events-none absolute -left-20 -top-20 h-60 w-60 rounded-full bg-cyan-500/15 blur-[80px]" />
+        <div className="pointer-events-none absolute -bottom-24 -right-24 h-60 w-60 rounded-full bg-violet-600/15 blur-[80px]" />
 
-          <Link href="/dashboard/integrate">
-            <div
-              className={`flex  hover:bg-[#09343e] border border-none   backdrop-blur-sm  text-cyan-400  items-center space-x-4 py-1 pr-12 pl-4 transition duration-200 ease-in-out  rounded-lg ${
-                page === "Integrate" ? "bg-[#09343e] border border-cyan-400/20  backdrop-blur-sm  text-cyan-400" : ""
-              }`}
-            >
-              <CgWebsite color="white" size={iconSize} />
-              <h1 className="text-white text-sm font-semibold">Integrate</h1>
-            </div>
-          </Link>
+        <Link
+          href="/dashboard"
+          className="relative flex items-center gap-3 px-2"
+        >
+          <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b] shadow-[0_0_30px_-4px_rgba(34,211,238,0.8)]">
+            <HiOutlineSparkles size={22} />
+          </span>
+          <span className="text-lg font-extrabold tracking-tight text-white">
+            FeedSense<span className="text-cyan-400">AI</span>
+          </span>
+        </Link>
 
-          <Link href="/dashboard/contact">
-            <div
-              className={`flex items-center hover:bg-[#09343e] border border-none   backdrop-blur-sm  text-cyan-400   space-x-4  py-1 cursor-pointer  pr-12 pl-4 transition duration-200 ease-in-out  rounded-lg ${
-                page === "Contact" ? "bg-[#09343e] border border-cyan-400/20  backdrop-blur-sm  text-cyan-400" : ""
-              }`}
-            >
-              <IoMdHelpCircle color="white" size={iconSize} />
-              <h1 className="text-white text-sm font-semibold">Help</h1>
-            </div>
-          </Link>
+        <nav className="relative mt-10 flex flex-col gap-1.5">
+          <p className="mb-2 px-3 text-xs font-semibold text-slate-600">
+            Menu
+          </p>
+          {links.map(({ href, key, label, icon: Icon }) => {
+            const active = page === key;
+            return (
+              <Link
+                key={key}
+                href={href}
+                aria-current={active ? "page" : undefined}
+                className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all ${
+                  active
+                    ? "bg-gradient-to-r from-cyan-400/20 via-cyan-400/5 to-transparent text-white ring-1 ring-inset ring-cyan-400/20"
+                    : "text-slate-400 hover:bg-white/[0.05] hover:text-white"
+                }`}
+              >
+                {active && (
+                  <span className="absolute -left-4 bottom-2 top-2 w-[3px] rounded-r-full bg-cyan-400 shadow-[0_0_14px_#22d3ee]" />
+                )}
+                <span
+                  className={`grid h-8 w-8 place-items-center rounded-lg ${
+                    active
+                      ? "bg-cyan-400/20 text-cyan-300"
+                      : "bg-white/[0.04] text-slate-400"
+                  }`}
+                >
+                  <Icon size={iconSize} />
+                </span>
+                {label}
+              </Link>
+            );
+          })}
+        </nav>
 
-       
-          <div
-            className={`flex  items-center hover:bg-red-600 space-x-4 py-1 cursor-pointer pr-16 pl-5 transition duration-200 ease-in-out  text-red-500 hover:text-white rounded-lg ${
-              page === "Logout" ? "bg-red-400" : ""
-            }`}
-            onClick={() => settoggle(true)}
-          >
-            <IoLogOut size={iconSize} />
-            <button className="  text-sm font-semibold ">Logout</button>
+        <div className="relative mt-auto space-y-3">
+          <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-cyan-400/10 to-violet-500/10 p-4">
+            <p className="text-sm font-bold text-white">Need a hand?</p>
+            <p className="mt-1 text-xs leading-relaxed text-slate-400">
+              Our team can help you set up your integration.
+            </p>
+            <Link
+              href="/dashboard/contact"
+              className="mt-3 inline-block rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/20"
+            >
+              Contact support
+            </Link>
           </div>
+
+          <button
+            onClick={() => settoggle(true)}
+            className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-400 transition-colors hover:bg-red-500/10 hover:text-red-400 ${
+              page === "Logout" ? "bg-red-500/10 text-red-400" : ""
+            }`}
+          >
+            <span className="grid h-8 w-8 place-items-center rounded-lg bg-white/[0.04]">
+              <IoLogOut size={iconSize} />
+            </span>
+            Logout
+          </button>
         </div>
       </aside>
       {toggle ? <ModelLogout settoggle={settoggle} /> : null}

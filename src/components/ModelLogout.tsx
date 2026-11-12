@@ -3,6 +3,7 @@ import authService from "@/firebase/utils/auth";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "./Loader";
+import { IoLogOutOutline } from "react-icons/io5";
 interface ModelLogoutProps {
   settoggle: (value: boolean) => void;
 }
@@ -28,31 +29,44 @@ const ModelLogout: React.FC<ModelLogoutProps> = ({ settoggle }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center h-full bg-black bg-opacity-75 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex h-full items-center justify-center bg-black/70 px-4 backdrop-blur-md">
       {isloading && <Loader message="Loggin you out!" />}
-      <div className="bg-[#151923] border-[1px] border-[#15171b]  w-[85vw] md:w-[60vw] lg:w-[40vw] xl:w-[30vw] rounded-lg p-6">
-        <h1 className="text-gray-300 text-xl md:text-2xl text-center  my-3">
-          Are you sure you want to Logout?
-        </h1>
-        <p className="text-gray-300 text-xs text-center my-5 leading-6 max-w-screen-sm">
-          Logging out will end your current session. You can always log back in
-          to continue where you left off. Are you ready to proceed?
-        </p>
-        <div className="flex justify-end gap-5 mt-6 -mx-4">
-          <button
-            onClick={() => {
-              settoggle(false);
-            }}
-            className="text-gray-300 text-xs bg-[#20242e] px-8 py-2 rounded-lg font-semibold"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleLogOut}
-            className="text-slate-300 text-xs bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 px-8 py-2 rounded-lg font-semibold"
-          >
-            Logout
-          </button>
+      <div
+        role="dialog"
+        aria-modal="true"
+        className="w-full max-w-md rounded-3xl bg-gradient-to-b from-white/25 via-white/[0.06] to-red-500/25 p-px shadow-[0_30px_80px_-20px_rgba(239,68,68,0.35)]"
+      >
+        <div className="relative overflow-hidden rounded-[23px] bg-[#0a0d12] p-6 text-center sm:p-8">
+          <div className="pointer-events-none absolute -top-16 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-red-500/25 blur-3xl" />
+
+          <span className="relative mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br from-red-500/20 to-orange-500/10 text-red-300 ring-1 ring-inset ring-red-400/30">
+            <IoLogOutOutline size={30} />
+          </span>
+
+          <h1 className="relative mt-6 text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Are you sure you want to Logout?
+          </h1>
+          <p className="relative mx-auto mt-3 max-w-sm text-sm leading-6 text-slate-400">
+            Logging out will end your current session. You can always log back in
+            to continue where you left off. Are you ready to proceed?
+          </p>
+
+          <div className="relative mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-center">
+            <button
+              onClick={() => {
+                settoggle(false);
+              }}
+              className="rounded-xl border border-white/10 bg-white/[0.05] px-8 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/10"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleLogOut}
+              className="rounded-xl bg-gradient-to-r from-red-500 to-orange-500 px-8 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_-10px_rgba(239,68,68,0.8)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-400/30"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </div>

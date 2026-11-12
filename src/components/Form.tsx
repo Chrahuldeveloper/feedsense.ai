@@ -2,7 +2,13 @@
 import dbService from "@/firebase/utils/db";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
-import { IoHappyOutline, IoSadOutline } from "react-icons/io5";
+import {
+  IoHappyOutline,
+  IoSadOutline,
+  IoBugOutline,
+  IoChatbubbleEllipsesOutline,
+  IoBulbOutline,
+} from "react-icons/io5";
 import { TbMoodSadDizzy } from "react-icons/tb";
 import LottiePlayer from "react-lottie-player";
 import FeedbackLoader from "../app/lottie-asserts/FeedbackLoader.json";
@@ -11,7 +17,8 @@ import { IoIosStarOutline, IoMdStar } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaTelegramPlane } from "react-icons/fa";
-import { IoBugOutline } from "react-icons/io5";
+import { FiChevronDown } from "react-icons/fi";
+import { HiOutlineSparkles } from "react-icons/hi2";
 
 interface Feedback {
   emotion: string;
@@ -22,6 +29,7 @@ interface Feedback {
 interface Emotion {
   title: string;
   emoji: JSX.Element;
+  active: string;
 }
 
 interface Bug {
@@ -32,6 +40,11 @@ interface Bug {
 }
 
 type Feature = Bug;
+
+/* UI-only tokens */
+const fieldClass =
+  "w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-slate-600 outline-none transition focus:border-cyan-400/60 focus:ring-4 focus:ring-cyan-400/10";
+const labelClass = "mb-2 block text-sm font-medium text-slate-300";
 
 const Form = () => {
   const { userID, websiteID } = useParams();
@@ -47,24 +60,36 @@ const Form = () => {
   const db = new dbService();
 
   const emotions: Emotion[] = [
-    { title: "Happy", emoji: <IoHappyOutline size={32} color="#c1d0d5" /> },
-    { title: "Neutral", emoji: <IoSadOutline size={32} color="#c1d0d5" /> },
-    { title: "Sad", emoji: <TbMoodSadDizzy size={32} color="#c1d0d5" /> },
+    {
+      title: "Happy",
+      emoji: <IoHappyOutline size={32} />,
+      active: "border-emerald-400/60 bg-emerald-400/10 text-emerald-300",
+    },
+    {
+      title: "Neutral",
+      emoji: <IoSadOutline size={32} />,
+      active: "border-amber-400/60 bg-amber-400/10 text-amber-300",
+    },
+    {
+      title: "Sad",
+      emoji: <TbMoodSadDizzy size={32} />,
+      active: "border-rose-400/60 bg-rose-400/10 text-rose-300",
+    },
   ];
 
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
 
   const sections = [
     {
-      image: <IoBugOutline size={24} color="white" />,
+      image: <IoChatbubbleEllipsesOutline size={20} />,
       tittle: "General Feedback",
     },
     {
-      image: <IoBugOutline size={24} color="white" />,
+      image: <IoBugOutline size={20} />,
       tittle: "Bug Report",
     },
     {
-      image: <IoBugOutline size={24} color="white" />,
+      image: <IoBulbOutline size={20} />,
       tittle: "Feature Request",
     },
   ];
@@ -190,351 +215,317 @@ const Form = () => {
     }
   };
 
+  /* UI-only: one layout for both the bug and feature forms,
+     wired to the same state setters as before */
+  const renderIssueForm = (kind: "bug" | "feature") => {
+    const data = kind === "bug" ? bug : feature;
+    const update = (patch: Partial<Bug>) =>
+      kind === "bug"
+        ? setbug({ ...bug, ...patch })
+        : setfeature({ ...feature, ...patch });
+
+    return (
+      <div className="space-y-5 px-5 pt-2 sm:px-8">
+        <div>
+          <label className={labelClass}>Email*</label>
+          <input
+            type="text"
+            placeholder="you@example.com"
+            value={data.email}
+            onChange={(e) => update({ email: e.target.value })}
+            className={fieldClass}
+          />
+        </div>
+
+        <div>
+          <label className={labelClass}>Priority</label>
+          <div className="relative w-full">
+            <div
+              role="button"
+              tabIndex={0}
+              className={`flex cursor-pointer items-center justify-between rounded-xl border bg-black/40 px-4 py-3 text-sm transition ${
+                open
+                  ? "border-cyan-400/60 ring-4 ring-cyan-400/10"
+                  : "border-white/10 hover:border-white/25"
+              }`}
+              onClick={() => setOpen(!open)}
+            >
+              <div className="flex items-center gap-2.5">
+                <span className={`h-2.5 w-2.5 rounded-full ${selected.color}`} />
+                <span className="text-white">{selected.name}</span>
+              </div>
+              <FiChevronDown
+                size={18}
+                className={`text-slate-500 transition-transform ${
+                  open ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+
+            {open && (
+              <div className="absolute bottom-full z-10 mb-2 w-full overflow-hidden rounded-xl border border-white/10 bg-[#10141b] shadow-2xl shadow-black/60">
+                {priorities.map((priority, idx) => (
+                  <div
+                    key={idx}
+                    onClick={() => {
+                      setSelected(priority);
+                      setOpen(false);
+                      update({ priority: priority.name });
+                    }}
+                    className={`flex cursor-pointer items-center gap-2.5 px-4 py-3 text-sm transition hover:bg-white/[0.06] ${
+                      selected.name === priority.name ? "bg-white/[0.06]" : ""
+                    }`}
+                  >
+                    <span className={`h-2.5 w-2.5 rounded-full ${priority.color}`} />
+                    <span className="text-white">{priority.name}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div>
+          <label className={labelClass}>Title*</label>
+          <input
+            type="text"
+            value={data.tittle}
+            onChange={(e) => update({ tittle: e.target.value })}
+            placeholder={
+              kind === "bug"
+                ? "Brief description of the bug"
+                : "Short summary of your idea"
+            }
+            className={fieldClass}
+          />
+        </div>
+
+        <div>
+          <label className={labelClass}>Description*</label>
+          <textarea
+            cols={10}
+            rows={7}
+            value={data.desc}
+            onChange={(e) => update({ desc: e.target.value })}
+            placeholder={
+              kind === "bug"
+                ? "Describe the bug in detail, including steps to reproduce"
+                : "Tell us what you would like and how it would help you"
+            }
+            className={`${fieldClass} resize-none`}
+          ></textarea>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div className="bg-gradient-to-b from-[#0c0c0e] via-[#1f1f21] to-[#2a2b2d] w-full ">
-      <div className="flex justify-center p-5 pt-5">
-        <div className="rounded-xl shadow-lg w-full max-w-lg sm:max-w-lg lg:max-w-xl border-[0.8px] border-[#121212]">
-          {error && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center h-full bg-black bg-opacity-70">
-              <div className="max-w-xs mx-auto -mt-10 text-center flex flex-col items-center space-y-3">
-                <LottiePlayer
-                  loop
-                  animationData={ErrorLoader}
-                  play
-                  className="w-36 lg:w-52"
-                />
-                <p className="text-white text-sm">
-                  Website Stopped Collecting Feedbacks
-                </p>
-              </div>
-            </div>
-          )}
+    <div className="relative min-h-screen w-full overflow-hidden bg-[#06080b] text-slate-200 antialiased">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        .fsf-root { font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; }
+        @keyframes fsf-drift { 0%,100% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(50px,30px,0) scale(1.15); } }
+        @keyframes fsf-sheen { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+        .fsf-drift { animation: fsf-drift 18s ease-in-out infinite; }
+        .fsf-btn { background-size: 200% 100%; }
+        .fsf-btn:hover { animation: fsf-sheen 2.4s linear infinite; }
+        @media (prefers-reduced-motion: reduce) { .fsf-drift, .fsf-btn:hover { animation: none !important; } }
+      `}</style>
 
-          {loading ? (
-            <div className="fixed inset-0 z-50 flex items-center justify-center h-full bg-black bg-opacity-70">
-              <div className="max-w-xs mx-auto -mt-10">
-                <LottiePlayer
-                  loop
-                  animationData={FeedbackLoader}
-                  play
-                  className="w-36 lg:w-52"
-                />
-              </div>
-            </div>
-          ) : (
-            <div className="bg-[#080809]">
-              <div className="w-36 py-1.5 mx-auto rounded-full text-blue-600 bg-[#0e1522] text-center my-4 border-[1px] border-blue-600">
-                <p className="text-xs">Feedback</p>
-              </div>
-              <div className="flex flex-col gap-3 my-4 justify-center text-center text-gray-300">
-                <h1 className="text-2xl font-bold">We Value Your Feedback</h1>
-                <p className="text-sm max-w-sm mx-auto">
-                  Help us improve our service by sharing your thoughts and
-                  experiences.
-                </p>
-              </div>
+      <div className="fsf-root relative">
+        {/* ambient background */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="fsf-drift absolute -left-24 -top-24 h-[28rem] w-[28rem] rounded-full bg-cyan-500/20 blur-[120px]" />
+          <div
+            className="fsf-drift absolute -right-24 top-1/3 h-[30rem] w-[30rem] rounded-full bg-violet-600/20 blur-[130px]"
+            style={{ animationDelay: "-9s" }}
+          />
+          <div
+            className="absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
+              backgroundSize: "48px 48px",
+            }}
+          />
+        </div>
 
-              <div className="flex items-center space-x-7 justify-center">
-                {sections.map((i, id) => {
-                  return (
-                    <div
-                      key={id}
-                      onClick={() => {
-                        setselectedSection(i.tittle);
-                      }}
-                    >
-                      <div
-                        className={`flex justify-center items-center space-x-2 cursor-pointer  rounded-lg px-3 py-2 text-gray-300 bg-[#0e1522] text-center my-4  ${
-                          selectedSection === i.tittle
-                            ? "border-[1px] border-blue-600 text-blue-600"
-                            : ""
-                        } `}
-                      >
-                        {i.image}
-                        <h1 className="text-white text-xs">{i.tittle}</h1>
-                      </div>
-                    </div>
-                  );
-                })}
+        <div className="relative z-10 flex justify-center px-4 py-8 sm:py-14">
+          <div className="w-full max-w-xl rounded-3xl bg-gradient-to-b from-white/25 via-white/[0.06] to-cyan-400/25 p-px shadow-[0_30px_90px_-30px_rgba(34,211,238,0.35)]">
+            {error && (
+              <div className="fixed inset-0 z-50 flex h-full items-center justify-center bg-black/70 backdrop-blur-md">
+                <div className="-mt-10 mx-auto flex max-w-xs flex-col items-center space-y-3 text-center">
+                  <LottiePlayer
+                    loop
+                    animationData={ErrorLoader}
+                    play
+                    className="w-36 lg:w-52"
+                  />
+                  <p className="text-sm text-white">
+                    Website Stopped Collecting Feedbacks
+                  </p>
+                </div>
               </div>
+            )}
 
-              {selectedSection === "General Feedback" ? (
-                <>
-                  <div className="space-y-2.5 mt-4 px-5">
-                    <div className="flex justify-between items-center text-sm">
-                      <h1 className="text-gray-300 font-semibold">Rate Us</h1>
-                      <p className="text-gray-300 font-semibold">
-                        {selectedRating} out of 5 stars
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-5">
-                      {[1, 2, 3, 4, 5].map((i) => (
-                        <div
-                          key={i}
-                          onMouseEnter={() => setHoveredRating(i)}
-                          onMouseLeave={() => setHoveredRating(null)}
-                          onClick={() => setSelectedRating(i)}
-                          className="cursor-pointer"
-                        >
-                          {i <= (hoveredRating ?? selectedRating) ? (
-                            <IoMdStar size={24} color="gold" />
-                          ) : (
-                            <IoIosStarOutline size={24} color="white" />
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+            {loading ? (
+              <div className="fixed inset-0 z-50 flex h-full items-center justify-center bg-black/70 backdrop-blur-md">
+                <div className="-mt-10 mx-auto max-w-xs">
+                  <LottiePlayer
+                    loop
+                    animationData={FeedbackLoader}
+                    play
+                    className="w-36 lg:w-52"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="rounded-[23px] bg-[#0a0d12]/95 pb-2 backdrop-blur-xl">
+                {/* header */}
+                <div className="px-5 pt-8 text-center sm:px-8">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400/15 to-violet-500/15 px-3.5 py-1.5 text-xs font-semibold text-cyan-200 ring-1 ring-inset ring-cyan-400/30">
+                    <HiOutlineSparkles size={14} />
+                    Feedback
+                  </span>
+                  <h1 className="mt-5 bg-gradient-to-r from-white via-white to-cyan-200 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl">
+                    We Value Your Feedback
+                  </h1>
+                  <p className="mx-auto mt-3 max-w-sm text-sm text-slate-400">
+                    Help us improve our service by sharing your thoughts and
+                    experiences.
+                  </p>
+                </div>
 
-                  <div className="space-y-2.5 mt-7 px-5">
-                    <textarea
-                      value={feedback.feedback}
-                      placeholder="Feedback"
-                      onChange={(e) =>
-                        setFeedback({ ...feedback, feedback: e.target.value })
-                      }
-                      cols={20}
-                      rows={5}
-                      className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
-                    />
-                  </div>
-
-                  {/* Emotions */}
-                  <div className="mt-6 space-y-2.5 px-5">
-                    <h1 className="font-semibold text-white text-sm">
-                      How was your experience*
-                    </h1>
-                    <div className="flex items-center justify-center space-x-5 mt-4">
-                      {emotions.map((emotion, idx) => (
-                        <div
-                          key={idx}
+                {/* section switcher */}
+                <div className="px-5 pb-5 pt-7 sm:px-8">
+                  <div className="grid grid-cols-3 gap-1.5 rounded-2xl border border-white/[0.07] bg-black/30 p-1.5">
+                    {sections.map((i, id) => {
+                      const active = selectedSection === i.tittle;
+                      return (
+                        <button
+                          type="button"
+                          key={id}
                           onClick={() => {
-                            setSelectedEmotion(idx);
-                            setFeedback({
-                              ...feedback,
-                              emotion: emotion.title,
-                            });
+                            setselectedSection(i.tittle);
                           }}
-                          className={`cursor-pointer flex items-center justify-center w-16 h-16 p-3 rounded-lg transition-all duration-200 ${
-                            selectedEmotion === idx
-                              ? "bg-[#0e1522] border-[1px] border-blue-600"
-                              : ""
+                          className={`flex flex-col items-center justify-center gap-1.5 rounded-xl px-2 py-3 text-center transition sm:flex-row sm:gap-2 ${
+                            active
+                              ? "bg-gradient-to-br from-cyan-400/20 to-violet-500/20 text-white ring-1 ring-inset ring-cyan-400/40 shadow-[0_8px_24px_-12px_rgba(34,211,238,0.6)]"
+                              : "text-slate-400 hover:bg-white/[0.05] hover:text-slate-200"
                           }`}
                         >
-                          <div className="flex flex-col items-center space-y-1">
+                          {i.image}
+                          <span className="text-[11px] font-semibold leading-tight sm:text-xs">
+                            {i.tittle}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {selectedSection === "General Feedback" ? (
+                  <>
+                    <div className="px-5 sm:px-8">
+                      <div className="flex items-center justify-between text-sm">
+                        <h2 className="font-semibold text-slate-200">Rate Us</h2>
+                        <p className="text-slate-500">
+                          {selectedRating} out of 5 stars
+                        </p>
+                      </div>
+                      <div className="mt-3 flex items-center gap-2">
+                        {[1, 2, 3, 4, 5].map((i) => (
+                          <button
+                            type="button"
+                            aria-label={`${i} star${i > 1 ? "s" : ""}`}
+                            key={i}
+                            onMouseEnter={() => setHoveredRating(i)}
+                            onMouseLeave={() => setHoveredRating(null)}
+                            onClick={() => setSelectedRating(i)}
+                            className="cursor-pointer transition-transform hover:scale-110"
+                          >
+                            {i <= (hoveredRating ?? selectedRating) ? (
+                              <IoMdStar
+                                size={36}
+                                className="text-amber-300 drop-shadow-[0_0_10px_rgba(251,191,36,0.55)]"
+                              />
+                            ) : (
+                              <IoIosStarOutline size={36} className="text-slate-600" />
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-7 px-5 sm:px-8">
+                      <label className={labelClass}>Your feedback</label>
+                      <textarea
+                        value={feedback.feedback}
+                        placeholder="Tell us what you think"
+                        onChange={(e) =>
+                          setFeedback({ ...feedback, feedback: e.target.value })
+                        }
+                        cols={20}
+                        rows={5}
+                        className={`${fieldClass} resize-none`}
+                      />
+                    </div>
+
+                    {/* Emotions */}
+                    <div className="mt-7 px-5 sm:px-8">
+                      <h2 className="text-sm font-semibold text-slate-200">
+                        How was your experience*
+                      </h2>
+                      <div className="mt-4 grid grid-cols-3 gap-3">
+                        {emotions.map((emotion, idx) => (
+                          <button
+                            type="button"
+                            key={idx}
+                            onClick={() => {
+                              setSelectedEmotion(idx);
+                              setFeedback({
+                                ...feedback,
+                                emotion: emotion.title,
+                              });
+                            }}
+                            className={`flex flex-col items-center gap-2 rounded-2xl border px-3 py-4 transition-all duration-200 ${
+                              selectedEmotion === idx
+                                ? `${emotion.active} scale-[1.03] shadow-lg`
+                                : "border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/25 hover:bg-white/[0.06]"
+                            }`}
+                          >
                             {emotion.emoji}
-                            <p className="text-xs text-gray-300 font-semibold">
+                            <span className="text-xs font-semibold">
                               {emotion.title}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              ) : selectedSection === "Bug Report" ? (
-                <>
-                  <div className="flex flex-col justify-center px-10 space-y-6 my-3">
-                    <div className="space-y-2">
-                      <h1 className="text-white">Email*</h1>
-                      <input
-                        type="text"
-                        placeholder="
-                        Email."
-                        value={bug.email}
-                        onChange={(e) => {
-                          setbug({ ...bug, email: e.target.value });
-                        }}
-                        className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <h1 className="text-white">Priority</h1>
-
-                      <div className="relative w-full">
-                        <div
-                          className="flex items-center justify-between bg-[#131314] border border-[#282e32] rounded-xl px-4 py-3 cursor-pointer hover:border-blue-400 transition"
-                          onClick={() => setOpen(!open)}
-                        >
-                          <div className="flex items-center space-x-2">
-                            <span
-                              className={`w-3 h-3 rounded-full ${selected.color}`}
-                            ></span>
-                            <span className="text-white">{selected.name}</span>
-                          </div>
-                          <span className="text-gray-400">▼</span>
-                        </div>
-
-                        {open && (
-                          <div className="absolute bottom-full mb-1 w-full bg-[#131314] border border-[#282e32] rounded-xl shadow-lg z-10">
-                            {priorities.map((priority, idx) => (
-                              <div
-                                key={idx}
-                                onClick={() => {
-                                  setSelected(priority);
-                                  setOpen(false);
-                                  setbug({ ...bug, priority: priority.name });
-                                }}
-                                className={`flex items-center space-x-2 px-4 py-3 cursor-pointer hover:bg-[#1f2937] transition ${
-                                  selected.name === priority.name
-                                    ? "bg-[#1f2937]"
-                                    : ""
-                                }`}
-                              >
-                                <span
-                                  className={`w-3 h-3 rounded-full ${priority.color}`}
-                                ></span>
-                                <span className="text-white">
-                                  {priority.name}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
+                            </span>
+                          </button>
+                        ))}
                       </div>
                     </div>
+                  </>
+                ) : selectedSection === "Bug Report" ? (
+                  renderIssueForm("bug")
+                ) : (
+                  renderIssueForm("feature")
+                )}
 
-                    <div className="space-y-2">
-                      <h1 className="text-white">Tittle*</h1>
-                      <input
-                        type="text"
-                        value={bug.tittle}
-                        onChange={(e) => {
-                          setbug({ ...bug, tittle: e.target.value });
-                        }}
-                        placeholder="
-                        Brief description of the bug."
-                        className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <h1 className="text-white">Description*</h1>
-                      <textarea
-                        cols={10}
-                        rows={8}
-                        value={bug.desc}
-                        onChange={(e) => {
-                          setbug({ ...bug, desc: e.target.value });
-                        }}
-                        placeholder="
-                          Please describe the bug in detail, including steps to reproduce.."
-                        className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
-                      ></textarea>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="flex flex-col justify-center px-10 space-y-6 my-3">
-                    <div className="space-y-2">
-                      <h1 className="text-white">Email*</h1>
-                      <input
-                        type="text"
-                        placeholder="
-                        Email."
-                        value={feature.email}
-                        onChange={(e) => {
-                          setfeature({ ...feature, email: e.target.value });
-                        }}
-                        className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <h1 className="text-white">Priority</h1>
-
-                      <div className="relative w-full">
-                        <div
-                          className="flex items-center justify-between bg-[#131314] border border-[#282e32] rounded-xl px-4 py-3 cursor-pointer hover:border-blue-400 transition"
-                          onClick={() => setOpen(!open)}
-                        >
-                          <div className="flex items-center space-x-2">
-                            <span
-                              className={`w-3 h-3 rounded-full ${selected.color}`}
-                            ></span>
-                            <span className="text-white">{selected.name}</span>
-                          </div>
-                          <span className="text-gray-400">▼</span>
-                        </div>
-
-                        {open && (
-                          <div className="absolute bottom-full mb-1 w-full bg-[#131314] border border-[#282e32] rounded-xl shadow-lg z-10">
-                            {priorities.map((priority, idx) => (
-                              <div
-                                key={idx}
-                                onClick={() => {
-                                  setSelected(priority);
-                                  setOpen(false);
-                                  setfeature({
-                                    ...feature,
-                                    priority: priority.name,
-                                  });
-                                }}
-                                className={`flex items-center space-x-2 px-4 py-3 cursor-pointer hover:bg-[#1f2937] transition ${
-                                  selected.name === priority.name
-                                    ? "bg-[#1f2937]"
-                                    : ""
-                                }`}
-                              >
-                                <span
-                                  className={`w-3 h-3 rounded-full ${priority.color}`}
-                                ></span>
-                                <span className="text-white">
-                                  {priority.name}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <h1 className="text-white">Tittle*</h1>
-
-                      <input
-                        type="text"
-                        value={feature.tittle}
-                        onChange={(e) => {
-                          setfeature({ ...feature, tittle: e.target.value });
-                        }}
-                        placeholder="
-                        Brief description of the bug."
-                        className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <h1 className="text-white">Description*</h1>
-                      <textarea
-                        cols={10}
-                        rows={8}
-                        value={feature.desc}
-                        onChange={(e) => {
-                          setfeature({ ...feature, desc: e.target.value });
-                        }}
-                        placeholder="
-                          Please describe the bug in detail, including steps to reproduce.."
-                        className="bg-[#131314] border-[1px] border-[#282e32] pl-3 pr-4 py-2 w-full rounded-xl text-white outline-none hover:border-blue-400 transition ease-in-out duration-300"
-                      ></textarea>
-                    </div>
-                  </div>
-                </>
-              )}
-
-              <div className="my-3 p-5">
-                <button
-                  onClick={saveSectionData}
-                  className="text-black  flex items-center justify-center gap-3 font-semibold px-4 py-2 rounded-lg w-full bg-slate-50 text-sm"
-                >
-                  <h1>Share Insights</h1>
-                  <FaTelegramPlane size={25} color="black" />
-                </button>
+                <div className="px-5 pb-5 pt-8 sm:px-8">
+                  <button
+                    onClick={saveSectionData}
+                    className="fsf-btn flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-4 py-3.5 text-sm font-bold text-[#06080b] shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
+                  >
+                    <span>Share Insights</span>
+                    <FaTelegramPlane size={20} />
+                  </button>
+                  <p className="mt-4 text-center text-xs text-slate-600">
+                    Powered by FeedSenseAI
+                  </p>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
+          <ToastContainer theme="dark" toastClassName={"custom-toast"} />
         </div>
-        <ToastContainer theme="dark" toastClassName={"custom-toast"} />
       </div>
     </div>
   );
