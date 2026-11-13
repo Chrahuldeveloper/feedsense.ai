@@ -1,9 +1,156 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
+import { FiFileText, FiRefreshCw, FiTruck } from "react-icons/fi";
 
 interface Props {
   setistoggle: (value: boolean) => void;
 }
+
+/* ---------- UI-only: shared reading-modal shell ---------- */
+const LegalShell = ({
+  title,
+  icon,
+  toc,
+  onClose,
+  children,
+}: {
+  title: string;
+  icon: React.ReactNode;
+  toc: { id: string; label: string }[];
+  onClose: () => void;
+  children: React.ReactNode;
+}) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(toc[0]?.id);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  useEffect(() => {
+    const root = scrollRef.current;
+    if (!root) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id);
+        });
+      },
+      { root, rootMargin: "-8% 0px -80% 0px" }
+    );
+    root.querySelectorAll("[data-sec]").forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  const go = (id: string) => {
+    const root = scrollRef.current;
+    const el = root?.querySelector<HTMLElement>(`#${id}`);
+    if (root && el) root.scrollTo({ top: el.offsetTop - 24, behavior: "smooth" });
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex h-full items-center justify-center bg-black/75 px-3 py-4 backdrop-blur-md sm:px-6"
+      onClick={onClose}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-5xl rounded-3xl bg-gradient-to-b from-white/25 via-white/[0.06] to-cyan-400/20 p-px shadow-[0_30px_90px_-30px_rgba(34,211,238,0.4)]"
+      >
+        <div className="relative flex h-[88vh] flex-col overflow-hidden rounded-[23px] bg-[#0a0d12]">
+          <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-violet-600/15 blur-3xl" />
+
+          {/* header */}
+          <div className="relative flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4 sm:px-8">
+            <div className="flex items-center gap-3">
+              <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-cyan-400/20 to-violet-500/20 text-cyan-300 ring-1 ring-inset ring-cyan-400/30">
+                {icon}
+              </span>
+              <h1 className="text-lg font-bold tracking-tight text-white sm:text-xl">
+                {title}
+              </h1>
+            </div>
+            <button
+              aria-label="Close"
+              onClick={onClose}
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-slate-300 transition hover:bg-white/10 hover:text-white"
+            >
+              <RxCross2 size={22} />
+            </button>
+            <div className="absolute inset-x-0 bottom-0 h-[2px] bg-white/[0.05]">
+              <div
+                className="h-full bg-gradient-to-r from-cyan-400 to-violet-500 transition-[width] duration-150"
+                style={{ width: `${progress * 100}%` }}
+              />
+            </div>
+          </div>
+
+          {/* mobile chips */}
+          <div className="flex gap-2 overflow-x-auto border-b border-white/[0.05] px-5 py-3 lg:hidden [scrollbar-width:none]">
+            {toc.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => go(t.id)}
+                className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+                  active === t.id
+                    ? "bg-cyan-400/15 text-cyan-200 ring-1 ring-inset ring-cyan-400/30"
+                    : "bg-white/[0.05] text-slate-400"
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="relative flex min-h-0 flex-1">
+            {/* desktop TOC */}
+            <nav className="hidden w-72 shrink-0 overflow-y-auto border-r border-white/[0.06] p-5 lg:block [scrollbar-width:thin]">
+              <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-600">
+                On this page
+              </p>
+              <ul className="space-y-1">
+                {toc.map((t) => (
+                  <li key={t.id}>
+                    <button
+                      onClick={() => go(t.id)}
+                      className={`w-full rounded-lg px-3 py-2.5 text-left text-sm font-medium transition ${
+                        active === t.id
+                          ? "bg-cyan-400/10 text-cyan-200"
+                          : "text-slate-400 hover:bg-white/[0.05] hover:text-white"
+                      }`}
+                    >
+                      {t.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <div
+              ref={scrollRef}
+              onScroll={(e) => {
+                const el = e.currentTarget;
+                const max = el.scrollHeight - el.clientHeight;
+                setProgress(max > 0 ? el.scrollTop / max : 0);
+              }}
+              className="relative flex-1 overflow-y-auto px-5 pb-16 pt-8 text-sm sm:px-10 sm:text-base [scrollbar-color:#2a3038_transparent] [scrollbar-width:thin]"
+            >
+              {children}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const TermsConditions: React.FC<Props> = ({ setistoggle }) => {
   const termsAndConditionsData = [
@@ -47,33 +194,57 @@ const TermsConditions: React.FC<Props> = ({ setistoggle }) => {
     },
   ];
 
+  const icons = [
+    <FiFileText size={22} key="a" />,
+    <FiRefreshCw size={22} key="b" />,
+    <FiTruck size={22} key="c" />,
+  ];
+  const tones = [
+    "bg-cyan-400/10 text-cyan-300 ring-cyan-400/25",
+    "bg-violet-400/10 text-violet-300 ring-violet-400/25",
+    "bg-emerald-400/10 text-emerald-300 ring-emerald-400/25",
+  ];
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
-      <div className="p-6 max-w-4xl mx-auto bg-[#121212] rounded-lg shadow-md h-[90vh] overflow-y-scroll">
-        <div className="flex justify-end">
-          <RxCross2
-            size={28}
-            color="#9ca3af"
-            className="cursor-pointer"
-            onClick={() => setistoggle(false)}
-          />
-        </div>
-        <div className="space-y-6">
-          {termsAndConditionsData.map((section, idx) => (
-            <div key={idx} className="space-y-4">
-              <h1 className="text-2xl font-bold text-white">{section.section}</h1>
-              <ul className="list-disc list-inside text-white space-y-3">
-                {section.content.map((paragraph, index) => (
-                  <li key={index} className="text-sm">
-                    {paragraph}
-                  </li>
-                ))}
-              </ul>
+    <LegalShell
+      title="Terms & Conditions"
+      icon={<FiFileText size={20} />}
+      toc={termsAndConditionsData.map((s, i) => ({
+        id: `terms-${i}`,
+        label: s.section,
+      }))}
+      onClose={() => setistoggle(false)}
+    >
+      <div className="space-y-16">
+        {termsAndConditionsData.map((section, idx) => (
+          <section key={idx} id={`terms-${idx}`} data-sec>
+            <div className="flex items-center gap-4">
+              <span
+                className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl ring-1 ring-inset ${tones[idx % 3]}`}
+              >
+                {icons[idx % 3]}
+              </span>
+              <h1 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+                {section.section}
+              </h1>
             </div>
-          ))}
-        </div>
+            <ul className="mt-8 space-y-3">
+              {section.content.map((paragraph, index) => (
+                <li
+                  key={index}
+                  className="flex gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.025] p-4 text-sm leading-7 text-slate-300 transition-colors hover:border-white/15 sm:p-5"
+                >
+                  <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-white/[0.06] text-xs font-bold tabular-nums text-cyan-300">
+                    {index + 1}
+                  </span>
+                  <span>{paragraph}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
       </div>
-    </div>
+    </LegalShell>
   );
 };
 
