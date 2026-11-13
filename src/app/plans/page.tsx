@@ -11,7 +11,7 @@ import { HiOutlineSparkles } from "react-icons/hi2";
 export default function page() {
   const navigate = useRouter();
   return (
-    <div className="relative min-h-screen w-full overflow-x-clip bg-[#05070a] text-[#06080b] antialiased">
+    <div className="relative min-h-screen w-full overflow-x-clip bg-[#05070a] text-white antialiased">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         .fsp-root{font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif}
@@ -110,11 +110,11 @@ export default function page() {
                 )}
                 <div className="flex h-full flex-col space-y-6 rounded-[23px] bg-[#0a0d12] p-7 sm:p-9">
                   <div className="space-y-3">
-                    <h3 className="text-lg font-bold tracking-tight text-[#06080b]">
+                    <h3 className="text-lg font-bold tracking-tight text-white">
                       {plan.name.toUpperCase()}
                     </h3>
                     <p className="text-sm text-slate-400">{plan.desc}</p>
-                    <p className="pt-2 text-5xl font-extrabold tracking-tight text-[#06080b]">
+                    <p className="pt-2 text-5xl font-extrabold tracking-tight text-white">
                       {plan.price}
                       <span className="ml-1 text-base font-medium text-slate-500">
                         /month
@@ -128,7 +128,7 @@ export default function page() {
                     className={`group flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-bold transition hover:-translate-y-0.5 ${
                       plan.highlight
                         ? "fsp-btn bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 text-[#05070a] shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)]"
-                        : "border border-white/15 bg-white/[0.05] text-[#06080b] hover:bg-white/10"
+                        : "border border-white/15 bg-white/[0.05] text-white hover:bg-white/10"
                     }`}
                   >
                     Grab Now
@@ -183,7 +183,7 @@ export default function page() {
                 key={f.q}
                 className="group rounded-2xl border border-white/[0.08] bg-white/[0.03] px-6 py-5 transition-colors open:border-cyan-400/30 open:bg-white/[0.05]"
               >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#06080b] [&::-webkit-details-marker]:hidden">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-white [&::-webkit-details-marker]:hidden">
                   {f.q}
                   <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/[0.06] text-lg leading-none text-cyan-300 transition-transform group-open:rotate-45">
                     +

@@ -282,7 +282,7 @@ const Page = () => {
   ];
 
   return (
-    <div className="fsa-root relative w-full overflow-x-clip bg-[#05070a] text-[#06080b]">
+    <div className="fsa-root relative w-full overflow-x-clip bg-[#05070a] text-white">
       <Theme />
 
       {/* scroll progress */}
@@ -384,7 +384,7 @@ const Page = () => {
                     <p className="bg-gradient-to-r from-cyan-300 to-violet-400 bg-clip-text text-5xl font-extrabold tracking-tight text-transparent sm:text-6xl">
                       {c.tag}
                     </p>
-                    <h3 className="mt-4 text-xl font-bold text-[#06080b] sm:text-2xl">
+                    <h3 className="mt-4 text-xl font-bold text-white sm:text-2xl">
                       {c.title}
                     </h3>
                     <p className="mt-3 leading-7 text-slate-400">{c.body}</p>
@@ -455,7 +455,7 @@ const Page = () => {
 
                 <div className="relative">
                   <span
-                    className={`grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br text-[#06080b] shadow-lg ${v.grad}`}
+                    className={`grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br text-white shadow-lg ${v.grad}`}
                   >
                     {v.icon}
                   </span>

@@ -127,7 +127,7 @@ const Kpi = ({
       </span>
       <span className={`${tones[tone].text} opacity-80`}>{icon}</span>
     </div>
-    <p className="mt-4 text-[2.6rem] font-semibold leading-none tabular-nums tracking-tight text-[#06080b]">
+    <p className="mt-4 text-[2.6rem] font-semibold leading-none tabular-nums tracking-tight text-white">
       {value}
     </p>
     {progress !== undefined ? (
@@ -171,7 +171,7 @@ const Gauge = ({ percent }: { percent: number }) => {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-4xl font-semibold tabular-nums tracking-tight text-[#06080b]">
+        <span className="text-4xl font-semibold tabular-nums tracking-tight text-white">
           {percent}%
         </span>
         <span className="mt-0.5 text-[11px] uppercase tracking-[0.14em] text-slate-500">
@@ -299,10 +299,10 @@ const Table = () => {
         <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#06080b]/70 backdrop-blur-xl">
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
             <div className="flex items-center gap-2.5 md:hidden">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b]">
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-white">
                 <HiOutlineSparkles size={18} />
               </span>
-              <h1 className="text-base font-semibold tracking-tight text-[#06080b]">
+              <h1 className="text-base font-semibold tracking-tight text-white">
                 FeedSense.ai
               </h1>
             </div>
@@ -324,14 +324,14 @@ const Table = () => {
                 <span className="max-w-[10rem] truncate text-sm text-slate-300">
                   {user?.displayName || "User"}
                 </span>
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-[#06080b] ring-2 ring-white/10">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-white ring-2 ring-white/10">
                   {initial}
                 </span>
               </div>
               <button
                 aria-label="Open menu"
                 onClick={() => setToggle(true)}
-                className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-[#06080b] transition hover:bg-white/10 md:hidden"
+                className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-white transition hover:bg-white/10 md:hidden"
               >
                 <CiMenuFries size={20} />
               </button>
@@ -365,7 +365,7 @@ const Table = () => {
             </div>
             <Link
               href="/dashboard/integrate"
-              className="fs-btn inline-flex items-center justify-center gap-2 self-start rounded-xl px-5 py-3 text-sm font-bold text-[#06080b] shadow-[0_12px_36px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 sm:self-auto"
+              className="fs-btn inline-flex items-center justify-center gap-2 self-start rounded-xl px-5 py-3 text-sm font-bold text-white shadow-[0_12px_36px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 sm:self-auto"
             >
               <FiPlus size={16} />
               Connect a website
@@ -425,7 +425,7 @@ const Table = () => {
             <div className="grid gap-6">
               <Surface>
                 <div className="p-6">
-                  <h2 className="text-sm font-semibold text-[#06080b]">
+                  <h2 className="text-sm font-semibold text-white">
                     Resolution rate
                   </h2>
                   <p className="mt-1 text-xs text-slate-500">
@@ -464,7 +464,7 @@ const Table = () => {
                         {a.icon}
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="block text-sm font-medium text-[#06080b]">{a.t}</span>
+                        <span className="block text-sm font-medium text-white">{a.t}</span>
                         <span className="block truncate text-xs text-slate-500">{a.d}</span>
                       </span>
                       <FiChevronRight
@@ -490,7 +490,7 @@ const Table = () => {
                 <span className="relative grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-cyan-400/20 to-violet-500/20 text-cyan-200 ring-1 ring-inset ring-cyan-400/30">
                   <CiGlobe size={30} />
                 </span>
-                <p className="relative mt-5 text-lg font-semibold text-[#06080b]">
+                <p className="relative mt-5 text-lg font-semibold text-white">
                   No websites connected yet
                 </p>
                 <p className="relative mt-1.5 text-sm text-slate-400">
@@ -498,7 +498,7 @@ const Table = () => {
                 </p>
                 <Link
                   href="/dashboard/integrate"
-                  className="fs-btn relative mt-6 inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-[#06080b]"
+                  className="fs-btn relative mt-6 inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white"
                 >
                   <FiPlus size={16} />
                   Connect a website
@@ -508,7 +508,7 @@ const Table = () => {
               <Surface>
                 <div className="flex items-center justify-between px-6 pb-4 pt-5">
                   <div className="flex items-center gap-3">
-                    <h2 className="text-base font-semibold text-[#06080b]">
+                    <h2 className="text-base font-semibold text-white">
                       Your websites
                     </h2>
                     <span className="rounded-full bg-white/[0.07] px-2.5 py-0.5 text-xs font-semibold tabular-nums text-slate-300">
@@ -534,14 +534,14 @@ const Table = () => {
                       >
                         <div className="flex min-w-0 items-center gap-3.5 md:col-span-4">
                           <span
-                            className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-sm font-bold text-[#06080b] ${
+                            className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-sm font-bold text-white ${
                               avatarGradients[idx % avatarGradients.length]
                             }`}
                           >
                             {(site?.name || "?").charAt(0).toUpperCase()}
                           </span>
                           <div className="min-w-0">
-                            <h3 className="truncate text-sm font-semibold text-[#06080b]">
+                            <h3 className="truncate text-sm font-semibold text-white">
                               {site?.name}
                             </h3>
                             <p className="truncate text-xs text-slate-500">

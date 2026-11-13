@@ -43,7 +43,7 @@ const ModelLogout: React.FC<ModelLogoutProps> = ({ settoggle }) => {
             <IoLogOutOutline size={30} />
           </span>
 
-          <h1 className="relative mt-6 text-xl font-semibold tracking-tight text-[#06080b] sm:text-2xl">
+          <h1 className="relative mt-6 text-xl font-semibold tracking-tight text-white sm:text-2xl">
             Are you sure you want to Logout?
           </h1>
           <p className="relative mx-auto mt-3 max-w-sm text-sm leading-6 text-slate-400">
@@ -62,7 +62,7 @@ const ModelLogout: React.FC<ModelLogoutProps> = ({ settoggle }) => {
             </button>
             <button
               onClick={handleLogOut}
-              className="rounded-xl bg-gradient-to-r from-red-500 to-orange-500 px-8 py-3 text-sm font-semibold text-[#06080b] shadow-[0_12px_30px_-10px_rgba(239,68,68,0.8)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-400/30"
+              className="rounded-xl bg-gradient-to-r from-red-500 to-orange-500 px-8 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_-10px_rgba(239,68,68,0.8)] transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-400/30"
             >
               Logout
             </button>

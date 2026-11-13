@@ -6,7 +6,7 @@ import React from "react";
 import { FiMail, FiPhone, FiMapPin, FiClock, FiSend } from "react-icons/fi";
 
 const fieldClass =
-  "w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#06080b] placeholder:text-slate-600 outline-none transition focus:border-cyan-400/60 focus:ring-4 focus:ring-cyan-400/10";
+  "w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-slate-600 outline-none transition focus:border-cyan-400/60 focus:ring-4 focus:ring-cyan-400/10";
 
 const info = [
   {
@@ -49,7 +49,7 @@ const InfoCard = ({
       {info[i].icon}
     </span>
     <div className="space-y-2">
-      <h4 className="font-semibold text-[#06080b]">{info[i].title}</h4>
+      <h4 className="font-semibold text-white">{info[i].title}</h4>
       <p className="text-sm text-slate-400">{info[i].desc}</p>
       {children}
     </div>
@@ -58,7 +58,7 @@ const InfoCard = ({
 
 const Contact = () => {
   return (
-    <div className="relative min-h-screen w-full overflow-x-clip bg-[#05070a] text-[#06080b] antialiased">
+    <div className="relative min-h-screen w-full overflow-x-clip bg-[#05070a] text-white antialiased">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         .fsc-root{font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif}

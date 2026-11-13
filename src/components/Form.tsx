@@ -43,7 +43,7 @@ type Feature = Bug;
 
 /* UI-only tokens */
 const fieldClass =
-  "w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#06080b] placeholder:text-slate-600 outline-none transition focus:border-cyan-400/60 focus:ring-4 focus:ring-cyan-400/10";
+  "w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-slate-600 outline-none transition focus:border-cyan-400/60 focus:ring-4 focus:ring-cyan-400/10";
 const labelClass = "mb-2 block text-sm font-medium text-slate-300";
 
 const Form = () => {
@@ -252,7 +252,7 @@ const Form = () => {
             >
               <div className="flex items-center gap-2.5">
                 <span className={`h-2.5 w-2.5 rounded-full ${selected.color}`} />
-                <span className="text-[#06080b]">{selected.name}</span>
+                <span className="text-white">{selected.name}</span>
               </div>
               <FiChevronDown
                 size={18}
@@ -277,7 +277,7 @@ const Form = () => {
                     }`}
                   >
                     <span className={`h-2.5 w-2.5 rounded-full ${priority.color}`} />
-                    <span className="text-[#06080b]">{priority.name}</span>
+                    <span className="text-white">{priority.name}</span>
                   </div>
                 ))}
               </div>
@@ -361,7 +361,7 @@ const Form = () => {
                     play
                     className="w-36 lg:w-52"
                   />
-                  <p className="text-sm text-[#06080b]">
+                  <p className="text-sm text-white">
                     Website Stopped Collecting Feedbacks
                   </p>
                 </div>
@@ -410,7 +410,7 @@ const Form = () => {
                           }}
                           className={`flex flex-col items-center justify-center gap-1.5 rounded-xl px-2 py-3 text-center transition sm:flex-row sm:gap-2 ${
                             active
-                              ? "bg-gradient-to-br from-cyan-400/20 to-violet-500/20 text-[#06080b] ring-1 ring-inset ring-cyan-400/40 shadow-[0_8px_24px_-12px_rgba(34,211,238,0.6)]"
+                              ? "bg-gradient-to-br from-cyan-400/20 to-violet-500/20 text-white ring-1 ring-inset ring-cyan-400/40 shadow-[0_8px_24px_-12px_rgba(34,211,238,0.6)]"
                               : "text-slate-400 hover:bg-white/[0.05] hover:text-slate-200"
                           }`}
                         >
@@ -512,7 +512,7 @@ const Form = () => {
                 <div className="px-5 pb-5 pt-8 sm:px-8">
                   <button
                     onClick={saveSectionData}
-                    className="fsf-btn flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-4 py-3.5 text-sm font-bold text-[#06080b] shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
+                    className="fsf-btn flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-4 py-3.5 text-sm font-bold text-white shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
                   >
                     <span>Share Insights</span>
                     <FaTelegramPlane size={20} />

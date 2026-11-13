@@ -76,7 +76,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
           </div>
         ) : (
           <div className="relative">
-            <h2 className="text-base font-semibold text-[#06080b]">Your Analytics</h2>
+            <h2 className="text-base font-semibold text-white">Your Analytics</h2>
             <p className="mt-1 text-sm text-slate-500">
               A snapshot of your workspace
             </p>
@@ -85,7 +85,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
               <div className="relative aspect-square w-full max-w-[200px] shrink-0">
                 <Doughnut data={analytics} options={options} />
                 <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-3xl font-semibold tabular-nums tracking-tight text-[#06080b]">
+                  <span className="text-3xl font-semibold tabular-nums tracking-tight text-white">
                     {sum}
                   </span>
                   <span className="text-[11px] uppercase tracking-[0.14em] text-slate-500">
@@ -107,7 +107,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
                       />
                       <span className="text-xs text-slate-400">{i.label}</span>
                     </div>
-                    <p className="mt-2 text-2xl font-semibold tabular-nums text-[#06080b]">
+                    <p className="mt-2 text-2xl font-semibold tabular-nums text-white">
                       {i.value}
                     </p>
                   </li>

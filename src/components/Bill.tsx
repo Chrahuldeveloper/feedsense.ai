@@ -14,13 +14,13 @@ const Bill = ({
             <FiCheck size={20} strokeWidth={3} />
           </span>
           <div>
-            <h1 className="text-sm font-semibold text-[#06080b]">
+            <h1 className="text-sm font-semibold text-white">
               {selectedPlan.name} Plan
             </h1>
             <p className="text-xs text-slate-500">Billed monthly</p>
           </div>
         </div>
-        <p className="text-base font-semibold tabular-nums text-[#06080b]">
+        <p className="text-base font-semibold tabular-nums text-white">
           ₹{selectedPlan.price}
         </p>
       </div>
@@ -39,7 +39,7 @@ const Bill = ({
 
       <div className="flex items-end justify-between gap-4">
         <h1 className="text-sm font-medium text-slate-300">Estimated total</h1>
-        <p className="text-[#06080b] text-4xl font-extrabold tabular-nums tracking-tight text-transparent">
+        <p className="text-white text-4xl font-extrabold tabular-nums tracking-tight text-transparent">
           ₹{selectedPlan.price}
         </p>
       </div>

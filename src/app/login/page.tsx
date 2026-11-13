@@ -61,7 +61,7 @@ export default function LoginPage() {
   ];
 
   return (
-    <div className="fsg-root grid min-h-screen bg-[#05070a] text-[#06080b] lg:grid-cols-[1.15fr_1fr]">
+    <div className="fsg-root grid min-h-screen bg-[#05070a] text-white lg:grid-cols-[1.15fr_1fr]">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         .fsg-root{font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
@@ -121,7 +121,7 @@ export default function LoginPage() {
             <div className="relative rounded-3xl bg-gradient-to-br from-white/30 via-white/10 to-white/[0.04] p-px">
               <div className="rounded-[23px] bg-[#0a0d12]/95 p-6 backdrop-blur-xl">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold text-[#06080b]">Live insights</p>
+                  <p className="text-sm font-semibold text-white">Live insights</p>
                   <span className="flex items-center gap-2 text-xs text-emerald-300">
                     <span className="relative flex h-2 w-2">
                       <span className="fsg-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400" />
