@@ -2,13 +2,13 @@
 import Link from "next/link";
 import React, { useEffect, useState, useMemo } from "react";
 import { CiMenuFries } from "react-icons/ci";
-import MobileSideBar from "./MobileSideBar";
+import MobileSideBar from "../../../components/MobileSideBar";
 import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
-import Analytics from "./Analytics";
+import Analytics from "../../../components/Analytics";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase/Firebase";
-import ModelLogout from "./ModelLogout";
+import { db } from "../../../firebase/Firebase";
+import ModelLogout from "../../../components/ModelLogout";
 import { BiMessageRounded } from "react-icons/bi";
 import { GoGraph } from "react-icons/go";
 import { CgNotes } from "react-icons/cg";
