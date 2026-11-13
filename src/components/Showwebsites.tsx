@@ -36,7 +36,6 @@ interface WebsiteData {
   feedback?: string[];
 }
 
-/* ---------- UI-only helpers ---------- */
 
 const avatarGradients = [
   "from-indigo-500 to-indigo-600",

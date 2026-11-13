@@ -9,13 +9,10 @@ import Analytics from "./Analytics";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/Firebase";
 import ModelLogout from "./ModelLogout";
-import Loader from "./Loader";
 import { BiMessageRounded } from "react-icons/bi";
 import { GoGraph } from "react-icons/go";
 import { CgNotes } from "react-icons/cg";
-import { CiGlobe } from "react-icons/ci";
 import {
-  FiArrowUpRight,
   FiPlus,
   FiClock,
   FiLifeBuoy,
