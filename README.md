@@ -21,7 +21,7 @@
 
 ---
 
-## 🚀 About
+## About
 
 FeedSenseAI helps developers, startups, and product teams understand what their users really want.
 
@@ -75,7 +75,7 @@ npm run dev
 
 Open `http://localhost:3000` in your browser.
 
-## 💡 Why FeedSenseAI?
+## Why FeedSenseAI?
 
 Great products are built by listening to users.
 
@@ -84,7 +84,3 @@ FeedSenseAI makes that process easier by turning unstructured feedback into insi
 **Listen. Analyze. Improve.**
 
 ---
-
-<p align="center">
-  Built with ❤️ by <a href="https://github.com/Chrahuldeveloper">Rahul</a>
-</p>
