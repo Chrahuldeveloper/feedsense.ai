@@ -345,7 +345,7 @@ const Page = () => {
                 </h1>
               </div>
               <p className="hidden text-sm text-zinc-500 md:block">
-                Dashboard <span className="mx-1.5 text-zinc-700">/</span>
+                Dashboard <span className="mx-1.5 text-zinc-700">/</span> Your Websites <span className="mx-1.5 text-zinc-700">/</span>
                 <span className="text-zinc-200">{getName || "Insights"}</span>
               </p>
               <div className="flex items-center gap-3">
