@@ -16,8 +16,7 @@ import ErrorLoader from "../app/lottie-asserts/ErrorLoader.json";
 import { IoIosStarOutline, IoMdStar } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaTelegramPlane } from "react-icons/fa";
-import { FiChevronDown } from "react-icons/fi";
+import { FiMail, FiCheck, FiArrowRight } from "react-icons/fi";
 import { HiOutlineSparkles } from "react-icons/hi2";
 
 interface Feedback {
@@ -43,8 +42,27 @@ type Feature = Bug;
 
 /* UI-only tokens */
 const fieldClass =
-  "w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-indigo-400/60 focus:ring-4 focus:ring-indigo-400/10";
-const labelClass = "mb-2 block text-sm font-medium text-zinc-300";
+  "w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-[15px] text-white placeholder:text-zinc-600 outline-none transition hover:border-white/20 focus:border-indigo-400/70 focus:bg-white/[0.05] focus:ring-4 focus:ring-indigo-400/15";
+
+const Field = ({
+  label,
+  hint,
+  children,
+}: {
+  label: string;
+  hint?: React.ReactNode;
+  children: React.ReactNode;
+}) => (
+  <div>
+    <div className="mb-2 flex items-baseline justify-between">
+      <label className="text-sm font-medium text-zinc-200">{label}</label>
+      {hint && <span className="text-xs text-zinc-500">{hint}</span>}
+    </div>
+    {children}
+  </div>
+);
+
+const ratingLabels = ["Poor", "Fair", "Good", "Very good", "Excellent"];
 
 const Form = () => {
   const { userID, websiteID } = useParams();
@@ -141,6 +159,7 @@ const Form = () => {
         setFeedback({ emotion: "", feedback: "", Rating: 0 });
         setSelectedEmotion(null);
         setSelectedRating(0);
+        toast.success("Thank you for your feedback!");
       } else {
         toast("The website is Not subscribed to Feedsenseai.");
       }
@@ -166,6 +185,7 @@ const Form = () => {
           email: "",
           priority: "",
         });
+        toast.success("Bug report submitted. Thank you!");
       } else {
         toast("The website is Not subscribed to Feedsenseai.");
       }
@@ -189,6 +209,7 @@ const Form = () => {
           email: "",
           priority: "",
         });
+        toast.success("Feature request submitted. Thank you!");
       } else {
         toast("The website is Not subscribed to Feedsenseai.");
       }
@@ -215,8 +236,14 @@ const Form = () => {
     }
   };
 
-  /* UI-only: one layout for both the bug and feature forms,
-     wired to the same state setters as before */
+  const sectionIndex = Math.max(
+    0,
+    sections.findIndex((s) => s.tittle === selectedSection)
+  );
+
+  const shortLabels = ["General", "Bug report", "Feature"];
+
+  /* one layout for the bug and feature forms, wired to the same setters */
   const renderIssueForm = (kind: "bug" | "feature") => {
     const data = kind === "bug" ? bug : feature;
     const update = (patch: Partial<Bug>) =>
@@ -225,68 +252,53 @@ const Form = () => {
         : setfeature({ ...feature, ...patch });
 
     return (
-      <div className="space-y-5 px-5 pt-2 sm:px-8">
-        <div>
-          <label className={labelClass}>Email*</label>
-          <input
-            type="text"
-            placeholder="you@example.com"
-            value={data.email}
-            onChange={(e) => update({ email: e.target.value })}
-            className={fieldClass}
-          />
-        </div>
-
-        <div>
-          <label className={labelClass}>Priority</label>
-          <div className="relative w-full">
-            <div
-              role="button"
-              tabIndex={0}
-              className={`flex cursor-pointer items-center justify-between rounded-xl border bg-black/40 px-4 py-3 text-sm transition ${
- open
- ? "border-indigo-400/60 ring-4 ring-indigo-400/10"
- : "border-white/10 hover:border-white/25"
- }`}
-              onClick={() => setOpen(!open)}
-            >
-              <div className="flex items-center gap-2.5">
-                <span className={`h-2.5 w-2.5 rounded-full ${selected.color}`} />
-                <span className="text-white">{selected.name}</span>
-              </div>
-              <FiChevronDown
-                size={18}
-                className={`text-zinc-500 transition-transform ${
- open ? "rotate-180" : ""
- }`}
-              />
-            </div>
-
-            {open && (
-              <div className="absolute bottom-full z-10 mb-2 w-full overflow-hidden rounded-xl border border-white/10 bg-[#18181b] shadow-2xl shadow-black/60">
-                {priorities.map((priority, idx) => (
-                  <div
-                    key={idx}
-                    onClick={() => {
-                      setSelected(priority);
-                      setOpen(false);
-                      update({ priority: priority.name });
-                    }}
-                    className={`flex cursor-pointer items-center gap-2.5 px-4 py-3 text-sm transition hover:bg-white/[0.06] ${
- selected.name === priority.name ? "bg-white/[0.06]" : ""
- }`}
-                  >
-                    <span className={`h-2.5 w-2.5 rounded-full ${priority.color}`} />
-                    <span className="text-white">{priority.name}</span>
-                  </div>
-                ))}
-              </div>
-            )}
+      <div className="space-y-6">
+        <Field label="Email*">
+          <div className="relative">
+            <FiMail
+              size={17}
+              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500"
+            />
+            <input
+              type="text"
+              placeholder="you@example.com"
+              value={data.email}
+              onChange={(e) => update({ email: e.target.value })}
+              className={`${fieldClass} pl-11`}
+            />
           </div>
-        </div>
+        </Field>
 
-        <div>
-          <label className={labelClass}>Title*</label>
+        <Field label="Priority">
+          <div role="radiogroup" className="grid grid-cols-3 gap-2">
+            {priorities.map((priority) => {
+              const active = selected.name === priority.name;
+              return (
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={active}
+                  key={priority.name}
+                  onClick={() => {
+                    setSelected(priority);
+                    setOpen(false);
+                    update({ priority: priority.name });
+                  }}
+                  className={`flex items-center justify-center gap-2 rounded-xl border px-3 py-3 text-sm font-medium transition ${
+                    active
+                      ? "border-indigo-400/60 bg-indigo-400/10 text-white"
+                      : "border-white/10 bg-white/[0.03] text-zinc-400 hover:border-white/20 hover:text-zinc-200"
+                  }`}
+                >
+                  <span className={`h-2 w-2 rounded-full ${priority.color}`} />
+                  {priority.name.replace(" Priority", "")}
+                </button>
+              );
+            })}
+          </div>
+        </Field>
+
+        <Field label="Title*">
           <input
             type="text"
             value={data.tittle}
@@ -298,176 +310,197 @@ const Form = () => {
             }
             className={fieldClass}
           />
-        </div>
+        </Field>
 
-        <div>
-          <label className={labelClass}>Description*</label>
+        <Field label="Description*" hint={`${data.desc.length} characters`}>
           <textarea
             cols={10}
-            rows={7}
+            rows={6}
             value={data.desc}
             onChange={(e) => update({ desc: e.target.value })}
             placeholder={
               kind === "bug"
-                ? "Describe the bug in detail, including steps to reproduce"
+                ? "What happened, and what did you expect? Include steps to reproduce."
                 : "Tell us what you would like and how it would help you"
             }
-            className={`${fieldClass} resize-none`}
+            className={`${fieldClass} resize-none leading-6`}
           ></textarea>
-        </div>
+        </Field>
       </div>
     );
   };
 
+  const activeRating = hoveredRating ?? selectedRating;
+
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#09090b] text-zinc-200 antialiased">
+    <div className="fsf-root relative min-h-screen w-full bg-[#09090b] text-zinc-200 antialiased">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         .fsf-root { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
-        @keyframes fsf-drift { 0%,100% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(50px,30px,0) scale(1.15); } }
-        @keyframes fsf-sheen { from { background-position: 200% 0; } to { background-position: -200% 0; } }
-        .fsf-drift { animation: fsf-drift 18s ease-in-out infinite; }
-        .fsf-btn { background-size: 200% 100%; }
-        .fsf-btn:hover { animation: fsf-sheen 2.4s linear infinite; }
-        @media (prefers-reduced-motion: reduce) { .fsf-drift, .fsf-btn:hover { animation: none !important; } }
+        @keyframes fsf-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+        .fsf-card { animation: fsf-in .5s cubic-bezier(.2,.7,.2,1) both; }
+        @media (prefers-reduced-motion: reduce) { .fsf-card { animation: none; } }
       `}</style>
 
-      <div className="fsf-root relative">
-        {/* ambient background */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[26rem] bg-[radial-gradient(60%_100%_at_50%_0%,rgba(129,140,248,0.09),transparent)]" />
-      </div>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[26rem] bg-[radial-gradient(60%_100%_at_50%_0%,rgba(129,140,248,0.09),transparent)]"
+      />
 
-        <div className="relative z-10 flex justify-center px-4 py-8 sm:py-14">
-          <div className="w-full max-w-xl rounded-3xl p-px bg-white/10">
-            {error && (
-              <div className="fixed inset-0 z-50 flex h-full items-center justify-center bg-black/70 backdrop-blur-md">
-                <div className="-mt-10 mx-auto flex max-w-xs flex-col items-center space-y-3 text-center">
-                  <LottiePlayer
-                    loop
-                    animationData={ErrorLoader}
-                    play
-                    className="w-36 lg:w-52"
-                  />
-                  <p className="text-sm text-white">
-                    Website Stopped Collecting Feedbacks
-                  </p>
-                </div>
+      {error && (
+        <div className="fixed inset-0 z-50 flex h-full items-center justify-center bg-[#09090b]/85 backdrop-blur-md">
+          <div className="-mt-10 mx-auto flex max-w-xs flex-col items-center space-y-3 text-center">
+            <LottiePlayer
+              loop
+              animationData={ErrorLoader}
+              play
+              className="w-36 lg:w-52"
+            />
+            <p className="text-sm text-white">
+              Website Stopped Collecting Feedbacks
+            </p>
+          </div>
+        </div>
+      )}
+
+      {loading && (
+        <div className="fixed inset-0 z-50 flex h-full items-center justify-center bg-[#09090b]/85 backdrop-blur-md">
+          <div className="-mt-10 mx-auto max-w-xs">
+            <LottiePlayer
+              loop
+              animationData={FeedbackLoader}
+              play
+              className="w-36 lg:w-52"
+            />
+          </div>
+        </div>
+      )}
+
+      <div className="relative z-10 flex min-h-screen items-start justify-center px-4 py-8 sm:items-center sm:py-14">
+        <div className="fsf-card w-full max-w-[560px]">
+          {/* brand */}
+          <div className="mb-6 flex items-center justify-center gap-2.5">
+            <span className="grid h-8 w-8 place-items-center rounded-lg bg-indigo-500 text-white">
+              <HiOutlineSparkles size={18} />
+            </span>
+            <span className="text-[15px] font-semibold tracking-tight text-white">
+              FeedSense.ai
+            </span>
+          </div>
+
+          <div className="rounded-2xl border border-white/[0.08] bg-[#111113] shadow-2xl shadow-black/50">
+            {/* header */}
+            <div className="px-6 pb-2 pt-8 text-center sm:px-9 sm:pt-10">
+              <h1 className="text-[28px] font-semibold leading-tight tracking-tight text-white sm:text-[32px]">
+                We Value Your Feedback
+              </h1>
+              <p className="mx-auto mt-3 max-w-sm text-[15px] leading-6 text-zinc-400">
+                Help us improve our service by sharing your thoughts and
+                experiences.
+              </p>
+            </div>
+
+            {/* segmented control with sliding indicator */}
+            <div className="px-6 pb-7 pt-7 sm:px-9">
+              <div
+                role="tablist"
+                className="relative grid grid-cols-3 rounded-xl border border-white/[0.06] bg-white/[0.03] p-1"
+              >
+                <span
+                  aria-hidden
+                  className="absolute inset-y-1 left-1 w-[calc((100%-0.5rem)/3)] rounded-lg bg-white/[0.09] ring-1 ring-inset ring-white/10 transition-transform duration-300 ease-out"
+                  style={{ transform: `translateX(${sectionIndex * 100}%)` }}
+                />
+                {sections.map((i, id) => {
+                  const active = selectedSection === i.tittle;
+                  return (
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected={active}
+                      key={id}
+                      onClick={() => {
+                        setselectedSection(i.tittle);
+                      }}
+                      className={`relative z-10 flex items-center justify-center gap-2 rounded-lg px-2 py-2.5 text-[13px] font-medium transition-colors ${
+                        active ? "text-white" : "text-zinc-500 hover:text-zinc-300"
+                      }`}
+                    >
+                      <span className="hidden sm:inline">{i.image}</span>
+                      {shortLabels[id]}
+                    </button>
+                  );
+                })}
               </div>
-            )}
+            </div>
 
-            {loading ? (
-              <div className="fixed inset-0 z-50 flex h-full items-center justify-center bg-black/70 backdrop-blur-md">
-                <div className="-mt-10 mx-auto max-w-xs">
-                  <LottiePlayer
-                    loop
-                    animationData={FeedbackLoader}
-                    play
-                    className="w-36 lg:w-52"
-                  />
-                </div>
-              </div>
-            ) : (
-              <div className="rounded-[23px] bg-[#111113]/95 pb-2 backdrop-blur-xl">
-                {/* header */}
-                <div className="px-5 pt-8 text-center sm:px-8">
-                  <span className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold text-indigo-200 ring-1 ring-inset ring-indigo-400/30 bg-indigo-400/15">
-                    <HiOutlineSparkles size={14} />
-                    Feedback
-                  </span>
-                  <h1 className="mt-5 text-3xl font-bold tracking-tight sm:text-4xl text-white">
-                    We Value Your Feedback
-                  </h1>
-                  <p className="mx-auto mt-3 max-w-sm text-sm text-zinc-400">
-                    Help us improve our service by sharing your thoughts and
-                    experiences.
-                  </p>
-                </div>
+            <div className="border-t border-white/[0.06]" />
 
-                {/* section switcher */}
-                <div className="px-5 pb-5 pt-7 sm:px-8">
-                  <div className="grid grid-cols-3 gap-1.5 rounded-2xl border border-white/[0.07] bg-black/30 p-1.5">
-                    {sections.map((i, id) => {
-                      const active = selectedSection === i.tittle;
-                      return (
+            {/* form body */}
+            <div className="px-6 py-7 sm:px-9 sm:py-8">
+              {selectedSection === "General Feedback" ? (
+                <div className="space-y-8">
+                  {/* rating */}
+                  <div>
+                    <div className="flex items-baseline justify-between">
+                      <h2 className="text-sm font-medium text-zinc-200">Rate Us</h2>
+                      <p className="text-xs text-zinc-500">
+                        {activeRating > 0
+                          ? `${ratingLabels[activeRating - 1]} · ${selectedRating} out of 5 stars`
+                          : `${selectedRating} out of 5 stars`}
+                      </p>
+                    </div>
+                    <div className="mt-3 flex items-center gap-1.5">
+                      {[1, 2, 3, 4, 5].map((i) => (
                         <button
                           type="button"
-                          key={id}
-                          onClick={() => {
-                            setselectedSection(i.tittle);
-                          }}
-                          className={`flex flex-col items-center justify-center gap-1.5 rounded-xl px-2 py-3 text-center transition sm:flex-row sm:gap-2 ${
- active
- ? " text-white ring-1 ring-inset ring-indigo-400/40 bg-indigo-400/20"
- : "text-zinc-400 hover:bg-white/[0.05] hover:text-zinc-200"
- }`}
+                          aria-label={`${i} star${i > 1 ? "s" : ""}`}
+                          key={i}
+                          onMouseEnter={() => setHoveredRating(i)}
+                          onMouseLeave={() => setHoveredRating(null)}
+                          onClick={() => setSelectedRating(i)}
+                          className="rounded-md p-1 transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-indigo-400/25"
                         >
-                          {i.image}
-                          <span className="text-[11px] font-semibold leading-tight sm:text-xs">
-                            {i.tittle}
-                          </span>
+                          {i <= activeRating ? (
+                            <IoMdStar size={34} className="text-amber-300" />
+                          ) : (
+                            <IoIosStarOutline size={34} className="text-zinc-700" />
+                          )}
                         </button>
-                      );
-                    })}
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                {selectedSection === "General Feedback" ? (
-                  <>
-                    <div className="px-5 sm:px-8">
-                      <div className="flex items-center justify-between text-sm">
-                        <h2 className="font-semibold text-zinc-200">Rate Us</h2>
-                        <p className="text-zinc-500">
-                          {selectedRating} out of 5 stars
-                        </p>
-                      </div>
-                      <div className="mt-3 flex items-center gap-2">
-                        {[1, 2, 3, 4, 5].map((i) => (
+                  {/* feedback */}
+                  <Field
+                    label="Your feedback"
+                    hint={`${feedback.feedback.length} characters`}
+                  >
+                    <textarea
+                      value={feedback.feedback}
+                      placeholder="Tell us what you think"
+                      onChange={(e) =>
+                        setFeedback({ ...feedback, feedback: e.target.value })
+                      }
+                      cols={20}
+                      rows={5}
+                      className={`${fieldClass} resize-none leading-6`}
+                    />
+                  </Field>
+
+                  {/* emotions */}
+                  <div>
+                    <h2 className="text-sm font-medium text-zinc-200">
+                      How was your experience*
+                    </h2>
+                    <div role="radiogroup" className="mt-3 grid grid-cols-3 gap-3">
+                      {emotions.map((emotion, idx) => {
+                        const active = selectedEmotion === idx;
+                        return (
                           <button
                             type="button"
-                            aria-label={`${i} star${i > 1 ? "s" : ""}`}
-                            key={i}
-                            onMouseEnter={() => setHoveredRating(i)}
-                            onMouseLeave={() => setHoveredRating(null)}
-                            onClick={() => setSelectedRating(i)}
-                            className="cursor-pointer transition-transform hover:scale-110"
-                          >
-                            {i <= (hoveredRating ?? selectedRating) ? (
-                              <IoMdStar
-                                size={36}
-                                className="text-amber-300 drop-"
-                              />
-                            ) : (
-                              <IoIosStarOutline size={36} className="text-zinc-600" />
-                            )}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="mt-7 px-5 sm:px-8">
-                      <label className={labelClass}>Your feedback</label>
-                      <textarea
-                        value={feedback.feedback}
-                        placeholder="Tell us what you think"
-                        onChange={(e) =>
-                          setFeedback({ ...feedback, feedback: e.target.value })
-                        }
-                        cols={20}
-                        rows={5}
-                        className={`${fieldClass} resize-none`}
-                      />
-                    </div>
-
-                    {/* Emotions */}
-                    <div className="mt-7 px-5 sm:px-8">
-                      <h2 className="text-sm font-semibold text-zinc-200">
-                        How was your experience*
-                      </h2>
-                      <div className="mt-4 grid grid-cols-3 gap-3">
-                        {emotions.map((emotion, idx) => (
-                          <button
-                            type="button"
+                            role="radio"
+                            aria-checked={active}
                             key={idx}
                             onClick={() => {
                               setSelectedEmotion(idx);
@@ -476,44 +509,52 @@ const Form = () => {
                                 emotion: emotion.title,
                               });
                             }}
-                            className={`flex flex-col items-center gap-2 rounded-2xl border px-3 py-4 transition-all duration-200 ${
-                              selectedEmotion === idx
-                                ? `${emotion.active} scale-[1.03] shadow-lg`
-                                : "border-white/10 bg-white/[0.03] text-zinc-400 hover:border-white/25 hover:bg-white/[0.06]"
+                            className={`relative flex flex-col items-center gap-2.5 rounded-xl border px-3 py-5 transition-all duration-200 ${
+                              active
+                                ? emotion.active
+                                : "border-white/10 bg-white/[0.03] text-zinc-500 hover:border-white/20 hover:text-zinc-300"
                             }`}
                           >
+                            {active && (
+                              <span className="absolute right-2.5 top-2.5 grid h-4 w-4 place-items-center rounded-full bg-current">
+                                <FiCheck size={10} strokeWidth={4} className="text-[#111113]" />
+                              </span>
+                            )}
                             {emotion.emoji}
-                            <span className="text-xs font-semibold">
+                            <span className="text-[13px] font-medium">
                               {emotion.title}
                             </span>
                           </button>
-                        ))}
-                      </div>
+                        );
+                      })}
                     </div>
-                  </>
-                ) : selectedSection === "Bug Report" ? (
-                  renderIssueForm("bug")
-                ) : (
-                  renderIssueForm("feature")
-                )}
-
-                <div className="px-5 pb-5 pt-8 sm:px-8">
-                  <button
-                    onClick={saveSectionData}
-                    className=" flex w-full items-center justify-center gap-3 rounded-xl px-4 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-indigo-400/30 bg-indigo-500 hover:bg-indigo-400"
-                  >
-                    <span>Share Insights</span>
-                    <FaTelegramPlane size={20} />
-                  </button>
-                  <p className="mt-4 text-center text-xs text-zinc-600">
-                    Powered by FeedSenseAI
-                  </p>
+                  </div>
                 </div>
-              </div>
-            )}
+              ) : selectedSection === "Bug Report" ? (
+                renderIssueForm("bug")
+              ) : (
+                renderIssueForm("feature")
+              )}
+
+              <button
+                onClick={saveSectionData}
+                className="group mt-9 flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-500 px-5 py-3.5 text-[15px] font-semibold text-white transition hover:bg-indigo-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-indigo-400/30 active:scale-[0.99]"
+              >
+                Share Insights
+                <FiArrowRight
+                  size={18}
+                  className="transition-transform group-hover:translate-x-0.5"
+                />
+              </button>
+            </div>
           </div>
-          <ToastContainer theme="dark" toastClassName={"custom-toast"} />
+
+          <p className="mt-6 flex items-center justify-center gap-2 text-xs text-zinc-600">
+            <HiOutlineSparkles size={14} />
+            Powered by FeedSenseAI
+          </p>
         </div>
+        <ToastContainer theme="dark" toastClassName={"custom-toast"} />
       </div>
     </div>
   );
