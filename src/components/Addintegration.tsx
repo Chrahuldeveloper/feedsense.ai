@@ -276,7 +276,7 @@ const AddIntegration: React.FC = () => {
         <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#06080b]/70 backdrop-blur-xl">
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
             <div className="flex items-center gap-2.5 md:hidden">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b]">
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-white">
                 <HiOutlineSparkles size={18} />
               </span>
               <h1 className="text-base font-semibold tracking-tight text-white">
@@ -292,7 +292,7 @@ const AddIntegration: React.FC = () => {
                 <span className="max-w-[10rem] truncate text-sm text-slate-300">
                   {user?.displayName || "User"}
                 </span>
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-[#06080b] ring-2 ring-white/10">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-white ring-2 ring-white/10">
                   {initial}
                 </span>
               </div>
@@ -360,9 +360,9 @@ const AddIntegration: React.FC = () => {
                     <span
                       className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-sm font-bold ${
                         done
-                          ? "bg-emerald-400 text-[#06080b]"
+                          ? "bg-emerald-400 text-white"
                           : active
-                          ? "bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b]"
+                          ? "bg-gradient-to-br from-cyan-400 to-violet-500 text-white"
                           : "bg-white/[0.06] text-slate-500"
                       }`}
                     >
@@ -481,7 +481,7 @@ const AddIntegration: React.FC = () => {
 
                       <button
                         onClick={saveData}
-                        className="fs-btn w-full rounded-xl px-6 py-4 text-sm font-bold text-[#06080b] shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
+                        className="fs-btn w-full rounded-xl px-6 py-4 text-sm font-bold text-white shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
                       >
                         Save website
                       </button>

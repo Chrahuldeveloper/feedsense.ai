@@ -53,7 +53,7 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({
 
         <div className="relative flex items-center justify-between px-1">
           <div className="flex items-center gap-2.5">
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b] shadow-[0_0_26px_-4px_rgba(34,211,238,0.8)]">
+            <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 text-white shadow-[0_0_26px_-4px_rgba(34,211,238,0.8)]">
               <HiOutlineSparkles size={20} />
             </span>
             <span className="text-lg font-extrabold tracking-tight text-white">

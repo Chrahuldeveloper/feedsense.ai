@@ -296,7 +296,7 @@ const Table = () => {
         <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#06080b]/70 backdrop-blur-xl">
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
             <div className="flex items-center gap-2.5 md:hidden">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b]">
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-white">
                 <HiOutlineSparkles size={18} />
               </span>
               <h1 className="text-base font-semibold tracking-tight text-white">
@@ -319,7 +319,7 @@ const Table = () => {
                 <span className="max-w-[10rem] truncate text-sm text-slate-300">
                   {user?.displayName || "User"}
                 </span>
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-[#06080b] ring-2 ring-white/10">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-white ring-2 ring-white/10">
                   {initial}
                 </span>
               </div>
@@ -479,7 +479,7 @@ const Table = () => {
                   </p>
                   <Link
                     href="/dashboard/integrate"
-                    className="relative mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-5 py-2.5 text-sm font-semibold text-[#06080b] shadow-[0_10px_30px_-10px_rgba(34,211,238,0.8)] transition hover:brightness-110"
+                    className="relative mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_30px_-10px_rgba(34,211,238,0.8)] transition hover:brightness-110"
                   >
                     <FiPlus size={16} />
                     Connect a website
