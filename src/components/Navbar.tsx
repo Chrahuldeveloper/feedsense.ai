@@ -58,18 +58,18 @@ const Navbar = () => {
     <>
       <nav
         className={`fixed left-0 top-0 z-50 w-full border-b transition-all duration-300 ${
-          isScrolled
-            ? "border-white/[0.08] bg-[#05070a]/70 backdrop-blur-xl"
-            : "border-transparent bg-transparent backdrop-blur-sm"
-        }`}
+ isScrolled
+ ? "border-white/[0.08] bg-[#09090b]/70 backdrop-blur-xl"
+ : "border-transparent bg-transparent backdrop-blur-sm"
+ }`}
       >
         <div className="relative mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
           {/* logo */}
           <Link href="/" className="flex items-center gap-2.5">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 text-[#05070a] shadow-[0_0_28px_-4px_rgba(34,211,238,0.7)]">
+            <span className="grid h-9 w-9 place-items-center rounded-xl text-white bg-indigo-500">
               <HiOutlineSparkles size={20} />
             </span>
-            <h1 className="bg-gradient-to-r from-cyan-300 to-violet-400 bg-clip-text text-xl font-bold tracking-tight text-transparent">
+            <h1 className=" text-xl font-bold tracking-tight text-indigo-300">
               FeedSense.ai
             </h1>
           </Link>
@@ -82,10 +82,10 @@ const Navbar = () => {
                   href={l.href}
                   aria-current={isActive(l.href) ? "page" : undefined}
                   className={`block rounded-full px-5 py-2 font-semibold transition-colors ${
-                    isActive(l.href)
-                      ? "bg-white/10 text-white shadow-inner"
-                      : "text-slate-400 hover:text-white"
-                  }`}
+ isActive(l.href)
+ ? "bg-white/10 text-white shadow-inner"
+ : "text-zinc-400 hover:text-white"
+ }`}
                 >
                   {l.label}
                 </Link>
@@ -97,14 +97,14 @@ const Navbar = () => {
           <div className="hidden items-center md:flex">
             {userSession === null ? (
               <Link href="/login">
-                <span className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 px-6 py-2.5 text-sm font-bold text-[#05070a] shadow-[0_10px_30px_-10px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 hover:brightness-110">
+                <span className="group inline-flex cursor-pointer items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:brightness-110 bg-indigo-500 hover:bg-indigo-400">
                   Login
                   <FiArrowRight className="transition-transform group-hover:translate-x-0.5" />
                 </span>
               </Link>
             ) : (
               <Link href="/dashboard">
-                <button className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 px-6 py-2.5 text-sm font-bold text-[#05070a] shadow-[0_10px_30px_-10px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 hover:brightness-110">
+                <button className="group inline-flex cursor-pointer items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:brightness-110 bg-indigo-500 hover:bg-indigo-400">
                   Your Account
                   <FiArrowRight className="transition-transform group-hover:translate-x-0.5" />
                 </button>
@@ -132,15 +132,15 @@ const Navbar = () => {
         >
           <nav
             onClick={(e) => e.stopPropagation()}
-            className="absolute inset-x-3 top-3 rounded-3xl bg-gradient-to-b from-white/25 via-white/[0.06] to-cyan-400/20 p-px shadow-[0_30px_80px_-20px_rgba(34,211,238,0.35)]"
+            className="absolute inset-x-3 top-3 rounded-3xl p-px bg-white/10"
           >
-            <div className="rounded-[23px] bg-[#0a0d12]/95 p-4 backdrop-blur-xl">
+            <div className="rounded-[23px] bg-[#111113]/95 p-4 backdrop-blur-xl">
               <div className="flex items-center justify-between px-2 pb-3 pt-1">
                 <div className="flex items-center gap-2.5">
-                  <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 text-[#05070a]">
+                  <span className="grid h-9 w-9 place-items-center rounded-xl text-white bg-indigo-500">
                     <HiOutlineSparkles size={20} />
                   </span>
-                  <span className="bg-gradient-to-r from-cyan-300 to-violet-400 bg-clip-text text-lg font-bold text-transparent">
+                  <span className=" text-lg font-bold text-indigo-300">
                     FeedSense.ai
                   </span>
                 </div>
@@ -149,7 +149,7 @@ const Navbar = () => {
                   onClick={() => {
                     settoogle(false);
                   }}
-                  className="grid h-10 w-10 place-items-center rounded-xl text-slate-300 transition hover:bg-white/10"
+                  className="grid h-10 w-10 place-items-center rounded-xl text-zinc-300 transition hover:bg-white/10"
                 >
                   <RxCross2 size={24} />
                 </button>
@@ -159,10 +159,10 @@ const Navbar = () => {
                 <Link href="/" onClick={() => settoogle(false)}>
                   <div
                     className={`flex items-center gap-4 rounded-xl px-4 py-3.5 text-sm font-semibold transition ${
-                      isActive("/")
-                        ? "bg-cyan-400/10 text-cyan-300"
-                        : "text-slate-200 hover:bg-white/[0.06]"
-                    }`}
+ isActive("/")
+ ? "bg-indigo-400/10 text-indigo-300"
+ : "text-zinc-200 hover:bg-white/[0.06]"
+ }`}
                   >
                     <FiHome size={20} />
                     Home
@@ -172,10 +172,10 @@ const Navbar = () => {
                 <Link href="/about" onClick={() => settoogle(false)}>
                   <div
                     className={`flex items-center gap-4 rounded-xl px-4 py-3.5 text-sm font-semibold transition ${
-                      isActive("/about")
-                        ? "bg-cyan-400/10 text-cyan-300"
-                        : "text-slate-200 hover:bg-white/[0.06]"
-                    }`}
+ isActive("/about")
+ ? "bg-indigo-400/10 text-indigo-300"
+ : "text-zinc-200 hover:bg-white/[0.06]"
+ }`}
                   >
                     <FiInfo size={20} />
                     About
@@ -186,10 +186,10 @@ const Navbar = () => {
                   <Link href="/plans" onClick={() => settoogle(false)}>
                     <div
                       className={`flex items-center gap-4 rounded-xl px-4 py-3.5 text-sm font-semibold transition ${
-                        isActive("/plans")
-                          ? "bg-cyan-400/10 text-cyan-300"
-                          : "text-slate-200 hover:bg-white/[0.06]"
-                      }`}
+ isActive("/plans")
+ ? "bg-indigo-400/10 text-indigo-300"
+ : "text-zinc-200 hover:bg-white/[0.06]"
+ }`}
                     >
                       <FiCreditCard size={20} />
                       Plans
@@ -201,14 +201,14 @@ const Navbar = () => {
               <div className="mt-3 border-t border-white/[0.07] pt-3">
                 {userSession === null ? (
                   <Link href="/login" onClick={() => settoogle(false)}>
-                    <button className="flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 py-3.5 text-sm font-bold text-[#05070a] shadow-[0_12px_30px_-10px_rgba(34,211,238,0.8)]">
+                    <button className="flex w-full items-center justify-center gap-3 rounded-xl py-3.5 text-sm font-bold text-white bg-indigo-500">
                       <FiLogIn size={20} />
                       Login
                     </button>
                   </Link>
                 ) : (
                   <Link href="/dashboard" onClick={() => settoogle(false)}>
-                    <button className="flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 py-3.5 text-sm font-bold text-[#05070a] shadow-[0_12px_30px_-10px_rgba(34,211,238,0.8)]">
+                    <button className="flex w-full items-center justify-center gap-3 rounded-xl py-3.5 text-sm font-bold text-white bg-indigo-500">
                       <FiUser size={20} />
                       Your Account
                     </button>

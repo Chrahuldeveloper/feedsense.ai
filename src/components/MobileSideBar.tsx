@@ -48,22 +48,22 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({
         onClick={(e) => e.stopPropagation()}
         className="fixed bottom-0 left-0 top-0 flex w-[82vw] max-w-xs flex-col overflow-hidden border-r border-white/[0.1] bg-[#080a0f] px-4 py-5"
       >
-        <div className="pointer-events-none absolute -left-16 -top-16 h-56 w-56 rounded-full bg-cyan-500/20 blur-[70px]" />
-        <div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-violet-600/20 blur-[70px]" />
+        
+        
 
         <div className="relative flex items-center justify-between px-1">
           <div className="flex items-center gap-2.5">
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 text-white shadow-[0_0_26px_-4px_rgba(34,211,238,0.8)]">
+            <span className="grid h-10 w-10 place-items-center rounded-xl text-white bg-indigo-500">
               <HiOutlineSparkles size={20} />
             </span>
-            <span className="text-lg font-extrabold tracking-tight text-white">
-              FeedSense<span className="text-cyan-400">AI</span>
+            <span className="text-lg font-semibold tracking-tight text-white">
+              FeedSense<span className="text-indigo-400">AI</span>
             </span>
           </div>
           <button
             aria-label="Close menu"
             onClick={() => setToggle(false)}
-            className="grid h-9 w-9 place-items-center rounded-lg text-slate-300 transition hover:bg-white/10"
+            className="grid h-9 w-9 place-items-center rounded-lg text-zinc-300 transition hover:bg-white/10"
           >
             <RxCross2 size={22} />
           </button>
@@ -76,17 +76,17 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({
               href={href}
               aria-current={active ? "page" : undefined}
               className={`flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold transition-colors ${
-                active
-                  ? "bg-gradient-to-r from-cyan-400/20 to-transparent text-white ring-1 ring-inset ring-cyan-400/20"
-                  : "text-slate-300 hover:bg-white/[0.06]"
-              }`}
+ active
+ ? " text-white ring-1 ring-inset ring-indigo-400/20 bg-indigo-400/20"
+ : "text-zinc-300 hover:bg-white/[0.06]"
+ }`}
             >
               <span
                 className={`grid h-8 w-8 place-items-center rounded-lg ${
-                  active
-                    ? "bg-cyan-400/20 text-cyan-300"
-                    : "bg-white/[0.05] text-slate-400"
-                }`}
+ active
+ ? "bg-indigo-400/20 text-indigo-300"
+ : "bg-white/[0.05] text-zinc-400"
+ }`}
               >
                 <Icon size={18} />
               </span>
@@ -98,8 +98,8 @@ const MobileSideBar: React.FC<MobileSideBarProps> = ({
         <button
           onClick={() => setToggleLogout(true)}
           className={`relative mt-auto flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-red-400 transition-colors hover:bg-red-500/10 ${
-            Page === "Logout" ? "bg-red-500/10" : ""
-          }`}
+ Page === "Logout" ? "bg-red-500/10" : ""
+ }`}
         >
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-red-500/10">
             <IoLogOut size={18} />

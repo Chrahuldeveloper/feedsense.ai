@@ -63,15 +63,15 @@ const LegalShell = ({
         aria-modal="true"
         aria-label={title}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-5xl rounded-3xl bg-gradient-to-b from-white/25 via-white/[0.06] to-cyan-400/20 p-px shadow-[0_30px_90px_-30px_rgba(34,211,238,0.4)]"
+        className="w-full max-w-5xl rounded-3xl p-px bg-white/10"
       >
-        <div className="relative flex h-[88vh] flex-col overflow-hidden rounded-[23px] bg-[#0a0d12]">
-          <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-violet-600/15 blur-3xl" />
+        <div className="relative flex h-[88vh] flex-col overflow-hidden rounded-[23px] bg-[#111113]">
+          
 
           {/* header */}
           <div className="relative flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4 sm:px-8">
             <div className="flex items-center gap-3">
-              <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-cyan-400/20 to-violet-500/20 text-cyan-300 ring-1 ring-inset ring-cyan-400/30">
+              <span className="grid h-10 w-10 place-items-center rounded-xl text-indigo-300 ring-1 ring-inset ring-indigo-400/30 bg-indigo-400/20">
                 {icon}
               </span>
               <h1 className="text-lg font-bold tracking-tight text-white sm:text-xl">
@@ -81,13 +81,13 @@ const LegalShell = ({
             <button
               aria-label="Close"
               onClick={onClose}
-              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-slate-300 transition hover:bg-white/10 hover:text-white"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-zinc-300 transition hover:bg-white/10 hover:text-white"
             >
               <RxCross2 size={22} />
             </button>
             <div className="absolute inset-x-0 bottom-0 h-[2px] bg-white/[0.05]">
               <div
-                className="h-full bg-gradient-to-r from-cyan-400 to-violet-500 transition-[width] duration-150"
+                className="h-full transition-[width] duration-150 bg-indigo-500"
                 style={{ width: `${progress * 100}%` }}
               />
             </div>
@@ -100,10 +100,10 @@ const LegalShell = ({
                 key={t.id}
                 onClick={() => go(t.id)}
                 className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
-                  active === t.id
-                    ? "bg-cyan-400/15 text-cyan-200 ring-1 ring-inset ring-cyan-400/30"
-                    : "bg-white/[0.05] text-slate-400"
-                }`}
+ active === t.id
+ ? "bg-indigo-400/15 text-indigo-200 ring-1 ring-inset ring-indigo-400/30"
+ : "bg-white/[0.05] text-zinc-400"
+ }`}
               >
                 {t.label}
               </button>
@@ -113,7 +113,7 @@ const LegalShell = ({
           <div className="relative flex min-h-0 flex-1">
             {/* desktop TOC */}
             <nav className="hidden w-72 shrink-0 overflow-y-auto border-r border-white/[0.06] p-5 lg:block [scrollbar-width:thin]">
-              <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-600">
+              <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-600">
                 On this page
               </p>
               <ul className="space-y-1">
@@ -122,10 +122,10 @@ const LegalShell = ({
                     <button
                       onClick={() => go(t.id)}
                       className={`w-full rounded-lg px-3 py-2.5 text-left text-sm font-medium transition ${
-                        active === t.id
-                          ? "bg-cyan-400/10 text-cyan-200"
-                          : "text-slate-400 hover:bg-white/[0.05] hover:text-white"
-                      }`}
+ active === t.id
+ ? "bg-indigo-400/10 text-indigo-200"
+ : "text-zinc-400 hover:bg-white/[0.05] hover:text-white"
+ }`}
                     >
                       {t.label}
                     </button>
@@ -141,7 +141,7 @@ const LegalShell = ({
                 const max = el.scrollHeight - el.clientHeight;
                 setProgress(max > 0 ? el.scrollTop / max : 0);
               }}
-              className="relative flex-1 overflow-y-auto px-5 pb-16 pt-8 text-sm sm:px-10 sm:text-base [scrollbar-color:#2a3038_transparent] [scrollbar-width:thin]"
+              className="relative flex-1 overflow-y-auto px-5 pb-16 pt-8 text-sm sm:px-10 sm:text-base [scrollbar-color:#27272a_transparent] [scrollbar-width:thin]"
             >
               {children}
             </div>
@@ -200,7 +200,7 @@ const TermsConditions: React.FC<Props> = ({ setistoggle }) => {
     <FiTruck size={22} key="c" />,
   ];
   const tones = [
-    "bg-cyan-400/10 text-cyan-300 ring-cyan-400/25",
+    "bg-indigo-400/10 text-indigo-300 ring-indigo-400/25",
     "bg-violet-400/10 text-violet-300 ring-violet-400/25",
     "bg-emerald-400/10 text-emerald-300 ring-emerald-400/25",
   ];
@@ -224,7 +224,7 @@ const TermsConditions: React.FC<Props> = ({ setistoggle }) => {
               >
                 {icons[idx % 3]}
               </span>
-              <h1 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+              <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
                 {section.section}
               </h1>
             </div>
@@ -232,9 +232,9 @@ const TermsConditions: React.FC<Props> = ({ setistoggle }) => {
               {section.content.map((paragraph, index) => (
                 <li
                   key={index}
-                  className="flex gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.025] p-4 text-sm leading-7 text-slate-300 transition-colors hover:border-white/15 sm:p-5"
+                  className="flex gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.025] p-4 text-sm leading-7 text-zinc-300 transition-colors hover:border-white/15 sm:p-5"
                 >
-                  <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-white/[0.06] text-xs font-bold tabular-nums text-cyan-300">
+                  <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-white/[0.06] text-xs font-bold tabular-nums text-indigo-300">
                     {index + 1}
                   </span>
                   <span>{paragraph}</span>

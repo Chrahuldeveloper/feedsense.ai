@@ -177,10 +177,10 @@ const Page = () => {
   };
 
   return (
-    <div className="fss-root relative min-h-screen w-full overflow-x-clip bg-[#05070a] text-white">
+    <div className="fss-root relative min-h-screen w-full overflow-x-clip bg-[#09090b] text-white">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        .fss-root{font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        .fss-root{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
         @keyframes fss-a{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(70px,40px,0) scale(1.15)}}
         @keyframes fss-b{0%,100%{transform:translate3d(0,0,0) scale(1.1)}50%{transform:translate3d(-60px,-30px,0) scale(.95)}}
         @keyframes fss-sheen{from{background-position:200% 0}to{background-position:-200% 0}}
@@ -194,27 +194,18 @@ const Page = () => {
 
       {/* ambient background */}
       <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="fss-a absolute -left-40 -top-40 h-[36rem] w-[36rem] rounded-full bg-cyan-500/[0.16] blur-[140px]" />
-        <div className="fss-b absolute -right-40 top-40 h-[40rem] w-[40rem] rounded-full bg-violet-600/[0.18] blur-[150px]" />
-        <div
-          className="absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_65%)]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-          }}
-        />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[26rem] bg-[radial-gradient(60%_100%_at_50%_0%,rgba(129,140,248,0.09),transparent)]" />
       </div>
 
       <div className="relative z-10">
         {/* top bar */}
-        <header className="border-b border-white/[0.06] bg-[#05070a]/60 backdrop-blur-xl">
+        <header className="border-b border-white/[0.06] bg-[#09090b]/60 backdrop-blur-xl">
           <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between px-5 sm:px-8">
             <Link href="/" className="flex items-center gap-2.5">
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 text-[#05070a]">
+              <span className="grid h-9 w-9 place-items-center rounded-xl text-white bg-indigo-500">
                 <HiOutlineSparkles size={20} />
               </span>
-              <span className="bg-gradient-to-r from-cyan-300 to-violet-400 bg-clip-text text-lg font-bold text-transparent">
+              <span className=" text-lg font-bold text-indigo-300">
                 FeedSense.ai
               </span>
             </Link>
@@ -235,14 +226,14 @@ const Page = () => {
         </header>
 
         <main className="mx-auto max-w-6xl px-5 pb-20 pt-10 sm:px-8 lg:pt-14">
-          <h1 className="bg-gradient-to-r from-white via-cyan-200 to-violet-300 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl">
+          <h1 className=" text-4xl font-semibold tracking-tight sm:text-5xl text-white">
             Buy Plan
           </h1>
-          <p className="mt-3 text-slate-400">
+          <p className="mt-3 text-zinc-400">
             For more details on our plans, visit our{" "}
             <Link
               href={"/plans"}
-              className="font-medium text-cyan-300 underline decoration-cyan-400/40 underline-offset-4 hover:text-cyan-200"
+              className="font-medium text-indigo-300 underline decoration-indigo-400/40 underline-offset-4 hover:text-indigo-200"
             >
               Pricing page
             </Link>
@@ -262,23 +253,20 @@ const Page = () => {
                       setCurrentPlan({ name: itm.name, price: itm.price });
                     }}
                     className={`block w-full rounded-3xl p-px text-left transition-all ${
-                      selected
-                        ? "bg-gradient-to-br from-cyan-300 via-white/15 to-violet-500 shadow-[0_20px_70px_-25px_rgba(34,211,238,0.6)]"
-                        : "bg-gradient-to-b from-white/[0.18] via-white/[0.05] to-white/[0.03] hover:from-white/30"
-                    }`}
+ selected
+ ? " bg-white/10"
+ : " hover: bg-white/10"
+ }`}
                   >
-                    <div className="relative overflow-hidden rounded-[23px] bg-[#0a0d12] p-6 sm:p-8">
-                      {selected && (
-                        <div className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-cyan-500/20 blur-3xl" />
-                      )}
+                    <div className="relative overflow-hidden rounded-[23px] bg-[#111113] p-6 sm:p-8">
                       <div className="relative flex items-start justify-between gap-4">
                         <div className="flex items-start gap-4">
                           <span
                             className={`mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 transition ${
-                              selected
-                                ? "border-cyan-400 bg-cyan-400 text-[#05070a]"
-                                : "border-white/20"
-                            }`}
+ selected
+ ? "border-indigo-400 bg-indigo-400 text-white"
+ : "border-white/20"
+ }`}
                           >
                             {selected && <FiCheck size={14} strokeWidth={3} />}
                           </span>
@@ -286,19 +274,19 @@ const Page = () => {
                             <h2 className="flex flex-wrap items-center gap-3 text-xl font-bold text-white">
                               {itm.name}
                               {selected && (
-                                <span className="rounded-full bg-gradient-to-r from-cyan-400/20 to-violet-500/20 px-3 py-1 text-[11px] font-semibold text-cyan-200 ring-1 ring-inset ring-cyan-400/30">
+                                <span className="rounded-full px-3 py-1 text-[11px] font-semibold text-indigo-200 ring-1 ring-inset ring-indigo-400/30 bg-indigo-400/20">
                                   Current Plan
                                 </span>
                               )}
                             </h2>
-                            <p className="mt-2 max-w-sm text-sm text-slate-400">
+                            <p className="mt-2 max-w-sm text-sm text-zinc-400">
                               {itm.desc}
                             </p>
                           </div>
                         </div>
-                        <p className="shrink-0 text-right text-3xl font-extrabold tracking-tight text-white">
+                        <p className="shrink-0 text-right text-3xl font-semibold tracking-tight text-white">
                           ₹{itm.price}
-                          <span className="block text-xs font-medium text-slate-500">
+                          <span className="block text-xs font-medium text-zinc-500">
                             /month
                           </span>
                         </p>
@@ -306,7 +294,7 @@ const Page = () => {
 
                       <ul className="relative mt-6 grid gap-3 border-t border-white/[0.07] pt-6 text-sm sm:grid-cols-2">
                         {itm.features.map((f) => (
-                          <li key={f} className="flex items-start gap-3 text-slate-200">
+                          <li key={f} className="flex items-start gap-3 text-zinc-200">
                             <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-400/15 text-emerald-300">
                               <FiCheck size={12} strokeWidth={3} />
                             </span>
@@ -322,8 +310,8 @@ const Page = () => {
 
             {/* order summary */}
             <aside className="lg:sticky lg:top-8 lg:col-span-2">
-              <div className="rounded-3xl bg-gradient-to-b from-white/25 via-white/[0.06] to-cyan-400/25 p-px shadow-[0_30px_90px_-40px_rgba(34,211,238,0.45)]">
-                <div className="rounded-[23px] bg-[#0a0d12] p-6 sm:p-8">
+              <div className="rounded-3xl p-px bg-white/10">
+                <div className="rounded-[23px] bg-[#111113] p-6 sm:p-8">
                   <h2 className="text-lg font-bold text-white">Order summary</h2>
 
                   <div className="mt-5 overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4">
@@ -334,31 +322,31 @@ const Page = () => {
                     <Script src="https://checkout.razorpay.com/v1/checkout.js" />
                     <button
                       onClick={handlePayment}
-                      className="fss-btn flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-5 py-4 text-sm font-bold text-white shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
+                      className=" flex w-full items-center justify-center gap-2 rounded-xl px-5 py-4 text-sm font-bold text-white transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-indigo-400/30 bg-indigo-500 hover:bg-indigo-400"
                     >
                       <FiLock size={16} />
                       Purchase · ₹{currentPlan.price}
                     </button>
                     <Link href="/dashboard">
-                      <button className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-5 py-3.5 text-sm font-semibold text-slate-300 transition hover:bg-white/10">
+                      <button className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-5 py-3.5 text-sm font-semibold text-zinc-300 transition hover:bg-white/10">
                         Cancel
                       </button>
                     </Link>
                   </div>
 
-                  <p className="mt-6 text-center text-sm text-slate-500">
+                  <p className="mt-6 text-center text-sm text-zinc-500">
                     Our{" "}
                     <span
                       onClick={() => {
                         setistoggle(true);
                       }}
-                      className="cursor-pointer text-slate-300 underline decoration-slate-600 underline-offset-4 hover:text-white"
+                      className="cursor-pointer text-zinc-300 underline decoration-zinc-600 underline-offset-4 hover:text-white"
                     >
                       Terms and conditions
                     </span>
                   </p>
 
-                  <div className="mt-5 flex items-center justify-center gap-2 text-xs text-slate-500">
+                  <div className="mt-5 flex items-center justify-center gap-2 text-xs text-zinc-500">
                     <FiShield size={14} className="text-emerald-400" />
                     Payments are processed securely by Razorpay
                   </div>

@@ -4,28 +4,28 @@ import { LuBrain } from "react-icons/lu";
 import { FiArrowUpRight } from "react-icons/fi";
 
 const linkClass =
-  "group inline-flex items-center gap-1.5 text-sm text-slate-400 transition-colors hover:text-white";
+  "group inline-flex items-center gap-1.5 text-sm text-zinc-400 transition-colors hover:text-white";
 
 export default function Footer() {
   return (
-    <footer className="relative w-full overflow-hidden bg-[#05070a] text-slate-300">
+    <footer className="relative w-full overflow-hidden bg-[#09090b] text-zinc-300">
       {/* top hairline + glow */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent" />
-      <div className="pointer-events-none absolute left-1/2 top-0 h-48 w-[40rem] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[100px]" />
-      <div className="pointer-events-none absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-violet-600/15 blur-[110px]" />
+      <div className="absolute inset-x-0 top-0 h-px bg-white/10" />
+      
+      
 
       <div className="relative mx-auto grid max-w-7xl grid-cols-2 gap-12 px-6 pb-16 pt-20 sm:px-8 lg:grid-cols-5 lg:px-10">
         {/* Brand */}
         <div className="col-span-2 flex flex-col items-start">
           <div className="flex items-center gap-3">
-            <span className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 text-[#05070a] shadow-[0_0_30px_-4px_rgba(34,211,238,0.7)]">
+            <span className="grid h-11 w-11 place-items-center rounded-xl text-white bg-indigo-500">
               <LuBrain size={24} />
             </span>
-            <h3 className="bg-gradient-to-r from-cyan-300 to-violet-400 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
+            <h3 className=" text-2xl font-bold tracking-tight text-indigo-300">
               FeedSenseAI
             </h3>
           </div>
-          <p className="mt-5 max-w-xs text-sm leading-relaxed text-slate-400">
+          <p className="mt-5 max-w-xs text-sm leading-relaxed text-zinc-400">
             Transform user feedback into actionable insights with the power of
             AI.
           </p>
@@ -98,13 +98,13 @@ export default function Footer() {
         aria-hidden
         className="pointer-events-none relative -mb-[3.5vw] select-none overflow-hidden px-4 text-center [mask-image:linear-gradient(to_bottom,black_25%,transparent_95%)]"
       >
-        <span className="block bg-gradient-to-b from-white/[0.14] to-transparent bg-clip-text text-[17vw] font-extrabold leading-[0.9] tracking-tighter text-transparent">
+        <span className="block text-[17vw] font-semibold leading-[0.9] tracking-tighter text-white/[0.05]">
           FeedSenseAI
         </span>
       </div>
 
       {/* Bottom Bar */}
-      <div className="relative border-t border-white/[0.07] py-5 text-center text-sm text-slate-500">
+      <div className="relative border-t border-white/[0.07] py-5 text-center text-sm text-zinc-500">
         © {new Date().getFullYear()} FeedSenseAI. All rights reserved.
       </div>
     </footer>

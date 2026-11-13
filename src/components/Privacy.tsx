@@ -9,21 +9,21 @@ const H2 = ({ id, children }: { id: string; children: React.ReactNode }) => (
   <h2
     id={id}
     data-sec
-    className="mb-4 mt-14 scroll-mt-6 border-t border-white/[0.07] pt-10 text-2xl font-extrabold tracking-tight text-white first:mt-0 first:border-0 first:pt-0 sm:text-3xl"
+    className="mb-4 mt-14 scroll-mt-6 border-t border-white/[0.07] pt-10 text-2xl font-semibold tracking-tight text-white first:mt-0 first:border-0 first:pt-0 sm:text-3xl"
   >
     {children}
   </h2>
 );
 const H3 = ({ children }: { children: React.ReactNode }) => (
-  <h3 className="mb-3 mt-7 text-base font-semibold text-cyan-200 sm:text-lg">
+  <h3 className="mb-3 mt-7 text-base font-semibold text-indigo-200 sm:text-lg">
     {children}
   </h3>
 );
 const P = ({ children }: { children: React.ReactNode }) => (
-  <p className="mb-4 leading-7 text-slate-300">{children}</p>
+  <p className="mb-4 leading-7 text-zinc-300">{children}</p>
 );
 const UL = ({ children }: { children: React.ReactNode }) => (
-  <ul className="mb-5 space-y-2.5 leading-7 text-slate-300 [&>li]:relative [&>li]:rounded-xl [&>li]:border [&>li]:border-white/[0.06] [&>li]:bg-white/[0.025] [&>li]:py-3 [&>li]:pl-10 [&>li]:pr-4 [&>li]:before:absolute [&>li]:before:left-4 [&>li]:before:top-[1.15rem] [&>li]:before:h-2 [&>li]:before:w-2 [&>li]:before:rounded-full [&>li]:before:bg-gradient-to-br [&>li]:before:from-cyan-400 [&>li]:before:to-violet-500 [&_strong]:font-semibold [&_strong]:text-white">
+  <ul className="mb-5 space-y-2.5 leading-7 text-zinc-300 [&>li]:relative [&>li]:rounded-xl [&>li]:border [&>li]:border-white/[0.06] [&>li]:bg-white/[0.025] [&>li]:py-3 [&>li]:pl-10 [&>li]:pr-4 [&>li]:before:absolute [&>li]:before:left-4 [&>li]:before:top-[1.15rem] [&>li]:before:h-2 [&>li]:before:w-2 [&>li]:before:rounded-full [&>li]:before: [&>li]:before: [&>li]:before: [&_strong]:font-semibold [&_strong]:text-white bg-indigo-500">
     {children}
   </ul>
 );
@@ -85,15 +85,15 @@ const LegalShell = ({
         aria-modal="true"
         aria-label={title}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-5xl rounded-3xl bg-gradient-to-b from-white/25 via-white/[0.06] to-cyan-400/20 p-px shadow-[0_30px_90px_-30px_rgba(34,211,238,0.4)]"
+        className="w-full max-w-5xl rounded-3xl p-px bg-white/10"
       >
-        <div className="relative flex h-[88vh] flex-col overflow-hidden rounded-[23px] bg-[#0a0d12]">
-          <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-violet-600/15 blur-3xl" />
+        <div className="relative flex h-[88vh] flex-col overflow-hidden rounded-[23px] bg-[#111113]">
+          
 
           {/* header */}
           <div className="relative flex items-center justify-between gap-4 border-b border-white/[0.07] px-5 py-4 sm:px-8">
             <div className="flex items-center gap-3">
-              <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-cyan-400/20 to-violet-500/20 text-cyan-300 ring-1 ring-inset ring-cyan-400/30">
+              <span className="grid h-10 w-10 place-items-center rounded-xl text-indigo-300 ring-1 ring-inset ring-indigo-400/30 bg-indigo-400/20">
                 {icon}
               </span>
               <h1 className="text-lg font-bold tracking-tight text-white sm:text-xl">
@@ -103,13 +103,13 @@ const LegalShell = ({
             <button
               aria-label="Close"
               onClick={onClose}
-              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-slate-300 transition hover:bg-white/10 hover:text-white"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-zinc-300 transition hover:bg-white/10 hover:text-white"
             >
               <RxCross2 size={22} />
             </button>
             <div className="absolute inset-x-0 bottom-0 h-[2px] bg-white/[0.05]">
               <div
-                className="h-full bg-gradient-to-r from-cyan-400 to-violet-500 transition-[width] duration-150"
+                className="h-full transition-[width] duration-150 bg-indigo-500"
                 style={{ width: `${progress * 100}%` }}
               />
             </div>
@@ -122,10 +122,10 @@ const LegalShell = ({
                 key={t.id}
                 onClick={() => go(t.id)}
                 className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
-                  active === t.id
-                    ? "bg-cyan-400/15 text-cyan-200 ring-1 ring-inset ring-cyan-400/30"
-                    : "bg-white/[0.05] text-slate-400"
-                }`}
+ active === t.id
+ ? "bg-indigo-400/15 text-indigo-200 ring-1 ring-inset ring-indigo-400/30"
+ : "bg-white/[0.05] text-zinc-400"
+ }`}
               >
                 {t.label}
               </button>
@@ -135,7 +135,7 @@ const LegalShell = ({
           <div className="relative flex min-h-0 flex-1">
             {/* desktop TOC */}
             <nav className="hidden w-72 shrink-0 overflow-y-auto border-r border-white/[0.06] p-5 lg:block [scrollbar-width:thin]">
-              <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-600">
+              <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-600">
                 On this page
               </p>
               <ul className="space-y-1">
@@ -144,10 +144,10 @@ const LegalShell = ({
                     <button
                       onClick={() => go(t.id)}
                       className={`w-full rounded-lg px-3 py-2.5 text-left text-sm font-medium transition ${
-                        active === t.id
-                          ? "bg-cyan-400/10 text-cyan-200"
-                          : "text-slate-400 hover:bg-white/[0.05] hover:text-white"
-                      }`}
+ active === t.id
+ ? "bg-indigo-400/10 text-indigo-200"
+ : "text-zinc-400 hover:bg-white/[0.05] hover:text-white"
+ }`}
                     >
                       {t.label}
                     </button>
@@ -163,7 +163,7 @@ const LegalShell = ({
                 const max = el.scrollHeight - el.clientHeight;
                 setProgress(max > 0 ? el.scrollTop / max : 0);
               }}
-              className="relative flex-1 overflow-y-auto px-5 pb-16 pt-8 text-sm sm:px-10 sm:text-base [scrollbar-color:#2a3038_transparent] [scrollbar-width:thin]"
+              className="relative flex-1 overflow-y-auto px-5 pb-16 pt-8 text-sm sm:px-10 sm:text-base [scrollbar-color:#27272a_transparent] [scrollbar-width:thin]"
             >
               {children}
             </div>
@@ -329,11 +329,11 @@ const Privacy: React.FC<props> = ({ setisprivacy }) => {
         If you have questions or concerns about this Privacy Policy, please
         contact us:
       </P>
-      <p className="rounded-2xl border border-cyan-400/20 bg-gradient-to-br from-cyan-400/[0.08] to-violet-500/[0.06] px-5 py-4 text-slate-200">
+      <p className="rounded-2xl border border-indigo-400/20 px-5 py-4 text-zinc-200 bg-indigo-400/[0.08]">
         Email:{" "}
         <a
           href="mailto:chrahulofficial@gmail.com"
-          className="font-semibold text-cyan-300 hover:text-cyan-200"
+          className="font-semibold text-indigo-300 hover:text-indigo-200"
         >
           chrahulofficial@gmail.com
         </a>

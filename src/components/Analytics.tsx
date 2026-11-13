@@ -36,8 +36,8 @@ const Analytics: React.FC<AnalyticsProps> = ({
   loading,
 }) => {
   const items = [
-    { label: "Websites", value: Number(totalWebsites) || 0, color: "#22d3ee" },
-    { label: "Feedbacks", value: Number(totalFeedback) || 0, color: "#a78bfa" },
+    { label: "Websites", value: Number(totalWebsites) || 0, color: "#818cf8" },
+    { label: "Feedbacks", value: Number(totalFeedback) || 0, color: "#38bdf8" },
     { label: "Completed", value: Number(totalTasksFinished) || 0, color: "#34d399" },
     { label: "Pending", value: Number(totalIncompleteTasks) || 0, color: "#fbbf24" },
   ];
@@ -50,7 +50,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
       {
         label: "Overview",
         data: sum === 0 ? [1] : items.map((i) => i.value),
-        backgroundColor: sum === 0 ? ["#1b2129"] : items.map((i) => i.color),
+        backgroundColor: sum === 0 ? ["#1f1f23"] : items.map((i) => i.color),
         borderWidth: 0,
         borderRadius: 6,
         spacing: sum === 0 ? 0 : 4,
@@ -67,9 +67,9 @@ const Analytics: React.FC<AnalyticsProps> = ({
   };
 
   return (
-    <div className="h-full rounded-2xl bg-gradient-to-b from-white/[0.16] via-white/[0.04] to-white/[0.03] p-px">
-      <div className="relative h-full overflow-hidden rounded-[15px] bg-[#0a0d13] p-6 sm:p-8">
-        <div className="pointer-events-none absolute -left-12 -top-12 h-44 w-44 rounded-full bg-violet-500/20 blur-3xl" />
+    <div className="h-full rounded-2xl p-px bg-white/10">
+      <div className="relative h-full overflow-hidden rounded-[15px] bg-[#111113] p-6 sm:p-8">
+        
         {loading ? (
           <div className="grid min-h-[18rem] place-items-center">
             <Loader message={"Please wait"} />
@@ -77,7 +77,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
         ) : (
           <div className="relative">
             <h2 className="text-base font-semibold text-white">Your Analytics</h2>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-zinc-500">
               A snapshot of your workspace
             </p>
 
@@ -88,7 +88,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
                   <span className="text-3xl font-semibold tabular-nums tracking-tight text-white">
                     {sum}
                   </span>
-                  <span className="text-[11px] uppercase tracking-[0.14em] text-slate-500">
+                  <span className="text-[11px] uppercase tracking-[0.14em] text-zinc-500">
                     total
                   </span>
                 </div>
@@ -105,7 +105,7 @@ const Analytics: React.FC<AnalyticsProps> = ({
                         className="h-2 w-2 rounded-full"
                         style={{ backgroundColor: i.color }}
                       />
-                      <span className="text-xs text-slate-400">{i.label}</span>
+                      <span className="text-xs text-zinc-400">{i.label}</span>
                     </div>
                     <p className="mt-2 text-2xl font-semibold tabular-nums text-white">
                       {i.value}

@@ -18,8 +18,8 @@ import { HiOutlineSparkles } from "react-icons/hi2";
 
 const Theme = () => (
   <style>{`
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-.fs-root{font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+.fs-root{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 @keyframes fs-drift-a{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(60px,30px,0) scale(1.15)}}
 @keyframes fs-drift-b{0%,100%{transform:translate3d(0,0,0) scale(1.1)}50%{transform:translate3d(-50px,-30px,0) scale(0.95)}}
 @keyframes fs-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
@@ -28,7 +28,7 @@ const Theme = () => (
 .fs-drift-b{animation:fs-drift-b 18s ease-in-out infinite}
 .fs-rise{animation:fs-rise .7s cubic-bezier(.2,.7,.2,1) both}
 .fs-gradient-text{background:linear-gradient(110deg,#ffffff 15%,#67e8f9 50%,#c4b5fd 85%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.fs-btn{background-image:linear-gradient(110deg,#22d3ee 0%,#818cf8 50%,#22d3ee 100%);background-size:200% 100%}
+.fs-btn{background-image:linear-gradient(110deg,#818cf8 0%,#818cf8 50%,#818cf8 100%);background-size:200% 100%}
 .fs-btn:hover{animation:fs-sheen 2.4s linear infinite}
 .fs-grid{background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:44px 44px}
 @media (prefers-reduced-motion:reduce){.fs-drift-a,.fs-drift-b,.fs-rise,.fs-btn:hover{animation:none!important}}
@@ -47,21 +47,16 @@ const GlowCard = ({
   children: React.ReactNode;
   className?: string;
   innerClassName?: string;
-  tint?: string; // e.g. "bg-cyan-500/25"
+  tint?: string; // e.g. "bg-indigo-500/25"
   style?: React.CSSProperties;
 }) => (
   <div
     style={style}
-    className={`relative rounded-2xl bg-gradient-to-b from-white/[0.18] via-white/[0.05] to-white/[0.03] p-px ${className}`}
+    className={`relative rounded-2xl p-px bg-white/10${className}`}
   >
     <div
-      className={`relative h-full overflow-hidden rounded-[15px] bg-[#0a0d13]/95 backdrop-blur-xl ${innerClassName}`}
+      className={`relative h-full overflow-hidden rounded-[15px] bg-[#111113]/95 backdrop-blur-xl ${innerClassName}`}
     >
-      {tint && (
-        <div
-          className={`pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full blur-3xl ${tint}`}
-        />
-      )}
       <div className="relative h-full">{children}</div>
     </div>
   </div>
@@ -91,15 +86,15 @@ interface User {
 
 /* UI-only class tokens */
 const inputClass =
-  "w-full rounded-xl border border-white/10 bg-black/40 py-3.5 pl-11 pr-4 text-sm text-white placeholder:text-slate-600 outline-none transition focus:border-cyan-400/60 focus:bg-black/60 focus:ring-4 focus:ring-cyan-400/10";
-const labelClass = "mb-2 block text-sm font-semibold text-slate-300";
+  "w-full rounded-xl border border-white/10 bg-black/40 py-3.5 pl-11 pr-4 text-sm text-white placeholder:text-zinc-600 outline-none transition focus:border-indigo-400/60 focus:bg-black/60 focus:ring-4 focus:ring-indigo-400/10";
+const labelClass = "mb-2 block text-sm font-semibold text-zinc-300";
 const iconClass =
-  "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500";
+  "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500";
 const avatarGradients = [
-  "from-cyan-400 to-blue-600",
-  "from-violet-400 to-fuchsia-600",
-  "from-emerald-400 to-teal-600",
-  "from-amber-400 to-rose-500",
+  "from-indigo-500 to-indigo-600",
+  "from-sky-500 to-sky-600",
+  "from-emerald-500 to-emerald-600",
+  "from-amber-500 to-amber-600",
 ];
 
 const AddIntegration: React.FC = () => {
@@ -152,7 +147,7 @@ const AddIntegration: React.FC = () => {
         <MdSettingsSuggest
           size={47}
           color="white"
-          className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 rounded-full p-3"
+          className=" rounded-full p-3 bg-indigo-500"
         />
       </button>
     </Link>
@@ -230,7 +225,7 @@ const AddIntegration: React.FC = () => {
         <MdSettingsSuggest
           size={47}
           color="white"
-          className="bg-gradient-to-r from-blue-400 via-blue-600 to-blue-700 rounded-full p-3"
+          className=" rounded-full p-3 bg-indigo-500"
         />
       </button>
     </Link>
@@ -267,32 +262,30 @@ const AddIntegration: React.FC = () => {
       <div className="fs-root relative min-w-0 flex-1 md:ml-64">
         {/* ambient background */}
         <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden md:left-64">
-          <div className="fs-drift-a absolute -left-24 -top-24 h-[420px] w-[420px] rounded-full bg-cyan-500/20 blur-[110px]" />
-          <div className="fs-drift-b absolute -right-24 top-10 h-[460px] w-[460px] rounded-full bg-violet-600/20 blur-[120px]" />
-          <div className="fs-grid absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)]" />
-        </div>
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[26rem] bg-[radial-gradient(60%_100%_at_50%_0%,rgba(129,140,248,0.09),transparent)]" />
+      </div>
 
         {/* ---------- Top bar ---------- */}
-        <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#06080b]/70 backdrop-blur-xl">
+        <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#09090b]/70 backdrop-blur-xl">
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
             <div className="flex items-center gap-2.5 md:hidden">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-white">
+              <span className="grid h-8 w-8 place-items-center rounded-lg text-white bg-indigo-500">
                 <HiOutlineSparkles size={18} />
               </span>
               <h1 className="text-base font-semibold tracking-tight text-white">
                 FeedSense.ai
               </h1>
             </div>
-            <p className="hidden text-sm text-slate-500 md:block">
-              Workspace <span className="mx-1.5 text-slate-700">/</span>
-              <span className="text-slate-200">Integrate</span>
+            <p className="hidden text-sm text-zinc-500 md:block">
+              Workspace <span className="mx-1.5 text-zinc-700">/</span>
+              <span className="text-zinc-200">Integrate</span>
             </p>
             <div className="flex items-center gap-3">
               <div className="hidden items-center gap-3 md:flex">
-                <span className="max-w-[10rem] truncate text-sm text-slate-300">
+                <span className="max-w-[10rem] truncate text-sm text-zinc-300">
                   {user?.displayName || "User"}
                 </span>
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-white ring-2 ring-white/10">
+                <span className="grid h-9 w-9 place-items-center rounded-full text-sm font-bold text-white ring-2 ring-white/10 bg-indigo-500">
                   {initial}
                 </span>
               </div>
@@ -322,22 +315,22 @@ const AddIntegration: React.FC = () => {
           <section className="fs-rise">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-2xl">
-                <h1 className="fs-gradient-text text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+                <h1 className="text-white text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
                   Integrate Website
                 </h1>
-                <p className="mt-4 text-base text-slate-400 sm:text-lg">
+                <p className="mt-4 text-base text-zinc-400 sm:text-lg">
                   Add FeedSenseAI to your website in minutes
                 </p>
               </div>
               <div className="flex items-center gap-3 self-start rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-3 backdrop-blur lg:self-auto">
-                <span className="grid h-10 w-10 place-items-center rounded-xl bg-cyan-400/10 text-cyan-300 ring-1 ring-inset ring-cyan-400/25">
+                <span className="grid h-10 w-10 place-items-center rounded-xl bg-indigo-400/10 text-indigo-300 ring-1 ring-inset ring-indigo-400/25">
                   <FiLayers size={18} />
                 </span>
                 <div>
                   <p className="text-2xl font-bold tabular-nums leading-none text-white">
                     {websitedata.length}
                   </p>
-                  <p className="mt-1 text-xs text-slate-500">websites connected</p>
+                  <p className="mt-1 text-xs text-zinc-500">websites connected</p>
                 </div>
               </div>
             </div>
@@ -350,33 +343,33 @@ const AddIntegration: React.FC = () => {
                   <li
                     key={s.title}
                     className={`relative flex items-center gap-4 rounded-2xl border px-5 py-4 transition-colors ${
-                      active
-                        ? "border-cyan-400/40 bg-cyan-400/[0.07] shadow-[0_0_40px_-12px_rgba(34,211,238,0.5)]"
-                        : done
-                        ? "border-emerald-400/25 bg-emerald-400/[0.05]"
-                        : "border-white/[0.08] bg-white/[0.02]"
-                    }`}
+ active
+ ? "border-indigo-400/40 bg-indigo-400/[0.07] "
+ : done
+ ? "border-emerald-400/25 bg-emerald-400/[0.05]"
+ : "border-white/[0.08] bg-white/[0.02]"
+ }`}
                   >
                     <span
                       className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-sm font-bold ${
-                        done
-                          ? "bg-emerald-400 text-white"
-                          : active
-                          ? "bg-gradient-to-br from-cyan-400 to-violet-500 text-white"
-                          : "bg-white/[0.06] text-slate-500"
-                      }`}
+ done
+ ? "bg-emerald-400 text-[#09090b]"
+ : active
+ ? " text-white bg-indigo-500"
+ : "bg-white/[0.06] text-zinc-500"
+ }`}
                     >
                       {done ? <FiCheck size={18} /> : i + 1}
                     </span>
                     <div className="min-w-0">
                       <p
                         className={`text-sm font-semibold ${
-                          done || active ? "text-white" : "text-slate-500"
-                        }`}
+ done || active ? "text-white" : "text-zinc-500"
+ }`}
                       >
                         {s.title}
                       </p>
-                      <p className="truncate text-xs text-slate-500">{s.desc}</p>
+                      <p className="truncate text-xs text-zinc-500">{s.desc}</p>
                     </div>
                   </li>
                 );
@@ -386,21 +379,21 @@ const AddIntegration: React.FC = () => {
 
           {/* ---------- Setup studio: one split panel ---------- */}
           <section className="fs-rise" style={{ animationDelay: "0.1s" }}>
-            <div className="rounded-[28px] bg-gradient-to-br from-cyan-400/50 via-white/10 to-violet-500/50 p-px shadow-[0_30px_90px_-40px_rgba(34,211,238,0.45)]">
-              <div className="grid overflow-hidden rounded-[27px] bg-[#080b10] lg:grid-cols-2">
+            <div className="rounded-[28px] p-px bg-white/10">
+              <div className="grid overflow-hidden rounded-[27px] bg-[#111113] lg:grid-cols-2">
                 {/* form side */}
                 <div className="relative p-6 sm:p-10">
-                  <div className="pointer-events-none absolute -left-20 -top-20 h-60 w-60 rounded-full bg-cyan-500/15 blur-3xl" />
+                  
                   <div className="relative">
                     <div className="flex items-center gap-4">
-                      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-cyan-400/10 text-cyan-300 ring-1 ring-inset ring-cyan-400/25">
+                      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-indigo-400/10 text-indigo-300 ring-1 ring-inset ring-indigo-400/25">
                         <CiGlobe size={28} />
                       </span>
                       <div>
                         <h2 className="text-xl font-bold text-white">
                           Website Details
                         </h2>
-                        <p className="text-sm text-slate-500">
+                        <p className="text-sm text-zinc-500">
                           Configure your integration
                         </p>
                       </div>
@@ -468,10 +461,10 @@ const AddIntegration: React.FC = () => {
                                 }))
                               }
                               className={`rounded-lg py-2.5 text-sm font-semibold transition ${
-                                websiteDataInput.type === o.v
-                                  ? "bg-gradient-to-br from-cyan-400/25 to-violet-500/25 text-white ring-1 ring-inset ring-cyan-400/40"
-                                  : "text-slate-400 hover:bg-white/[0.05] hover:text-slate-200"
-                              }`}
+ websiteDataInput.type === o.v
+ ? " text-white ring-1 ring-inset ring-indigo-400/40 bg-indigo-400/25"
+ : "text-zinc-400 hover:bg-white/[0.05] hover:text-zinc-200"
+ }`}
                             >
                               {o.l}
                             </button>
@@ -481,7 +474,7 @@ const AddIntegration: React.FC = () => {
 
                       <button
                         onClick={saveData}
-                        className="fs-btn w-full rounded-xl px-6 py-4 text-sm font-bold text-[#06080b] shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
+                        className=" w-full rounded-xl px-6 py-4 text-sm font-bold text-white transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-indigo-400/30 bg-indigo-500 hover:bg-indigo-400"
                       >
                         Save website
                       </button>
@@ -490,8 +483,8 @@ const AddIntegration: React.FC = () => {
                 </div>
 
                 {/* code side */}
-                <div className="relative flex flex-col border-t border-white/[0.07] bg-[#06080c] p-6 sm:p-10 lg:border-l lg:border-t-0">
-                  <div className="pointer-events-none absolute -bottom-24 -right-16 h-64 w-64 rounded-full bg-violet-600/20 blur-3xl" />
+                <div className="relative flex flex-col border-t border-white/[0.07] bg-[#09090b] p-6 sm:p-10 lg:border-l lg:border-t-0">
+                  
                   <div className="relative flex items-center gap-4">
                     <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-violet-400/10 text-violet-300 ring-1 ring-inset ring-violet-400/25">
                       <IoCodeOutline size={26} />
@@ -500,13 +493,13 @@ const AddIntegration: React.FC = () => {
                       <h2 className="text-xl font-bold text-white">
                         Integration Code
                       </h2>
-                      <p className="text-sm text-slate-500">
+                      <p className="text-sm text-zinc-500">
                         Copy and paste to your website
                       </p>
                     </div>
                   </div>
 
-                  <div className="relative mt-9 flex flex-1 flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0b0f15] shadow-[0_20px_60px_-30px_rgba(0,0,0,0.9)]">
+                  <div className="relative mt-9 flex flex-1 flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#111113] ">
                     {highlightedCode1.length != 0 ? (
                       <>
                         <div className="flex items-center justify-between border-b border-white/[0.07] px-4 py-3">
@@ -514,30 +507,30 @@ const AddIntegration: React.FC = () => {
                             <span className="h-3 w-3 rounded-full bg-red-400/80" />
                             <span className="h-3 w-3 rounded-full bg-amber-400/80" />
                             <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
-                            <span className="ml-3 text-xs text-slate-500">
+                            <span className="ml-3 text-xs text-zinc-500">
                               feedback-button.tsx
                             </span>
                           </div>
                           <button
                             type="button"
                             onClick={copyCode}
-                            className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-cyan-400/40 hover:bg-cyan-400/10 hover:text-cyan-200"
+                            className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-zinc-200 transition hover:border-indigo-400/40 hover:bg-indigo-400/10 hover:text-indigo-200"
                           >
                             <FaRegCopy size={13} />
                             Copy
                           </button>
                         </div>
                         <pre
-                          className="max-h-80 min-h-[14rem] flex-1 overflow-auto px-5 py-5 text-left text-xs leading-relaxed text-slate-200 [scrollbar-color:#2a3038_transparent] [scrollbar-width:thin]"
+                          className="max-h-80 min-h-[14rem] flex-1 overflow-auto px-5 py-5 text-left text-xs leading-relaxed text-zinc-200 [scrollbar-color:#27272a_transparent] [scrollbar-width:thin]"
                           dangerouslySetInnerHTML={{ __html: highlightedCode1 }}
                         ></pre>
                       </>
                     ) : (
                       <div className="flex flex-1 flex-col items-center justify-center px-8 py-16 text-center">
-                        <span className="grid h-14 w-14 place-items-center rounded-2xl bg-white/[0.05] text-slate-400 ring-1 ring-inset ring-white/10">
+                        <span className="grid h-14 w-14 place-items-center rounded-2xl bg-white/[0.05] text-zinc-400 ring-1 ring-inset ring-white/10">
                           <IoCodeOutline size={26} />
                         </span>
-                        <p className="mt-5 max-w-xs text-sm text-slate-400">
+                        <p className="mt-5 max-w-xs text-sm text-zinc-400">
                           Fill in your website details and save to get your
                           integration code
                         </p>
@@ -555,26 +548,26 @@ const AddIntegration: React.FC = () => {
               <h2 className="text-xl font-bold text-white sm:text-2xl">
                 Connected websites
               </h2>
-              <span className="rounded-full bg-gradient-to-r from-cyan-400/15 to-violet-500/15 px-3 py-1 text-xs font-semibold text-cyan-200 ring-1 ring-inset ring-cyan-400/25">
+              <span className="rounded-full px-3 py-1 text-xs font-semibold text-indigo-200 ring-1 ring-inset ring-indigo-400/25 bg-indigo-400/15">
                 {websitedata.length}
               </span>
             </div>
 
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
               {websitedata.map((site, idx) => (
-                <GlowCard key={idx} tint="bg-cyan-500/10">
+                <GlowCard key={idx} tint="bg-indigo-500/10">
                   <div className="p-5 sm:p-6">
                     <div className="flex items-start justify-between gap-3">
                       <span
                         className={`grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-lg font-bold text-white shadow-lg ${
-                          avatarGradients[idx % avatarGradients.length]
-                        }`}
+ avatarGradients[idx % avatarGradients.length]
+ }`}
                       >
                         {(site.name || "?").charAt(0).toUpperCase()}
                       </span>
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-2.5 py-1 text-xs font-medium text-emerald-300 ring-1 ring-inset ring-emerald-400/25">
                         <span className="relative flex h-1.5 w-1.5">
-                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                          
                           <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
                         </span>
                         {"Active"}
@@ -587,7 +580,7 @@ const AddIntegration: React.FC = () => {
 
                     <button
                       type="button"
-                      className="group mt-1 flex max-w-full items-center gap-1.5 text-left text-sm text-cyan-300 transition hover:text-cyan-200"
+                      className="group mt-1 flex max-w-full items-center gap-1.5 text-left text-sm text-indigo-300 transition hover:text-indigo-200"
                       onClick={() => {
                         const url = site.url!.match(/^https?:\/\//)
                           ? site.url
@@ -604,7 +597,7 @@ const AddIntegration: React.FC = () => {
                     </button>
 
                     <div className="mt-6 flex items-center justify-between border-t border-white/[0.07] pt-4">
-                      <span className="rounded-full bg-white/[0.06] px-3 py-1 text-xs font-medium capitalize text-slate-300">
+                      <span className="rounded-full bg-white/[0.06] px-3 py-1 text-xs font-medium capitalize text-zinc-300">
                         {site.type || "Website"}
                       </span>
                       <button
@@ -612,7 +605,7 @@ const AddIntegration: React.FC = () => {
                         onClick={() => {
                           handleDeleteWebsite(site.name);
                         }}
-                        className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs font-medium text-slate-400 transition hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400"
+                        className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs font-medium text-zinc-400 transition hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400"
                       >
                         <BsTrash2 className="h-3.5 w-3.5" />
                         Delete
@@ -622,12 +615,13 @@ const AddIntegration: React.FC = () => {
                 </GlowCard>
               ))}
 
+              {/* add-another tile */}
               <button
                 type="button"
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="group flex min-h-[13rem] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/15 bg-white/[0.02] text-slate-400 transition hover:border-cyan-400/40 hover:bg-cyan-400/[0.04] hover:text-cyan-200"
+                className="group flex min-h-[13rem] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/15 bg-white/[0.02] text-zinc-400 transition hover:border-indigo-400/40 hover:bg-indigo-400/[0.04] hover:text-indigo-200"
               >
-                <span className="grid h-12 w-12 place-items-center rounded-xl bg-white/[0.05] ring-1 ring-inset ring-white/10 transition group-hover:bg-cyan-400/10 group-hover:ring-cyan-400/30">
+                <span className="grid h-12 w-12 place-items-center rounded-xl bg-white/[0.05] ring-1 ring-inset ring-white/10 transition group-hover:bg-indigo-400/10 group-hover:ring-indigo-400/30">
                   <FiPlus size={22} />
                 </span>
                 <span className="text-sm font-semibold">
