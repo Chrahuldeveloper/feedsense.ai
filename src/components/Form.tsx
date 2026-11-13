@@ -1,7 +1,7 @@
 "use client";
 import dbService from "@/firebase/utils/db";
 import { useParams } from "next/navigation";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   IoHappyOutline,
   IoSadOutline,
@@ -11,16 +11,14 @@ import {
   IoMailOutline,
 } from "react-icons/io5";
 import { TbMoodSadDizzy } from "react-icons/tb";
-import LottiePlayer from "react-lottie-player";
-import FeedbackLoader from "../app/lottie-asserts/FeedbackLoader.json";
-import ErrorLoader from "../app/lottie-asserts/ErrorLoader.json";
 import { IoIosStarOutline, IoMdStar } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaTelegramPlane } from "react-icons/fa";
 import { HiOutlineSparkles } from "react-icons/hi2";
 
-const BRAND_URL = "https://feedsenseai.vercel.app/";
+/* TODO: point this at your marketing site */
+const BRAND_URL = "#";
 
 interface Feedback {
   emotion: string;
@@ -43,6 +41,7 @@ interface Bug {
 
 type Feature = Bug;
 
+/* UI tokens */
 const fieldClass =
   "w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-slate-600 outline-none transition hover:border-white/20 focus:border-cyan-400/60 focus:bg-white/[0.05] focus:ring-4 focus:ring-cyan-400/10";
 const labelClass = "mb-2 block text-[13px] font-medium text-slate-300";
@@ -69,6 +68,13 @@ const priorities = [
 ];
 const DEFAULT_PRIORITY = "Medium Priority";
 const ratingLabels = ["Poor", "Fair", "Good", "Great", "Excellent"];
+const stages = [
+  "Reading your feedback",
+  "Detecting the sentiment",
+  "Sending it to the team",
+];
+/* minimum time the sending animation stays up; set to 0 to disable */
+const MIN_SEND_MS = 1700;
 
 const emptyIssue: Bug = {
   email: "",
@@ -91,7 +97,25 @@ const Form = () => {
     feedback: "",
     Rating: 0,
   });
+  const [stage, setStage] = useState<number>(0);
+  const [sent, setSent] = useState<{
+    title: string;
+    meta: string;
+    rating: number;
+  } | null>(null);
   const db = new dbService();
+
+  useEffect(() => {
+    if (!loading) {
+      setStage(0);
+      return;
+    }
+    const t = setInterval(
+      () => setStage((s) => Math.min(s + 1, stages.length - 1)),
+      700
+    );
+    return () => clearInterval(t);
+  }, [loading]);
 
   const emotions: Emotion[] = [
     {
@@ -127,7 +151,6 @@ const Form = () => {
     toast("The website is Not subscribed to Feedsenseai.");
 
   const saveFeedBack = async (): Promise<boolean> => {
-    setLoading(true);
     try {
       const isSubscribed = await db.checkifSubscribed(
         userID.toString(),
@@ -155,8 +178,6 @@ const Form = () => {
       console.log(error);
       seterror(true);
       return false;
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -199,22 +220,44 @@ const Form = () => {
   };
 
   const saveSectionData = async () => {
+    const isGeneral = selectedSection === "General Feedback";
+    const isBugTab = selectedSection === "Bug Report";
+    const data = isBugTab ? bug : feature;
+    const summary = isGeneral
+      ? {
+          title: feedback.emotion
+            ? `${feedback.emotion} experience`
+            : "General feedback",
+          meta:
+            feedback.feedback.trim() ||
+            ratingLabels[selectedRating - 1] ||
+            "No message added",
+          rating: selectedRating,
+        }
+      : {
+          title:
+            data.tittle.trim() || (isBugTab ? "Bug report" : "Feature request"),
+          meta: data.priority,
+          rating: 0,
+        };
+
+    setLoading(true);
     try {
-      let ok = false;
-      if (selectedSection === "General Feedback") {
-        ok = await saveFeedBack();
-      } else if (selectedSection === "Bug Report") {
-        setLoading(true);
-        ok = await saveBug();
-        setLoading(false);
-      } else {
-        setLoading(true);
-        ok = await saveFeature();
-        setLoading(false);
+      const wait = new Promise((r) => setTimeout(r, MIN_SEND_MS));
+      const ok = isGeneral
+        ? await saveFeedBack()
+        : isBugTab
+        ? await saveBug()
+        : await saveFeature();
+      await wait;
+      if (ok) {
+        setSent(summary);
+        setSubmitted(true);
       }
-      if (ok) setSubmitted(true);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -232,6 +275,7 @@ const Form = () => {
       ? "idea"
       : "feedback";
 
+  /* cursor spotlight: updates CSS vars, no re-render */
   const onMove = (e: React.MouseEvent) => {
     const el = cardRef.current;
     if (!el) return;
@@ -427,7 +471,59 @@ const Form = () => {
         .fsf-tick { stroke-dasharray: 40; stroke-dashoffset: 40; animation: fsf-draw .4s .55s ease forwards; }
         .fsf-ping { animation: fsf-ping 2.4s ease-out .9s infinite; }
 
+        /* sending orb */
+        @keyframes fso-spin { to { transform: rotate(360deg); } }
+        @keyframes fso-morph {
+          0%, 100% { border-radius: 60% 40% 55% 45% / 55% 45% 60% 40%; }
+          25% { border-radius: 42% 58% 38% 62% / 60% 40% 62% 38%; }
+          50% { border-radius: 52% 48% 63% 37% / 40% 62% 38% 60%; }
+          75% { border-radius: 38% 62% 46% 54% / 55% 38% 62% 45%; }
+        }
+        @keyframes fso-breathe { 0%, 100% { transform: scale(.94); } 50% { transform: scale(1.06); } }
+        @keyframes fso-glow { 0%, 100% { opacity: .5; transform: scale(.95); } 50% { opacity: .95; transform: scale(1.12); } }
+        @keyframes fso-ripple { 0% { transform: scale(1); opacity: .45; } 100% { transform: scale(2.4); opacity: 0; } }
+        @keyframes fso-twinkle { 0%, 100% { transform: scale(.9) rotate(-8deg); } 50% { transform: scale(1.12) rotate(8deg); } }
+        @keyframes fso-sheen { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+        @keyframes fso-slide { 0% { transform: translateX(-120%); } 100% { transform: translateX(320%); } }
+        @keyframes fso-swap { from { opacity: 0; transform: translateY(6px); filter: blur(4px); } to { opacity: 1; transform: none; filter: blur(0); } }
+        .fso-overlay { animation: fsf-fade .3s ease-out both; }
+        .fso-glow { position: absolute; inset: -26px; border-radius: 9999px; filter: blur(34px);
+          background: radial-gradient(circle, rgba(34,211,238,.55), rgba(139,92,246,.4) 55%, transparent 72%);
+          animation: fso-glow 3s ease-in-out infinite; }
+        .fso-ripple { position: absolute; inset: 30px; border-radius: 9999px; border: 1px solid rgba(34,211,238,.5);
+          animation: fso-ripple 2.8s cubic-bezier(.2,.6,.3,1) infinite; }
+        .fso-ripple.b { animation-delay: 1.4s; border-color: rgba(167,139,250,.5); }
+        .fso-orbit { position: absolute; border-radius: 9999px; border: 1px solid rgba(148,163,184,.14); }
+        .fso-orbit::before { content: ""; position: absolute; inset: -1px; border-radius: 9999px;
+          -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+                  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px)); }
+        .fso-orbit.a { inset: 0; animation: fso-spin 2.6s linear infinite; }
+        .fso-orbit.a::before { background: conic-gradient(from 0deg, transparent 0 55%, rgba(34,211,238,.95) 100%); }
+        .fso-orbit.b { inset: 12px; animation: fso-spin 4.2s linear infinite reverse; }
+        .fso-orbit.b::before { background: conic-gradient(from 0deg, transparent 0 65%, rgba(167,139,250,.95) 100%); }
+        .fso-comet { position: absolute; top: -4px; left: 50%; width: 8px; height: 8px; margin-left: -4px; border-radius: 9999px; background: #fff;
+          box-shadow: 0 0 10px 2px rgba(34,211,238,.9), 0 0 22px 6px rgba(34,211,238,.45); }
+        .fso-orbit.b .fso-comet { width: 6px; height: 6px; margin-left: -3px; top: -3px;
+          box-shadow: 0 0 10px 2px rgba(167,139,250,.9), 0 0 20px 5px rgba(167,139,250,.45); }
+        .fso-core { position: absolute; inset: 30px; animation: fso-breathe 3s ease-in-out infinite; }
+        .fso-blob { position: absolute; inset: 0; background: conic-gradient(from 0deg, #22d3ee, #6366f1, #a78bfa, #22d3ee);
+          box-shadow: 0 0 34px rgba(34,211,238,.55), inset 0 0 16px rgba(255,255,255,.25);
+          animation: fso-morph 6s ease-in-out infinite, fso-spin 9s linear infinite; }
+        .fso-gloss { position: absolute; inset: 0; border-radius: 9999px; pointer-events: none;
+          background: radial-gradient(circle at 30% 24%, rgba(255,255,255,.65), rgba(255,255,255,0) 42%); }
+        .fso-icon { animation: fso-twinkle 2.4s ease-in-out infinite; }
+        .fso-text { background: linear-gradient(110deg, #8b9bb4 30%, #fff 50%, #8b9bb4 70%); background-size: 200% 100%;
+          -webkit-background-clip: text; background-clip: text; color: transparent;
+          animation: fso-sheen 3s linear infinite, fso-swap .4s ease-out both; }
+        .fso-bar { position: relative; overflow: hidden; width: 7rem; height: 2px; border-radius: 9999px; background: rgba(148,163,184,.15); }
+        .fso-bar::after { content: ""; position: absolute; inset: 0; width: 38%; border-radius: 9999px;
+          background: linear-gradient(90deg, transparent, #22d3ee, #a78bfa, transparent);
+          animation: fso-slide 1.5s cubic-bezier(.6,.1,.4,.9) infinite; }
+
         @media (prefers-reduced-motion: reduce) {
+          .fso-overlay, .fso-glow, .fso-ripple, .fso-core, .fso-blob, .fso-icon, .fso-bar::after { animation: none; }
+          .fso-orbit.a { animation-duration: 12s; } .fso-orbit.b { animation-duration: 18s; }
+          .fso-text { animation: none; background: none; color: #cbd5e1; -webkit-text-fill-color: #cbd5e1; }
           .fsf-border, .fsf-card, .fsf-stagger > *, .fsf-pop, .fsf-bounce, .fsf-ping { animation: none; }
           .fsf-ring, .fsf-tick { animation: none; stroke-dashoffset: 0; }
           .fsf-btn, .fsf-btn:hover, .fsf-btn::after, .fsf-send { transition: none; transform: none; }
@@ -457,6 +553,60 @@ const Form = () => {
               aria-hidden
               className="fsf-spot pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
             />
+
+            {loading && (
+              <div
+                role="status"
+                aria-live="polite"
+                className="fso-overlay absolute inset-0 z-30 flex flex-col items-center justify-center bg-[#0b0e14]/90 backdrop-blur-md"
+              >
+                <div className="relative h-28 w-28">
+                  <div className="fso-glow" />
+                  <span className="fso-ripple" />
+                  <span className="fso-ripple b" />
+                  <div className="fso-orbit a"><span className="fso-comet" /></div>
+                  <div className="fso-orbit b"><span className="fso-comet" /></div>
+                  <div className="fso-core">
+                    <div className="fso-blob" />
+                    <div className="fso-gloss" />
+                    <div className="absolute inset-0 grid place-items-center text-white">
+                      <span className="fso-icon drop-shadow-[0_0_8px_rgba(255,255,255,.8)]">
+                        <HiOutlineSparkles size={24} />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <p key={stage} className="fso-text mt-9 text-base font-semibold tracking-tight">
+                  {stages[stage]}
+                </p>
+                <div className="fso-bar mt-4" aria-hidden />
+              </div>
+            )}
+
+            {error && !loading && (
+              <div className="fso-overlay absolute inset-0 z-30 flex flex-col items-center justify-center bg-[#0b0e14]/95 px-8 text-center backdrop-blur-md">
+                <div className="relative grid h-20 w-20 place-items-center">
+                  <div className="absolute inset-0 rounded-full bg-rose-500/20 blur-2xl" />
+                  <svg viewBox="0 0 52 52" className="relative h-20 w-20" aria-hidden>
+                    <circle className="fsf-ring" cx="26" cy="26" r="24" fill="none" stroke="#fb7185" strokeWidth="2" />
+                    <path className="fsf-tick" d="M26 15v14M26 36v.5" fill="none" stroke="#fb7185" strokeWidth="3" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <h2 className="mt-7 text-xl font-bold tracking-tight text-white">
+                  Feedback is paused
+                </h2>
+                <p className="mt-2 max-w-xs text-sm text-slate-400">
+                  This website has stopped collecting feedback for now.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => seterror(false)}
+                  className="mt-7 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-cyan-400/40 hover:bg-white/[0.07]"
+                >
+                  Try again
+                </button>
+              </div>
+            )}
 
             {/* progress line */}
             <div aria-hidden className="relative h-[2px] w-full bg-white/[0.06]">
@@ -506,6 +656,39 @@ const Form = () => {
                   <p className="mt-2 max-w-xs text-sm text-slate-400">
                     Your {noun} just reached the team. We read every one.
                   </p>
+                  {sent && (
+                    <div className="mt-7 w-full max-w-xs rounded-xl border border-white/10 bg-white/[0.03] p-3.5 text-left">
+                      <div className="flex items-center gap-3">
+                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-cyan-400/25 to-violet-500/25 text-cyan-200 ring-1 ring-inset ring-cyan-400/30">
+                          {selectedSection === "Bug Report" ? (
+                            <IoBugOutline size={17} />
+                          ) : selectedSection === "Feature Request" ? (
+                            <IoBulbOutline size={17} />
+                          ) : (
+                            <IoChatbubbleEllipsesOutline size={17} />
+                          )}
+                        </span>
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate text-sm font-semibold text-white">{sent.title}</p>
+                          <p className="truncate text-xs text-slate-500">{sent.meta}</p>
+                        </div>
+                      </div>
+                      {sent.rating > 0 && (
+                        <div className="mt-3 flex items-center gap-1 border-t border-white/[0.06] pt-3">
+                          {[1, 2, 3, 4, 5].map((i) => (
+                            <IoMdStar
+                              key={i}
+                              size={16}
+                              className={i <= sent.rating ? "text-amber-300" : "text-slate-700"}
+                            />
+                          ))}
+                          <span className="ml-1.5 text-xs text-slate-500">
+                            {ratingLabels[sent.rating - 1]}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
                   <button
                     type="button"
                     onClick={() => setSubmitted(false)}
@@ -664,10 +847,11 @@ const Form = () => {
                     )}
                   </div>
 
+                  {/* submit */}
                   <div className="px-5 pt-7 sm:px-8">
                     <button
                       onClick={saveSectionData}
-                      className="fsf-btn flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-4 py-3.5 text-sm font-bold text-[#06080b] shadow-[0_14px_36px_-14px_rgba(34,211,238,0.8)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
+                      className="fsf-btn flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-4 py-3.5 text-sm font-bold text-white shadow-[0_14px_36px_-14px_rgba(34,211,238,0.8)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
                     >
                       <span>{submitLabel}</span>
                       <FaTelegramPlane size={18} className="fsf-send" />
@@ -676,6 +860,7 @@ const Form = () => {
                 </>
               )}
 
+              {/* attribution */}
               <div className="flex items-center justify-center gap-1.5 px-5 pb-6 pt-5 text-[11px] text-slate-500">
                 <HiOutlineSparkles size={12} className="text-cyan-400/80" />
                 <a
@@ -692,21 +877,6 @@ const Form = () => {
           </div>
         </div>
 
-        {error && (
-          <div className="fixed inset-0 z-50 flex h-full items-center justify-center bg-black/70 backdrop-blur-md">
-            <div className="-mt-10 mx-auto flex max-w-xs flex-col items-center space-y-3 text-center">
-              <LottiePlayer loop animationData={ErrorLoader} play className="w-36 lg:w-52" />
-              <p className="text-sm text-white">Website Stopped Collecting Feedbacks</p>
-            </div>
-          </div>
-        )}
-        {loading && (
-          <div className="fixed inset-0 z-50 flex h-full items-center justify-center bg-black/70 backdrop-blur-md">
-            <div className="-mt-10 mx-auto max-w-xs">
-              <LottiePlayer loop animationData={FeedbackLoader} play className="w-36 lg:w-52" />
-            </div>
-          </div>
-        )}
         <ToastContainer theme="dark" toastClassName={"custom-toast"} />
       </div>
     </div>
