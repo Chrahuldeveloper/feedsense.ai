@@ -200,8 +200,8 @@ export default function Showwebsites() {
   );
 
   return (
-    <div className="fs-root relative min-w-0 flex-1 md:ml-64 p-6">
-              <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden md:left-64">
+    <div className="fs-root relative min-w-0 flex-1 md:ml-64 ">
+              <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden md:left-64 p-8">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-2xl">
           <h1 className="text-white text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
