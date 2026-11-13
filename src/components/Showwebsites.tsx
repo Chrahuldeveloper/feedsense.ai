@@ -201,6 +201,16 @@ export default function Showwebsites() {
 
   return (
     <div className="fs-root relative min-w-0 flex-1 md:ml-64 p-6">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="max-w-2xl">
+          <h1 className="text-white text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+            Your Website's
+          </h1>
+          <p className="mt-4 text-base text-zinc-400 sm:text-lg">
+            Add FeedSenseAI to your website in minutes
+          </p>
+        </div>
+      </div>
       <section className="fs-rise" style={{ animationDelay: "0.15s" }}>
         {loading ? (
           <Surface>
@@ -342,9 +352,8 @@ export default function Showwebsites() {
                         <td className="px-6 py-4">
                           <div className="flex min-w-0 items-center gap-3.5">
                             <span
-                              className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-sm font-bold text-white ${
-                                avatarGradients[(start + i) % avatarGradients.length]
-                              }`}
+                              className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-sm font-bold text-white ${avatarGradients[(start + i) % avatarGradients.length]
+                                }`}
                             >
                               {(site?.name || "?").charAt(0).toUpperCase()}
                             </span>
