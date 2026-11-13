@@ -83,8 +83,8 @@ const Navbar = () => {
                   aria-current={isActive(l.href) ? "page" : undefined}
                   className={`block rounded-full px-5 py-2 font-semibold transition-colors ${
                     isActive(l.href)
-                      ? "bg-white/10 text-white shadow-inner"
-                      : "text-slate-400 hover:text-white"
+                      ? "bg-white/10 text-[#06080b] shadow-inner"
+                      : "text-slate-400 hover:text-[#06080b]"
                   }`}
                 >
                   {l.label}
@@ -118,7 +118,7 @@ const Navbar = () => {
             onClick={() => {
               settoogle(true);
             }}
-            className="grid h-11 w-11 place-items-center rounded-xl border border-white/10 bg-white/[0.05] text-white transition hover:bg-white/10 md:hidden"
+            className="grid h-11 w-11 place-items-center rounded-xl border border-white/10 bg-white/[0.05] text-[#06080b] transition hover:bg-white/10 md:hidden"
           >
             <CiMenuFries size={22} />
           </button>

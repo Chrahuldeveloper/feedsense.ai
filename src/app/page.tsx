@@ -257,7 +257,7 @@ const Page = () => {
   );
 
   return (
-    <div className="fsh-root relative w-full overflow-x-clip bg-[#05070a] text-white">
+    <div className="fsh-root relative w-full overflow-x-clip bg-[#05070a] text-[#06080b]">
       <Theme />
 
       {/* ambient background */}

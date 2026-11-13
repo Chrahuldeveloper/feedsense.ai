@@ -40,7 +40,7 @@ const Loader: React.FC<props> = ({ message }) => {
           <div className="fsl-halo absolute -inset-6 rounded-full bg-gradient-to-br from-cyan-400/40 to-violet-500/40 blur-2xl" />
           <div className="fsl-ring" />
           <div className="fsl-ring2" />
-          <div className="fsl-orb absolute inset-[32px] grid place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-white shadow-[0_0_40px_rgba(34,211,238,0.6)]">
+          <div className="fsl-orb absolute inset-[32px] grid place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b] shadow-[0_0_40px_rgba(34,211,238,0.6)]">
             <HiOutlineSparkles size={22} />
           </div>
         </div>

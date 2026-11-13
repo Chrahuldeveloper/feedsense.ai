@@ -4,7 +4,7 @@ import { LuBrain } from "react-icons/lu";
 import { FiArrowUpRight } from "react-icons/fi";
 
 const linkClass =
-  "group inline-flex items-center gap-1.5 text-sm text-slate-400 transition-colors hover:text-white";
+  "group inline-flex items-center gap-1.5 text-sm text-slate-400 transition-colors hover:text-[#06080b]";
 
 export default function Footer() {
   return (
@@ -33,7 +33,7 @@ export default function Footer() {
 
         {/* Product */}
         <div>
-          <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-white">
+          <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-[#06080b]">
             Product
           </h4>
           <ul className="space-y-3">
@@ -49,7 +49,7 @@ export default function Footer() {
 
         {/* Company */}
         <div>
-          <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-white">
+          <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-[#06080b]">
             Company
           </h4>
           <ul className="space-y-3">
@@ -76,7 +76,7 @@ export default function Footer() {
 
         {/* Support */}
         <div>
-          <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-white">
+          <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-[#06080b]">
             Support
           </h4>
           <ul className="space-y-3">

@@ -91,7 +91,7 @@ interface User {
 
 /* UI-only class tokens */
 const inputClass =
-  "w-full rounded-xl border border-white/10 bg-black/40 py-3.5 pl-11 pr-4 text-sm text-white placeholder:text-slate-600 outline-none transition focus:border-cyan-400/60 focus:bg-black/60 focus:ring-4 focus:ring-cyan-400/10";
+  "w-full rounded-xl border border-white/10 bg-black/40 py-3.5 pl-11 pr-4 text-sm text-[#06080b] placeholder:text-slate-600 outline-none transition focus:border-cyan-400/60 focus:bg-black/60 focus:ring-4 focus:ring-cyan-400/10";
 const labelClass = "mb-2 block text-sm font-semibold text-slate-300";
 const iconClass =
   "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500";
@@ -148,7 +148,7 @@ const AddIntegration: React.FC = () => {
     <Link href="https://feedsenseai.vercel.app/integrate/${
       user!.uid
     }/${websiteId}">
-      <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
+      <button className="text-[#06080b] cursor-pointer hover:scale-110 duration-500 ease-in-out">
         <MdSettingsSuggest
           size={47}
           color="white"
@@ -226,7 +226,7 @@ const AddIntegration: React.FC = () => {
     <Link href="https://feedsenseai.vercel.app/integrate/${
       user!.uid
     }/${lastWebsiteId}">
-      <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
+      <button className="text-[#06080b] cursor-pointer hover:scale-110 duration-500 ease-in-out">
         <MdSettingsSuggest
           size={47}
           color="white"
@@ -276,10 +276,10 @@ const AddIntegration: React.FC = () => {
         <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#06080b]/70 backdrop-blur-xl">
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
             <div className="flex items-center gap-2.5 md:hidden">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-white">
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b]">
                 <HiOutlineSparkles size={18} />
               </span>
-              <h1 className="text-base font-semibold tracking-tight text-white">
+              <h1 className="text-base font-semibold tracking-tight text-[#06080b]">
                 FeedSense.ai
               </h1>
             </div>
@@ -292,14 +292,14 @@ const AddIntegration: React.FC = () => {
                 <span className="max-w-[10rem] truncate text-sm text-slate-300">
                   {user?.displayName || "User"}
                 </span>
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-white ring-2 ring-white/10">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-[#06080b] ring-2 ring-white/10">
                   {initial}
                 </span>
               </div>
               <button
                 aria-label="Open menu"
                 onClick={() => setToggle(true)}
-                className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-white transition hover:bg-white/10 md:hidden"
+                className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-[#06080b] transition hover:bg-white/10 md:hidden"
               >
                 <CiMenuFries size={20} />
               </button>
@@ -334,7 +334,7 @@ const AddIntegration: React.FC = () => {
                   <FiLayers size={18} />
                 </span>
                 <div>
-                  <p className="text-2xl font-bold tabular-nums leading-none text-white">
+                  <p className="text-2xl font-bold tabular-nums leading-none text-[#06080b]">
                     {websitedata.length}
                   </p>
                   <p className="mt-1 text-xs text-slate-500">websites connected</p>
@@ -360,9 +360,9 @@ const AddIntegration: React.FC = () => {
                     <span
                       className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-sm font-bold ${
                         done
-                          ? "bg-emerald-400 text-white"
+                          ? "bg-emerald-400 text-[#06080b]"
                           : active
-                          ? "bg-gradient-to-br from-cyan-400 to-violet-500 text-white"
+                          ? "bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b]"
                           : "bg-white/[0.06] text-slate-500"
                       }`}
                     >
@@ -371,7 +371,7 @@ const AddIntegration: React.FC = () => {
                     <div className="min-w-0">
                       <p
                         className={`text-sm font-semibold ${
-                          done || active ? "text-white" : "text-slate-500"
+                          done || active ? "text-[#06080b]" : "text-slate-500"
                         }`}
                       >
                         {s.title}
@@ -397,7 +397,7 @@ const AddIntegration: React.FC = () => {
                         <CiGlobe size={28} />
                       </span>
                       <div>
-                        <h2 className="text-xl font-bold text-white">
+                        <h2 className="text-xl font-bold text-[#06080b]">
                           Website Details
                         </h2>
                         <p className="text-sm text-slate-500">
@@ -469,7 +469,7 @@ const AddIntegration: React.FC = () => {
                               }
                               className={`rounded-lg py-2.5 text-sm font-semibold transition ${
                                 websiteDataInput.type === o.v
-                                  ? "bg-gradient-to-br from-cyan-400/25 to-violet-500/25 text-white ring-1 ring-inset ring-cyan-400/40"
+                                  ? "bg-gradient-to-br from-cyan-400/25 to-violet-500/25 text-[#06080b] ring-1 ring-inset ring-cyan-400/40"
                                   : "text-slate-400 hover:bg-white/[0.05] hover:text-slate-200"
                               }`}
                             >
@@ -481,7 +481,7 @@ const AddIntegration: React.FC = () => {
 
                       <button
                         onClick={saveData}
-                        className="fs-btn w-full rounded-xl px-6 py-4 text-sm font-bold text-white shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
+                        className="fs-btn w-full rounded-xl px-6 py-4 text-sm font-bold text-[#06080b] shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
                       >
                         Save website
                       </button>
@@ -497,7 +497,7 @@ const AddIntegration: React.FC = () => {
                       <IoCodeOutline size={26} />
                     </span>
                     <div>
-                      <h2 className="text-xl font-bold text-white">
+                      <h2 className="text-xl font-bold text-[#06080b]">
                         Integration Code
                       </h2>
                       <p className="text-sm text-slate-500">
@@ -552,7 +552,7 @@ const AddIntegration: React.FC = () => {
           {/* ---------- Connected websites: card grid ---------- */}
           <section className="fs-rise" style={{ animationDelay: "0.2s" }}>
             <div className="mb-5 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-white sm:text-2xl">
+              <h2 className="text-xl font-bold text-[#06080b] sm:text-2xl">
                 Connected websites
               </h2>
               <span className="rounded-full bg-gradient-to-r from-cyan-400/15 to-violet-500/15 px-3 py-1 text-xs font-semibold text-cyan-200 ring-1 ring-inset ring-cyan-400/25">
@@ -566,7 +566,7 @@ const AddIntegration: React.FC = () => {
                   <div className="p-5 sm:p-6">
                     <div className="flex items-start justify-between gap-3">
                       <span
-                        className={`grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-lg font-bold text-white shadow-lg ${
+                        className={`grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-lg font-bold text-[#06080b] shadow-lg ${
                           avatarGradients[idx % avatarGradients.length]
                         }`}
                       >
@@ -581,7 +581,7 @@ const AddIntegration: React.FC = () => {
                       </span>
                     </div>
 
-                    <h3 className="mt-5 truncate text-base font-semibold text-white">
+                    <h3 className="mt-5 truncate text-base font-semibold text-[#06080b]">
                       {site.name}
                     </h3>
 

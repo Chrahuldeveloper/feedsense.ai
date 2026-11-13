@@ -177,7 +177,7 @@ const Page = () => {
   };
 
   return (
-    <div className="fss-root relative min-h-screen w-full overflow-x-clip bg-[#05070a] text-white">
+    <div className="fss-root relative min-h-screen w-full overflow-x-clip bg-[#05070a] text-[#06080b]">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         .fss-root{font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
@@ -226,7 +226,7 @@ const Page = () => {
               <Link
                 href={"/dashboard"}
                 aria-label="Close"
-                className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-white transition hover:bg-white/10"
+                className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-[#06080b] transition hover:bg-white/10"
               >
                 <RxCross2 size={22} />
               </Link>
@@ -283,7 +283,7 @@ const Page = () => {
                             {selected && <FiCheck size={14} strokeWidth={3} />}
                           </span>
                           <div>
-                            <h2 className="flex flex-wrap items-center gap-3 text-xl font-bold text-white">
+                            <h2 className="flex flex-wrap items-center gap-3 text-xl font-bold text-[#06080b]">
                               {itm.name}
                               {selected && (
                                 <span className="rounded-full bg-gradient-to-r from-cyan-400/20 to-violet-500/20 px-3 py-1 text-[11px] font-semibold text-cyan-200 ring-1 ring-inset ring-cyan-400/30">
@@ -296,7 +296,7 @@ const Page = () => {
                             </p>
                           </div>
                         </div>
-                        <p className="shrink-0 text-right text-3xl font-extrabold tracking-tight text-white">
+                        <p className="shrink-0 text-right text-3xl font-extrabold tracking-tight text-[#06080b]">
                           ₹{itm.price}
                           <span className="block text-xs font-medium text-slate-500">
                             /month
@@ -324,7 +324,7 @@ const Page = () => {
             <aside className="lg:sticky lg:top-8 lg:col-span-2">
               <div className="rounded-3xl bg-gradient-to-b from-white/25 via-white/[0.06] to-cyan-400/25 p-px shadow-[0_30px_90px_-40px_rgba(34,211,238,0.45)]">
                 <div className="rounded-[23px] bg-[#0a0d12] p-6 sm:p-8">
-                  <h2 className="text-lg font-bold text-white">Order summary</h2>
+                  <h2 className="text-lg font-bold text-[#06080b]">Order summary</h2>
 
                   <div className="mt-5 overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4">
                     <Bill selectedPlan={currentPlan} />
@@ -334,7 +334,7 @@ const Page = () => {
                     <Script src="https://checkout.razorpay.com/v1/checkout.js" />
                     <button
                       onClick={handlePayment}
-                      className="fss-btn flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-5 py-4 text-sm font-bold text-white shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
+                      className="fss-btn flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-5 py-4 text-sm font-bold text-[#06080b] shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
                     >
                       <FiLock size={16} />
                       Purchase · ₹{currentPlan.price}
@@ -352,7 +352,7 @@ const Page = () => {
                       onClick={() => {
                         setistoggle(true);
                       }}
-                      className="cursor-pointer text-slate-300 underline decoration-slate-600 underline-offset-4 hover:text-white"
+                      className="cursor-pointer text-slate-300 underline decoration-slate-600 underline-offset-4 hover:text-[#06080b]"
                     >
                       Terms and conditions
                     </span>

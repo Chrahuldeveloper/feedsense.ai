@@ -64,10 +64,10 @@ const SideBar: React.FC<props> = ({ page }) => {
           href="/dashboard"
           className="relative flex items-center gap-3 px-2"
         >
-          <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 text-white shadow-[0_0_30px_-4px_rgba(34,211,238,0.8)]">
+          <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b] shadow-[0_0_30px_-4px_rgba(34,211,238,0.8)]">
             <HiOutlineSparkles size={22} />
           </span>
-          <span className="text-lg font-extrabold tracking-tight text-white">
+          <span className="text-lg font-extrabold tracking-tight text-[#06080b]">
             FeedSense<span className="text-cyan-400">AI</span>
           </span>
         </Link>
@@ -85,8 +85,8 @@ const SideBar: React.FC<props> = ({ page }) => {
                 aria-current={active ? "page" : undefined}
                 className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all ${
                   active
-                    ? "bg-gradient-to-r from-cyan-400/20 via-cyan-400/5 to-transparent text-white ring-1 ring-inset ring-cyan-400/20"
-                    : "text-slate-400 hover:bg-white/[0.05] hover:text-white"
+                    ? "bg-gradient-to-r from-cyan-400/20 via-cyan-400/5 to-transparent text-[#06080b] ring-1 ring-inset ring-cyan-400/20"
+                    : "text-slate-400 hover:bg-white/[0.05] hover:text-[#06080b]"
                 }`}
               >
                 {active && (
@@ -109,13 +109,13 @@ const SideBar: React.FC<props> = ({ page }) => {
 
         <div className="relative mt-auto space-y-3">
           <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-cyan-400/10 to-violet-500/10 p-4">
-            <p className="text-sm font-bold text-white">Need a hand?</p>
+            <p className="text-sm font-bold text-[#06080b]">Need a hand?</p>
             <p className="mt-1 text-xs leading-relaxed text-slate-400">
               Our team can help you set up your integration.
             </p>
             <Link
               href="/dashboard/contact"
-              className="mt-3 inline-block rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/20"
+              className="mt-3 inline-block rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold text-[#06080b] transition hover:bg-white/20"
             >
               Contact support
             </Link>

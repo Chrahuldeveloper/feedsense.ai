@@ -9,7 +9,7 @@ const H2 = ({ id, children }: { id: string; children: React.ReactNode }) => (
   <h2
     id={id}
     data-sec
-    className="mb-4 mt-14 scroll-mt-6 border-t border-white/[0.07] pt-10 text-2xl font-extrabold tracking-tight text-white first:mt-0 first:border-0 first:pt-0 sm:text-3xl"
+    className="mb-4 mt-14 scroll-mt-6 border-t border-white/[0.07] pt-10 text-2xl font-extrabold tracking-tight text-[#06080b] first:mt-0 first:border-0 first:pt-0 sm:text-3xl"
   >
     {children}
   </h2>
@@ -23,7 +23,7 @@ const P = ({ children }: { children: React.ReactNode }) => (
   <p className="mb-4 leading-7 text-slate-300">{children}</p>
 );
 const UL = ({ children }: { children: React.ReactNode }) => (
-  <ul className="mb-5 space-y-2.5 leading-7 text-slate-300 [&>li]:relative [&>li]:rounded-xl [&>li]:border [&>li]:border-white/[0.06] [&>li]:bg-white/[0.025] [&>li]:py-3 [&>li]:pl-10 [&>li]:pr-4 [&>li]:before:absolute [&>li]:before:left-4 [&>li]:before:top-[1.15rem] [&>li]:before:h-2 [&>li]:before:w-2 [&>li]:before:rounded-full [&>li]:before:bg-gradient-to-br [&>li]:before:from-cyan-400 [&>li]:before:to-violet-500 [&_strong]:font-semibold [&_strong]:text-white">
+  <ul className="mb-5 space-y-2.5 leading-7 text-slate-300 [&>li]:relative [&>li]:rounded-xl [&>li]:border [&>li]:border-white/[0.06] [&>li]:bg-white/[0.025] [&>li]:py-3 [&>li]:pl-10 [&>li]:pr-4 [&>li]:before:absolute [&>li]:before:left-4 [&>li]:before:top-[1.15rem] [&>li]:before:h-2 [&>li]:before:w-2 [&>li]:before:rounded-full [&>li]:before:bg-gradient-to-br [&>li]:before:from-cyan-400 [&>li]:before:to-violet-500 [&_strong]:font-semibold [&_strong]:text-[#06080b]">
     {children}
   </ul>
 );
@@ -96,14 +96,14 @@ const LegalShell = ({
               <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-cyan-400/20 to-violet-500/20 text-cyan-300 ring-1 ring-inset ring-cyan-400/30">
                 {icon}
               </span>
-              <h1 className="text-lg font-bold tracking-tight text-white sm:text-xl">
+              <h1 className="text-lg font-bold tracking-tight text-[#06080b] sm:text-xl">
                 {title}
               </h1>
             </div>
             <button
               aria-label="Close"
               onClick={onClose}
-              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-slate-300 transition hover:bg-white/10 hover:text-white"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-slate-300 transition hover:bg-white/10 hover:text-[#06080b]"
             >
               <RxCross2 size={22} />
             </button>
@@ -146,7 +146,7 @@ const LegalShell = ({
                       className={`w-full rounded-lg px-3 py-2.5 text-left text-sm font-medium transition ${
                         active === t.id
                           ? "bg-cyan-400/10 text-cyan-200"
-                          : "text-slate-400 hover:bg-white/[0.05] hover:text-white"
+                          : "text-slate-400 hover:bg-white/[0.05] hover:text-[#06080b]"
                       }`}
                     >
                       {t.label}

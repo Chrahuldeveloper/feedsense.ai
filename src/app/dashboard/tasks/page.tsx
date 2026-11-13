@@ -105,7 +105,7 @@ const Panel = ({
             <span className={`grid h-10 w-10 place-items-center rounded-xl ring-1 ring-inset ${tones[tone]}`}>
               {icon}
             </span>
-            <h2 className="font-semibold text-white">{title}</h2>
+            <h2 className="font-semibold text-[#06080b]">{title}</h2>
             {count !== undefined && (
               <span className="rounded-full bg-white/[0.07] px-2.5 py-0.5 text-xs font-semibold tabular-nums text-slate-300">
                 {count}
@@ -316,7 +316,7 @@ const Page = () => {
       </div>
 
       <div className="mt-4 flex items-center gap-3">
-        <span className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-violet-400 to-fuchsia-600 font-bold text-white">
+        <span className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-violet-400 to-fuchsia-600 font-bold text-[#06080b]">
           {i.email[0].toUpperCase()}
         </span>
         <h3 className="truncate text-sm font-semibold text-slate-200">
@@ -324,13 +324,13 @@ const Page = () => {
         </h3>
       </div>
 
-      <h4 className="mt-4 text-lg font-bold text-white">{i.tittle}</h4>
+      <h4 className="mt-4 text-lg font-bold text-[#06080b]">{i.tittle}</h4>
       <p className="mt-2 text-sm leading-6 text-slate-400">{i.desc}</p>
 
       <div className="mt-5 flex justify-end">
         <button
           onClick={onClose}
-          className="rounded-lg border border-rose-400/30 bg-rose-500/10 px-4 py-2 text-xs font-semibold text-rose-300 transition hover:bg-rose-500 hover:text-white"
+          className="rounded-lg border border-rose-400/30 bg-rose-500/10 px-4 py-2 text-xs font-semibold text-rose-300 transition hover:bg-rose-500 hover:text-[#06080b]"
         >
           Close
         </button>
@@ -372,10 +372,10 @@ const Page = () => {
           <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#06080b]/70 backdrop-blur-xl">
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
               <div className="flex items-center gap-2.5 md:hidden">
-                <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-white">
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b]">
                   <HiOutlineSparkles size={18} />
                 </span>
-                <h1 className="text-base font-semibold tracking-tight text-white">
+                <h1 className="text-base font-semibold tracking-tight text-[#06080b]">
                   FeedSense.ai
                 </h1>
               </div>
@@ -388,14 +388,14 @@ const Page = () => {
                   <span className="max-w-[10rem] truncate text-sm text-slate-300">
                     {user?.displayName || "User"}
                   </span>
-                  <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-white ring-2 ring-white/10">
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-[#06080b] ring-2 ring-white/10">
                     {initial}
                   </span>
                 </div>
                 <button
                   aria-label="Open menu"
                   onClick={() => setToggle(true)}
-                  className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-white transition hover:bg-white/10 md:hidden"
+                  className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-[#06080b] transition hover:bg-white/10 md:hidden"
                 >
                   <CiMenuFries size={20} />
                 </button>
@@ -408,7 +408,7 @@ const Page = () => {
             <section className="fst-rise">
               <Link
                 href="/dashboard"
-                className="inline-flex items-center gap-2 text-sm text-slate-400 transition hover:text-white"
+                className="inline-flex items-center gap-2 text-sm text-slate-400 transition hover:text-[#06080b]"
               >
                 <FiArrowLeft size={16} />
                 Back to dashboard
@@ -425,7 +425,7 @@ const Page = () => {
                 </div>
                 <div className="flex flex-wrap items-center gap-2.5">
                   {getName && (
-                    <span className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-semibold text-white">
+                    <span className="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-semibold text-[#06080b]">
                       {getName}
                     </span>
                   )}
@@ -443,7 +443,7 @@ const Page = () => {
               <div className="rounded-3xl bg-gradient-to-br from-cyan-400/40 via-white/10 to-violet-500/40 p-px lg:col-span-2">
                 <div className="relative h-full overflow-hidden rounded-[23px] bg-[#0a0d13] p-6 sm:p-8">
                   <div className="pointer-events-none absolute -left-16 -top-16 h-52 w-52 rounded-full bg-cyan-500/20 blur-3xl" />
-                  <h2 className="relative text-lg font-bold text-white">
+                  <h2 className="relative text-lg font-bold text-[#06080b]">
                     Sentiment overview
                   </h2>
                   <p className="relative mt-1 text-sm text-slate-500">
@@ -459,7 +459,7 @@ const Page = () => {
                       <div className="absolute inset-0 rounded-full border-[14px] border-white/[0.06]" />
                     )}
                     <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-                      <span className="text-4xl font-extrabold tabular-nums text-white">
+                      <span className="text-4xl font-extrabold tabular-nums text-[#06080b]">
                         {total}
                       </span>
                       <span className="text-xs text-slate-500">responses</span>
@@ -486,7 +486,7 @@ const Page = () => {
                             }}
                           />
                         </div>
-                        <span className="w-8 text-right font-semibold tabular-nums text-white">
+                        <span className="w-8 text-right font-semibold tabular-nums text-[#06080b]">
                           {s.v}
                         </span>
                       </div>
@@ -504,7 +504,7 @@ const Page = () => {
                   >
                     <div>
                       <p className="text-sm text-slate-400">{x.l}</p>
-                      <p className="mt-1 text-3xl font-extrabold tabular-nums text-white">
+                      <p className="mt-1 text-3xl font-extrabold tabular-nums text-[#06080b]">
                         {x.v}
                       </p>
                     </div>
