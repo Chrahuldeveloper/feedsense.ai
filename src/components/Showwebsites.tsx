@@ -210,7 +210,6 @@ export default function Showwebsites() {
 
   return (
     <div className="fs-root relative min-w-0 flex-1 md:ml-64 ">
-      <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden md:left-64 ">
 
         <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#09090b]/70 backdrop-blur-xl">
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
@@ -508,7 +507,6 @@ export default function Showwebsites() {
             </Surface>
           )}
         </section>
-      </div>
               {toggle && (
           <MobileSideBar
             Page="Integrate"
