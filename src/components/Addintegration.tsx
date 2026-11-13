@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ModelLogout from "./ModelLogout";
 import { IoCodeOutline } from "react-icons/io5";
 import { BsTrash2 } from "react-icons/bs";
-import { FiChevronDown, FiArrowUpRight, FiLink, FiLayers, FiType } from "react-icons/fi";
+import { FiArrowUpRight, FiLink, FiType, FiCheck, FiPlus, FiLayers } from "react-icons/fi";
 import { HiOutlineSparkles } from "react-icons/hi2";
 
 const Theme = () => (
@@ -36,6 +36,7 @@ const Theme = () => (
 );
 
 
+/* Card with a thin gradient border and an optional corner glow */
 const GlowCard = ({
   children,
   className = "",
@@ -248,48 +249,57 @@ const AddIntegration: React.FC = () => {
 
   const initial = (user?.displayName || "U").charAt(0).toUpperCase();
 
+  const filled =
+    websiteDataInput.name !== "" &&
+    websiteDataInput.url !== "" &&
+    websiteDataInput.type !== "";
+  const stage = highlightedCode1.length !== 0 ? 2 : filled ? 1 : 0;
+  const steps = [
+    { title: "Add details", desc: "Name, URL and type" },
+    { title: "Save website", desc: "Register it with FeedSense" },
+    { title: "Paste the code", desc: "Drop it into your site" },
+  ];
+
   return (
     <>
       <Theme />
       {(fetchingData || savingData || deleting) && <Loader message="Loading" />}
       <div className="fs-root relative min-w-0 flex-1 md:ml-64">
         {/* ambient background */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[560px] overflow-hidden">
+        <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden md:left-64">
           <div className="fs-drift-a absolute -left-24 -top-24 h-[420px] w-[420px] rounded-full bg-cyan-500/20 blur-[110px]" />
           <div className="fs-drift-b absolute -right-24 top-10 h-[460px] w-[460px] rounded-full bg-violet-600/20 blur-[120px]" />
           <div className="fs-grid absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)]" />
         </div>
 
         {/* ---------- Top bar ---------- */}
-        <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#06080b]/60 backdrop-blur-2xl">
+        <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#06080b]/70 backdrop-blur-xl">
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
             <div className="flex items-center gap-2.5 md:hidden">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b] shadow-[0_0_20px_-2px_rgba(34,211,238,0.7)]">
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b]">
                 <HiOutlineSparkles size={18} />
               </span>
-              <h1 className="text-base font-bold tracking-tight text-white">
+              <h1 className="text-base font-semibold tracking-tight text-white">
                 FeedSense.ai
               </h1>
             </div>
-
             <p className="hidden text-sm text-slate-500 md:block">
               Workspace <span className="mx-1.5 text-slate-700">/</span>
-              <span className="font-medium text-slate-200">Integrate</span>
+              <span className="text-slate-200">Integrate</span>
             </p>
-
             <div className="flex items-center gap-3">
-              <div className="hidden items-center gap-3 rounded-full border border-white/[0.08] bg-white/[0.04] py-1 pl-4 pr-1 md:flex">
-                <span className="max-w-[10rem] truncate text-sm text-slate-200">
+              <div className="hidden items-center gap-3 md:flex">
+                <span className="max-w-[10rem] truncate text-sm text-slate-300">
                   {user?.displayName || "User"}
                 </span>
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-[#06080b]">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-[#06080b] ring-2 ring-white/10">
                   {initial}
                 </span>
               </div>
               <button
                 aria-label="Open menu"
                 onClick={() => setToggle(true)}
-                className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.05] text-white transition hover:bg-white/10 md:hidden"
+                className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-white transition hover:bg-white/10 md:hidden"
               >
                 <CiMenuFries size={20} />
               </button>
@@ -307,241 +317,277 @@ const AddIntegration: React.FC = () => {
 
         {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
-        <main className="relative z-10 mx-auto max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:space-y-8 lg:px-10 lg:py-10">
-          {/* ---------- Hero ---------- */}
-          <section>
-            <h1 className="fs-gradient-text text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-              Integrate Website
-            </h1>
-            <p className="mt-4 max-w-lg text-base text-slate-400 sm:text-lg">
-              Add FeedSenseAI to your website in minutes
-            </p>
-          </section>
-
-          {/* ---------- Form + code ---------- */}
-          <section className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            {/* Form */}
-            <GlowCard tint="bg-cyan-500/25" className="fs-rise">
-              <div className="p-5 sm:p-7">
-                <div className="flex items-center gap-4">
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-cyan-400/30 to-cyan-400/5 text-cyan-200 ring-1 ring-inset ring-cyan-300/25 shadow-[0_0_30px_-6px_rgba(34,211,238,0.65)]">
-                    <CiGlobe size={28} />
-                  </span>
-                  <div>
-                    <p className="text-xs font-semibold text-cyan-300">Step 1</p>
-                    <h2 className="text-lg font-bold text-white">
-                      Website Details
-                    </h2>
-                    <p className="text-sm text-slate-500">
-                      Configure your integration
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-8 space-y-5">
-                  <div>
-                    <label htmlFor="site-name" className={labelClass}>
-                      Website name
-                    </label>
-                    <div className="relative">
-                      <FiType size={17} className={iconClass} />
-                      <input
-                        id="site-name"
-                        type="text"
-                        placeholder="Website Name"
-                        className={inputClass}
-                        value={websiteDataInput.name}
-                        onChange={(e) =>
-                          setWebsiteDataInput((prev) => ({
-                            ...prev,
-                            name: e.target.value,
-                          }))
-                        }
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label htmlFor="site-url" className={labelClass}>
-                      Website URL
-                    </label>
-                    <div className="relative">
-                      <FiLink size={17} className={iconClass} />
-                      <input
-                        id="site-url"
-                        type="text"
-                        placeholder="Website URL"
-                        className={inputClass}
-                        value={websiteDataInput.url}
-                        onChange={(e) =>
-                          setWebsiteDataInput((prev) => ({
-                            ...prev,
-                            url: e.target.value,
-                          }))
-                        }
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label htmlFor="site-type" className={labelClass}>
-                      Type
-                    </label>
-                    <div className="relative">
-                      <FiLayers size={17} className={iconClass} />
-                      <select
-                        id="site-type"
-                        className={`${inputClass} appearance-none pr-11 [color-scheme:dark]`}
-                        value={websiteDataInput.type}
-                        onChange={(e) =>
-                          setWebsiteDataInput((prev) => ({
-                            ...prev,
-                            type: e.target.value,
-                          }))
-                        }
-                      >
-                        <option value="">Select Type</option>
-                        <option value="personal">Personal</option>
-                        <option value="business">Business</option>
-                      </select>
-                      <FiChevronDown
-                        size={18}
-                        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-500"
-                      />
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={saveData}
-                    className="fs-btn w-full rounded-xl px-6 py-3.5 text-sm font-bold text-[#06080b] shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
-                  >
-                    Save website
-                  </button>
+        <main className="relative z-10 mx-auto max-w-7xl space-y-10 px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
+          {/* ---------- Title + live stepper ---------- */}
+          <section className="fs-rise">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-2xl">
+                <h1 className="fs-gradient-text text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+                  Integrate Website
+                </h1>
+                <p className="mt-4 text-base text-slate-400 sm:text-lg">
+                  Add FeedSenseAI to your website in minutes
+                </p>
+              </div>
+              <div className="flex items-center gap-3 self-start rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-3 backdrop-blur lg:self-auto">
+                <span className="grid h-10 w-10 place-items-center rounded-xl bg-cyan-400/10 text-cyan-300 ring-1 ring-inset ring-cyan-400/25">
+                  <FiLayers size={18} />
+                </span>
+                <div>
+                  <p className="text-2xl font-bold tabular-nums leading-none text-white">
+                    {websitedata.length}
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">websites connected</p>
                 </div>
               </div>
-            </GlowCard>
+            </div>
 
-            {/* Code */}
-            <GlowCard
-              tint="bg-violet-500/25"
-              className="fs-rise"
-              style={{ animationDelay: "120ms" }}
-              innerClassName="flex flex-col"
-            >
-              <div className="flex h-full flex-col p-5 sm:p-7">
-                <div className="flex items-center gap-4">
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-violet-400/30 to-violet-400/5 text-violet-200 ring-1 ring-inset ring-violet-300/25 shadow-[0_0_30px_-6px_rgba(167,139,250,0.65)]">
-                    <IoCodeOutline size={26} />
-                  </span>
-                  <div>
-                    <p className="text-xs font-semibold text-violet-300">
-                      Step 2
-                    </p>
-                    <h2 className="text-lg font-bold text-white">
-                      Integration Code
-                    </h2>
-                    <p className="text-sm text-slate-500">
-                      Copy and paste to your website
-                    </p>
+            <ol className="relative mt-10 grid gap-3 sm:grid-cols-3 sm:gap-5">
+              {steps.map((s, i) => {
+                const done = i < stage;
+                const active = i === stage;
+                return (
+                  <li
+                    key={s.title}
+                    className={`relative flex items-center gap-4 rounded-2xl border px-5 py-4 transition-colors ${
+                      active
+                        ? "border-cyan-400/40 bg-cyan-400/[0.07] shadow-[0_0_40px_-12px_rgba(34,211,238,0.5)]"
+                        : done
+                        ? "border-emerald-400/25 bg-emerald-400/[0.05]"
+                        : "border-white/[0.08] bg-white/[0.02]"
+                    }`}
+                  >
+                    <span
+                      className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-sm font-bold ${
+                        done
+                          ? "bg-emerald-400 text-[#06080b]"
+                          : active
+                          ? "bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b]"
+                          : "bg-white/[0.06] text-slate-500"
+                      }`}
+                    >
+                      {done ? <FiCheck size={18} /> : i + 1}
+                    </span>
+                    <div className="min-w-0">
+                      <p
+                        className={`text-sm font-semibold ${
+                          done || active ? "text-white" : "text-slate-500"
+                        }`}
+                      >
+                        {s.title}
+                      </p>
+                      <p className="truncate text-xs text-slate-500">{s.desc}</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </section>
+
+          {/* ---------- Setup studio: one split panel ---------- */}
+          <section className="fs-rise" style={{ animationDelay: "0.1s" }}>
+            <div className="rounded-[28px] bg-gradient-to-br from-cyan-400/50 via-white/10 to-violet-500/50 p-px shadow-[0_30px_90px_-40px_rgba(34,211,238,0.45)]">
+              <div className="grid overflow-hidden rounded-[27px] bg-[#080b10] lg:grid-cols-2">
+                {/* form side */}
+                <div className="relative p-6 sm:p-10">
+                  <div className="pointer-events-none absolute -left-20 -top-20 h-60 w-60 rounded-full bg-cyan-500/15 blur-3xl" />
+                  <div className="relative">
+                    <div className="flex items-center gap-4">
+                      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-cyan-400/10 text-cyan-300 ring-1 ring-inset ring-cyan-400/25">
+                        <CiGlobe size={28} />
+                      </span>
+                      <div>
+                        <h2 className="text-xl font-bold text-white">
+                          Website Details
+                        </h2>
+                        <p className="text-sm text-slate-500">
+                          Configure your integration
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mt-9 space-y-6">
+                      <div>
+                        <label htmlFor="site-name" className={labelClass}>
+                          Website name
+                        </label>
+                        <div className="relative">
+                          <FiType size={17} className={iconClass} />
+                          <input
+                            id="site-name"
+                            type="text"
+                            placeholder="Website Name"
+                            className={inputClass}
+                            value={websiteDataInput.name}
+                            onChange={(e) =>
+                              setWebsiteDataInput((prev) => ({
+                                ...prev,
+                                name: e.target.value,
+                              }))
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label htmlFor="site-url" className={labelClass}>
+                          Website URL
+                        </label>
+                        <div className="relative">
+                          <FiLink size={17} className={iconClass} />
+                          <input
+                            id="site-url"
+                            type="text"
+                            placeholder="Website URL"
+                            className={inputClass}
+                            value={websiteDataInput.url}
+                            onChange={(e) =>
+                              setWebsiteDataInput((prev) => ({
+                                ...prev,
+                                url: e.target.value,
+                              }))
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <span className={labelClass}>Type</span>
+                        <div className="grid grid-cols-2 gap-1.5 rounded-xl border border-white/10 bg-black/40 p-1.5">
+                          {[
+                            { v: "personal", l: "Personal" },
+                            { v: "business", l: "Business" },
+                          ].map((o) => (
+                            <button
+                              key={o.v}
+                              type="button"
+                              onClick={() =>
+                                setWebsiteDataInput((prev) => ({
+                                  ...prev,
+                                  type: o.v,
+                                }))
+                              }
+                              className={`rounded-lg py-2.5 text-sm font-semibold transition ${
+                                websiteDataInput.type === o.v
+                                  ? "bg-gradient-to-br from-cyan-400/25 to-violet-500/25 text-white ring-1 ring-inset ring-cyan-400/40"
+                                  : "text-slate-400 hover:bg-white/[0.05] hover:text-slate-200"
+                              }`}
+                            >
+                              {o.l}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={saveData}
+                        className="fs-btn w-full rounded-xl px-6 py-4 text-sm font-bold text-[#06080b] shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
+                      >
+                        Save website
+                      </button>
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-8 flex min-h-[18rem] flex-1 flex-col overflow-hidden rounded-xl border border-white/[0.08] bg-[#070a0f] shadow-inner">
-                  {highlightedCode1.length != 0 ? (
-                    <>
-                      <div className="flex items-center justify-between border-b border-white/[0.06] bg-white/[0.02] px-4 py-2.5">
-                        <div className="flex items-center gap-1.5">
-                          <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
-                          <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
-                          <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
-                        </div>
-                        <button
-                          type="button"
-                          onClick={copyCode}
-                          className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-cyan-400/40 hover:bg-cyan-400/10 hover:text-cyan-200"
-                        >
-                          <FaRegCopy size={13} />
-                          Copy
-                        </button>
-                      </div>
-                      <pre
-                        className="max-h-80 min-h-[12rem] flex-1 overflow-auto px-4 py-4 text-left text-xs leading-relaxed text-slate-200 [scrollbar-color:#2a3038_transparent] [scrollbar-width:thin]"
-                        dangerouslySetInnerHTML={{ __html: highlightedCode1 }}
-                      ></pre>
-                    </>
-                  ) : (
-                    <div className="flex flex-1 flex-col items-center justify-center px-6 py-14 text-center">
-                      <span className="grid h-14 w-14 place-items-center rounded-2xl bg-white/[0.05] text-slate-400 ring-1 ring-inset ring-white/10">
-                        <IoCodeOutline size={26} />
-                      </span>
-                      <p className="mt-5 max-w-xs text-sm text-slate-400">
-                        Fill in your website details and save to get your
-                        integration code
+                {/* code side */}
+                <div className="relative flex flex-col border-t border-white/[0.07] bg-[#06080c] p-6 sm:p-10 lg:border-l lg:border-t-0">
+                  <div className="pointer-events-none absolute -bottom-24 -right-16 h-64 w-64 rounded-full bg-violet-600/20 blur-3xl" />
+                  <div className="relative flex items-center gap-4">
+                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-violet-400/10 text-violet-300 ring-1 ring-inset ring-violet-400/25">
+                      <IoCodeOutline size={26} />
+                    </span>
+                    <div>
+                      <h2 className="text-xl font-bold text-white">
+                        Integration Code
+                      </h2>
+                      <p className="text-sm text-slate-500">
+                        Copy and paste to your website
                       </p>
                     </div>
-                  )}
+                  </div>
+
+                  <div className="relative mt-9 flex flex-1 flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0b0f15] shadow-[0_20px_60px_-30px_rgba(0,0,0,0.9)]">
+                    {highlightedCode1.length != 0 ? (
+                      <>
+                        <div className="flex items-center justify-between border-b border-white/[0.07] px-4 py-3">
+                          <div className="flex items-center gap-2">
+                            <span className="h-3 w-3 rounded-full bg-red-400/80" />
+                            <span className="h-3 w-3 rounded-full bg-amber-400/80" />
+                            <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
+                            <span className="ml-3 text-xs text-slate-500">
+                              feedback-button.tsx
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={copyCode}
+                            className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-slate-200 transition hover:border-cyan-400/40 hover:bg-cyan-400/10 hover:text-cyan-200"
+                          >
+                            <FaRegCopy size={13} />
+                            Copy
+                          </button>
+                        </div>
+                        <pre
+                          className="max-h-80 min-h-[14rem] flex-1 overflow-auto px-5 py-5 text-left text-xs leading-relaxed text-slate-200 [scrollbar-color:#2a3038_transparent] [scrollbar-width:thin]"
+                          dangerouslySetInnerHTML={{ __html: highlightedCode1 }}
+                        ></pre>
+                      </>
+                    ) : (
+                      <div className="flex flex-1 flex-col items-center justify-center px-8 py-16 text-center">
+                        <span className="grid h-14 w-14 place-items-center rounded-2xl bg-white/[0.05] text-slate-400 ring-1 ring-inset ring-white/10">
+                          <IoCodeOutline size={26} />
+                        </span>
+                        <p className="mt-5 max-w-xs text-sm text-slate-400">
+                          Fill in your website details and save to get your
+                          integration code
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </GlowCard>
+            </div>
           </section>
 
-          {/* ---------- Websites table ---------- */}
-          <GlowCard innerClassName="!overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-5 sm:px-7">
-              <h2 className="text-lg font-bold text-white">
+          {/* ---------- Connected websites: card grid ---------- */}
+          <section className="fs-rise" style={{ animationDelay: "0.2s" }}>
+            <div className="mb-5 flex items-center justify-between">
+              <h2 className="text-xl font-bold text-white sm:text-2xl">
                 Connected websites
               </h2>
-              <span className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-semibold text-slate-300">
+              <span className="rounded-full bg-gradient-to-r from-cyan-400/15 to-violet-500/15 px-3 py-1 text-xs font-semibold text-cyan-200 ring-1 ring-inset ring-cyan-400/25">
                 {websitedata.length}
               </span>
             </div>
 
-            <div className="hidden grid-cols-12 gap-4 border-y border-white/[0.06] bg-white/[0.025] px-7 py-3 text-xs font-semibold text-slate-500 md:grid">
-              <div className="col-span-3">Website name</div>
-              <div className="col-span-5">URL</div>
-              <div className="col-span-2">Status</div>
-              <div className="col-span-2 text-right">Actions</div>
-            </div>
-
-            {websitedata.length === 0 && !fetchingData ? (
-              <div className="px-6 py-16 text-center">
-                <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-white/[0.05] text-slate-400 ring-1 ring-inset ring-white/10">
-                  <CiGlobe size={28} />
-                </span>
-                <p className="mt-4 text-sm font-semibold text-slate-200">
-                  No websites yet
-                </p>
-                <p className="mt-1 text-sm text-slate-500">
-                  Save your first website above to see it here
-                </p>
-              </div>
-            ) : (
-              <div className="divide-y divide-white/[0.05]">
-                {websitedata.map((site, idx) => (
-                  <div
-                    key={idx}
-                    className="flex flex-col gap-3 px-5 py-4 transition-colors hover:bg-cyan-400/[0.04] sm:px-7 md:grid md:grid-cols-12 md:items-center md:gap-4"
-                  >
-                    <div className="flex items-center justify-between gap-3 md:col-span-3">
-                      <div className="flex min-w-0 items-center gap-3">
-                        <span
-                          className={`grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-gradient-to-br text-sm font-extrabold text-white ${
-                            avatarGradients[idx % avatarGradients.length]
-                          }`}
-                        >
-                          {(site.name || "?").charAt(0).toUpperCase()}
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {websitedata.map((site, idx) => (
+                <GlowCard key={idx} tint="bg-cyan-500/10">
+                  <div className="p-5 sm:p-6">
+                    <div className="flex items-start justify-between gap-3">
+                      <span
+                        className={`grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-lg font-bold text-white shadow-lg ${
+                          avatarGradients[idx % avatarGradients.length]
+                        }`}
+                      >
+                        {(site.name || "?").charAt(0).toUpperCase()}
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-2.5 py-1 text-xs font-medium text-emerald-300 ring-1 ring-inset ring-emerald-400/25">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
                         </span>
-                        <span className="truncate text-sm font-semibold text-white">
-                          {site.name}
-                        </span>
-                      </div>
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-300 ring-1 ring-inset ring-emerald-400/25 md:hidden">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                        Active
+                        {"Active"}
                       </span>
                     </div>
 
+                    <h3 className="mt-5 truncate text-base font-semibold text-white">
+                      {site.name}
+                    </h3>
+
                     <button
                       type="button"
-                      className="group flex min-w-0 items-center gap-1.5 text-left text-sm text-cyan-300 transition hover:text-cyan-200 md:col-span-5"
+                      className="group mt-1 flex max-w-full items-center gap-1.5 text-left text-sm text-cyan-300 transition hover:text-cyan-200"
                       onClick={() => {
                         const url = site.url!.match(/^https?:\/\//)
                           ? site.url
@@ -553,37 +599,45 @@ const AddIntegration: React.FC = () => {
                       <span className="truncate">{site.url}</span>
                       <FiArrowUpRight
                         size={14}
-                        className="shrink-0 opacity-60 group-hover:opacity-100"
+                        className="shrink-0 opacity-60 transition group-hover:opacity-100"
                       />
                     </button>
 
-                    <div className="hidden md:col-span-2 md:block">
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-300 ring-1 ring-inset ring-emerald-400/25">
-                        <span className="relative flex h-1.5 w-1.5">
-                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                        </span>
-                        {"Active"}
+                    <div className="mt-6 flex items-center justify-between border-t border-white/[0.07] pt-4">
+                      <span className="rounded-full bg-white/[0.06] px-3 py-1 text-xs font-medium capitalize text-slate-300">
+                        {site.type || "Website"}
                       </span>
-                    </div>
-
-                    <div className="md:col-span-2 md:text-right">
                       <button
                         aria-label={`Delete ${site.name}`}
                         onClick={() => {
                           handleDeleteWebsite(site.name);
                         }}
-                        className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs font-semibold text-slate-400 transition hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400"
+                        className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs font-medium text-slate-400 transition hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400"
                       >
                         <BsTrash2 className="h-3.5 w-3.5" />
-                        <span className="md:hidden">Delete</span>
+                        Delete
                       </button>
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
-          </GlowCard>
+                </GlowCard>
+              ))}
+
+              <button
+                type="button"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="group flex min-h-[13rem] flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/15 bg-white/[0.02] text-slate-400 transition hover:border-cyan-400/40 hover:bg-cyan-400/[0.04] hover:text-cyan-200"
+              >
+                <span className="grid h-12 w-12 place-items-center rounded-xl bg-white/[0.05] ring-1 ring-inset ring-white/10 transition group-hover:bg-cyan-400/10 group-hover:ring-cyan-400/30">
+                  <FiPlus size={22} />
+                </span>
+                <span className="text-sm font-semibold">
+                  {websitedata.length === 0 && !fetchingData
+                    ? "Save your first website above"
+                    : "Add another website"}
+                </span>
+              </button>
+            </div>
+          </section>
         </main>
       </div>
 
