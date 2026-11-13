@@ -377,7 +377,7 @@ const Table = () => {
                   <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                     <Link
                       href="/dashboard/integrate"
-                      className="fs-shine inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-6 py-3 text-sm font-semibold text-[#06080b] shadow-[0_12px_40px_-10px_rgba(34,211,238,0.8)] transition hover:brightness-110"
+                      className="fs-shine inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_40px_-10px_rgba(34,211,238,0.8)] transition hover:brightness-110"
                     >
                       <FiPlus size={16} />
                       Connect a website
