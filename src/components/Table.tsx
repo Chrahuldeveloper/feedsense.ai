@@ -365,7 +365,7 @@ const Table = () => {
             </div>
             <Link
               href="/dashboard/integrate"
-              className="fs-btn inline-flex items-center justify-center gap-2 self-start rounded-xl px-5 py-3 text-sm font-bold text-white shadow-[0_12px_36px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 sm:self-auto"
+              className="fs-btn inline-flex items-center justify-center gap-2 self-start rounded-xl px-5 py-3 text-sm font-bold text-[#06080b] shadow-[0_12px_36px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 sm:self-auto"
             >
               <FiPlus size={16} />
               Connect a website
