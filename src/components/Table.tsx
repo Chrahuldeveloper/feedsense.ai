@@ -14,7 +14,13 @@ import { BiMessageRounded } from "react-icons/bi";
 import { GoGraph } from "react-icons/go";
 import { CgNotes } from "react-icons/cg";
 import { CiGlobe } from "react-icons/ci";
-import { FiArrowUpRight, FiPlus, FiClock, FiTrendingUp } from "react-icons/fi";
+import {
+  FiArrowUpRight,
+  FiPlus,
+  FiClock,
+  FiLifeBuoy,
+  FiChevronRight,
+} from "react-icons/fi";
 import { HiOutlineSparkles } from "react-icons/hi2";
 
 const Theme = () => (
@@ -65,43 +71,25 @@ interface User {
 
 /* ---------- UI-only helpers ---------- */
 
-type Tone = "cyan" | "violet" | "emerald" | "amber";
-
-const toneStyles: Record<Tone, { icon: string; glow: string; bar: string }> = {
-  cyan: {
-    icon: "bg-cyan-400/10 text-cyan-300 ring-cyan-400/25",
-    glow: "bg-cyan-400/25",
-    bar: "from-cyan-400 to-sky-500",
-  },
-  violet: {
-    icon: "bg-violet-400/10 text-violet-300 ring-violet-400/25",
-    glow: "bg-violet-400/25",
-    bar: "from-violet-400 to-fuchsia-500",
-  },
-  emerald: {
-    icon: "bg-emerald-400/10 text-emerald-300 ring-emerald-400/25",
-    glow: "bg-emerald-400/25",
-    bar: "from-emerald-400 to-teal-400",
-  },
-  amber: {
-    icon: "bg-amber-400/10 text-amber-300 ring-amber-400/25",
-    glow: "bg-amber-400/25",
-    bar: "from-amber-400 to-orange-500",
-  },
-};
+const toNum = (s: string) => Number(s) || 0;
 
 const avatarGradients = [
   "from-cyan-400 to-blue-600",
   "from-violet-400 to-fuchsia-600",
   "from-emerald-400 to-teal-600",
-  "from-amber-400 to-orange-600",
-  "from-pink-400 to-rose-600",
+  "from-amber-400 to-rose-500",
 ];
 
-const toNum = (s: string) => Number(s) || 0;
+type Tone = "cyan" | "violet" | "emerald" | "amber";
+const tones: Record<Tone, { text: string; bar: string; dot: string }> = {
+  cyan: { text: "text-cyan-300", bar: "from-cyan-400 to-sky-500", dot: "bg-cyan-400" },
+  violet: { text: "text-violet-300", bar: "from-violet-400 to-fuchsia-500", dot: "bg-violet-400" },
+  emerald: { text: "text-emerald-300", bar: "from-emerald-400 to-teal-400", dot: "bg-emerald-400" },
+  amber: { text: "text-amber-300", bar: "from-amber-400 to-orange-500", dot: "bg-amber-400" },
+};
 
-/* gradient-hairline card */
-const GlowCard = ({
+/* gradient-hairline surface */
+const Surface = ({
   children,
   className = "",
 }: {
@@ -109,15 +97,15 @@ const GlowCard = ({
   className?: string;
 }) => (
   <div
-    className={`rounded-2xl bg-gradient-to-br from-white/20 via-white/[0.04] to-white/10 p-px ${className}`}
+    className={`rounded-2xl bg-gradient-to-b from-white/[0.16] via-white/[0.04] to-white/[0.03] p-px ${className}`}
   >
-    <div className="relative h-full overflow-hidden rounded-[15px] bg-[#0a0e13]">
+    <div className="relative h-full overflow-hidden rounded-[15px] bg-[#0a0d13]">
       {children}
     </div>
   </div>
 );
 
-const StatCard = ({
+const Kpi = ({
   label,
   value,
   hint,
@@ -132,38 +120,67 @@ const StatCard = ({
   icon: React.ReactNode;
   progress?: number;
 }) => (
-  <GlowCard>
-    <div
-      className={`pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full blur-3xl ${toneStyles[tone].glow}`}
-    />
-    <div className="relative p-5">
-      <div className="flex items-start justify-between">
-        <p className="text-sm font-medium text-slate-400">{label}</p>
-        <div
-          className={`grid h-10 w-10 place-items-center rounded-xl ring-1 ring-inset ${toneStyles[tone].icon}`}
-        >
-          {icon}
-        </div>
-      </div>
-      <p className="mt-2 text-4xl font-semibold tabular-nums tracking-tight text-white">
-        {value}
-      </p>
-      {progress !== undefined ? (
-        <div className="mt-4">
-          <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.07]">
-            <div
-              className={`h-full rounded-full bg-gradient-to-r ${toneStyles[tone].bar}`}
-              style={{ width: `${Math.max(progress, 3)}%` }}
-            />
-          </div>
-          <p className="mt-2.5 text-xs text-slate-500">{hint}</p>
-        </div>
-      ) : (
-        <p className="mt-[1.65rem] text-xs text-slate-500">{hint}</p>
-      )}
+  <div className="group relative px-6 py-6">
+    <div className="flex items-center justify-between">
+      <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+        {label}
+      </span>
+      <span className={`${tones[tone].text} opacity-80`}>{icon}</span>
     </div>
-  </GlowCard>
+    <p className="mt-4 text-[2.6rem] font-semibold leading-none tabular-nums tracking-tight text-white">
+      {value}
+    </p>
+    {progress !== undefined ? (
+      <div className="mt-5 h-1 w-full overflow-hidden rounded-full bg-white/[0.07]">
+        <div
+          className={`h-full rounded-full bg-gradient-to-r ${tones[tone].bar}`}
+          style={{ width: `${Math.max(progress, 3)}%` }}
+        />
+      </div>
+    ) : (
+      <div className="mt-5 h-1 w-8 rounded-full bg-white/10" />
+    )}
+    <p className="mt-3 text-xs text-slate-500">{hint}</p>
+  </div>
 );
+
+const Gauge = ({ percent }: { percent: number }) => {
+  const r = 52;
+  const c = 2 * Math.PI * r;
+  return (
+    <div className="relative mx-auto h-44 w-44">
+      <svg viewBox="0 0 120 120" className="h-full w-full -rotate-90">
+        <defs>
+          <linearGradient id="fsd-gauge" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stopColor="#34d399" />
+            <stop offset="1" stopColor="#22d3ee" />
+          </linearGradient>
+        </defs>
+        <circle cx="60" cy="60" r={r} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="9" />
+        <circle
+          cx="60"
+          cy="60"
+          r={r}
+          fill="none"
+          stroke="url(#fsd-gauge)"
+          strokeWidth="9"
+          strokeLinecap="round"
+          strokeDasharray={c}
+          strokeDashoffset={c - (c * percent) / 100}
+          style={{ transition: "stroke-dashoffset 1s cubic-bezier(.2,.7,.2,1)" }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-4xl font-semibold tabular-nums tracking-tight text-white">
+          {percent}%
+        </span>
+        <span className="mt-0.5 text-[11px] uppercase tracking-[0.14em] text-slate-500">
+          resolved
+        </span>
+      </div>
+    </div>
+  );
+};
 
 const Table = () => {
   const [websitedata, setWebsitedata] = useState<WebsiteData[]>([]);
@@ -249,6 +266,12 @@ const Table = () => {
 
   const [toggleLogout, setToggleLogout] = useState(false);
 
+  const [greeting, setGreeting] = useState("Welcome back");
+  useEffect(() => {
+    const h = new Date().getHours();
+    setGreeting(h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening");
+  }, []);
+
   const firstName = (user?.displayName || "there").split(" ")[0];
   const initial = (user?.displayName || "U").charAt(0).toUpperCase();
 
@@ -259,44 +282,24 @@ const Table = () => {
   const sites = toNum(infodata.totalWebsites);
   const avgFeedback =
     sites > 0 ? (toNum(infodata.totalFeedback) / sites).toFixed(1) : "0";
+  const maxFeedback = Math.max(1, ...websitedata.map((s) => s?.feedback?.length ?? 0));
 
   return (
     <>
       <Theme />
-      <style>{`
-        @keyframes fs-drift { 0%,100% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(50px,35px,0) scale(1.15); } }
-        @keyframes fs-shine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        .fs-drift { animation: fs-drift 20s ease-in-out infinite; }
-        .fs-shine { background-size: 200% 100%; animation: fs-shine 6s linear infinite; }
-        @media (prefers-reduced-motion: reduce) { .fs-drift, .fs-shine { animation: none !important; } }
-      `}</style>
-
       <div className="fs-root relative min-w-0 flex-1 md:ml-64">
         {/* ambient background */}
-        <div
-          aria-hidden
-          className="pointer-events-none fixed inset-0 overflow-hidden md:left-64"
-        >
-          <div className="fs-drift absolute -right-24 -top-24 h-[28rem] w-[28rem] rounded-full bg-cyan-500/[0.14] blur-[120px]" />
-          <div
-            className="fs-drift absolute -bottom-40 left-10 h-[30rem] w-[30rem] rounded-full bg-violet-600/[0.14] blur-[130px]"
-            style={{ animationDelay: "-9s" }}
-          />
-          <div
-            className="absolute inset-0 opacity-[0.35] [mask-image:radial-gradient(ellipse_at_top,black,transparent_75%)]"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
-              backgroundSize: "56px 56px",
-            }}
-          />
+        <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden md:left-64">
+          <div className="fs-drift-a absolute -left-24 -top-24 h-[420px] w-[420px] rounded-full bg-cyan-500/[0.14] blur-[120px]" />
+          <div className="fs-drift-b absolute -right-24 top-10 h-[460px] w-[460px] rounded-full bg-violet-600/[0.15] blur-[130px]" />
+          <div className="fs-grid absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_at_top,black_15%,transparent_65%)]" />
         </div>
 
         {/* ---------- Top bar ---------- */}
         <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#06080b]/70 backdrop-blur-xl">
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
             <div className="flex items-center gap-2.5 md:hidden">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-white">
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b]">
                 <HiOutlineSparkles size={18} />
               </span>
               <h1 className="text-base font-semibold tracking-tight text-white">
@@ -304,22 +307,24 @@ const Table = () => {
               </h1>
             </div>
 
-            <p className="hidden text-sm text-slate-500 md:block">
-              Workspace <span className="mx-1.5 text-slate-700">/</span>
+            <p className="hidden items-center gap-1.5 text-sm text-slate-500 md:flex">
+              Workspace
+              <FiChevronRight size={14} className="text-slate-700" />
               <span className="text-slate-200">Dashboard</span>
             </p>
 
             <div className="flex items-center gap-3">
               {plan?.subscription && (
-                <span className="hidden rounded-full bg-gradient-to-r from-cyan-400/15 to-violet-500/15 px-3 py-1 text-xs font-semibold capitalize text-cyan-200 ring-1 ring-inset ring-cyan-400/30 sm:inline-block">
+                <span className="hidden items-center gap-1.5 rounded-full bg-gradient-to-r from-cyan-400/15 to-violet-500/15 px-3 py-1 text-xs font-semibold capitalize text-cyan-200 ring-1 ring-inset ring-cyan-400/30 sm:inline-flex">
+                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-300" />
                   {plan.subscription}
                 </span>
               )}
-              <div className="hidden items-center gap-3 md:flex">
+              <div className="hidden items-center gap-3 border-l border-white/[0.08] pl-4 md:flex">
                 <span className="max-w-[10rem] truncate text-sm text-slate-300">
                   {user?.displayName || "User"}
                 </span>
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-white ring-2 ring-white/10">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-[#06080b] ring-2 ring-white/10">
                   {initial}
                 </span>
               </div>
@@ -344,112 +349,69 @@ const Table = () => {
 
         {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
-        <main className="relative z-10 mx-auto max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:space-y-8 lg:px-10 lg:py-8">
-          {/* ---------- Hero ---------- */}
-          <section className="rounded-[28px] bg-gradient-to-br from-cyan-400/60 via-white/10 to-violet-500/60 p-px">
-            <div className="relative overflow-hidden rounded-[27px] bg-[#070a0f] p-6 sm:p-8 lg:p-10">
-              <div className="fs-drift pointer-events-none absolute -left-24 -top-32 h-80 w-80 rounded-full bg-cyan-500/30 blur-[90px]" />
-              <div
-                className="fs-drift pointer-events-none absolute -bottom-44 -right-24 h-96 w-96 rounded-full bg-violet-600/30 blur-[110px]"
-                style={{ animationDelay: "-10s" }}
-              />
-              <div
-                className="pointer-events-none absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_at_top_left,black,transparent_70%)]"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(rgba(255,255,255,0.14) 1px, transparent 1px)",
-                  backgroundSize: "22px 22px",
-                }}
-              />
-
-              <div className="relative grid items-center gap-8 lg:grid-cols-5">
-                <div className="lg:col-span-3">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-medium text-slate-300 backdrop-blur">
-                    <HiOutlineSparkles className="text-cyan-300" size={14} />
-                    Welcome back, {firstName}
-                  </span>
-                  <h1 className="mt-5 bg-gradient-to-r from-white via-white to-cyan-200 bg-clip-text text-4xl font-semibold tracking-tight text-transparent sm:text-5xl lg:text-6xl">
-                    Dashboard Overview
-                  </h1>
-                  <p className="mt-4 max-w-md text-base text-slate-400 sm:text-lg">
-                    AI-powered insights from your user feedback
-                  </p>
-                  <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                    <Link
-                      href="/dashboard/integrate"
-                      className="fs-shine inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_40px_-10px_rgba(34,211,238,0.8)] transition hover:brightness-110"
-                    >
-                      <FiPlus size={16} />
-                      Connect a website
-                    </Link>
-                  </div>
-                </div>
-
-                {/* glass summary */}
-                <div className="lg:col-span-2">
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-5 backdrop-blur-xl">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium text-slate-300">
-                        Resolution rate
-                      </p>
-                      <span className="grid h-8 w-8 place-items-center rounded-lg bg-emerald-400/10 text-emerald-300 ring-1 ring-inset ring-emerald-400/25">
-                        <FiTrendingUp size={16} />
-                      </span>
-                    </div>
-                    <p className="mt-3 text-5xl font-semibold tabular-nums tracking-tight text-white">
-                      {allTasks > 0 ? `${rate}%` : "–"}
-                    </p>
-                    <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/10">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400"
-                        style={{ width: `${rate}%` }}
-                      />
-                    </div>
-                    <p className="mt-3 text-xs text-slate-400">
-                      {finished} of {allTasks} tasks completed
-                    </p>
-                  </div>
-                </div>
-              </div>
+        <main className="relative z-10 mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
+          {/* ---------- Heading row ---------- */}
+          <section className="fs-rise flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-medium text-cyan-300">
+                {greeting}, {firstName}
+              </p>
+              <h1 className="fs-gradient-text mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+                Dashboard Overview
+              </h1>
+              <p className="mt-2 text-slate-400">
+                AI-powered insights from your user feedback
+              </p>
             </div>
+            <Link
+              href="/dashboard/integrate"
+              className="fs-btn inline-flex items-center justify-center gap-2 self-start rounded-xl px-5 py-3 text-sm font-bold text-[#06080b] shadow-[0_12px_36px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 sm:self-auto"
+            >
+              <FiPlus size={16} />
+              Connect a website
+            </Link>
           </section>
 
-          {/* ---------- Stats ---------- */}
-          <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            <StatCard
-              label="Websites"
-              value={infodata.totalWebsites}
-              hint="Connected to FeedSense"
-              tone="cyan"
-              icon={<BiMessageRounded size={20} />}
-            />
-            <StatCard
-              label="Feedbacks"
-              value={infodata.totalFeedback}
-              hint={`About ${avgFeedback} per website`}
-              tone="violet"
-              icon={<CgNotes size={20} />}
-            />
-            <StatCard
-              label="Completed"
-              value={infodata.totalTasksFinished}
-              hint="Tasks resolved"
-              tone="emerald"
-              icon={<GoGraph size={18} />}
-              progress={allTasks > 0 ? (finished / allTasks) * 100 : 0}
-            />
-            <StatCard
-              label="Pending"
-              value={infodata.totalIncompleteTasks}
-              hint="Tasks waiting on you"
-              tone="amber"
-              icon={<FiClock size={18} />}
-              progress={allTasks > 0 ? (pending / allTasks) * 100 : 0}
-            />
+          {/* ---------- KPI strip ---------- */}
+          <section className="fs-rise" style={{ animationDelay: "0.05s" }}>
+            <Surface>
+              <div className="grid grid-cols-2 divide-white/[0.07] lg:grid-cols-4 lg:divide-x [&>div:nth-child(n+3)]:border-t [&>div:nth-child(n+3)]:border-white/[0.07] lg:[&>div:nth-child(n+3)]:border-t-0 [&>div:nth-child(even)]:border-l [&>div:nth-child(even)]:border-white/[0.07] lg:[&>div:nth-child(even)]:border-l-0">
+                <Kpi
+                  label="Websites"
+                  value={infodata.totalWebsites}
+                  hint="Connected to FeedSense"
+                  tone="cyan"
+                  icon={<BiMessageRounded size={20} />}
+                />
+                <Kpi
+                  label="Feedbacks"
+                  value={infodata.totalFeedback}
+                  hint={`About ${avgFeedback} per website`}
+                  tone="violet"
+                  icon={<CgNotes size={19} />}
+                />
+                <Kpi
+                  label="Completed"
+                  value={infodata.totalTasksFinished}
+                  hint="Tasks resolved"
+                  tone="emerald"
+                  icon={<GoGraph size={18} />}
+                  progress={allTasks > 0 ? (finished / allTasks) * 100 : 0}
+                />
+                <Kpi
+                  label="Pending"
+                  value={infodata.totalIncompleteTasks}
+                  hint="Tasks waiting on you"
+                  tone="amber"
+                  icon={<FiClock size={18} />}
+                  progress={allTasks > 0 ? (pending / allTasks) * 100 : 0}
+                />
+              </div>
+            </Surface>
           </section>
 
-          {/* ---------- Analytics + websites ---------- */}
-          <section className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+          {/* ---------- Analytics + gauge + quick actions ---------- */}
+          <section className="fs-rise grid gap-6 lg:grid-cols-3" style={{ animationDelay: "0.1s" }}>
             <div className="lg:col-span-2">
               <Analytics
                 totalWebsites={infodata.totalWebsites}
@@ -460,51 +422,119 @@ const Table = () => {
               />
             </div>
 
-            <div className="lg:col-span-3">
-              {loading ? (
-                <div className="grid min-h-[22rem] place-items-center rounded-2xl border border-white/[0.07] bg-white/[0.02] lg:h-full">
-                  <Loader message="please wait" />
-                </div>
-              ) : websitedata?.length === 0 ? (
-                <div className="relative flex min-h-[22rem] flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-white/15 bg-white/[0.02] p-10 text-center lg:h-full">
-                  <div className="pointer-events-none absolute left-1/2 top-1/3 h-40 w-40 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl" />
-                  <span className="relative grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br from-cyan-400/20 to-violet-500/20 text-cyan-200 ring-1 ring-inset ring-cyan-400/30">
-                    <CiGlobe size={34} />
-                  </span>
-                  <p className="relative mt-5 text-lg font-semibold text-white">
-                    No websites connected yet
+            <div className="grid gap-6">
+              <Surface>
+                <div className="p-6">
+                  <h2 className="text-sm font-semibold text-white">
+                    Resolution rate
+                  </h2>
+                  <p className="mt-1 text-xs text-slate-500">
+                    {finished} of {allTasks} tasks completed
                   </p>
-                  <p className="relative mt-1.5 max-w-xs text-sm text-slate-400">
-                    Add your first website to get started
-                  </p>
-                  <Link
-                    href="/dashboard/integrate"
-                    className="relative mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_30px_-10px_rgba(34,211,238,0.8)] transition hover:brightness-110"
-                  >
-                    <FiPlus size={16} />
-                    Connect a website
-                  </Link>
+                  <div className="mt-5">
+                    <Gauge percent={rate} />
+                  </div>
                 </div>
-              ) : (
-                <GlowCard className="lg:h-full">
-                  <div className="flex items-center justify-between px-5 pb-3 pt-5 sm:px-6">
-                    <h2 className="text-lg font-semibold text-white">
+              </Surface>
+
+              <Surface>
+                <div className="p-2">
+                  {[
+                    {
+                      href: "/dashboard/integrate",
+                      icon: <FiPlus size={16} />,
+                      t: "Connect a website",
+                      d: "Add the snippet to a new site",
+                      c: "bg-cyan-400/10 text-cyan-300 ring-cyan-400/25",
+                    },
+                    {
+                      href: "/dashboard/contact",
+                      icon: <FiLifeBuoy size={16} />,
+                      t: "Get help",
+                      d: "Talk to the FeedSense team",
+                      c: "bg-violet-400/10 text-violet-300 ring-violet-400/25",
+                    },
+                  ].map((a) => (
+                    <Link
+                      key={a.t}
+                      href={a.href}
+                      className="group flex items-center gap-3 rounded-xl px-3 py-3 transition-colors hover:bg-white/[0.05]"
+                    >
+                      <span className={`grid h-9 w-9 place-items-center rounded-lg ring-1 ring-inset ${a.c}`}>
+                        {a.icon}
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-sm font-medium text-white">{a.t}</span>
+                        <span className="block truncate text-xs text-slate-500">{a.d}</span>
+                      </span>
+                      <FiChevronRight
+                        size={16}
+                        className="text-slate-600 transition group-hover:translate-x-0.5 group-hover:text-slate-300"
+                      />
+                    </Link>
+                  ))}
+                </div>
+              </Surface>
+            </div>
+          </section>
+
+          {/* ---------- Websites table ---------- */}
+          <section className="fs-rise" style={{ animationDelay: "0.15s" }}>
+            {loading ? (
+              <div className="grid min-h-[16rem] place-items-center rounded-2xl border border-white/[0.07] bg-white/[0.02]">
+                <Loader message="please wait" />
+              </div>
+            ) : websitedata?.length === 0 ? (
+              <div className="relative flex min-h-[16rem] flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-white/15 bg-white/[0.02] p-10 text-center">
+                <div className="pointer-events-none absolute left-1/2 top-1/3 h-40 w-40 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl" />
+                <span className="relative grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-cyan-400/20 to-violet-500/20 text-cyan-200 ring-1 ring-inset ring-cyan-400/30">
+                  <CiGlobe size={30} />
+                </span>
+                <p className="relative mt-5 text-lg font-semibold text-white">
+                  No websites connected yet
+                </p>
+                <p className="relative mt-1.5 text-sm text-slate-400">
+                  Add your first website to get started
+                </p>
+                <Link
+                  href="/dashboard/integrate"
+                  className="fs-btn relative mt-6 inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-[#06080b]"
+                >
+                  <FiPlus size={16} />
+                  Connect a website
+                </Link>
+              </div>
+            ) : (
+              <Surface>
+                <div className="flex items-center justify-between px-6 pb-4 pt-5">
+                  <div className="flex items-center gap-3">
+                    <h2 className="text-base font-semibold text-white">
                       Your websites
                     </h2>
-                    <span className="rounded-full bg-gradient-to-r from-cyan-400/15 to-violet-500/15 px-3 py-1 text-xs font-semibold text-cyan-200 ring-1 ring-inset ring-cyan-400/25">
+                    <span className="rounded-full bg-white/[0.07] px-2.5 py-0.5 text-xs font-semibold tabular-nums text-slate-300">
                       {websitedata.length}
                     </span>
                   </div>
+                </div>
 
-                  <div className="flex max-h-[26rem] flex-col gap-3 overflow-y-auto px-4 pb-5 [scrollbar-color:#2a3038_transparent] [scrollbar-width:thin] sm:px-5">
-                    {websitedata?.map((site, idx) => (
+                <div className="hidden grid-cols-12 gap-4 border-y border-white/[0.06] bg-white/[0.02] px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 md:grid">
+                  <div className="col-span-4">Website</div>
+                  <div className="col-span-3">Feedback</div>
+                  <div className="col-span-2">Status</div>
+                  <div className="col-span-3 text-right">Actions</div>
+                </div>
+
+                <div className="max-h-[28rem] divide-y divide-white/[0.05] overflow-y-auto [scrollbar-color:#2a3038_transparent] [scrollbar-width:thin]">
+                  {websitedata?.map((site, idx) => {
+                    const count = site?.feedback?.length ?? 0;
+                    return (
                       <div
                         key={idx}
-                        className="group flex items-center justify-between gap-4 rounded-xl border border-white/[0.06] bg-white/[0.03] p-3.5 transition-colors hover:border-cyan-400/30 hover:bg-white/[0.06]"
+                        className="flex flex-col gap-3 px-6 py-4 transition-colors hover:bg-white/[0.03] md:grid md:grid-cols-12 md:items-center md:gap-4"
                       >
-                        <div className="flex min-w-0 items-center gap-3.5">
+                        <div className="flex min-w-0 items-center gap-3.5 md:col-span-4">
                           <span
-                            className={`grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-lg font-bold text-white shadow-lg ${
+                            className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-sm font-bold text-white ${
                               avatarGradients[idx % avatarGradients.length]
                             }`}
                           >
@@ -517,43 +547,58 @@ const Table = () => {
                             <p className="truncate text-xs text-slate-500">
                               {site?.url}
                             </p>
-                            <div className="mt-2 flex flex-wrap items-center gap-2">
-                              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-2.5 py-0.5 text-xs font-medium text-emerald-300 ring-1 ring-inset ring-emerald-400/25">
-                                <span className="relative flex h-1.5 w-1.5">
-                                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-                                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                                </span>
-                                Active
-                              </span>
-                              <span className="text-xs text-slate-500">
-                                {site?.feedback?.length ?? 0} feedback
-                              </span>
-                            </div>
                           </div>
                         </div>
-                        <Link
-                          aria-label={`Open tasks for ${site?.name}`}
-                          className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.05] px-3 py-2 text-xs font-medium text-slate-200 transition hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:text-cyan-200"
-                          href={{
-                            pathname: "/dashboard/tasks",
-                            query: {
-                              feedback: JSON.stringify(site?.feedback || []),
-                              name: site?.name,
-                              image: site?.image,
-                              Plan: plan?.subscription,
-                              TotalFeedback: site?.feedback?.length ?? 0,
-                            },
-                          }}
-                        >
-                          <span className="hidden sm:inline">View tasks</span>
-                          <FiArrowUpRight size={16} />
-                        </Link>
+
+                        <div className="md:col-span-3">
+                          <div className="flex items-center gap-3">
+                            <div className="h-1.5 w-full max-w-[9rem] overflow-hidden rounded-full bg-white/[0.07]">
+                              <div
+                                className="h-full rounded-full bg-gradient-to-r from-violet-400 to-cyan-400"
+                                style={{ width: `${(count / maxFeedback) * 100}%` }}
+                              />
+                            </div>
+                            <span className="text-xs tabular-nums text-slate-400">
+                              {count} feedback
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="md:col-span-2">
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-2.5 py-0.5 text-xs font-medium text-emerald-300 ring-1 ring-inset ring-emerald-400/25">
+                            <span className="relative flex h-1.5 w-1.5">
+                              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                            </span>
+                            Active
+                          </span>
+                        </div>
+
+                        <div className="md:col-span-3 md:text-right">
+                          <Link
+                            aria-label={`Open tasks for ${site?.name}`}
+                            className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-slate-200 transition hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:text-cyan-200"
+                            href={{
+                              pathname: "/dashboard/tasks",
+                              query: {
+                                feedback: JSON.stringify(site?.feedback || []),
+                                name: site?.name,
+                                image: site?.image,
+                                Plan: plan?.subscription,
+                                TotalFeedback: site?.feedback?.length ?? 0,
+                              },
+                            }}
+                          >
+                            View tasks
+                            <FiArrowUpRight size={15} />
+                          </Link>
+                        </div>
                       </div>
-                    ))}
-                  </div>
-                </GlowCard>
-              )}
-            </div>
+                    );
+                  })}
+                </div>
+              </Surface>
+            )}
           </section>
         </main>
       </div>

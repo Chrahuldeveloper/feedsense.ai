@@ -7,6 +7,7 @@ import Link from "next/link";
 import { CgWebsite } from "react-icons/cg";
 import { IoMdHelpCircle } from "react-icons/io";
 import { HiOutlineSparkles } from "react-icons/hi2";
+import useAuth from "@/hooks/CurrentUser";
 
 const Theme = () => (
   <style>{`
@@ -34,6 +35,9 @@ interface props {
 
 const SideBar: React.FC<props> = ({ page }) => {
   const [toggle, settoggle] = useState(false);
+  const { user } = useAuth() as {
+    user: { displayName?: string; email?: string } | null;
+  };
 
   const iconSize = 20;
 
@@ -64,7 +68,7 @@ const SideBar: React.FC<props> = ({ page }) => {
           href="/dashboard"
           className="relative flex items-center gap-3 px-2"
         >
-          <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 text-white shadow-[0_0_30px_-4px_rgba(34,211,238,0.8)]">
+          <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 text-[#06080b] shadow-[0_0_30px_-4px_rgba(34,211,238,0.8)]">
             <HiOutlineSparkles size={22} />
           </span>
           <span className="text-lg font-extrabold tracking-tight text-white">
@@ -108,17 +112,18 @@ const SideBar: React.FC<props> = ({ page }) => {
         </nav>
 
         <div className="relative mt-auto space-y-3">
-          <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-cyan-400/10 to-violet-500/10 p-4">
-            <p className="text-sm font-bold text-white">Need a hand?</p>
-            <p className="mt-1 text-xs leading-relaxed text-slate-400">
-              Our team can help you set up your integration.
-            </p>
-            <Link
-              href="/dashboard/contact"
-              className="mt-3 inline-block rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-white/20"
-            >
-              Contact support
-            </Link>
+          <div className="flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-3">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-[#06080b] ring-2 ring-white/10">
+              {(user?.displayName || "U").charAt(0).toUpperCase()}
+            </span>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-semibold text-white">
+                {user?.displayName || "User"}
+              </p>
+              <p className="truncate text-xs text-slate-500">
+                {user?.email || "Signed in"}
+              </p>
+            </div>
           </div>
 
           <button
