@@ -19,6 +19,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/Firebase";
 import { HiOutlineSparkles } from "react-icons/hi2";
 import MobileSideBar from "./MobileSideBar";
+import ModelLogout from "./ModelLogout";
 
 interface Plan {
   subscription: string;
@@ -209,7 +210,7 @@ export default function Showwebsites() {
 
   return (
     <div className="fs-root relative min-w-0 flex-1 md:ml-64 ">
-      <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden md:left-64 p-8">
+      <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden md:left-64 ">
 
         <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#09090b]/70 backdrop-blur-xl">
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
@@ -245,9 +246,9 @@ export default function Showwebsites() {
           </div>
         </header>
 
+        {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
-
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between p-8 py-12">
           <div className="max-w-2xl">
             <h1 className="text-white text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
               Your Website's
@@ -257,7 +258,7 @@ export default function Showwebsites() {
             </p>
           </div>
         </div>
-        <section className="fs-rise mt-10" style={{ animationDelay: "0.15s" }}>
+        <section className="fs-rise mt-10 p-8" style={{ animationDelay: "0.15s" }}>
           {loading ? (
             <Surface>
               <div className="flex items-center justify-between px-6 py-5">
