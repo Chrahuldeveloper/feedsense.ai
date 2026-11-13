@@ -325,7 +325,7 @@ const Page = () => {
       {isloading && <Loader message="Deleting..." />}
 
       <div className="fst-root relative flex min-h-screen w-full overflow-x-clip bg-[#09090b] text-zinc-200">
-        <SideBar page="Home" />
+        <SideBar page="Your websites" />
 
         <div className="relative min-w-0 flex-1 md:ml-64">
           {/* ambient background */}
