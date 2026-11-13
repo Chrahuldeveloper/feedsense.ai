@@ -10,14 +10,20 @@ import {
   IoBulbOutline,
 } from "react-icons/io5";
 import { TbMoodSadDizzy } from "react-icons/tb";
-import LottiePlayer from "react-lottie-player";
 import FeedbackLoader from "../app/lottie-asserts/FeedbackLoader.json";
 import ErrorLoader from "../app/lottie-asserts/ErrorLoader.json";
 import { IoIosStarOutline, IoMdStar } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { FiMail, FiCheck, FiArrowRight } from "react-icons/fi";
 import { HiOutlineSparkles } from "react-icons/hi2";
+
+import dynamic from "next/dynamic";
+
+const LottiePlayer = dynamic(
+  () => import("react-lottie-player"),
+  { ssr: false }
+);
+
 
 interface Feedback {
   emotion: string;
