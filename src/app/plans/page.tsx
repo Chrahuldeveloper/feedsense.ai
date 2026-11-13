@@ -18,8 +18,10 @@ export default function page() {
         @keyframes fsp-a{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(70px,40px,0) scale(1.15)}}
         @keyframes fsp-sheen{from{background-position:200% 0}to{background-position:-200% 0}}
         .fsp-a{animation:fsp-a 18s ease-in-out infinite}
+        @keyframes fsp-border{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+        .fsp-border{background:linear-gradient(120deg,#22d3ee,#a78bfa,#22d3ee,#a78bfa);background-size:300% 100%;animation:fsp-border 8s linear infinite}
         .fsp-btn{background-size:200% 100%}.fsp-btn:hover{animation:fsp-sheen 2.2s linear infinite}
-        @media (prefers-reduced-motion:reduce){.fsp-a,.fsp-btn:hover{animation:none!important}}
+        @media (prefers-reduced-motion:reduce){.fsp-a,.fsp-btn:hover,.fsp-border{animation:none!important}}
       `}</style>
 
       <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden">
@@ -48,9 +50,10 @@ export default function page() {
             We're on a mission to transform how businesses understand and act on
             user feedback through the power of artificial intelligence.
           </p>
-          <p className="mt-10 text-sm font-semibold text-cyan-300">
+          <div className="mt-12 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-xs font-semibold text-cyan-300 backdrop-blur">
+            <HiOutlineSparkles size={14} />
             Choose your plan
-          </p>
+          </div>
         </section>
 
         <div className="mx-auto flex max-w-5xl flex-col items-stretch justify-center gap-8 px-6 pb-28 md:flex-row">
@@ -95,7 +98,7 @@ export default function page() {
               <div
                 className={`relative h-full rounded-3xl p-px ${
                   plan.highlight
-                    ? "bg-gradient-to-b from-cyan-300 via-white/10 to-violet-500"
+                    ? "fsp-border"
                     : "bg-gradient-to-b from-white/20 via-white/[0.05] to-white/10"
                 }`}
               >
@@ -157,6 +160,40 @@ export default function page() {
             </div>
           ))}
         </div>
+        <section className="mx-auto max-w-3xl px-6 pb-28">
+          <h2 className="text-center text-3xl font-extrabold tracking-tight sm:text-4xl">
+            Questions, answered
+          </h2>
+          <div className="mt-10 space-y-3">
+            {[
+              {
+                q: "Is there a free trial?",
+                a: "Yes. Start with a 14-day free trial. No credit card required.",
+              },
+              {
+                q: "Can I cancel anytime?",
+                a: "Yes. You can cancel anytime, with no long-term commitment.",
+              },
+              {
+                q: "Which plan should I pick?",
+                a: "Basic suits small teams getting started with up to 3 websites. Pro adds unlimited websites and feedback, advanced analytics and priority support.",
+              },
+            ].map((f) => (
+              <details
+                key={f.q}
+                className="group rounded-2xl border border-white/[0.08] bg-white/[0.03] px-6 py-5 transition-colors open:border-cyan-400/30 open:bg-white/[0.05]"
+              >
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-white [&::-webkit-details-marker]:hidden">
+                  {f.q}
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/[0.06] text-lg leading-none text-cyan-300 transition-transform group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <p className="mt-3 text-sm leading-6 text-slate-400">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
         <Footer />
       </div>
     </div>
