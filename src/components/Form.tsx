@@ -879,6 +879,15 @@ const Form = () => {
 
         <ToastContainer theme="dark" toastClassName={"custom-toast"} />
       </div>
+            <div
+        aria-hidden
+        className="pointer-events-none relative -mb-[3.5vw] select-none overflow-hidden px-4 text-center [mask-image:linear-gradient(to_bottom,black_25%,transparent_95%)]"
+      >
+        <span className="block bg-gradient-to-b from-white/[0.14] to-transparent bg-clip-text text-[17vw] font-extrabold leading-[0.9] tracking-tighter text-transparent">
+          FeedSenseAI
+        </span>
+      </div>
+
     </div>
   );
 };
