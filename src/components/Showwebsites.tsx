@@ -223,7 +223,7 @@ export default function Showwebsites() {
             </div>
             <p className="hidden text-sm text-zinc-500 md:block">
               Workspace <span className="mx-1.5 text-zinc-700">/</span>
-              <span className="text-zinc-200">Integrate</span>
+              <span className="text-zinc-200">Your Websites</span>
             </p>
             <div className="flex items-center gap-3">
               <div className="hidden items-center gap-3 md:flex">
