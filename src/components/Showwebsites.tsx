@@ -200,7 +200,7 @@ export default function Showwebsites() {
   );
 
   return (
-    <div className="fs-root relative min-w-0 flex-1 md:ml-64">
+    <div className="fs-root relative min-w-0 flex-1 md:ml-64 p-6">
       <section className="fs-rise" style={{ animationDelay: "0.15s" }}>
         {loading ? (
           <Surface>
