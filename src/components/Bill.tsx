@@ -39,7 +39,7 @@ const Bill = ({
 
       <div className="flex items-end justify-between gap-4">
         <h1 className="text-sm font-medium text-slate-300">Estimated total</h1>
-        <p className="bg-gradient-to-r from-cyan-300 to-violet-400 bg-clip-text text-4xl font-extrabold tabular-nums tracking-tight text-transparent">
+        <p className="text-white text-4xl font-extrabold tabular-nums tracking-tight text-transparent">
           ₹{selectedPlan.price}
         </p>
       </div>

@@ -334,7 +334,7 @@ const Page = () => {
                     <Script src="https://checkout.razorpay.com/v1/checkout.js" />
                     <button
                       onClick={handlePayment}
-                      className="fss-btn flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-5 py-4 text-sm font-bold text-[#05070a] shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
+                      className="fss-btn flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-5 py-4 text-sm font-bold text-white shadow-[0_14px_40px_-12px_rgba(34,211,238,0.8)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
                     >
                       <FiLock size={16} />
                       Purchase · ₹{currentPlan.price}
