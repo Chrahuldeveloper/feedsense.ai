@@ -51,6 +51,12 @@ const SideBar: React.FC<props> = ({ page }) => {
       label: "Help",
       icon: IoMdHelpCircle,
     },
+    {
+      href: "/dashboard/connected-websites",
+      key: "View Websites",
+      label: "View Websites",
+      icon: IoMdHelpCircle,
+    },
   ];
 
   return (

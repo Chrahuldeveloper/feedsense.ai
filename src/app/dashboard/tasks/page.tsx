@@ -24,7 +24,7 @@ import { FaRegCircleStop } from "react-icons/fa6";
 import ModelLogout from "@/components/ModelLogout";
 import { LuBrain } from "react-icons/lu";
 import { GoGraph } from "react-icons/go";
-import { FiCheck, FiArrowLeft, FiAlertTriangle, FiLock } from "react-icons/fi";
+import { FiCheck, FiArrowLeft, FiLock } from "react-icons/fi";
 import { AiFillStar } from "react-icons/ai";
 import { HiOutlineSparkles, HiOutlineLightBulb } from "react-icons/hi2";
 import { IoBugOutline, IoBulbOutline } from "react-icons/io5";
@@ -68,62 +68,33 @@ const Theme = () => (
 @keyframes fst-a{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(60px,30px,0) scale(1.15)}}
 @keyframes fst-b{0%,100%{transform:translate3d(0,0,0) scale(1.1)}50%{transform:translate3d(-50px,-30px,0) scale(.95)}}
 @keyframes fst-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fst-row{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes fst-blink{0%,100%{opacity:1}50%{opacity:.35}}
 .fst-a{animation:fst-a 16s ease-in-out infinite}.fst-b{animation:fst-b 20s ease-in-out infinite}
 .fst-rise{animation:fst-rise .6s cubic-bezier(.2,.7,.2,1) both}
+.fst-row{animation:fst-row .45s cubic-bezier(.2,.7,.2,1) both}
 .fst-blink{animation:fst-blink 1.6s ease-in-out infinite}
-@media (prefers-reduced-motion:reduce){.fst-a,.fst-b,.fst-rise,.fst-blink{animation:none!important}}
+.fst-scroll{scrollbar-width:thin;scrollbar-color:#2a3038 transparent}
+@media (prefers-reduced-motion:reduce){.fst-a,.fst-b,.fst-rise,.fst-row,.fst-blink{animation:none!important}}
 `}</style>
 );
 
-const Panel = ({
-  icon,
-  title,
-  count,
-  right,
-  children,
-  tone = "cyan",
-}: {
-  icon: React.ReactNode;
-  title: string;
-  count?: number;
-  right?: React.ReactNode;
-  children: React.ReactNode;
-  tone?: "cyan" | "violet" | "rose" | "amber";
-}) => {
-  const tones = {
-    cyan: "bg-cyan-400/10 text-cyan-300 ring-cyan-400/25",
-    violet: "bg-violet-400/10 text-violet-300 ring-violet-400/25",
-    rose: "bg-rose-400/10 text-rose-300 ring-rose-400/25",
-    amber: "bg-amber-400/10 text-amber-300 ring-amber-400/25",
-  };
-  return (
-    <div className="fst-rise rounded-3xl bg-gradient-to-b from-white/[0.18] via-white/[0.05] to-white/[0.03] p-px">
-      <div className="flex h-[34rem] flex-col overflow-hidden rounded-[23px] bg-[#0a0d13]">
-        <div className="flex items-center justify-between gap-3 border-b border-white/[0.06] px-5 py-4 sm:px-6">
-          <div className="flex items-center gap-3">
-            <span className={`grid h-10 w-10 place-items-center rounded-xl ring-1 ring-inset ${tones[tone]}`}>
-              {icon}
-            </span>
-            <h2 className="font-semibold text-white">{title}</h2>
-            {count !== undefined && (
-              <span className="rounded-full bg-white/[0.07] px-2.5 py-0.5 text-xs font-semibold tabular-nums text-slate-300">
-                {count}
-              </span>
-            )}
-          </div>
-          {right}
-        </div>
-        <div className="flex-1 overflow-y-auto p-4 [scrollbar-color:#2a3038_transparent] [scrollbar-width:thin] sm:p-5">
-          {children}
-        </div>
-      </div>
-    </div>
-  );
+const tones = {
+  cyan: "bg-cyan-400/10 text-cyan-300 ring-cyan-400/25",
+  violet: "bg-violet-400/10 text-violet-300 ring-violet-400/25",
+  rose: "bg-rose-400/10 text-rose-300 ring-rose-400/25",
+  amber: "bg-amber-400/10 text-amber-300 ring-amber-400/25",
 };
 
+const clamp = (n: number): React.CSSProperties => ({
+  display: "-webkit-box",
+  WebkitLineClamp: n,
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
+});
+
 const Empty = ({ text }: { text: string }) => (
-  <div className="flex h-full min-h-[16rem] flex-col items-center justify-center gap-4 text-center">
+  <div className="flex min-h-[16rem] flex-col items-center justify-center gap-4 px-6 py-10 text-center">
     <span className="grid h-14 w-14 place-items-center rounded-2xl bg-white/[0.04] text-slate-500 ring-1 ring-inset ring-white/10">
       <FaRegCircleStop size={24} />
     </span>
@@ -131,11 +102,123 @@ const Empty = ({ text }: { text: string }) => (
   </div>
 );
 
+/* table shell: header, sticky column row, scroll area, footer */
+const TableCard = ({
+  icon,
+  title,
+  subtitle,
+  count,
+  right,
+  tone = "cyan",
+  cols,
+  isEmpty,
+  emptyText,
+  footer,
+  children,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  subtitle: string;
+  count: number;
+  right?: React.ReactNode;
+  tone?: keyof typeof tones;
+  cols: { label: string; right?: boolean; className?: string }[];
+  isEmpty: boolean;
+  emptyText: string;
+  footer: string;
+  children: React.ReactNode;
+}) => (
+  <div className="fst-rise rounded-3xl bg-gradient-to-b from-white/[0.18] via-white/[0.05] to-white/[0.03] p-px">
+    <div className="overflow-hidden rounded-[23px] bg-[#0a0d13]">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-5 sm:px-6">
+        <div className="flex items-center gap-3.5">
+          <span className={`grid h-11 w-11 place-items-center rounded-xl ring-1 ring-inset ${tones[tone]}`}>
+            {icon}
+          </span>
+          <div>
+            <div className="flex items-center gap-2.5">
+              <h2 className="text-base font-bold text-white">{title}</h2>
+              <span className="rounded-full bg-white/[0.07] px-2.5 py-0.5 text-xs font-semibold tabular-nums text-slate-300">
+                {count}
+              </span>
+            </div>
+            <p className="mt-0.5 text-xs text-slate-500">{subtitle}</p>
+          </div>
+        </div>
+        {right}
+      </div>
+
+      {isEmpty ? (
+        <div className="border-t border-white/[0.06]">
+          <Empty text={emptyText} />
+        </div>
+      ) : (
+        <>
+          <div className="fst-scroll max-h-[28rem] overflow-auto border-t border-white/[0.06]">
+            <table className="w-full min-w-[44rem] text-left">
+              <thead>
+                <tr>
+                  {cols.map((c) => (
+                    <th
+                      key={c.label}
+                      className={`sticky top-0 z-10 bg-[#0d1118]/95 px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500 backdrop-blur ${
+                        c.right ? "text-right" : ""
+                      } ${c.className || ""}`}
+                    >
+                      {c.label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>{children}</tbody>
+            </table>
+          </div>
+          <div className="border-t border-white/[0.06] px-5 py-3 text-xs text-slate-600 sm:px-6">
+            {footer}
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+);
+
+const Tr = ({
+  idx,
+  children,
+  className = "",
+}: {
+  idx: number;
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <tr
+    className={`fst-row group border-t border-white/[0.05] transition-colors hover:bg-white/[0.035] hover:[&>td:first-child]:shadow-[inset_2px_0_0_0_#22d3ee] ${className}`}
+    style={{ animationDelay: `${Math.min(idx, 8) * 45}ms` }}
+  >
+    {children}
+  </tr>
+);
+
+const Td = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => <td className={`px-5 py-4 align-middle ${className}`}>{children}</td>;
+
 const priorityTone = (p: string) => {
-  const s = p.toLowerCase();
+  const s = (p || "").toLowerCase();
   if (s.includes("high")) return "bg-rose-400/10 text-rose-300 ring-rose-400/25";
   if (s.includes("low")) return "bg-emerald-400/10 text-emerald-300 ring-emerald-400/25";
   return "bg-amber-400/10 text-amber-300 ring-amber-400/25";
+};
+
+const priorityDot = (p: string) => {
+  const s = (p || "").toLowerCase();
+  if (s.includes("high")) return "bg-rose-400";
+  if (s.includes("low")) return "bg-emerald-400";
+  return "bg-amber-400";
 };
 
 const emotionTone = (e: string) => {
@@ -144,6 +227,115 @@ const emotionTone = (e: string) => {
   if (s === "sad") return "bg-rose-400/10 text-rose-300 ring-rose-400/25";
   return "bg-amber-400/10 text-amber-300 ring-amber-400/25";
 };
+
+const emotionDot = (e: string) => {
+  const s = (e || "").toLowerCase();
+  if (s === "happy") return "bg-emerald-400";
+  if (s === "sad") return "bg-rose-400";
+  return "bg-amber-400";
+};
+
+const EmotionPill = ({ e }: { e: string }) =>
+  e ? (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold capitalize ring-1 ring-inset ${emotionTone(
+        e
+      )}`}
+    >
+      <span className={`h-1.5 w-1.5 rounded-full ${emotionDot(e)}`} />
+      {e}
+    </span>
+  ) : (
+    <span className="text-slate-700">—</span>
+  );
+
+const Stars = ({ n }: { n: number }) =>
+  n > 0 ? (
+    <div className="flex items-center gap-0.5" aria-label={`${n} out of 5`}>
+      {[1, 2, 3, 4, 5].map((i) => (
+        <AiFillStar
+          key={i}
+          size={15}
+          className={i <= n ? "text-amber-300" : "text-slate-700"}
+        />
+      ))}
+    </div>
+  ) : (
+    <span className="text-slate-700">—</span>
+  );
+
+const IssueRows = ({
+  items,
+  onClose,
+}: {
+  items: Bug[];
+  onClose: (tittle: string) => void;
+}) => (
+  <>
+    {items.map((i, idx) => (
+      <Tr key={idx} idx={idx}>
+        <Td className="w-[16rem]">
+          <div className="flex items-center gap-3">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-violet-400 to-fuchsia-600 text-sm font-bold text-white">
+              {(i.email?.[0] || "?").toUpperCase()}
+            </span>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-semibold text-slate-200">
+                {(i.email || "").split("@")[0] || "Anonymous"}
+              </p>
+              <p className="max-w-[11rem] truncate text-xs text-slate-500">
+                {i.email}
+              </p>
+            </div>
+          </div>
+        </Td>
+        <Td>
+          <p className="text-sm font-bold text-white" style={clamp(1)}>
+            {i.tittle}
+          </p>
+          <p
+            className="mt-1 max-w-md text-[13px] leading-5 text-slate-400"
+            style={clamp(2)}
+          >
+            {i.desc}
+          </p>
+        </Td>
+        <Td>
+          <span
+            className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset ${priorityTone(
+              i.priority
+            )}`}
+          >
+            <span className={`h-1.5 w-1.5 rounded-full ${priorityDot(i.priority)}`} />
+            {(i.priority || "").replace(" Priority", "") || "Medium"}
+          </span>
+        </Td>
+        <Td>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-300 ring-1 ring-inset ring-cyan-400/25">
+            <span className="fst-blink h-1.5 w-1.5 rounded-full bg-cyan-300" />
+            Open
+          </span>
+        </Td>
+        <Td className="text-right">
+          <button
+            onClick={() => onClose(i.tittle)}
+            className="rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-semibold text-slate-300 transition hover:border-rose-400/40 hover:bg-rose-500 hover:text-white"
+          >
+            Close
+          </button>
+        </Td>
+      </Tr>
+    ))}
+  </>
+);
+
+const issueCols = [
+  { label: "Reporter" },
+  { label: "Issue" },
+  { label: "Priority" },
+  { label: "Status" },
+  { label: "Action", right: true },
+];
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -284,59 +476,6 @@ const Page = () => {
     { l: "Neutral", v: NeutralCount, bar: "from-amber-400 to-orange-400", dot: "bg-amber-400" },
     { l: "Sad", v: SadCount, bar: "from-rose-400 to-pink-500", dot: "bg-rose-400" },
   ];
-
-  /* shared renderer for bug + feature cards */
-  const IssueCard = ({
-    i,
-    kind,
-    onClose,
-  }: {
-    i: Bug;
-    kind: "Bug" | "Feature";
-    onClose: () => void;
-  }) => (
-    <div className="mb-4 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5 transition-colors hover:border-white/20">
-      <div className="flex items-center justify-between gap-3">
-        <span
-          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset ${priorityTone(
-            i.priority
-          )}`}
-        >
-          <FiAlertTriangle size={12} />
-          {i.priority.replace(" Priority", "") || "Medium"}
-        </span>
-        <div className="flex gap-2">
-          <span className="rounded-full bg-rose-500/15 px-3 py-1 text-xs font-semibold text-rose-300">
-            Open
-          </span>
-          <span className="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-300">
-            {kind}
-          </span>
-        </div>
-      </div>
-
-      <div className="mt-4 flex items-center gap-3">
-        <span className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-violet-400 to-fuchsia-600 font-bold text-white">
-          {i.email[0].toUpperCase()}
-        </span>
-        <h3 className="truncate text-sm font-semibold text-slate-200">
-          {i.email.split("@")[0]}
-        </h3>
-      </div>
-
-      <h4 className="mt-4 text-lg font-bold text-white">{i.tittle}</h4>
-      <p className="mt-2 text-sm leading-6 text-slate-400">{i.desc}</p>
-
-      <div className="mt-5 flex justify-end">
-        <button
-          onClick={onClose}
-          className="rounded-lg border border-rose-400/30 bg-rose-500/10 px-4 py-2 text-xs font-semibold text-rose-300 transition hover:bg-rose-500 hover:text-white"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  );
 
   return (
     <>
@@ -516,12 +655,13 @@ const Page = () => {
               </div>
             </section>
 
-            {/* panels */}
-            <section className="grid gap-5 xl:grid-cols-2">
+            {/* tables */}
+            <section className="grid gap-6">
               {/* AI insights */}
-              <Panel
+              <TableCard
                 icon={<LuBrain size={20} />}
                 title="AI Insights"
+                subtitle="Suggested actions generated from your users' feedback"
                 count={insightCount}
                 right={
                   <span className="inline-flex items-center gap-2 rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-300 ring-1 ring-inset ring-cyan-400/25">
@@ -529,43 +669,70 @@ const Page = () => {
                     AI analyzing...
                   </span>
                 }
+                cols={[
+                  { label: "Insight" },
+                  { label: "Based on" },
+                  { label: "Sentiment" },
+                  { label: "Actions", right: true },
+                ]}
+                isEmpty={insightCount === 0}
+                emptyText="No Analysis Yet"
+                footer={`${insightCount} insight${insightCount === 1 ? "" : "s"} ready to review`}
               >
                 {isBasic && insightCount > 0 && (
-                  <Link
-                    href="/plans"
-                    className="mb-4 flex items-center gap-3 rounded-xl border border-violet-400/25 bg-violet-400/[0.08] px-4 py-3 text-sm text-violet-200 transition hover:bg-violet-400/15"
-                  >
-                    <FiLock size={16} />
-                    Upgrade to Pro to read and act on AI insights
-                  </Link>
-                )}
-                {feedbackData.length > 0 ? (
-                  feedbackData.map((fb, idx) =>
-                    fb?.parsedFeedback?.response ? (
-                      <div
-                        key={idx}
-                        className={`mb-4 flex items-start gap-4 rounded-2xl border border-amber-400/20 bg-gradient-to-br from-amber-400/[0.08] to-transparent p-5 ${
-                          getPlan === "Basic"
-                            ? "cursor-not-allowed"
-                            : "cursor-pointer"
-                        }`}
+                  <tr>
+                    <td colSpan={4} className="px-5 pb-1 pt-4">
+                      <Link
+                        href="/plans"
+                        className="flex items-center gap-3 rounded-xl border border-violet-400/25 bg-violet-400/[0.08] px-4 py-3 text-sm text-violet-200 transition hover:bg-violet-400/15"
                       >
-                        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-amber-400/15 text-amber-300 ring-1 ring-inset ring-amber-400/25">
-                          <HiOutlineLightBulb size={22} />
-                        </span>
-                        <div className="min-w-0 flex-1">
+                        <FiLock size={16} />
+                        Upgrade to Pro to read and act on AI insights
+                      </Link>
+                    </td>
+                  </tr>
+                )}
+                {feedbackData.map((fb, idx) =>
+                  fb?.parsedFeedback?.response ? (
+                    <Tr
+                      key={idx}
+                      idx={idx}
+                      className={isBasic ? "cursor-not-allowed" : ""}
+                    >
+                      <Td>
+                        <div className="flex items-start gap-3.5">
+                          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-amber-400/15 text-amber-300 ring-1 ring-inset ring-amber-400/25">
+                            <HiOutlineLightBulb size={20} />
+                          </span>
                           <p
-                            className={`text-sm leading-6 text-slate-200 ${
-                              getPlan === "Basic" ? "blur-sm" : ""
+                            className={`max-w-md text-sm leading-6 text-slate-200 ${
+                              isBasic ? "blur-sm" : ""
                             }`}
+                            style={clamp(3)}
                           >
                             {fb.parsedFeedback.response.replace(/"/g, "")}
                           </p>
                         </div>
-                        <div className="flex shrink-0 items-center gap-2">
-                          <RxCross2
-                            size={36}
-                            className="cursor-pointer rounded-full p-2 text-rose-400 transition hover:bg-rose-500/20"
+                      </Td>
+                      <Td>
+                        <p
+                          className="max-w-[14rem] text-[13px] leading-5 text-slate-500"
+                          style={clamp(2)}
+                        >
+                          {fb.feedback || "—"}
+                        </p>
+                      </Td>
+                      <Td>
+                        <EmotionPill e={fb.emotion} />
+                      </Td>
+                      <Td className="text-right">
+                        <div className="inline-flex items-center gap-2">
+                          <button
+                            title="Dismiss"
+                            aria-label="Dismiss insight"
+                            className={`grid h-9 w-9 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-rose-400 transition hover:border-rose-400/40 hover:bg-rose-500/20 ${
+                              isBasic ? "cursor-not-allowed opacity-40" : ""
+                            }`}
                             onClick={() => {
                               if (getPlan !== "Basic") {
                                 setFeedbackData((prev) =>
@@ -573,13 +740,14 @@ const Page = () => {
                                 );
                               }
                             }}
-                          />
-                          <FiCheck
-                            size={36}
-                            className={`cursor-pointer rounded-full p-2 text-emerald-400 transition hover:bg-emerald-500/20 ${
-                              getPlan === "Basic"
-                                ? "cursor-not-allowed opacity-50"
-                                : ""
+                          >
+                            <RxCross2 size={18} />
+                          </button>
+                          <button
+                            title="Mark as completed"
+                            aria-label="Mark insight as completed"
+                            className={`grid h-9 w-9 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-emerald-400 transition hover:border-emerald-400/40 hover:bg-emerald-500/20 ${
+                              isBasic ? "cursor-not-allowed opacity-40" : ""
                             }`}
                             onClick={async () => {
                               if (getPlan === "Basic") return;
@@ -603,105 +771,78 @@ const Page = () => {
                                 setisloading(false);
                               }
                             }}
-                          />
+                          >
+                            <FiCheck size={18} />
+                          </button>
                         </div>
-                      </div>
-                    ) : null
-                  )
-                ) : (
-                  <Empty text="No Analysis Yet" />
+                      </Td>
+                    </Tr>
+                  ) : null
                 )}
-              </Panel>
+              </TableCard>
 
               {/* user feedback */}
-              <Panel
+              <TableCard
                 icon={<GoGraph size={18} />}
                 title="User Feedback"
+                subtitle="Everything your users have shared"
                 count={feedbackData.length}
                 tone="violet"
-                right={null}
+                cols={[
+                  { label: "Sentiment" },
+                  { label: "Rating" },
+                  { label: "Feedback" },
+                ]}
+                isEmpty={feedbackData.length === 0}
+                emptyText="No Feedbacks Yet"
+                footer={`${feedbackData.length} response${feedbackData.length === 1 ? "" : "s"} in total`}
               >
-                {feedbackData.length > 0 ? (
-                  feedbackData.map((fb, idx) => (
-                    <div
-                      key={idx}
-                      className="mb-4 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5 transition-colors hover:border-white/20"
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        {fb.emotion ? (
-                          <span
-                            className={`rounded-full px-3 py-1 text-xs font-semibold capitalize ring-1 ring-inset ${emotionTone(
-                              fb.emotion
-                            )}`}
-                          >
-                            {fb.emotion}
-                          </span>
-                        ) : (
-                          <span />
-                        )}
-                        {fb.Rating > 0 && (
-                          <span className="inline-flex items-center gap-1 text-sm font-semibold text-amber-300">
-                            <AiFillStar size={16} />
-                            {fb.Rating}
-                            <span className="font-normal text-slate-500">/5</span>
-                          </span>
-                        )}
-                      </div>
-                      <p className="mt-3 text-sm leading-6 text-slate-300">
-                        {fb.feedback}
+                {feedbackData.map((fb, idx) => (
+                  <Tr key={idx} idx={idx}>
+                    <Td className="w-40">
+                      <EmotionPill e={fb.emotion} />
+                    </Td>
+                    <Td className="w-40">
+                      <Stars n={fb.Rating} />
+                    </Td>
+                    <Td>
+                      <p className="max-w-xl text-sm leading-6 text-slate-300">
+                        {fb.feedback || <span className="text-slate-700">—</span>}
                       </p>
-                    </div>
-                  ))
-                ) : (
-                  <Empty text="No Feedbacks Yet" />
-                )}
-              </Panel>
+                    </Td>
+                  </Tr>
+                ))}
+              </TableCard>
 
               {/* bugs */}
-              <Panel
+              <TableCard
                 icon={<IoBugOutline size={20} />}
                 title="Bugs Reported"
+                subtitle="Issues your users ran into"
                 count={bugsdata?.length ?? 0}
                 tone="rose"
+                cols={issueCols}
+                isEmpty={!bugsdata || bugsdata.length === 0}
+                emptyText="No Bugs Reported"
+                footer={`${bugsdata?.length ?? 0} open bug${bugsdata?.length === 1 ? "" : "s"}`}
               >
-                {bugsdata?.length > 0 ? (
-                  bugsdata?.map((i, id) => (
-                    <IssueCard
-                      key={id}
-                      i={i}
-                      kind="Bug"
-                      onClose={() => {
-                        bugDelete(i.tittle);
-                      }}
-                    />
-                  ))
-                ) : (
-                  <Empty text="No Bugs Reported" />
-                )}
-              </Panel>
+                <IssueRows items={bugsdata || []} onClose={bugDelete} />
+              </TableCard>
 
               {/* features */}
-              <Panel
+              <TableCard
                 icon={<IoBulbOutline size={20} />}
                 title="Feature Requests"
+                subtitle="Ideas your users would love to see"
                 count={featuredata?.length ?? 0}
                 tone="amber"
+                cols={issueCols}
+                isEmpty={!featuredata || featuredata.length === 0}
+                emptyText="No Feature Requests"
+                footer={`${featuredata?.length ?? 0} open request${featuredata?.length === 1 ? "" : "s"}`}
               >
-                {featuredata?.length > 0 ? (
-                  featuredata?.map((i, id) => (
-                    <IssueCard
-                      key={id}
-                      i={i}
-                      kind="Feature"
-                      onClose={() => {
-                        featureDelete(i.tittle);
-                      }}
-                    />
-                  ))
-                ) : (
-                  <Empty text="No Feature Requests" />
-                )}
-              </Panel>
+                <IssueRows items={featuredata || []} onClose={featureDelete} />
+              </TableCard>
             </section>
           </main>
         </div>
