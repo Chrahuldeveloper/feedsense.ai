@@ -9,13 +9,10 @@ import Analytics from "./Analytics";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/Firebase";
 import ModelLogout from "./ModelLogout";
-import Loader from "./Loader";
 import { BiMessageRounded } from "react-icons/bi";
 import { GoGraph } from "react-icons/go";
 import { CgNotes } from "react-icons/cg";
-import { CiGlobe } from "react-icons/ci";
 import {
-  FiArrowUpRight,
   FiPlus,
   FiClock,
   FiLifeBuoy,
@@ -61,16 +58,8 @@ interface User {
   photoURL: string;
 }
 
-/* ---------- UI-only helpers ---------- */
 
 const toNum = (s: string) => Number(s) || 0;
-
-const avatarGradients = [
-  "from-indigo-500 to-indigo-600",
-  "from-sky-500 to-sky-600",
-  "from-emerald-500 to-emerald-600",
-  "from-amber-500 to-amber-600",
-];
 
 type Tone = "cyan" | "violet" | "emerald" | "amber";
 const tones: Record<Tone, { text: string; bar: string; dot: string }> = {
@@ -80,7 +69,6 @@ const tones: Record<Tone, { text: string; bar: string; dot: string }> = {
   amber: { text: "text-amber-300", bar: "from-amber-400 to-orange-500", dot: "bg-amber-400" },
 };
 
-/* gradient-hairline surface */
 const Surface = ({
   children,
   className = "",
