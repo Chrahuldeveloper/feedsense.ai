@@ -248,16 +248,6 @@ export default function Showwebsites() {
 
         {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between p-8 py-12">
-          <div className="max-w-2xl">
-            <h1 className="text-white text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-              Your Website's
-            </h1>
-            <p className="mt-4 text-base text-zinc-400 sm:text-lg">
-              Add FeedSenseAI to your website in minutes
-            </p>
-          </div>
-        </div>
         <section className="fs-rise mt-10 p-8" style={{ animationDelay: "0.15s" }}>
           {loading ? (
             <Surface>
