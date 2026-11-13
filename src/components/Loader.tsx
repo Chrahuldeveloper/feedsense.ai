@@ -10,54 +10,61 @@ const Loader: React.FC<props> = ({ message }) => {
     <div
       role="status"
       aria-live="polite"
-      className="fixed inset-0 z-[60] flex h-full items-center justify-center bg-[#09090b]/70 backdrop-blur-md"
+      className="fsl-overlay fixed inset-0 z-[60] flex h-full items-center justify-center bg-[#09090b]/85 backdrop-blur-xl"
     >
       <style>{`
+        @keyframes fsl-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fsl-rise { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
         @keyframes fsl-spin { to { transform: rotate(360deg); } }
-        @keyframes fsl-pulse { 0%,100% { transform: scale(.92); opacity:.75; } 50% { transform: scale(1.08); opacity:1; } }
-        @keyframes fsl-halo { 0%,100% { transform: scale(.9); opacity:.45; } 50% { transform: scale(1.15); opacity:.85; } }
-        @keyframes fsl-dot { 0%,80%,100% { transform: translateY(0); opacity:.35; } 40% { transform: translateY(-5px); opacity:1; } }
-        @keyframes fsl-sheen { from { background-position: 200% 0; } to { background-position: -200% 0; } }
-        .fsl-ring, .fsl-ring2 {
-          position:absolute; border-radius:9999px;
-          -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
-                  mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
+        @keyframes fsl-slide { 0% { transform: translateX(-110%); } 100% { transform: translateX(360%); } }
+        @keyframes fsl-breathe { 0%,100% { opacity: .9; } 50% { opacity: 1; } }
+        .fsl-overlay { animation: fsl-in .25s ease-out both; }
+        .fsl-stage { animation: fsl-rise .5s cubic-bezier(.2,.7,.2,1) .05s both; }
+        .fsl-arc {
+          position: absolute; inset: -14px; border-radius: 9999px;
+          background: conic-gradient(from 0deg, rgba(129,140,248,0) 0%, rgba(129,140,248,0) 35%, rgba(165,180,252,.55) 80%, #e0e7ff 100%);
+          -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1.5px));
+                  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1.5px));
+          animation: fsl-spin 1.25s linear infinite;
         }
-        .fsl-ring { inset:0; background: conic-gradient(from 0deg, transparent 0 30%, #818cf8 62%, #c7d2fe 88%, transparent); animation: fsl-spin 1.4s linear infinite; }
-        .fsl-ring2 { inset:14px; background: conic-gradient(from 180deg, transparent 0 35%, #c7d2fe 65%, #818cf8 90%, transparent); animation: fsl-spin 2.2s linear infinite reverse; opacity:.75; }
-        .fsl-halo { animation: fsl-halo 2.4s ease-in-out infinite; }
-        .fsl-orb { animation: fsl-pulse 2.4s ease-in-out infinite; }
-        .fsl-text { background: linear-gradient(110deg,#94a3b8 30%,#ffffff 50%,#94a3b8 70%); background-size:200% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation: fsl-sheen 3s linear infinite; }
-        .fsl-dot { animation: fsl-dot 1.2s ease-in-out infinite; }
+        .fsl-bar { animation: fsl-slide 1.4s cubic-bezier(.65,0,.35,1) infinite; }
+        .fsl-mark { animation: fsl-breathe 2.4s ease-in-out infinite; }
         @media (prefers-reduced-motion: reduce) {
-          .fsl-ring { animation-duration: 6s; } .fsl-ring2 { animation-duration: 9s; }
-          .fsl-halo, .fsl-orb, .fsl-text, .fsl-dot { animation: none; }
+          .fsl-arc { animation-duration: 6s; }
+          .fsl-bar { animation-duration: 4s; }
+          .fsl-mark, .fsl-stage, .fsl-overlay { animation: none; }
         }
       `}</style>
 
-      <div className="flex flex-col items-center">
-        <div className="relative h-28 w-28">
-          
-          <div className="fsl-ring" />
-          <div className="fsl-ring2" />
-          <div className="fsl-orb absolute inset-[32px] grid place-items-center rounded-full text-white bg-indigo-500">
-            <HiOutlineSparkles size={22} />
+      <div className="fsl-stage flex flex-col items-center">
+        {/* mark with a hairline orbit */}
+        <div className="relative h-[72px] w-[72px]">
+          <span className="absolute inset-[-14px] rounded-full border border-white/[0.07]" />
+          <span className="fsl-arc" />
+          <div className="fsl-mark grid h-full w-full place-items-center rounded-[20px] border border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.02] text-white">
+            <HiOutlineSparkles size={28} />
           </div>
         </div>
 
-        <p className="fsl-text mt-9 text-lg font-semibold tracking-tight">
+        <p className="mt-10 text-[15px] font-medium tracking-tight text-zinc-200">
           {message || "Loading"}
         </p>
-        <div className="mt-3 flex gap-1.5" aria-hidden>
-          {[0, 1, 2].map((i) => (
-            <span
-              key={i}
-              className="fsl-dot h-1.5 w-1.5 rounded-full bg-indigo-300"
-              style={{ animationDelay: `${i * 0.15}s` }}
-            />
-          ))}
+
+        {/* indeterminate progress hairline */}
+        <div
+          aria-hidden
+          className="mt-5 h-[2px] w-44 overflow-hidden rounded-full bg-white/[0.08]"
+        >
+          <span className="fsl-bar block h-full w-1/4 rounded-full bg-gradient-to-r from-transparent via-indigo-300 to-transparent" />
         </div>
       </div>
+
+      <p
+        aria-hidden
+        className="absolute bottom-8 text-[11px] font-medium uppercase tracking-[0.3em] text-zinc-600"
+      >
+        FeedSense.ai
+      </p>
     </div>
   );
 };
