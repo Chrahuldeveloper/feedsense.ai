@@ -1,3 +1,4 @@
+"use client";
 import dbService from "@/firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import React, { useEffect, useMemo, useState } from "react";
