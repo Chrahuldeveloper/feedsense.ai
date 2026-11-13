@@ -484,7 +484,7 @@ const Form = () => {
           <div className="px-5 pb-6 pt-7 sm:px-8">
             <button
               onClick={saveSectionData}
-              className="fsf-btn flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-4 py-3.5 text-sm font-bold text-white shadow-[0_14px_36px_-14px_rgba(34,211,238,0.8)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
+              className="fsf-btn flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-4 py-3.5 text-sm font-bold text-[#06080b] shadow-[0_14px_36px_-14px_rgba(34,211,238,0.8)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
             >
               <span>{submitLabel}</span>
               <FaTelegramPlane size={18} />
@@ -500,7 +500,6 @@ const Form = () => {
           </div>
         </div>
 
-        {/* overlays */}
         {error && (
           <div className="fixed inset-0 z-50 flex h-full items-center justify-center bg-black/70 backdrop-blur-md">
             <div className="-mt-10 mx-auto flex max-w-xs flex-col items-center space-y-3 text-center">
