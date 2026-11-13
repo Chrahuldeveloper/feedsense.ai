@@ -183,7 +183,6 @@ const Gauge = ({ percent }: { percent: number }) => {
 };
 
 const Table = () => {
-  const [websitedata, setWebsitedata] = useState<WebsiteData[]>([]);
   const [infodata, setInfodata] = useState<InfoData>({
     totalWebsites: "0",
     totalFeedback: "0",
@@ -212,31 +211,7 @@ const Table = () => {
     checkPlan();
   }, [loading, user]);
 
-  useEffect(() => {
-    const fetchWebsites = async () => {
-      if (!user || loading) return;
-
-      try {
-        const data = await db1.fetchWebsites(user);
-        console.log("Fetched Websites Data from Firestore:", data);
-
-        const transformedData = data.map((item: any) => ({
-          name: item.name || "",
-          url: item.url || "",
-          type: item.type || "",
-          image: item.image || "",
-          feedback: item.feedback || [],
-        }));
-
-        setWebsitedata(transformedData);
-      } catch (error) {
-        console.error("Error fetching websites:", error);
-      }
-    };
-
-    fetchWebsites();
-  }, [loading, user, db1]);
-
+ 
   useEffect(() => {
     const fetchDetails = async () => {
       if (!user || loading) return;
@@ -282,18 +257,15 @@ const Table = () => {
   const sites = toNum(infodata.totalWebsites);
   const avgFeedback =
     sites > 0 ? (toNum(infodata.totalFeedback) / sites).toFixed(1) : "0";
-  const maxFeedback = Math.max(1, ...websitedata.map((s) => s?.feedback?.length ?? 0));
 
   return (
     <>
       <Theme />
       <div className="fs-root relative min-w-0 flex-1 md:ml-64">
-        {/* ambient background */}
         <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden md:left-64">
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[26rem] bg-[radial-gradient(60%_100%_at_50%_0%,rgba(129,140,248,0.09),transparent)]" />
       </div>
 
-        {/* ---------- Top bar ---------- */}
         <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#09090b]/70 backdrop-blur-xl">
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
             <div className="flex items-center gap-2.5 md:hidden">
@@ -348,7 +320,6 @@ const Table = () => {
         {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
         <main className="relative z-10 mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
-          {/* ---------- Heading row ---------- */}
           <section className="fs-rise flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-sm font-medium text-indigo-300">
@@ -370,7 +341,6 @@ const Table = () => {
             </Link>
           </section>
 
-          {/* ---------- KPI strip ---------- */}
           <section className="fs-rise" style={{ animationDelay: "0.05s" }}>
             <Surface>
               <div className="grid grid-cols-2 divide-white/[0.07] lg:grid-cols-4 lg:divide-x [&>div:nth-child(n+3)]:border-t [&>div:nth-child(n+3)]:border-white/[0.07] lg:[&>div:nth-child(n+3)]:border-t-0 [&>div:nth-child(even)]:border-l [&>div:nth-child(even)]:border-white/[0.07] lg:[&>div:nth-child(even)]:border-l-0">
@@ -474,129 +444,6 @@ const Table = () => {
                 </div>
               </Surface>
             </div>
-          </section>
-
-          {/* ---------- Websites table ---------- */}
-          <section className="fs-rise" style={{ animationDelay: "0.15s" }}>
-            {loading ? (
-              <div className="grid min-h-[16rem] place-items-center rounded-2xl border border-white/[0.07] bg-white/[0.02]">
-                <Loader message="please wait" />
-              </div>
-            ) : websitedata?.length === 0 ? (
-              <div className="relative flex min-h-[16rem] flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-white/15 bg-white/[0.02] p-10 text-center">
-                
-                <span className="relative grid h-14 w-14 place-items-center rounded-2xl text-indigo-200 ring-1 ring-inset ring-indigo-400/30 bg-indigo-400/20">
-                  <CiGlobe size={30} />
-                </span>
-                <p className="relative mt-5 text-lg font-semibold text-white">
-                  No websites connected yet
-                </p>
-                <p className="relative mt-1.5 text-sm text-zinc-400">
-                  Add your first website to get started
-                </p>
-                <Link
-                  href="/dashboard/integrate"
-                  className=" relative mt-6 inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white bg-indigo-500 hover:bg-indigo-400"
-                >
-                  <FiPlus size={16} />
-                  Connect a website
-                </Link>
-              </div>
-            ) : (
-              <Surface>
-                <div className="flex items-center justify-between px-6 pb-4 pt-5">
-                  <div className="flex items-center gap-3">
-                    <h2 className="text-base font-semibold text-white">
-                      Your websites
-                    </h2>
-                    <span className="rounded-full bg-white/[0.07] px-2.5 py-0.5 text-xs font-semibold tabular-nums text-zinc-300">
-                      {websitedata.length}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="hidden grid-cols-12 gap-4 border-y border-white/[0.06] bg-white/[0.02] px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500 md:grid">
-                  <div className="col-span-4">Website</div>
-                  <div className="col-span-3">Feedback</div>
-                  <div className="col-span-2">Status</div>
-                  <div className="col-span-3 text-right">Actions</div>
-                </div>
-
-                <div className="max-h-[28rem] divide-y divide-white/[0.05] overflow-y-auto [scrollbar-color:#27272a_transparent] [scrollbar-width:thin]">
-                  {websitedata?.map((site, idx) => {
-                    const count = site?.feedback?.length ?? 0;
-                    return (
-                      <div
-                        key={idx}
-                        className="flex flex-col gap-3 px-6 py-4 transition-colors hover:bg-white/[0.03] md:grid md:grid-cols-12 md:items-center md:gap-4"
-                      >
-                        <div className="flex min-w-0 items-center gap-3.5 md:col-span-4">
-                          <span
-                            className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-sm font-bold text-white ${
- avatarGradients[idx % avatarGradients.length]
- }`}
-                          >
-                            {(site?.name || "?").charAt(0).toUpperCase()}
-                          </span>
-                          <div className="min-w-0">
-                            <h3 className="truncate text-sm font-semibold text-white">
-                              {site?.name}
-                            </h3>
-                            <p className="truncate text-xs text-zinc-500">
-                              {site?.url}
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="md:col-span-3">
-                          <div className="flex items-center gap-3">
-                            <div className="h-1.5 w-full max-w-[9rem] overflow-hidden rounded-full bg-white/[0.07]">
-                              <div
-                                className="h-full rounded-full bg-indigo-500"
-                                style={{ width: `${(count / maxFeedback) * 100}%` }}
-                              />
-                            </div>
-                            <span className="text-xs tabular-nums text-zinc-400">
-                              {count} feedback
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="md:col-span-2">
-                          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-2.5 py-0.5 text-xs font-medium text-emerald-300 ring-1 ring-inset ring-emerald-400/25">
-                            <span className="relative flex h-1.5 w-1.5">
-                              
-                              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                            </span>
-                            Active
-                          </span>
-                        </div>
-
-                        <div className="md:col-span-3 md:text-right">
-                          <Link
-                            aria-label={`Open tasks for ${site?.name}`}
-                            className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-zinc-200 transition hover:border-indigo-400/50 hover:bg-indigo-400/10 hover:text-indigo-200"
-                            href={{
-                              pathname: "/dashboard/tasks",
-                              query: {
-                                feedback: JSON.stringify(site?.feedback || []),
-                                name: site?.name,
-                                image: site?.image,
-                                Plan: plan?.subscription,
-                                TotalFeedback: site?.feedback?.length ?? 0,
-                              },
-                            }}
-                          >
-                            View tasks
-                            <FiArrowUpRight size={15} />
-                          </Link>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </Surface>
-            )}
           </section>
         </main>
       </div>

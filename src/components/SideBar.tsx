@@ -8,6 +8,9 @@ import { CgWebsite } from "react-icons/cg";
 import { IoMdHelpCircle } from "react-icons/io";
 import { HiOutlineSparkles } from "react-icons/hi2";
 import useAuth from "@/hooks/CurrentUser";
+import { CgProfile } from "react-icons/cg";
+import { FaLink } from "react-icons/fa6";
+
 
 const Theme = () => (
   <style>{`
@@ -50,10 +53,22 @@ const SideBar: React.FC<props> = ({ page }) => {
       icon: CgWebsite,
     },
     {
-      href: "/dashboard/contact",
+      href: "/contactUs",
       key: "Contact",
       label: "Help",
       icon: IoMdHelpCircle,
+    },
+    {
+      href: "/dashboard/connected-websites",
+      key: "Your websites",
+      label: "Your websites",
+      icon:  FaLink ,
+    },
+        {
+      href: "/dashboard/profile",
+      key: "My Profile",
+      label: "My Profile",
+      icon: CgProfile,
     },
   ];
 
@@ -61,8 +76,6 @@ const SideBar: React.FC<props> = ({ page }) => {
     <>
       <Theme />
       <aside className="fs-root fixed bottom-0 left-0 top-0 z-40 hidden w-64 flex-col overflow-hidden border-r border-white/[0.07] bg-[#07090d]/90 px-4 py-6 backdrop-blur-2xl md:flex">
-        
-        
 
         <Link
           href="/dashboard"
