@@ -20,8 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { FaTelegramPlane } from "react-icons/fa";
 import { HiOutlineSparkles } from "react-icons/hi2";
 
-/* TODO: point this at your marketing site */
-const BRAND_URL = "#";
+const BRAND_URL = "https://feedsenseai.vercel.app/";
 
 interface Feedback {
   emotion: string;
@@ -44,7 +43,6 @@ interface Bug {
 
 type Feature = Bug;
 
-/* UI tokens */
 const fieldClass =
   "w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-slate-600 outline-none transition hover:border-white/20 focus:border-cyan-400/60 focus:bg-white/[0.05] focus:ring-4 focus:ring-cyan-400/10";
 const labelClass = "mb-2 block text-[13px] font-medium text-slate-300";
@@ -234,7 +232,6 @@ const Form = () => {
       ? "idea"
       : "feedback";
 
-  /* cursor spotlight: updates CSS vars, no re-render */
   const onMove = (e: React.MouseEvent) => {
     const el = cardRef.current;
     if (!el) return;
@@ -667,11 +664,10 @@ const Form = () => {
                     )}
                   </div>
 
-                  {/* submit */}
                   <div className="px-5 pt-7 sm:px-8">
                     <button
                       onClick={saveSectionData}
-                      className="fsf-btn flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-4 py-3.5 text-sm font-bold text-white shadow-[0_14px_36px_-14px_rgba(34,211,238,0.8)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
+                      className="fsf-btn flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 px-4 py-3.5 text-sm font-bold text-[#06080b] shadow-[0_14px_36px_-14px_rgba(34,211,238,0.8)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-400/30"
                     >
                       <span>{submitLabel}</span>
                       <FaTelegramPlane size={18} className="fsf-send" />
@@ -680,7 +676,6 @@ const Form = () => {
                 </>
               )}
 
-              {/* attribution */}
               <div className="flex items-center justify-center gap-1.5 px-5 pb-6 pt-5 text-[11px] text-slate-500">
                 <HiOutlineSparkles size={12} className="text-cyan-400/80" />
                 <a
@@ -697,7 +692,6 @@ const Form = () => {
           </div>
         </div>
 
-        {/* overlays */}
         {error && (
           <div className="fixed inset-0 z-50 flex h-full items-center justify-center bg-black/70 backdrop-blur-md">
             <div className="-mt-10 mx-auto flex max-w-xs flex-col items-center space-y-3 text-center">
