@@ -13,10 +13,19 @@ import { VscGraph } from "react-icons/vsc";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { BsGraphUpArrow } from "react-icons/bs";
 import { FiCheckCircle, FiTrendingUp, FiArrowRight, FiPlay } from "react-icons/fi";
+import { FiPlus, FiClock, FiLifeBuoy, FiChevronRight } from "react-icons/fi";
+import { BiMessageRounded } from "react-icons/bi";
+import { GoGraph } from "react-icons/go";
+import { CgNotes, CgWebsite, CgProfile } from "react-icons/cg";
+import { MdDashboard } from "react-icons/md";
+import { IoLogOut } from "react-icons/io5";
+import { IoMdHelpCircle } from "react-icons/io";
+import { FaLink } from "react-icons/fa6";
 import { AiOutlineStar } from "react-icons/ai";
 import { HiOutlineUsers, HiOutlineSparkles } from "react-icons/hi2";
 import { LuBrain } from "react-icons/lu";
 import Footer from "@/components/Footer";
+import Analytics from "@/components/Analytics";
 import { useRouter } from "next/navigation";
 
 interface User {
@@ -39,11 +48,11 @@ const Theme = () => (
 @keyframes fsh-spin{to{transform:rotate(360deg)}}
 .fsh-spin{animation:fsh-spin 5s linear infinite}
 @keyframes fsh-enter{from{opacity:0;transform:translateY(-30px) scale(.97)}}
-@keyframes fsh-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@keyframes fsh-toast{0%{opacity:0;transform:translateY(-10px) scale(.97)}10%,80%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-6px)}}
 @keyframes fsh-fade{from{opacity:0;transform:translateY(6px)}}
 @keyframes fsh-blink{0%,100%{opacity:1}50%{opacity:.35}}
 .fsh-enter{animation:fsh-enter .75s cubic-bezier(.22,1,.36,1) both}
-.fsh-shimmer{background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.14),rgba(255,255,255,.05));background-size:200% 100%;animation:fsh-shimmer 1.4s linear infinite}
+.fsh-toast{animation:fsh-toast 3.4s ease both}
 .fsh-fade{animation:fsh-fade .6s cubic-bezier(.22,1,.36,1) both}
 .fsh-blink{animation:fsh-blink 1.8s ease-in-out infinite}
 .fsh-a{animation:fsh-drift-a 16s ease-in-out infinite}
@@ -56,7 +65,7 @@ const Theme = () => (
 .fsh-ping{animation:fsh-pulse 2s ease-out infinite}
 .fsh-line{stroke-dasharray:300;animation:fsh-draw 2.4s ease forwards}
 .fsh-frame{transform-style:preserve-3d;transform-origin:50% 0%;will-change:transform}
-@media (prefers-reduced-motion:reduce){.fsh-enter,.fsh-shimmer,.fsh-fade,.fsh-blink,.fsh-spin,.fsh-a,.fsh-b,.fsh-float,.fsh-marquee,.fsh-sheen,.fsh-btn:hover,.fsh-ping,.fsh-line{animation:none!important}}
+@media (prefers-reduced-motion:reduce){.fsh-enter,.fsh-toast,.fsh-fade,.fsh-blink,.fsh-spin,.fsh-a,.fsh-b,.fsh-float,.fsh-marquee,.fsh-sheen,.fsh-btn:hover,.fsh-ping,.fsh-line{animation:none!important}}
 `}</style>
 );
 
@@ -131,35 +140,17 @@ const SpotCard = ({
   </div>
 );
 
-/* ---------- live product demo (built in code, streams feedback) ---------- */
+/* ---------- hero product preview: a live replica of the real dashboard ---------- */
+
 type Sent = "Positive" | "Neutral" | "Negative";
-interface FeedItem {
-  id: number;
-  who: string;
-  t: string;
-  s: Sent;
-  tag: string;
-  pri?: string;
-  analyzed: boolean;
-}
 
-const STREAM: Omit<FeedItem, "id" | "analyzed">[] = [
-  { who: "Priya S.", t: "Love the new dashboard, everything is so much clearer.", s: "Positive", tag: "Dashboard" },
-  { who: "Daniel R.", t: "Checkout feels confusing. I couldn't find where to enter my promo code.", s: "Negative", tag: "Checkout", pri: "High" },
-  { who: "Aisha K.", t: "Please add a dark mode, my eyes hurt when I use it at night.", s: "Neutral", tag: "Feature request" },
-  { who: "Marco L.", t: "The app crashes every time I open settings on iOS.", s: "Negative", tag: "Bug", pri: "High" },
-  { who: "Hannah W.", t: "Support replied within minutes. Genuinely impressed.", s: "Positive", tag: "Support" },
-  { who: "Ken T.", t: "Search gets a bit slow on larger projects.", s: "Neutral", tag: "Performance" },
+const STREAM: { who: string; t: string; s: Sent }[] = [
+  { who: "Priya S.", t: "Love the new dashboard, everything is so clear.", s: "Positive" },
+  { who: "Daniel R.", t: "Couldn't find where to enter my promo code.", s: "Negative" },
+  { who: "Aisha K.", t: "Please add a dark mode for late-night use.", s: "Neutral" },
+  { who: "Marco L.", t: "App crashes when I open settings on iOS.", s: "Negative" },
+  { who: "Hannah W.", t: "Support replied in minutes. Impressed!", s: "Positive" },
 ];
-
-const INSIGHTS: Record<string, string> = {
-  Dashboard: "Users love the new dashboard. Satisfaction is trending up this week.",
-  Checkout: "Checkout friction is rising. Several users can't find the promo code.",
-  "Feature request": "Dark mode is your most requested feature this week.",
-  Bug: "Crashes on iOS settings need attention. Marked high priority.",
-  Support: "Fast support replies are a clear strength. Keep it up.",
-  Performance: "Search speed on large projects is slowing users down.",
-};
 
 const sentStyle: Record<Sent, string> = {
   Positive: "bg-emerald-400/10 text-emerald-300 ring-emerald-400/25",
@@ -167,54 +158,146 @@ const sentStyle: Record<Sent, string> = {
   Negative: "bg-rose-400/10 text-rose-300 ring-rose-400/25",
 };
 
-const ROW_H = 108;
+/* eased 0 -> to over time, used to animate the replica on load */
+const useTween = (to: number, delay = 500, dur = 1500) => {
+  const [v, setV] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setV(to);
+      return;
+    }
+    let raf = 0;
+    const t0 = performance.now() + delay;
+    const tick = (now: number) => {
+      const p = Math.min(Math.max((now - t0) / dur, 0), 1);
+      setV(to * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [to, delay, dur]);
+  return v;
+};
+
+/* --- dashboard pieces, same markup and classes as the real dashboard --- */
+type DTone = "cyan" | "violet" | "emerald" | "amber";
+const dTones: Record<DTone, { text: string; bar: string; dot: string }> = {
+  cyan: { text: "text-indigo-300", bar: "from-indigo-400 to-indigo-500", dot: "bg-indigo-400" },
+  violet: { text: "text-violet-300", bar: "from-violet-400 to-violet-500", dot: "bg-violet-400" },
+  emerald: { text: "text-emerald-300", bar: "from-emerald-400 to-teal-400", dot: "bg-emerald-400" },
+  amber: { text: "text-amber-300", bar: "from-amber-400 to-orange-500", dot: "bg-amber-400" },
+};
+
+const DSurface = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <div className={`rounded-2xl p-px bg-white/10 ${className}`}>
+    <div className="relative h-full overflow-hidden rounded-[15px] bg-[#111113]">
+      {children}
+    </div>
+  </div>
+);
+
+const DKpi = ({
+  label,
+  value,
+  hint,
+  tone,
+  icon,
+  progress,
+}: {
+  label: string;
+  value: string;
+  hint: string;
+  tone: DTone;
+  icon: React.ReactNode;
+  progress?: number;
+}) => (
+  <div className="group relative px-6 py-6">
+    <div className="flex items-center justify-between">
+      <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+        {label}
+      </span>
+      <span className={`${dTones[tone].text} opacity-80`}>{icon}</span>
+    </div>
+    <p className="mt-4 text-[2.6rem] font-semibold leading-none tabular-nums tracking-tight text-white">
+      {value}
+    </p>
+    {progress !== undefined ? (
+      <div className="mt-5 h-1 w-full overflow-hidden rounded-full bg-white/[0.07]">
+        <div
+          className={`h-full rounded-full bg-gradient-to-r ${dTones[tone].bar}`}
+          style={{ width: `${Math.max(progress, 3)}%` }}
+        />
+      </div>
+    ) : (
+      <div className="mt-5 h-1 w-8 rounded-full bg-white/10" />
+    )}
+    <p className="mt-3 text-xs text-zinc-500">{hint}</p>
+  </div>
+);
+
+const DGauge = ({ percent }: { percent: number }) => {
+  const r = 52;
+  const c = 2 * Math.PI * r;
+  return (
+    <div className="relative mx-auto h-44 w-44">
+      <svg viewBox="0 0 120 120" className="h-full w-full -rotate-90">
+        <defs>
+          <linearGradient id="fsh-gauge" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stopColor="#34d399" />
+            <stop offset="1" stopColor="#818cf8" />
+          </linearGradient>
+        </defs>
+        <circle cx="60" cy="60" r={r} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="9" />
+        <circle
+          cx="60"
+          cy="60"
+          r={r}
+          fill="none"
+          stroke="url(#fsh-gauge)"
+          strokeWidth="9"
+          strokeLinecap="round"
+          strokeDasharray={c}
+          strokeDashoffset={c - (c * percent) / 100}
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-4xl font-semibold tabular-nums tracking-tight text-white">
+          {percent}%
+        </span>
+        <span className="mt-0.5 text-[11px] uppercase tracking-[0.14em] text-zinc-500">
+          resolved
+        </span>
+      </div>
+    </div>
+  );
+};
+
+/* demo numbers (kept constant so the real Analytics chart stays stable) */
+const DEMO = { websites: 3, feedback: 128, done: 42, pending: 13 };
 
 const LiveDemo = () => {
-  const [items, setItems] = useState<FeedItem[]>(() =>
-    [2, 1, 0].map((k) => ({
-      ...STREAM[k],
-      id: k,
-      analyzed: true,
-    }))
-  );
-  const [today, setToday] = useState(128);
-  const [issues, setIssues] = useState(12);
-  const [mix, setMix] = useState<Record<Sent, number>>({
-    Positive: 68,
-    Neutral: 21,
-    Negative: 11,
-  });
+  const k = useTween(1);
+  const [n, setN] = useState(0);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    let n = 3;
-    let analyze: ReturnType<typeof setTimeout> | undefined;
     const id = setInterval(() => {
-      if (document.hidden) return;
-      const base = STREAM[n % STREAM.length];
-      const item: FeedItem = { ...base, id: n, analyzed: false };
-      n += 1;
-      setItems((prev) => [item, ...prev].slice(0, 5));
-      setToday((c) => c + 1);
-      if (base.s === "Negative") setIssues((c) => c + 1);
-      setMix((m) => ({ ...m, [base.s]: m[base.s] + 1 }));
-      analyze = setTimeout(() => {
-        setItems((prev) =>
-          prev.map((p) => (p.id === item.id ? { ...p, analyzed: true } : p))
-        );
-      }, 1100);
-    }, 3200);
-    return () => {
-      clearInterval(id);
-      if (analyze) clearTimeout(analyze);
-    };
+      if (!document.hidden) setN((x) => x + 1);
+    }, 3600);
+    return () => clearInterval(id);
   }, []);
 
-  const totalMix = mix.Positive + mix.Neutral + mix.Negative;
-  const latest = items.find((i) => i.analyzed) ?? items[0];
-  const bars = [38, 52, 46, 61, 55, 72, 58 + (today % 9) * 4];
-
-  const age = (i: number) => (i === 0 ? "just now" : `${i * 3}s ago`);
+  const cur = STREAM[n % STREAM.length];
+  const all = DEMO.done + DEMO.pending;
+  const rate = Math.round((DEMO.done / all) * 100 * k);
+  const avg = (DEMO.feedback / DEMO.websites).toFixed(1);
+  const num = (v: number) => String(Math.round(v * k));
 
   return (
     <div className="overflow-hidden rounded-[21px] bg-[#0e0e11] text-left">
@@ -233,178 +316,268 @@ const LiveDemo = () => {
         </span>
       </div>
 
-      <div className="grid lg:grid-cols-[176px_minmax(0,1fr)_300px]">
-        {/* sidebar */}
-        <aside className="hidden border-r border-white/[0.06] p-4 lg:block">
-          <div className="flex items-center gap-2.5 px-1.5">
-            <span className="grid h-7 w-7 place-items-center rounded-lg bg-indigo-500 text-white">
-              <HiOutlineSparkles size={15} />
+      <div className="flex max-h-[46rem] overflow-hidden bg-[#09090b]">
+        {/* sidebar: same markup and classes as the real SideBar */}
+        <aside className="hidden w-64 shrink-0 flex-col overflow-hidden border-r border-white/[0.07] bg-[#07090d]/90 px-4 py-6 lg:flex">
+          <div className="relative flex items-center gap-3 px-2">
+            <span className="grid h-10 w-10 place-items-center rounded-xl bg-indigo-500 text-white">
+              <HiOutlineSparkles size={22} />
             </span>
-            <span className="text-sm font-semibold text-white">
+            <span className="text-lg font-semibold tracking-tight text-white">
               FeedSense<span className="text-indigo-400">AI</span>
             </span>
           </div>
-          <ul className="mt-7 space-y-1 text-[13px]">
-            {["Overview", "Feedback", "Insights", "Websites", "Integrate"].map((x, i) => (
-              <li
-                key={x}
-                className={`flex items-center gap-2.5 rounded-lg px-2.5 py-2 ${
-                  i === 0
-                    ? "bg-indigo-400/[0.12] font-medium text-white"
-                    : "text-zinc-500"
-                }`}
-              >
-                <span
-                  className={`h-1.5 w-1.5 rounded-full ${
-                    i === 0 ? "bg-indigo-400" : "bg-zinc-700"
-                  }`}
-                />
-                {x}
-              </li>
-            ))}
-          </ul>
-        </aside>
 
-        {/* main: KPIs + live feed */}
-        <div className="min-w-0 p-4 sm:p-5">
-          <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
+          <nav className="relative mt-10 flex flex-col gap-1.5">
+            <p className="mb-2 px-3 text-xs font-semibold text-zinc-600">Menu</p>
             {[
-              { l: "Feedback today", v: String(today), d: "+12%", c: "text-emerald-300" },
-              { l: "Satisfaction", v: "4.6", d: "+0.3", c: "text-emerald-300" },
-              { l: "Open issues", v: String(issues), d: "needs review", c: "text-amber-300" },
-            ].map((k) => (
-              <div
-                key={k.l}
-                className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-3 sm:p-4"
-              >
-                <p className="truncate text-[10px] font-medium uppercase tracking-[0.12em] text-zinc-500 sm:text-[11px]">
-                  {k.l}
-                </p>
-                <p className="mt-2 text-xl font-semibold tabular-nums text-white sm:text-2xl">
-                  {k.v}
-                </p>
-                <p className={`mt-1 hidden text-[11px] sm:block ${k.c}`}>{k.d}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-5 flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-white">Live feedback</h3>
-            <span className="text-xs text-zinc-500">Streaming from your website</span>
-          </div>
-
-          <div className="relative mt-3 overflow-hidden" style={{ height: ROW_H * 4 - 10 }}>
-            {items.map((it, i) => (
-              <div
-                key={it.id}
-                className="fsh-enter absolute inset-x-0 top-0 transition-[transform,opacity] duration-[800ms] ease-[cubic-bezier(.22,1,.36,1)]"
-                style={{
-                  height: ROW_H - 10,
-                  transform: `translateY(${i * ROW_H}px)`,
-                  opacity: i >= 4 ? 0 : 1 - i * 0.06,
-                }}
-              >
-                <div className="flex h-full gap-3 rounded-xl border border-white/[0.07] bg-[#131316] p-3.5">
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/[0.07] text-xs font-semibold text-zinc-300">
-                    {it.who.charAt(0)}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="truncate text-xs font-medium text-zinc-300">
-                        {it.who}
-                      </span>
-                      <span className="shrink-0 text-[11px] text-zinc-600">
-                        {age(i)}
-                      </span>
-                    </div>
-                    <p className="mt-1 line-clamp-2 text-[13px] leading-5 text-zinc-400">
-                      {it.t}
-                    </p>
-                    <div className="mt-2 flex h-5 items-center gap-1.5">
-                      {it.analyzed ? (
-                        <>
-                          <span
-                            className={`fsh-fade rounded-full px-2 py-0.5 text-[10px] font-semibold ring-1 ring-inset ${sentStyle[it.s]}`}
-                          >
-                            {it.s}
-                          </span>
-                          <span className="fsh-fade rounded-full bg-white/[0.06] px-2 py-0.5 text-[10px] font-medium text-zinc-300 ring-1 ring-inset ring-white/10">
-                            {it.tag}
-                          </span>
-                          {it.pri && (
-                            <span className="fsh-fade rounded-full bg-rose-500/10 px-2 py-0.5 text-[10px] font-semibold text-rose-300">
-                              {it.pri}
-                            </span>
-                          )}
-                        </>
-                      ) : (
-                        <>
-                          <LuBrain size={12} className="text-indigo-300" />
-                          <span className="fsh-shimmer h-3.5 w-20 rounded-full" />
-                          <span className="fsh-shimmer h-3.5 w-14 rounded-full" />
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* insights */}
-        <div className="border-t border-white/[0.06] p-4 sm:p-5 lg:border-l lg:border-t-0">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-white">Sentiment</h3>
-            <span className="text-xs tabular-nums text-zinc-500">{totalMix} responses</span>
-          </div>
-          <div className="mt-4 space-y-3.5">
-            {(["Positive", "Neutral", "Negative"] as Sent[]).map((k) => {
-              const pct = Math.round((mix[k] / totalMix) * 100);
-              const bar =
-                k === "Positive" ? "bg-emerald-400" : k === "Neutral" ? "bg-amber-400" : "bg-rose-400";
+              { label: "Home", icon: MdDashboard },
+              { label: "Integrate", icon: CgWebsite },
+              { label: "Help", icon: IoMdHelpCircle },
+              { label: "Your websites", icon: FaLink },
+              { label: "My Profile", icon: CgProfile },
+            ].map(({ label, icon: Icon }, i) => {
+              const active = i === 0;
               return (
-                <div key={k} className="flex items-center gap-3 text-xs">
-                  <span className="w-14 text-zinc-400">{k}</span>
-                  <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.07]">
-                    <div
-                      className={`h-full rounded-full ${bar} transition-[width] duration-[900ms] ease-out`}
-                      style={{ width: `${pct}%` }}
-                    />
-                  </div>
-                  <span className="w-8 text-right tabular-nums text-zinc-300">{pct}%</span>
+                <div
+                  key={label}
+                  className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all ${
+                    active
+                      ? "bg-indigo-400/20 text-white ring-1 ring-inset ring-indigo-400/20"
+                      : "text-zinc-400 hover:bg-white/[0.05] hover:text-white"
+                  }`}
+                >
+                  {active && (
+                    <span className="absolute -left-4 bottom-2 top-2 w-[3px] rounded-r-full bg-indigo-400" />
+                  )}
+                  <span
+                    className={`grid h-8 w-8 place-items-center rounded-lg ${
+                      active
+                        ? "bg-indigo-400/20 text-indigo-300"
+                        : "bg-white/[0.04] text-zinc-400"
+                    }`}
+                  >
+                    <Icon size={20} />
+                  </span>
+                  {label}
                 </div>
               );
             })}
+          </nav>
+
+          <div className="relative mt-auto space-y-3">
+            <div className="flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-3">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-indigo-500 text-sm font-bold text-white ring-2 ring-white/10">
+                A
+              </span>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold text-white">
+                  Alex Morgan
+                </p>
+                <p className="truncate text-xs text-zinc-500">alex@acme.com</p>
+              </div>
+            </div>
+            <div className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-zinc-400 transition-colors hover:bg-red-500/10 hover:text-red-400">
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-white/[0.04]">
+                <IoLogOut size={20} />
+              </span>
+              Logout
+            </div>
+          </div>
+        </aside>
+
+        {/* dashboard */}
+        <div className="relative min-w-0 flex-1">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-[26rem] bg-[radial-gradient(60%_100%_at_50%_0%,rgba(129,140,248,0.09),transparent)]"
+          />
+
+          {/* new feedback toast */}
+          <div
+            key={n}
+            className="fsh-toast pointer-events-none absolute right-4 top-3 z-20 hidden w-72 items-center gap-3 rounded-xl border border-white/10 bg-[#111113]/95 p-3 shadow-xl shadow-black/40 backdrop-blur sm:flex"
+          >
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.07] text-xs font-semibold text-zinc-300">
+              {cur.who.charAt(0)}
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center justify-between gap-2">
+                <span className="truncate text-xs font-medium text-zinc-200">
+                  {cur.who}
+                </span>
+                <span
+                  className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ring-1 ring-inset ${sentStyle[cur.s]}`}
+                >
+                  {cur.s}
+                </span>
+              </div>
+              <p className="mt-0.5 truncate text-[11px] text-zinc-500">{cur.t}</p>
+            </div>
           </div>
 
-          <div className="mt-6 rounded-xl border border-indigo-400/20 bg-indigo-400/[0.06] p-4">
-            <div className="flex items-center gap-2 text-xs font-semibold text-indigo-300">
-              <LuBrain size={15} />
-              AI insight
+          {/* top bar */}
+          <header className="relative z-10 border-b border-white/[0.06] bg-[#09090b]/70 backdrop-blur-xl">
+            <div className="flex h-16 items-center justify-between px-4 sm:px-6">
+              <div className="flex items-center gap-2.5 md:hidden">
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-indigo-500 text-white">
+                  <HiOutlineSparkles size={18} />
+                </span>
+                <h1 className="text-base font-semibold tracking-tight text-white">
+                  FeedSense.ai
+                </h1>
+              </div>
+              <p className="hidden items-center gap-1.5 text-sm text-zinc-500 md:flex">
+                Workspace
+                <FiChevronRight size={14} className="text-zinc-700" />
+                <span className="text-zinc-200">Dashboard</span>
+              </p>
+              <div className="flex items-center gap-3">
+                <span className="hidden items-center gap-1.5 rounded-full bg-indigo-400/15 px-3 py-1 text-xs font-semibold capitalize text-indigo-200 ring-1 ring-inset ring-indigo-400/30 sm:inline-flex">
+                  <span className="h-1.5 w-1.5 rounded-full bg-indigo-300" />
+                  Pro
+                </span>
+                <div className="hidden items-center gap-3 border-l border-white/[0.08] pl-4 md:flex">
+                  <span className="max-w-[10rem] truncate text-sm text-zinc-300">
+                    Alex Morgan
+                  </span>
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-indigo-500 text-sm font-bold text-white ring-2 ring-white/10">
+                    A
+                  </span>
+                </div>
+              </div>
             </div>
-            <p key={latest?.tag} className="fsh-fade mt-2.5 text-[13px] leading-5 text-zinc-200">
-              {INSIGHTS[latest?.tag ?? "Dashboard"]}
-            </p>
-          </div>
+          </header>
 
-          <div className="mt-6">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-medium text-zinc-300">This week</span>
-              <span className="text-zinc-600">Feedback volume</span>
-            </div>
-            <div className="mt-3 flex h-20 items-end gap-1.5">
-              {bars.map((h, i) => (
-                <div
-                  key={i}
-                  className={`flex-1 rounded-t-md transition-[height] duration-700 ease-out ${
-                    i === bars.length - 1 ? "bg-indigo-400" : "bg-white/[0.12]"
-                  }`}
-                  style={{ height: `${Math.min(100, h)}%` }}
+          <main className="relative z-10 space-y-6 px-4 py-8 sm:px-6">
+            {/* heading row */}
+            <section className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-sm font-medium text-indigo-300">
+                  Good morning, Alex
+                </p>
+                <h1 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                  Dashboard Overview
+                </h1>
+                <p className="mt-2 text-zinc-400">
+                  AI-powered insights from your user feedback
+                </p>
+              </div>
+              <span className="inline-flex items-center justify-center gap-2 self-start rounded-xl bg-indigo-500 px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-indigo-400 sm:self-auto">
+                <FiPlus size={16} />
+                Connect a website
+              </span>
+            </section>
+
+            {/* KPI strip */}
+            <section>
+              <DSurface>
+                <div className="grid grid-cols-2 divide-white/[0.07] lg:grid-cols-4 lg:divide-x [&>div:nth-child(n+3)]:border-t [&>div:nth-child(n+3)]:border-white/[0.07] lg:[&>div:nth-child(n+3)]:border-t-0 [&>div:nth-child(even)]:border-l [&>div:nth-child(even)]:border-white/[0.07] lg:[&>div:nth-child(even)]:border-l-0">
+                  <DKpi
+                    label="Websites"
+                    value={num(DEMO.websites)}
+                    hint="Connected to FeedSense"
+                    tone="cyan"
+                    icon={<BiMessageRounded size={20} />}
+                  />
+                  <DKpi
+                    label="Feedbacks"
+                    value={num(DEMO.feedback)}
+                    hint={`About ${avg} per website`}
+                    tone="violet"
+                    icon={<CgNotes size={19} />}
+                  />
+                  <DKpi
+                    label="Completed"
+                    value={num(DEMO.done)}
+                    hint="Tasks resolved"
+                    tone="emerald"
+                    icon={<GoGraph size={18} />}
+                    progress={(DEMO.done / all) * 100 * k}
+                  />
+                  <DKpi
+                    label="Pending"
+                    value={num(DEMO.pending)}
+                    hint="Tasks waiting on you"
+                    tone="amber"
+                    icon={<FiClock size={18} />}
+                    progress={(DEMO.pending / all) * 100 * k}
+                  />
+                </div>
+              </DSurface>
+            </section>
+
+            {/* analytics + gauge + quick actions */}
+            <section className="grid gap-6 lg:grid-cols-3">
+              <div className="lg:col-span-2">
+                <Analytics
+                  totalWebsites={String(DEMO.websites)}
+                  totalFeedback={String(DEMO.feedback)}
+                  totalTasksFinished={String(DEMO.done)}
+                  totalIncompleteTasks={String(DEMO.pending)}
+                  loading={false}
                 />
-              ))}
-            </div>
-          </div>
+              </div>
+
+              <div className="grid gap-6">
+                <DSurface>
+                  <div className="p-6">
+                    <h2 className="text-sm font-semibold text-white">
+                      Resolution rate
+                    </h2>
+                    <p className="mt-1 text-xs text-zinc-500">
+                      {DEMO.done} of {all} tasks completed
+                    </p>
+                    <div className="mt-5">
+                      <DGauge percent={rate} />
+                    </div>
+                  </div>
+                </DSurface>
+
+                <DSurface>
+                  <div className="p-2">
+                    {[
+                      {
+                        icon: <FiPlus size={16} />,
+                        t: "Connect a website",
+                        d: "Add the snippet to a new site",
+                        c: "bg-indigo-400/10 text-indigo-300 ring-indigo-400/25",
+                      },
+                      {
+                        icon: <FiLifeBuoy size={16} />,
+                        t: "Get help",
+                        d: "Talk to the FeedSense team",
+                        c: "bg-violet-400/10 text-violet-300 ring-violet-400/25",
+                      },
+                    ].map((a) => (
+                      <div
+                        key={a.t}
+                        className="group flex items-center gap-3 rounded-xl px-3 py-3 transition-colors hover:bg-white/[0.05]"
+                      >
+                        <span
+                          className={`grid h-9 w-9 place-items-center rounded-lg ring-1 ring-inset ${a.c}`}
+                        >
+                          {a.icon}
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-sm font-medium text-white">
+                            {a.t}
+                          </span>
+                          <span className="block truncate text-xs text-zinc-500">
+                            {a.d}
+                          </span>
+                        </span>
+                        <FiChevronRight
+                          size={16}
+                          className="text-zinc-600 transition group-hover:translate-x-0.5 group-hover:text-zinc-300"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </DSurface>
+              </div>
+            </section>
+          </main>
         </div>
       </div>
     </div>
@@ -604,46 +777,52 @@ const Page = () => {
               </span>
             </a>
 
-            {/* headline with a rotating subject */}
-            <h1 className="mx-auto mt-8 max-w-5xl text-[2.6rem] font-semibold leading-[1.05] tracking-[-0.035em] sm:text-6xl lg:text-7xl xl:text-[5.5rem]">
-              <span className="bg-gradient-to-b from-white to-zinc-300 bg-clip-text text-transparent">
+            {/* headline: three stacked lines, rotating subject in a tinted capsule */}
+            <h1 className="mx-auto mt-8 max-w-4xl text-[2.2rem] font-semibold leading-[1.1] tracking-[-0.035em] sm:text-6xl lg:text-[4.5rem]">
+              <span className="block bg-gradient-to-b from-white to-zinc-300 bg-clip-text text-transparent">
                 Transform
-              </span>{" "}
-              <br className="sm:hidden" />
-              <span className="relative inline-grid align-bottom">
-                <span className="sr-only">User Feedback</span>
-                {words.map((w, i) => {
-                  const active = i === wi;
-                  const justLeft = i === (wi - 1 + words.length) % words.length;
-                  return (
-                    <span
-                      key={w}
-                      aria-hidden
-                      className="col-start-1 row-start-1 whitespace-nowrap text-indigo-300"
-                      style={{
-                        opacity: active ? 1 : 0,
-                        transform: active
-                          ? "translateY(0)"
-                          : justLeft
-                          ? "translateY(-0.3em)"
-                          : "translateY(0.3em)",
-                        filter: active ? "blur(0px)" : "blur(8px)",
-                        transition:
-                          "opacity 700ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1), filter 700ms ease-out",
-                      }}
-                    >
-                      {w}
-                    </span>
-                  );
-                })}
-              </span>{" "}
-              <br className="hidden sm:block" />
-              <span className="bg-gradient-to-b from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent">
-                Into Actionable Insights
+              </span>
+              <span className="my-2 block sm:my-3">
+                <span className="relative inline-block rounded-2xl bg-indigo-500/[0.10] px-4 py-1 ring-1 ring-inset ring-indigo-400/25 sm:rounded-3xl sm:px-7 sm:py-2">
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-indigo-300/70 to-transparent"
+                  />
+                  <span className="relative inline-grid align-bottom">
+                    <span className="sr-only">User Feedback</span>
+                    {words.map((w, i) => {
+                      const active = i === wi;
+                      const justLeft = i === (wi - 1 + words.length) % words.length;
+                      return (
+                        <span
+                          key={w}
+                          aria-hidden
+                          className="col-start-1 row-start-1 whitespace-nowrap text-indigo-300"
+                          style={{
+                            opacity: active ? 1 : 0,
+                            transform: active
+                              ? "translateY(0)"
+                              : justLeft
+                              ? "translateY(-0.3em)"
+                              : "translateY(0.3em)",
+                            filter: active ? "blur(0px)" : "blur(8px)",
+                            transition:
+                              "opacity 700ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1), filter 700ms ease-out",
+                          }}
+                        >
+                          {w}
+                        </span>
+                      );
+                    })}
+                  </span>
+                </span>
+              </span>
+              <span className="block bg-gradient-to-b from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent">
+                into actionable insights
               </span>
             </h1>
 
-            <p className="mx-auto mt-7 max-w-xl text-base leading-7 text-zinc-400 sm:text-lg">
+            <p className="mx-auto mt-7 max-w-2xl text-base leading-7 text-zinc-400 sm:text-lg sm:leading-8">
               Harness the power of artificial intelligence to understand your users
               better, make data-driven decisions, and boost your product's success
               with real-time feedback analytics.
@@ -668,22 +847,40 @@ const Page = () => {
             </div>
 
             {/* social proof */}
-            <div className="mt-8 flex flex-col items-center justify-center gap-2 text-xs text-zinc-500 sm:flex-row sm:gap-3">
-              <span className="flex gap-0.5 text-amber-300">
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <AiOutlineStar key={i} size={14} className="fill-current" />
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5">
+              <div className="flex -space-x-2">
+                {["P", "D", "A", "M", "H"].map((c, i) => (
+                  <span
+                    key={c}
+                    className={`grid h-8 w-8 place-items-center rounded-full text-[11px] font-semibold text-white ring-2 ring-[#09090b] ${
+                      [
+                        "bg-indigo-500",
+                        "bg-violet-500",
+                        "bg-emerald-500",
+                        "bg-amber-500",
+                        "bg-rose-500",
+                      ][i]
+                    }`}
+                  >
+                    {c}
+                  </span>
                 ))}
-              </span>
-              <span>
-                <span className="font-semibold text-zinc-300">4.9/5</span> from
-                30+ active teams
-              </span>
-              <span className="hidden text-zinc-700 sm:inline">•</span>
-              <span>14‑day free trial • No credit card required</span>
+              </div>
+              <div className="flex flex-col items-center gap-1 sm:items-start">
+                <span className="flex gap-0.5 text-amber-300">
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <AiOutlineStar key={i} size={14} className="fill-current" />
+                  ))}
+                </span>
+                <span className="text-xs text-zinc-500">
+                  <span className="font-semibold text-zinc-300">4.9/5</span> from
+                  30+ active teams · 14‑day free trial · No credit card required
+                </span>
+              </div>
             </div>
 
             {/* live product stage */}
-            <div className="relative mx-auto mt-16 max-w-6xl [perspective:1800px]">
+            <div className="relative mx-auto mt-20 max-w-6xl [perspective:1800px]">
               <div aria-hidden className="absolute inset-x-8 top-10 h-4/5 rounded-[3rem] bg-indigo-500/[0.12] blur-3xl" />
 
               <div className="[mask-image:linear-gradient(to_bottom,black_62%,transparent_100%)]">
