@@ -1338,17 +1338,18 @@ const Page = () => {
             </div>
           </div>
         </section>
-        <style>{`@keyframes fwf-in{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
-.fwf{all:initial;position:fixed;left:24px;bottom:24px;z-index:2147483000;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;animation:fwf-in .7s cubic-bezier(.22,1,.36,1) .5s both}
-.fwf *,.fwf *::before,.fwf *::after{box-sizing:border-box}
-.fwf a{text-decoration:none;color:inherit;cursor:pointer}
-@media (prefers-reduced-motion:reduce){.fwf,.fwf *{animation:none!important;transition:none!important}}
-.fwf-bar{display:flex;align-items:center;gap:6px;padding:7px 8px 7px 16px;border-radius:999px;background:rgba(24,24,27,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(251,113,133,.3);box-shadow:0 14px 36px -12px rgba(0,0,0,.6),0 0 0 4px rgba(251,113,133,.06),inset 0 1px 0 rgba(255,255,255,.08)}
-.fwf-txt{margin-right:6px;font-size:13px;font-weight:600;color:#fafafa;white-space:nowrap;letter-spacing:-.01em}
-.fwf-e{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.06);font-size:18px;line-height:1;transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .25s}
-.fwf-e:hover{transform:scale(1.22) translateY(-2px);background:rgba(251,113,133,.22)}
-.fwf-e:focus-visible{outline:2px solid #fb7185;outline-offset:2px}`}</style>
-        <div className="fwf"><div className="fwf-bar"><span className="fwf-txt">How was it?</span><a href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/leetcode" target="_blank" rel="noopener noreferrer" className="fwf-e" aria-label="Loved it">😍</a><a href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/leetcode" target="_blank" rel="noopener noreferrer" className="fwf-e" aria-label="It was okay">🙂</a><a href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/leetcode" target="_blank" rel="noopener noreferrer" className="fwf-e" aria-label="Not great">😕</a></div></div>
+        // FeedSenseAI widget: Edge tab. No dependencies. Paste it anywhere in your React / Next.js layout.
+        <style>{`@keyframes fwc-in{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+.fwc{all:initial;position:fixed;right:0;top:calc(50% - 60px);z-index:2147483000;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;animation:fwc-in .7s cubic-bezier(.22,1,.36,1) .5s both}
+.fwc *,.fwc *::before,.fwc *::after{box-sizing:border-box}
+.fwc a{text-decoration:none;color:inherit;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.fwc,.fwc *{animation:none!important;transition:none!important}}
+.fwc-tab{display:flex;flex-direction:column;align-items:center;gap:10px;width:42px;padding:16px 0;border-radius:14px 0 0 14px;color:#04130d;background:linear-gradient(180deg,#6ee7b7,#10b981);box-shadow:-8px 10px 28px -10px rgba(16,185,129,.7),inset 1px 1px 0 rgba(255,255,255,.4);transition:width .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
+.fwc-tab:hover{width:50px;box-shadow:-12px 12px 34px -10px rgba(16,185,129,.9),inset 1px 1px 0 rgba(255,255,255,.5)}
+.fwc-tab:focus-visible{outline:2px solid #34d399;outline-offset:3px}
+.fwc-ico{display:grid;place-items:center}
+.fwc-txt{writing-mode:vertical-rl;transform:rotate(180deg);font-size:13px;font-weight:700;letter-spacing:.06em;line-height:1}`}</style>
+        <div className="fwc"><a href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/X" target="_blank" rel="noopener noreferrer" className="fwc-tab" aria-label="Open feedback form"><span className="fwc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#04130d" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.2 3.6c-.5.4-1.3.1-1.3-.6V16A2.5 2.5 0 0 1 4 13.5z" /><path d="M12 6.6l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z" fill="#04130d" stroke="none" /></svg></span><span className="fwc-txt">Feedback</span></a></div>
         <Footer />
       </div>
     </div>
