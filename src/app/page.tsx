@@ -343,21 +343,19 @@ const LiveDemo = () => {
               return (
                 <div
                   key={label}
-                  className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all ${
-                    active
+                  className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all ${active
                       ? "bg-indigo-400/20 text-white ring-1 ring-inset ring-indigo-400/20"
                       : "text-zinc-400 hover:bg-white/[0.05] hover:text-white"
-                  }`}
+                    }`}
                 >
                   {active && (
                     <span className="absolute -left-4 bottom-2 top-2 w-[3px] rounded-r-full bg-indigo-400" />
                   )}
                   <span
-                    className={`grid h-8 w-8 place-items-center rounded-lg ${
-                      active
+                    className={`grid h-8 w-8 place-items-center rounded-lg ${active
                         ? "bg-indigo-400/20 text-indigo-300"
                         : "bg-white/[0.04] text-zinc-400"
-                    }`}
+                      }`}
                   >
                     <Icon size={20} />
                   </span>
@@ -681,9 +679,8 @@ const StepVisual = ({ i }: { i: number }) => {
             className={done ? "text-emerald-400" : "text-zinc-600"}
           />
           <span
-            className={`min-w-0 flex-1 truncate text-[12px] ${
-              done ? "text-zinc-500 line-through" : "text-zinc-200"
-            }`}
+            className={`min-w-0 flex-1 truncate text-[12px] ${done ? "text-zinc-500 line-through" : "text-zinc-200"
+              }`}
           >
             {t as string}
           </span>
@@ -917,8 +914,8 @@ const Page = () => {
                             transform: active
                               ? "translateY(0)"
                               : justLeft
-                              ? "translateY(-0.3em)"
-                              : "translateY(0.3em)",
+                                ? "translateY(-0.3em)"
+                                : "translateY(0.3em)",
                             filter: active ? "blur(0px)" : "blur(8px)",
                             transition:
                               "opacity 700ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1), filter 700ms ease-out",
@@ -966,15 +963,14 @@ const Page = () => {
                 {["P", "D", "A", "M", "H"].map((c, i) => (
                   <span
                     key={c}
-                    className={`grid h-8 w-8 place-items-center rounded-full text-[11px] font-semibold text-white ring-2 ring-[#09090b] ${
-                      [
+                    className={`grid h-8 w-8 place-items-center rounded-full text-[11px] font-semibold text-white ring-2 ring-[#09090b] ${[
                         "bg-indigo-500",
                         "bg-violet-500",
                         "bg-emerald-500",
                         "bg-amber-500",
                         "bg-rose-500",
                       ][i]
-                    }`}
+                      }`}
                   >
                     {c}
                   </span>
@@ -1152,7 +1148,7 @@ const Page = () => {
               </p>
               <div className="mt-6 flex items-center gap-3 rounded-xl border border-rose-400/20 bg-rose-400/[0.07] px-4 py-3 text-xs text-rose-200">
                 <span className="relative flex h-2.5 w-2.5">
-                  
+
                   <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-rose-400" />
                 </span>
                 Negative feedback spike detected
@@ -1306,10 +1302,10 @@ const Page = () => {
         {/* ================= CTA ================= */}
         <section className="mx-auto max-w-5xl px-4 py-20 sm:px-6 lg:py-28">
           <div className="relative">
-            
+
             <div className="relative rounded-[2rem] p-px bg-white/10">
               <div className="relative overflow-hidden rounded-[calc(2rem-1px)] bg-[#111113] px-6 py-14 text-center sm:px-14 sm:py-20">
-                
+
                 <h2 className="relative text-3xl font-semibold tracking-tight sm:text-5xl">
                   Ready to Transform Your{" "}
                   <span className=" text-indigo-300">
@@ -1342,19 +1338,66 @@ const Page = () => {
             </div>
           </div>
         </section>
+        <style>{`
+    @keyframes fsw-in{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
+    @keyframes fsw-ping{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+    .fsw{all:initial;position:fixed;right:24px;bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:2147483000;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;animation:fsw-in .7s cubic-bezier(.22,1,.36,1) .6s both}
+    .fsw *,.fsw *::before,.fsw *::after{box-sizing:border-box}
+    .fsw-btn{position:relative;display:flex;align-items:center;gap:10px;height:48px;padding:0 16px 0 8px;border-radius:999px;color:#fff;text-decoration:none;cursor:pointer;background:linear-gradient(180deg,rgba(32,32,38,.82),rgba(17,17,19,.82));backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);border:1px solid rgba(255,255,255,.12);box-shadow:0 12px 32px -10px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s,border-color .35s}
+    .fsw-btn:hover{transform:translateY(-2px);border-color:rgba(129,140,248,.55);box-shadow:0 18px 40px -12px rgba(0,0,0,.6),0 0 0 4px rgba(129,140,248,.14),inset 0 1px 0 rgba(255,255,255,.16)}
+    .fsw-btn:active{transform:translateY(0) scale(.97)}
+    .fsw-btn:focus-visible{outline:2px solid #818cf8;outline-offset:3px}
+    .fsw-ico{position:relative;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#a5b4fc,#6366f1 60%,#4f46e5);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 4px 12px -2px rgba(99,102,241,.7)}
+    .fsw-ico::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(129,140,248,.7);animation:fsw-ping 2.2s ease-out 2s 3}
+    .fsw-ico svg{display:block;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+    .fsw-btn:hover .fsw-ico svg{transform:rotate(-12deg) scale(1.08)}
+    .fsw-label{font-size:14px;font-weight:600;letter-spacing:-.01em;line-height:1}
+    .fsw-arrow{display:block;width:0;opacity:0;margin-left:-6px;overflow:hidden;transition:width .35s cubic-bezier(.22,1,.36,1),opacity .25s,margin .35s}
+    .fsw-btn:hover .fsw-arrow{width:14px;opacity:.8;margin-left:0}
+    .fsw-card{position:absolute;right:0;bottom:calc(100% + 14px);width:272px;padding:14px;border-radius:18px;color:#fff;background:rgba(17,17,19,.92);backdrop-filter:blur(18px) saturate(1.5);-webkit-backdrop-filter:blur(18px) saturate(1.5);border:1px solid rgba(255,255,255,.1);box-shadow:0 24px 60px -16px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.08);opacity:0;transform:translateY(8px) scale(.97);transform-origin:bottom right;pointer-events:none;transition:opacity .25s,transform .35s cubic-bezier(.22,1,.36,1)}
+    .fsw:hover .fsw-card,.fsw:focus-within .fsw-card{opacity:1;transform:none}
+    .fsw-h{font-size:13px;font-weight:600;letter-spacing:-.01em}
+    .fsw-p{margin:2px 0 10px;font-size:12px;color:#a1a1aa}
+    .fsw-row{display:flex;align-items:center;gap:10px;margin-top:6px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.04);font-size:12.5px;font-weight:500;color:#e4e4e7}
+    .fsw-dot{width:7px;height:7px;border-radius:50%}
+    .fsw-foot{margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.07);font-size:11px;color:#71717a}
+    .fsw-foot b{font-weight:600;color:#d4d4d8}
+    @media (max-width:640px){.fsw{right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px))}.fsw-label,.fsw-arrow,.fsw-card{display:none}.fsw-btn{width:52px;height:52px;padding:0;justify-content:center}.fsw-ico{width:36px;height:36px}}
+    @media (hover:none){.fsw-card{display:none}}
+    @media (prefers-reduced-motion:reduce){.fsw,.fsw-ico::after{animation:none}.fsw-btn,.fsw-arrow,.fsw-card,.fsw-ico svg{transition:none}}
+  `}</style>
 
-  <div className="fixed bottom-10 right-10">
-    <Link href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/feedsenseai">
-      <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
-        <MdSettingsSuggest
-          size={47}
-          color="white"
-          className=" rounded-full p-3 bg-indigo-500"
-        />
-      </button>
-    </Link>
-  </div>
+        <div className="fsw">
+          <div className="fsw-card" role="tooltip">
+            <div className="fsw-h">Got a thought?</div>
+            <div className="fsw-p">We read every message.</div>
+            <div className="fsw-row"><span className="fsw-dot" style={{ background: "#34d399", boxShadow: "0 0 8px #34d399" }} />Share feedback</div>
+            <div className="fsw-row"><span className="fsw-dot" style={{ background: "#fb7185", boxShadow: "0 0 8px #fb7185" }} />Report a bug</div>
+            <div className="fsw-row"><span className="fsw-dot" style={{ background: "#fbbf24", boxShadow: "0 0 8px #fbbf24" }} />Request a feature</div>
+            <div className="fsw-foot">Powered by <b>FeedSenseAI</b></div>
+          </div>
 
+          <Link
+            href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/feedsenseai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="fsw-btn"
+            aria-label="Open feedback form: share feedback, report a bug or request a feature"
+          >
+            <span className="fsw-ico">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.2 3.6c-.5.4-1.3.1-1.3-.6V16A2.5 2.5 0 0 1 4 13.5z" />
+                <path d="M12 6.6l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z" fill="#fff" stroke="none" />
+              </svg>
+            </span>
+            <span className="fsw-label">Feedback</span>
+            <span className="fsw-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </span>
+          </Link>
+        </div>
         <Footer />
       </div>
     </div>
