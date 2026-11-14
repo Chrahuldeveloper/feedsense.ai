@@ -21,7 +21,7 @@ import { MdDashboard } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import { IoMdHelpCircle } from "react-icons/io";
 import { FaLink } from "react-icons/fa6";
-import { AiOutlineStar } from "react-icons/ai";
+import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { HiOutlineUsers, HiOutlineSparkles } from "react-icons/hi2";
 import { LuBrain } from "react-icons/lu";
 import Footer from "@/components/Footer";
@@ -55,6 +55,8 @@ const Theme = () => (
 .fsh-toast{animation:fsh-toast 3.4s ease both}
 .fsh-fade{animation:fsh-fade .6s cubic-bezier(.22,1,.36,1) both}
 .fsh-blink{animation:fsh-blink 1.8s ease-in-out infinite}
+@keyframes fsh-travel{0%{left:0;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:100%;opacity:0}}
+.fsh-travel{animation:fsh-travel 4.5s ease-in-out infinite}
 .fsh-a{animation:fsh-drift-a 16s ease-in-out infinite}
 .fsh-b{animation:fsh-drift-b 20s ease-in-out infinite}
 .fsh-float{animation:fsh-float 6s ease-in-out infinite}
@@ -65,7 +67,7 @@ const Theme = () => (
 .fsh-ping{animation:fsh-pulse 2s ease-out infinite}
 .fsh-line{stroke-dasharray:300;animation:fsh-draw 2.4s ease forwards}
 .fsh-frame{transform-style:preserve-3d;transform-origin:50% 0%;will-change:transform}
-@media (prefers-reduced-motion:reduce){.fsh-enter,.fsh-toast,.fsh-fade,.fsh-blink,.fsh-spin,.fsh-a,.fsh-b,.fsh-float,.fsh-marquee,.fsh-sheen,.fsh-btn:hover,.fsh-ping,.fsh-line{animation:none!important}}
+@media (prefers-reduced-motion:reduce){.fsh-enter,.fsh-toast,.fsh-fade,.fsh-blink,.fsh-spin,.fsh-a,.fsh-b,.fsh-float,.fsh-marquee,.fsh-sheen,.fsh-btn:hover,.fsh-ping,.fsh-line,.fsh-travel{animation:none!important}}
 `}</style>
 );
 
@@ -584,6 +586,118 @@ const LiveDemo = () => {
   );
 };
 
+/* ---------- "Live in three steps" vignettes ---------- */
+const StepVisual = ({ i }: { i: number }) => {
+  if (i === 0)
+    return (
+      <div className="flex h-full flex-col justify-between">
+        <div className="rounded-xl border border-white/[0.07] bg-[#09090b] p-3.5 font-mono text-[11px] leading-5">
+          <div className="mb-2.5 flex gap-1.5">
+            <span className="h-2 w-2 rounded-full bg-white/15" />
+            <span className="h-2 w-2 rounded-full bg-white/15" />
+            <span className="h-2 w-2 rounded-full bg-white/15" />
+          </div>
+          <p>
+            <span className="text-zinc-500">{"<"}</span>
+            <span className="text-indigo-300">script</span>
+          </p>
+          <p className="pl-3">
+            <span className="text-violet-300">src</span>
+            <span className="text-zinc-500">=</span>
+            <span className="text-emerald-300">{'"feedsense.js"'}</span>
+          </p>
+          <p className="pl-3">
+            <span className="text-violet-300">data-site</span>
+            <span className="text-zinc-500">=</span>
+            <span className="text-emerald-300">{'"your-site"'}</span>
+          </p>
+          <p>
+            <span className="text-zinc-500">{"></"}</span>
+            <span className="text-indigo-300">script</span>
+            <span className="text-zinc-500">{">"}</span>
+          </p>
+        </div>
+        <div className="mt-3 flex items-center gap-2 rounded-lg bg-emerald-400/10 px-3 py-2 text-[11px] font-medium text-emerald-300 ring-1 ring-inset ring-emerald-400/25">
+          <span className="fsh-blink h-1.5 w-1.5 rounded-full bg-emerald-400" />
+          Connected · feedback widget is live
+        </div>
+      </div>
+    );
+
+  if (i === 1)
+    return (
+      <div className="flex h-full flex-col justify-between rounded-xl border border-white/[0.07] bg-[#09090b] p-3.5">
+        <p className="text-xs font-semibold text-zinc-200">How was your experience?</p>
+        <div className="flex gap-1.5">
+          {[
+            ["Happy", "border-emerald-400/50 bg-emerald-400/10 text-emerald-300"],
+            ["Neutral", "border-white/10 bg-white/[0.03] text-zinc-500"],
+            ["Sad", "border-white/10 bg-white/[0.03] text-zinc-500"],
+          ].map(([l, c]) => (
+            <span
+              key={l}
+              className={`rounded-lg border px-2.5 py-1 text-[11px] font-semibold ${c}`}
+            >
+              {l}
+            </span>
+          ))}
+        </div>
+        <div className="flex gap-0.5">
+          {[0, 1, 2, 3, 4].map((n) => (
+            <AiFillStar
+              key={n}
+              size={16}
+              className={n < 4 ? "text-amber-300" : "text-zinc-700"}
+            />
+          ))}
+        </div>
+        <div className="space-y-1.5">
+          <span className="block h-1.5 w-full rounded bg-white/10" />
+          <span className="block h-1.5 w-2/3 rounded bg-white/10" />
+        </div>
+        <span className="rounded-lg bg-indigo-500 py-1.5 text-center text-[11px] font-semibold text-white">
+          Send feedback
+        </span>
+      </div>
+    );
+
+  return (
+    <div className="flex h-full flex-col gap-2 rounded-xl border border-white/[0.07] bg-[#09090b] p-3.5">
+      <div className="mb-0.5 flex items-center gap-2 text-[11px] font-semibold text-indigo-300">
+        <LuBrain size={14} />
+        AI insights
+      </div>
+      {[
+        ["Simplify the checkout form", "High", "bg-rose-400/10 text-rose-300 ring-rose-400/25", false],
+        ["Add a dark mode toggle", "Medium", "bg-amber-400/10 text-amber-300 ring-amber-400/25", false],
+        ["Fix iOS settings crash", "Done", "bg-emerald-400/10 text-emerald-300 ring-emerald-400/25", true],
+      ].map(([t, l, c, done]) => (
+        <div
+          key={t as string}
+          className="flex items-center gap-2.5 rounded-lg border border-white/[0.07] bg-white/[0.03] px-3 py-2"
+        >
+          <FiCheckCircle
+            size={15}
+            className={done ? "text-emerald-400" : "text-zinc-600"}
+          />
+          <span
+            className={`min-w-0 flex-1 truncate text-[12px] ${
+              done ? "text-zinc-500 line-through" : "text-zinc-200"
+            }`}
+          >
+            {t as string}
+          </span>
+          <span
+            className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ring-1 ring-inset ${c}`}
+          >
+            {l as string}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const Page = () => {
   useEffect(() => {
     AOS.init({ duration: 800, once: true, easing: "ease-out-cubic" });
@@ -1075,10 +1189,19 @@ const Page = () => {
         </section>
 
         {/* ================= HOW IT WORKS ================= */}
-        <section id="how" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-10 lg:py-24">
+        <section id="how" className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-10 lg:py-24">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-32 -z-10 h-[30rem] bg-[radial-gradient(50%_60%_at_50%_50%,rgba(129,140,248,0.08),transparent)]"
+          />
+
           <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-5xl">
-              Live in three steps
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-xs font-medium text-zinc-300">
+              <HiOutlineSparkles size={14} className="text-indigo-300" />
+              How it works
+            </span>
+            <h2 className="mt-6 text-3xl font-bold tracking-tight sm:text-5xl">
+              Live in <span className="text-indigo-300">three steps</span>
             </h2>
             <p className="mt-5 text-zinc-400 sm:text-lg">
               From first snippet to first insight, in the time it takes to make
@@ -1086,17 +1209,44 @@ const Page = () => {
             </p>
           </div>
 
-          <div className="relative mt-16 grid gap-6 md:grid-cols-3">
-            <div className="absolute left-[16%] right-[16%] top-8 hidden h-px md:block bg-white/10" />
-            {steps.map((s, i) => (
-              <div key={s.title} className="relative text-center" data-aos="fade-up" data-aos-delay={i * 120}>
-                <span className="relative mx-auto grid h-16 w-16 place-items-center rounded-2xl text-xl font-semibold text-white bg-indigo-500">
-                  {i + 1}
-                </span>
-                <h3 className="mt-6 text-lg font-semibold">{s.title}</h3>
-                <p className="mx-auto mt-2 max-w-xs text-sm text-zinc-400">{s.desc}</p>
-              </div>
-            ))}
+          <div className="relative mt-16">
+            {/* connector with a travelling pulse */}
+            <div className="absolute left-[16.6%] right-[16.6%] top-6 hidden h-px bg-gradient-to-r from-white/5 via-white/15 to-white/5 md:block">
+              <span className="fsh-travel absolute top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-indigo-300 shadow-[0_0_12px_2px_rgba(129,140,248,0.9)]" />
+            </div>
+
+            <div className="grid gap-x-6 gap-y-10 md:grid-cols-3">
+              {steps.map((s, i) => (
+                <div
+                  key={s.title}
+                  className="relative flex flex-col"
+                  data-aos="fade-up"
+                  data-aos-delay={i * 120}
+                >
+                  <span className="relative z-10 mx-auto grid h-12 w-12 place-items-center rounded-full bg-[#09090b] ring-1 ring-indigo-400/40 shadow-[0_0_32px_-6px_rgba(129,140,248,0.7)]">
+                    <span className="grid h-9 w-9 place-items-center rounded-full bg-indigo-500 text-sm font-semibold text-white">
+                      {i + 1}
+                    </span>
+                  </span>
+
+                  <div className="mt-6 h-full transition-transform duration-300 hover:-translate-y-1">
+                    <SpotCard className="h-full">
+                      <div className="h-52">
+                        <StepVisual i={i} />
+                      </div>
+                      <h3 className="mt-7 text-lg font-semibold tracking-tight text-white">
+                        {s.title}
+                      </h3>
+                      <p className="mt-2 text-sm leading-6 text-zinc-400">{s.desc}</p>
+                      <span className="mt-5 inline-flex items-center gap-2 text-xs font-medium text-indigo-300">
+                        <FiCheckCircle size={14} />
+                        {["Live in minutes", "From every user", "Prioritized by AI"][i]}
+                      </span>
+                    </SpotCard>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
