@@ -99,34 +99,6 @@ const Surface = ({
   </div>
 );
 
-const Kpi = ({
-  label,
-  value,
-  hint,
-  tone,
-  icon,
-}: {
-  label: string;
-  value: string;
-  hint: string;
-  tone: Tone;
-  icon: React.ReactNode;
-}) => (
-  <div className="group relative px-6 py-6">
-    <div className="flex items-center justify-between">
-      <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
-        {label}
-      </span>
-      <span className={`${tones[tone]} opacity-80`}>{icon}</span>
-    </div>
-    <p className="mt-4 text-[2.6rem] font-semibold leading-none tabular-nums tracking-tight text-white">
-      {value}
-    </p>
-    <div className="mt-5 h-1 w-8 rounded-full bg-white/10" />
-    <p className="mt-3 truncate text-xs text-zinc-500">{hint}</p>
-  </div>
-);
-
 const SortIcon = ({ dir }: { dir: "asc" | "desc" | null }) => (
   <span className="ml-1.5 inline-flex flex-col leading-none">
     <FiChevronUp
@@ -196,7 +168,6 @@ export default function Showwebsites() {
     fetchWebsites();
   }, [loading, user, db1]);
 
-  /* ---------- table state (UI only) ---------- */
   const [query, setQuery] = useState("");
   const [typeFilter, setTypeFilter] = useState<"all" | "personal" | "business">("all");
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
@@ -206,17 +177,6 @@ export default function Showwebsites() {
   const maxFeedback = Math.max(
     1,
     ...websitedata.map((s) => s?.feedback?.length ?? 0)
-  );
-  const totalFeedback = websitedata.reduce(
-    (a, s) => a + (s?.feedback?.length ?? 0),
-    0
-  );
-  const avgFeedback =
-    websitedata.length > 0 ? (totalFeedback / websitedata.length).toFixed(1) : "0";
-  const topSite = websitedata.reduce<WebsiteData | null>(
-    (best, s) =>
-      (s?.feedback?.length ?? 0) > (best?.feedback?.length ?? -1) ? s : best,
-    null
   );
 
   const initial = (user?.displayName || "U").charAt(0).toUpperCase();
@@ -291,12 +251,10 @@ export default function Showwebsites() {
     <>
       <Theme />
       <div className="fs-root relative min-w-0 flex-1 md:ml-64">
-        {/* ambient background */}
         <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden md:left-64">
           <div className="pointer-events-none absolute inset-x-0 top-0 h-[26rem] bg-[radial-gradient(60%_100%_at_50%_0%,rgba(129,140,248,0.09),transparent)]" />
         </div>
 
-        {/* ---------- Top bar ---------- */}
         <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#09090b]/70 backdrop-blur-xl">
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
             <div className="flex items-center gap-2.5 md:hidden">
@@ -366,42 +324,6 @@ export default function Showwebsites() {
               <FiPlus size={16} />
               Connect a website
             </Link>
-          </section>
-
-          {/* ---------- KPI strip ---------- */}
-          <section className="fs-rise" style={{ animationDelay: "0.05s" }}>
-            <Surface>
-              <div className="grid grid-cols-2 divide-white/[0.07] lg:grid-cols-4 lg:divide-x [&>div:nth-child(n+3)]:border-t [&>div:nth-child(n+3)]:border-white/[0.07] lg:[&>div:nth-child(n+3)]:border-t-0 [&>div:nth-child(even)]:border-l [&>div:nth-child(even)]:border-white/[0.07] lg:[&>div:nth-child(even)]:border-l-0">
-                <Kpi
-                  label="Websites"
-                  value={String(websitedata.length)}
-                  hint="Connected to FeedSense"
-                  tone="indigo"
-                  icon={<FiGlobe size={19} />}
-                />
-                <Kpi
-                  label="Feedbacks"
-                  value={String(totalFeedback)}
-                  hint="Collected across all sites"
-                  tone="violet"
-                  icon={<FiMessageSquare size={18} />}
-                />
-                <Kpi
-                  label="Average"
-                  value={avgFeedback}
-                  hint="Feedback per website"
-                  tone="emerald"
-                  icon={<FiBarChart2 size={18} />}
-                />
-                <Kpi
-                  label="Top site"
-                  value={String(topSite?.feedback?.length ?? 0)}
-                  hint={topSite?.name ? `Most active: ${topSite.name}` : "No activity yet"}
-                  tone="amber"
-                  icon={<FiAward size={18} />}
-                />
-              </div>
-            </Surface>
           </section>
 
           {/* ---------- Websites table ---------- */}
