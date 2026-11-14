@@ -17,7 +17,7 @@ import { FiPlus, FiClock, FiLifeBuoy, FiChevronRight } from "react-icons/fi";
 import { BiMessageRounded } from "react-icons/bi";
 import { GoGraph } from "react-icons/go";
 import { CgNotes, CgWebsite, CgProfile } from "react-icons/cg";
-import { MdDashboard } from "react-icons/md";
+import { MdDashboard, MdSettingsSuggest } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import { IoMdHelpCircle } from "react-icons/io";
 import { FaLink } from "react-icons/fa6";
