@@ -308,14 +308,13 @@ const AddIntegration: React.FC = () => {
         {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
         <main className="relative z-10 mx-auto max-w-7xl space-y-10 px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
-          {/* ---------- Title + live stepper ---------- */}
           <section className="fs-rise">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-2xl">
                 <h1 className="text-white text-4xl font-semibold leading-[1.05] tracking-tight sm:text-4xl">
                   Integrate Website
                 </h1>
-                <p className="mt-4 text-base text-zinc-400 sm:text-lg">
+                <p className="mt-4  text-zinc-400 ">
                   Add FeedSenseAI to your website in minutes
                 </p>
               </div>
