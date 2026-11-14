@@ -107,7 +107,7 @@ const ACCENTS = [
   { name: "Emerald", hex: "#10b981" },
   { name: "Rose", hex: "#f43f5e" },
   { name: "Amber", hex: "#f59e0b" },
-  { name: "Mono", hex: "#e4e4e7" },
+  { name: "Mono", hex: "#52525b" },
 ];
 
 const hexToRgb = (h: string) => {
@@ -123,9 +123,9 @@ const mix = (h: string, to: string, t: number) => {
     .join("")}`;
 };
 
+/* custom properties every widget reads, derived from one accent colour */
 const palette = (hex: string) => {
   const { r, g, b } = hexToRgb(hex);
-  const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
   const bg = hexToRgb(mix(hex, "#000000", 0.84));
   return [
     `--fw:${hex}`,
@@ -138,9 +138,10 @@ const palette = (hex: string) => {
     `--fw-bg:${mix(hex, "#000000", 0.84)}`,
     `--fw-bg2:${mix(hex, "#000000", 0.74)}`,
     `--fw-bga:rgba(${bg.r},${bg.g},${bg.b},.9)`,
-    `--fw-ink:${lum > 0.6 ? "#0a0a0a" : "#ffffff"}`,
+    `--fw-ink:#ffffff`,
   ].join(";");
 };
+
 const CHAT = (size = 18) =>
   `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.2 3.6c-.5.4-1.3.1-1.3-.6V16A2.5 2.5 0 0 1 4 13.5z"/><path d="M12 6.6l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z" fill="currentColor" stroke="none"/></svg>`;
 
@@ -148,12 +149,14 @@ const ARROW = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" strok
 
 const STAR = `<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg>`;
 
-/* shared: isolation from the host site, entrance animation, reduced motion */
+/* shared: isolation from the host site, entrance animation, reduced motion.
+   :where(a) keeps the link reset at zero specificity, so each widget's own
+   colours always win over it. */
 const base = (p: string, pos: string, vars: string) =>
   `@keyframes ${p}-in{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
-.${p}{all:initial;position:fixed;${pos};${vars};z-index:2147483000;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;animation:${p}-in .7s cubic-bezier(.22,1,.36,1) .4s both}
+.${p}{all:initial;position:fixed;${pos};${vars};color:#fff;z-index:2147483000;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;animation:${p}-in .7s cubic-bezier(.22,1,.36,1) .4s both}
 .${p} *,.${p} *::before,.${p} *::after{box-sizing:border-box}
-.${p} a{text-decoration:none;color:inherit;cursor:pointer}
+.${p} :where(a){text-decoration:none;color:inherit;cursor:pointer}
 @media (prefers-reduced-motion:reduce){.${p},.${p} *,.${p} *::before,.${p} *::after{animation:none!important;transition:none!important}}`;
 
 const A = (cls: string, label = "Open feedback form") =>
@@ -165,7 +168,7 @@ const makeWidgets = (side: Side, accent: string): Widget[] => {
   const rtl = side === "right";
 
   return [
-    /* 1 ─ Aurora */
+    /* 1 ─ Aurora: glass pill with a travelling light border */
     {
       id: "aurora",
       name: "Aurora",
@@ -190,7 +193,7 @@ const makeWidgets = (side: Side, accent: string): Widget[] => {
       html: `<div class="fwa">${A("fwa-btn")}<span class="fwa-in"><span class="fwa-ico">${CHAT(16)}</span><span class="fwa-label">Feedback</span><span class="fwa-arrow">${ARROW}</span></span></a></div>`,
     },
 
-    /* 2 ─ Orb */
+    /* 2 ─ Orb: glossy sphere with a double ripple */
     {
       id: "orb",
       name: "Pulse orb",
@@ -207,12 +210,12 @@ const makeWidgets = (side: Side, accent: string): Widget[] => {
 .fwb-btn:hover svg{transform:rotate(-10deg) scale(1.08)}
 .fwb-btn:active{transform:scale(.94)}
 .fwb-btn:focus-visible{outline:2px solid var(--fw);outline-offset:4px}
-.fwb-tip{position:absolute;${rtl ? "right" : "left"}:calc(100% + 14px);top:50%;transform:translateY(-50%) translateX(${rtl ? 6 : -6}px);opacity:0;padding:8px 13px;border-radius:11px;color:var(--fw2);background:var(--fw-bg);border:1px solid var(--fw-line);box-shadow:0 12px 28px -10px rgba(0,0,0,.6);font-size:12.5px;font-weight:600;white-space:nowrap;pointer-events:none;transition:opacity .25s,transform .35s cubic-bezier(.22,1,.36,1)}
+.fwb-tip{position:absolute;${rtl ? "right" : "left"}:calc(100% + 14px);top:50%;transform:translateY(-50%) translateX(${rtl ? 6 : -6}px);opacity:0;padding:8px 13px;border-radius:11px;color:#fff;background:var(--fw-bg);border:1px solid var(--fw-line);box-shadow:0 12px 28px -10px rgba(0,0,0,.6);font-size:12.5px;font-weight:600;white-space:nowrap;pointer-events:none;transition:opacity .25s,transform .35s cubic-bezier(.22,1,.36,1)}
 .fwb-btn:hover .fwb-tip,.fwb-btn:focus-visible .fwb-tip{opacity:1;transform:translateY(-50%)}`,
       html: `<div class="fwb">${A("fwb-btn")}<span class="fwb-tip">Share feedback</span>${CHAT(25)}</a></div>`,
     },
 
-    /* 3 ─ Dock */
+    /* 3 ─ Dock: a circle that unfolds on hover */
     {
       id: "dock",
       name: "Unfold dock",
@@ -223,14 +226,14 @@ const makeWidgets = (side: Side, accent: string): Widget[] => {
 .fwc-dock{display:flex;align-items:center;gap:10px;height:52px;width:52px;padding:0 9px;border-radius:999px;overflow:hidden;color:#fff;background:var(--fw-bga);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6);border:1px solid var(--fw-line);box-shadow:0 16px 38px -14px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.08);transition:width .55s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s}
 .fwc-ico{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;color:var(--fw2);background:var(--fw-soft);box-shadow:inset 0 0 0 1px var(--fw3)}
 .fwc-ico svg{display:block}
-.fwc-txt{flex:none;white-space:nowrap;font-size:13.5px;font-weight:600;letter-spacing:-.01em;opacity:0;transform:translateX(${rtl ? 8 : -8}px);transition:opacity .35s .12s,transform .5s .06s cubic-bezier(.22,1,.36,1)}
+.fwc-txt{flex:none;white-space:nowrap;color:#fff;font-size:13.5px;font-weight:600;letter-spacing:-.01em;opacity:0;transform:translateX(${rtl ? 8 : -8}px);transition:opacity .35s .12s,transform .5s .06s cubic-bezier(.22,1,.36,1)}
 .fwc-dock:hover,.fwc-dock:focus-visible{width:184px;border-color:var(--fw3);box-shadow:0 20px 44px -14px rgba(0,0,0,.75),0 0 0 5px var(--fw-soft),inset 0 1px 0 rgba(255,255,255,.1)}
 .fwc-dock:hover .fwc-txt,.fwc-dock:focus-visible .fwc-txt{opacity:1;transform:none}
 .fwc-dock:focus-visible{outline:2px solid var(--fw);outline-offset:4px}`,
       html: `<div class="fwc">${A("fwc-dock")}<span class="fwc-ico">${CHAT(16)}</span><span class="fwc-txt">Give feedback</span></a></div>`,
     },
 
-    /* 4 ─ Rating card */
+    /* 4 ─ Rating card: one-tap stars */
     {
       id: "rating",
       name: "Rating card",
@@ -238,19 +241,19 @@ const makeWidgets = (side: Side, accent: string): Widget[] => {
       css:
         base("fwd", corner, v) +
         `
-.fwd-card{width:292px;padding:16px;border-radius:20px;color:#fafafa;background:var(--fw-bga);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);border:1px solid var(--fw-line);box-shadow:0 28px 64px -22px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.08)}
+.fwd-card{width:292px;padding:16px;border-radius:20px;color:#fff;background:var(--fw-bga);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);border:1px solid var(--fw-line);box-shadow:0 28px 64px -22px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.08)}
 .fwd-top{display:flex;align-items:center;gap:11px}
 .fwd-mark{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;color:var(--fw2);background:var(--fw-soft);box-shadow:inset 0 0 0 1px var(--fw3)}
 .fwd-mark svg{display:block}
 .fwd-h{font-size:14px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
-.fwd-sub{margin-top:3px;font-size:12px;color:#a1a1aa;line-height:1.2}
+.fwd-sub{margin-top:3px;font-size:12px;color:#fff;line-height:1.2}
 .fwd-stars{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px;margin:16px 0 4px}
 .fwd-s{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;color:#3f3f46;background:rgba(255,255,255,.03);transition:color .2s,background .2s,transform .35s cubic-bezier(.34,1.56,.64,1)}
 .fwd-s svg{display:block}
 .fwd-s:hover,.fwd-s:hover ~ .fwd-s{color:#fbbf24;background:rgba(251,191,36,.12)}
 .fwd-s:hover{transform:translateY(-3px) scale(1.12)}
 .fwd-s:focus-visible{outline:2px solid #fbbf24;outline-offset:2px}
-.fwd-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--fw-line);font-size:11px;color:#71717a}
+.fwd-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--fw-line);font-size:11px;color:#fff}
 @media (max-width:640px){.fwd-card{width:calc(100vw - 32px);max-width:292px}}`,
       html: `<div class="fwd"><div class="fwd-card"><div class="fwd-top"><span class="fwd-mark">${CHAT(16)}</span><div><div class="fwd-h">How&#39;s your experience?</div><div class="fwd-sub">Tap a star to tell us</div></div></div><div class="fwd-stars">${[5, 4, 3, 2, 1]
         .map((n) => `${A("fwd-s", `${n} star${n > 1 ? "s" : ""}`)}${STAR}</a>`)
@@ -304,7 +307,7 @@ const makeWidgets = (side: Side, accent: string): Widget[] => {
         `
 .fwg-bar{display:flex;align-items:center;gap:14px;padding:6px 6px 6px 18px;border-radius:999px;background:var(--fw-bga);backdrop-filter:blur(18px) saturate(1.5);-webkit-backdrop-filter:blur(18px) saturate(1.5);border:1px solid var(--fw-line);box-shadow:0 18px 40px -14px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.08)}
 .fwg-dot{width:8px;height:8px;border-radius:50%;background:var(--fw);box-shadow:0 0 12px var(--fw)}
-.fwg-txt{font-size:13.5px;font-weight:500;color:#e4e4e7;white-space:nowrap;letter-spacing:-.005em}
+.fwg-txt{font-size:13.5px;font-weight:500;color:#fff;white-space:nowrap;letter-spacing:-.005em}
 .fwg-btn{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 16px;border-radius:999px;color:var(--fw-ink);background:linear-gradient(135deg,var(--fw2),var(--fw));font-size:13px;font-weight:700;white-space:nowrap;box-shadow:0 8px 18px -8px var(--fw3),inset 0 1px 0 rgba(255,255,255,.35);transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
 .fwg-btn svg{display:block;transition:transform .35s cubic-bezier(.22,1,.36,1)}
 .fwg-btn:hover{transform:translateY(-1px);box-shadow:0 12px 24px -8px var(--fw3),inset 0 1px 0 rgba(255,255,255,.45)}
@@ -322,7 +325,7 @@ const makeWidgets = (side: Side, accent: string): Widget[] => {
         base("fwh", corner, v) +
         `
 .fwh-bar{display:flex;align-items:center;gap:6px;padding:7px 8px 7px 18px;border-radius:999px;background:var(--fw-bga);backdrop-filter:blur(18px) saturate(1.5);-webkit-backdrop-filter:blur(18px) saturate(1.5);border:1px solid var(--fw-line);box-shadow:0 18px 40px -14px rgba(0,0,0,.7),0 0 0 4px var(--fw-soft),inset 0 1px 0 rgba(255,255,255,.08)}
-.fwh-txt{margin-right:6px;font-size:13.5px;font-weight:600;color:#fafafa;white-space:nowrap;letter-spacing:-.01em}
+.fwh-txt{margin-right:6px;font-size:13.5px;font-weight:600;color:#fff;white-space:nowrap;letter-spacing:-.01em}
 .fwh-e{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--fw-soft);font-size:19px;line-height:1;transition:transform .35s cubic-bezier(.34,1.56,.64,1),background .25s}
 .fwh-e:hover{transform:scale(1.25) translateY(-3px);background:var(--fw3)}
 .fwh-e:focus-visible{outline:2px solid var(--fw);outline-offset:2px}`,
