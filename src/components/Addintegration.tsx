@@ -312,7 +312,7 @@ const AddIntegration: React.FC = () => {
           <section className="fs-rise">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-2xl">
-                <h1 className="text-white text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+                <h1 className="text-white text-4xl font-semibold leading-[1.05] tracking-tight sm:text-4xl">
                   Integrate Website
                 </h1>
                 <p className="mt-4 text-base text-zinc-400 sm:text-lg">

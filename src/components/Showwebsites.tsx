@@ -306,7 +306,6 @@ export default function Showwebsites() {
         {toggleLogout && <ModelLogout settoggle={setToggleLogout} />}
 
         <main className="relative z-10 mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
-          {/* ---------- Heading row ---------- */}
           <section className="fs-rise flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-sm font-medium text-indigo-300">Websites</p>
