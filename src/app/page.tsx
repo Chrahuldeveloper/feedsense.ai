@@ -344,8 +344,8 @@ const LiveDemo = () => {
                 <div
                   key={label}
                   className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all ${active
-                    ? "bg-indigo-400/20 text-white ring-1 ring-inset ring-indigo-400/20"
-                    : "text-zinc-400 hover:bg-white/[0.05] hover:text-white"
+                      ? "bg-indigo-400/20 text-white ring-1 ring-inset ring-indigo-400/20"
+                      : "text-zinc-400 hover:bg-white/[0.05] hover:text-white"
                     }`}
                 >
                   {active && (
@@ -353,8 +353,8 @@ const LiveDemo = () => {
                   )}
                   <span
                     className={`grid h-8 w-8 place-items-center rounded-lg ${active
-                      ? "bg-indigo-400/20 text-indigo-300"
-                      : "bg-white/[0.04] text-zinc-400"
+                        ? "bg-indigo-400/20 text-indigo-300"
+                        : "bg-white/[0.04] text-zinc-400"
                       }`}
                   >
                     <Icon size={20} />
@@ -964,12 +964,12 @@ const Page = () => {
                   <span
                     key={c}
                     className={`grid h-8 w-8 place-items-center rounded-full text-[11px] font-semibold text-white ring-2 ring-[#09090b] ${[
-                      "bg-indigo-500",
-                      "bg-violet-500",
-                      "bg-emerald-500",
-                      "bg-amber-500",
-                      "bg-rose-500",
-                    ][i]
+                        "bg-indigo-500",
+                        "bg-violet-500",
+                        "bg-emerald-500",
+                        "bg-amber-500",
+                        "bg-rose-500",
+                      ][i]
                       }`}
                   >
                     {c}
@@ -1338,18 +1338,21 @@ const Page = () => {
             </div>
           </div>
         </section>
-        // FeedSenseAI widget: Edge tab. No dependencies. Paste it anywhere in your React / Next.js layout.
-        <style>{`@keyframes fwc-in{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
-.fwc{all:initial;position:fixed;right:0;top:calc(50% - 60px);z-index:2147483000;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;animation:fwc-in .7s cubic-bezier(.22,1,.36,1) .5s both}
-.fwc *,.fwc *::before,.fwc *::after{box-sizing:border-box}
-.fwc a{text-decoration:none;color:inherit;cursor:pointer}
-@media (prefers-reduced-motion:reduce){.fwc,.fwc *{animation:none!important;transition:none!important}}
-.fwc-tab{display:flex;flex-direction:column;align-items:center;gap:10px;width:42px;padding:16px 0;border-radius:14px 0 0 14px;color:#04130d;background:linear-gradient(180deg,#6ee7b7,#10b981);box-shadow:-8px 10px 28px -10px rgba(16,185,129,.7),inset 1px 1px 0 rgba(255,255,255,.4);transition:width .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
-.fwc-tab:hover{width:50px;box-shadow:-12px 12px 34px -10px rgba(16,185,129,.9),inset 1px 1px 0 rgba(255,255,255,.5)}
-.fwc-tab:focus-visible{outline:2px solid #34d399;outline-offset:3px}
-.fwc-ico{display:grid;place-items:center}
-.fwc-txt{writing-mode:vertical-rl;transform:rotate(180deg);font-size:13px;font-weight:700;letter-spacing:.06em;line-height:1}`}</style>
-        <div className="fwc"><a href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/X" target="_blank" rel="noopener noreferrer" className="fwc-tab" aria-label="Open feedback form"><span className="fwc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#04130d" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.2 3.6c-.5.4-1.3.1-1.3-.6V16A2.5 2.5 0 0 1 4 13.5z" /><path d="M12 6.6l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z" fill="#04130d" stroke="none" /></svg></span><span className="fwc-txt">Feedback</span></a></div>
+  <style>{`@keyframes fwb-in{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+.fwb{all:initial;position:fixed;right:24px;bottom:24px;z-index:2147483000;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;animation:fwb-in .7s cubic-bezier(.22,1,.36,1) .5s both}
+.fwb *,.fwb *::before,.fwb *::after{box-sizing:border-box}
+.fwb a{text-decoration:none;color:inherit;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.fwb,.fwb *{animation:none!important;transition:none!important}}
+@keyframes fwb-ping{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.7);opacity:0}}
+.fwb-btn{position:relative;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;color:#fff;background:linear-gradient(135deg,#c4b5fd,#7c3aed 55%,#c026d3);box-shadow:0 12px 32px -8px rgba(124,58,237,.75),inset 0 1px 0 rgba(255,255,255,.4);transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s}
+.fwb-btn::before{content:"";position:absolute;inset:0;border-radius:50%;background:#8b5cf6;z-index:-1;animation:fwb-ping 2.6s ease-out infinite}
+.fwb-btn:hover{transform:scale(1.08) rotate(-6deg);box-shadow:0 18px 40px -8px rgba(124,58,237,.9),inset 0 1px 0 rgba(255,255,255,.5)}
+.fwb-btn:active{transform:scale(.95)}
+.fwb-btn:focus-visible{outline:2px solid #c4b5fd;outline-offset:4px}
+.fwb-btn svg{display:block}
+.fwb-tip{position:absolute;right:calc(100% + 12px);top:50%;transform:translateY(-50%) translateX(6px);opacity:0;padding:7px 12px;border-radius:10px;background:#18181b;border:1px solid rgba(255,255,255,.1);color:#fff;font-size:12.5px;font-weight:600;white-space:nowrap;pointer-events:none;transition:opacity .25s,transform .3s cubic-bezier(.22,1,.36,1)}
+.fwb-btn:hover .fwb-tip,.fwb-btn:focus-visible .fwb-tip{opacity:1;transform:translateY(-50%)}`}</style>
+  <div className="fwb"><a href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/X" target="_blank" rel="noopener noreferrer" className="fwb-btn" aria-label="Open feedback form"><span className="fwb-tip">Feedback</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.2 3.6c-.5.4-1.3.1-1.3-.6V16A2.5 2.5 0 0 1 4 13.5z"/><path d="M12 6.6l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z" fill="#fff" stroke="none"/></svg></a></div>
         <Footer />
       </div>
     </div>
