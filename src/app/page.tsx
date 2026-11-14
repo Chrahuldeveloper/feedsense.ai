@@ -14,7 +14,7 @@ import { SlGraph } from "react-icons/sl";
 import { VscGraph } from "react-icons/vsc";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { BsGraphUpArrow } from "react-icons/bs";
-import { FiCheckCircle, FiTrendingUp, FiArrowRight } from "react-icons/fi";
+import { FiCheckCircle, FiTrendingUp, FiArrowRight, FiPlay } from "react-icons/fi";
 import { AiOutlineStar } from "react-icons/ai";
 import { HiOutlineUsers, HiOutlineSparkles } from "react-icons/hi2";
 import { LuBrain } from "react-icons/lu";
@@ -38,6 +38,8 @@ const Theme = () => (
 @keyframes fsh-sheen{from{background-position:200% 0}to{background-position:-200% 0}}
 @keyframes fsh-pulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.6);opacity:0}}
 @keyframes fsh-draw{from{stroke-dashoffset:300}to{stroke-dashoffset:0}}
+@keyframes fsh-spin{to{transform:rotate(360deg)}}
+.fsh-spin{animation:fsh-spin 5s linear infinite}
 .fsh-a{animation:fsh-drift-a 16s ease-in-out infinite}
 .fsh-b{animation:fsh-drift-b 20s ease-in-out infinite}
 .fsh-float{animation:fsh-float 6s ease-in-out infinite}
@@ -48,7 +50,7 @@ const Theme = () => (
 .fsh-ping{animation:fsh-pulse 2s ease-out infinite}
 .fsh-line{stroke-dasharray:300;animation:fsh-draw 2.4s ease forwards}
 .fsh-frame{transform-style:preserve-3d;transform-origin:50% 0%;will-change:transform}
-@media (prefers-reduced-motion:reduce){.fsh-a,.fsh-b,.fsh-float,.fsh-marquee,.fsh-sheen,.fsh-btn:hover,.fsh-ping,.fsh-line{animation:none!important}}
+@media (prefers-reduced-motion:reduce){.fsh-spin,.fsh-a,.fsh-b,.fsh-float,.fsh-marquee,.fsh-sheen,.fsh-btn:hover,.fsh-ping,.fsh-line{animation:none!important}}
 `}</style>
 );
 
@@ -125,17 +127,19 @@ const SpotCard = ({
 
 const Chip = ({
   className,
-  delay,
+  depth,
   children,
 }: {
   className: string;
-  delay: string;
+  depth: number;
   children: React.ReactNode;
 }) => (
   <div className={`absolute z-20 hidden lg:block ${className}`}>
     <div
-      className=" rounded-2xl border border-white/15 bg-[#141416]/80 p-4 backdrop-blur-xl"
-      style={{ animationDelay: delay }}
+      className="rounded-2xl border border-white/10 bg-[#141416]/85 p-4 shadow-2xl shadow-black/50 backdrop-blur-xl transition-transform duration-300 ease-out"
+      style={{
+        transform: `translate3d(calc(var(--px,0) * ${depth}px), calc(var(--py,0) * ${depth * 0.7}px), 0)`,
+      }}
     >
       {children}
     </div>
@@ -146,6 +150,29 @@ const Page = () => {
   useEffect(() => {
     AOS.init({ duration: 800, once: true, easing: "ease-out-cubic" });
   }, []);
+
+  const words = [
+    "User Feedback",
+    "Customer Reviews",
+    "Bug Reports",
+    "Feature Requests",
+  ];
+  const [wi, setWi] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = setInterval(() => setWi((i) => (i + 1) % words.length), 2600);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onHeroMove = (e: React.MouseEvent<HTMLElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    const el = e.currentTarget;
+    el.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    el.style.setProperty("--my", `${e.clientY - r.top}px`);
+    el.style.setProperty("--px", String(((e.clientX - r.left) / r.width - 0.5) * 2));
+    el.style.setProperty("--py", String(((e.clientY - r.top) / r.height - 0.5) * 2));
+  };
 
   const frameRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -269,118 +296,200 @@ const Page = () => {
         <Navbar />
 
         {/* ================= HERO ================= */}
-        <section className="mx-auto max-w-7xl px-4 pb-10 pt-32 text-center sm:px-6 sm:pt-40 lg:px-10">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-xs font-medium text-zinc-300 backdrop-blur">
-            <HiOutlineSparkles className="text-indigo-300" size={15} />
-            AI-powered feedback analytics
-          </span>
+        <section onMouseMove={onHeroMove} className="relative overflow-hidden">
+          {/* light cone, grid and cursor spotlight */}
+          <div aria-hidden className="pointer-events-none absolute inset-0">
+            <div className="absolute left-1/2 top-0 h-[46rem] w-[96rem] -translate-x-1/2 bg-[conic-gradient(from_180deg_at_50%_0%,rgba(129,140,248,0.30)_0deg,transparent_26deg,transparent_334deg,rgba(129,140,248,0.30)_360deg)] opacity-60 blur-2xl [mask-image:linear-gradient(to_bottom,black,transparent_88%)]" />
+            <div
+              className="absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_65%_55%_at_50%_0%,black,transparent)]"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px)",
+                backgroundSize: "64px 64px",
+              }}
+            />
+            <div
+              className="absolute inset-0 hidden lg:block"
+              style={{
+                background:
+                  "radial-gradient(560px circle at var(--mx,50%) var(--my,30%), rgba(129,140,248,0.08), transparent 60%)",
+              }}
+            />
+          </div>
 
-          <h1 className="mx-auto mt-8 max-w-5xl text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-8xl">
-            Transform{" "}
-            <span className=" text-indigo-300">
-              User Feedback
-            </span>{" "}
-            <br className="hidden sm:block" />
-            Into Actionable Insights
-          </h1>
-
-          <p className="mx-auto mt-8 max-w-xl text-base text-zinc-400 sm:text-lg">
-            Harness the power of artificial intelligence to understand your users
-            better, make data-driven decisions, and boost your product's success
-            with real-time feedback analytics.
-          </p>
-
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link href={`${userSession === null ? "/login" : "/dashboard"}`}>
-              <button className=" group inline-flex cursor-pointer items-center gap-2 rounded-2xl px-8 py-4 text-sm font-bold text-white transition hover:-translate-y-0.5 bg-indigo-500 hover:bg-indigo-400">
-                Get Started
-                <FiArrowRight className="transition-transform group-hover:translate-x-1" />
-              </button>
-            </Link>
+          <div className="relative mx-auto max-w-7xl px-4 pt-32 text-center sm:px-6 sm:pt-40 lg:px-10">
+            {/* announcement pill with a travelling highlight */}
             <a
               href="#how"
-              className="inline-flex items-center rounded-2xl border border-white/15 bg-white/[0.04] px-8 py-4 text-sm font-semibold text-zinc-200 backdrop-blur transition hover:bg-white/10"
+              className="group relative inline-flex overflow-hidden rounded-full p-px"
             >
-              See how it works
+              <span aria-hidden className="absolute left-1/2 top-1/2 h-0 w-0">
+                <span className="fsh-spin absolute -left-[220px] -top-[220px] h-[440px] w-[440px] bg-[conic-gradient(from_0deg,transparent_0_72%,#818cf8_92%,transparent_100%)]" />
+              </span>
+              <span className="relative inline-flex items-center gap-2.5 rounded-full bg-[#0d0d10] py-1.5 pl-1.5 pr-4 text-xs font-medium text-zinc-300">
+                <span className="rounded-full bg-indigo-500/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-indigo-300">
+                  New
+                </span>
+                Real-time AI insights are live
+                <FiArrowRight
+                  size={13}
+                  className="text-zinc-500 transition-transform group-hover:translate-x-0.5 group-hover:text-zinc-300"
+                />
+              </span>
             </a>
-          </div>
-          <p className="mt-5 text-xs text-zinc-500">
-            14‑day free trial • No credit card required
-          </p>
 
-          {/* product frame */}
-          <div className="relative mx-auto mt-16 max-w-5xl [perspective:1800px]">
-            
-
-            <div ref={frameRef} className="fsh-frame relative">
-              <div className="rounded-[22px] p-px bg-white/10">
-                <div className="overflow-hidden rounded-[21px] bg-[#111113]">
-                  <div className="flex items-center gap-2 border-b border-white/[0.07] px-4 py-3">
-                    <span className="h-3 w-3 rounded-full bg-red-400/80" />
-                    <span className="h-3 w-3 rounded-full bg-amber-400/80" />
-                    <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
-                    <span className="mx-auto hidden rounded-md bg-white/[0.05] px-10 py-1 text-xs text-zinc-500 sm:block">
-                      feedsenseai.vercel.app/dashboard
+            {/* headline with a rotating subject */}
+            <h1 className="mx-auto mt-8 max-w-5xl text-[2.6rem] font-semibold leading-[1.05] tracking-[-0.035em] sm:text-6xl lg:text-7xl xl:text-[5.5rem]">
+              <span className="bg-gradient-to-b from-white to-zinc-300 bg-clip-text text-transparent">
+                Transform
+              </span>{" "}
+              <br className="sm:hidden" />
+              <span className="relative inline-grid align-bottom">
+                <span className="sr-only">User Feedback</span>
+                {words.map((w, i) => {
+                  const active = i === wi;
+                  const justLeft = i === (wi - 1 + words.length) % words.length;
+                  return (
+                    <span
+                      key={w}
+                      aria-hidden
+                      className="col-start-1 row-start-1 whitespace-nowrap text-indigo-300"
+                      style={{
+                        opacity: active ? 1 : 0,
+                        transform: active
+                          ? "translateY(0)"
+                          : justLeft
+                          ? "translateY(-0.3em)"
+                          : "translateY(0.3em)",
+                        filter: active ? "blur(0px)" : "blur(8px)",
+                        transition:
+                          "opacity 700ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1), filter 700ms ease-out",
+                      }}
+                    >
+                      {w}
                     </span>
-                  </div>
-                  <Image
-                    src={img1}
-                    alt="FeedSenseAI dashboard"
-                    width={1000}
-                    height={550}
-                    className="h-auto w-full"
-                    priority
-                  />
-                </div>
-              </div>
+                  );
+                })}
+              </span>{" "}
+              <br className="hidden sm:block" />
+              <span className="bg-gradient-to-b from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent">
+                Into Actionable Insights
+              </span>
+            </h1>
+
+            <p className="mx-auto mt-7 max-w-xl text-base leading-7 text-zinc-400 sm:text-lg">
+              Harness the power of artificial intelligence to understand your users
+              better, make data-driven decisions, and boost your product's success
+              with real-time feedback analytics.
+            </p>
+
+            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+              <Link href={`${userSession === null ? "/login" : "/dashboard"}`}>
+                <button className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-[#09090b] transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-200 active:translate-y-0">
+                  Get Started
+                  <FiArrowRight className="transition-transform group-hover:translate-x-1" />
+                </button>
+              </Link>
+              <a
+                href="#how"
+                className="group inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] py-2 pl-2 pr-6 text-sm font-medium text-zinc-200 backdrop-blur transition-colors hover:bg-white/10"
+              >
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-white/10 text-white transition-colors group-hover:bg-indigo-500">
+                  <FiPlay size={14} className="ml-0.5" />
+                </span>
+                See how it works
+              </a>
             </div>
 
-            <Chip className="-left-10 top-24 w-64 text-left xl:-left-20" delay="0s">
-              <div className="flex items-center justify-between">
-                <span className="flex gap-0.5 text-amber-300">
-                  {[0, 1, 2, 3, 4].map((i) => (
-                    <AiOutlineStar key={i} size={14} className="fill-current" />
-                  ))}
-                </span>
-                <span className="rounded-full bg-emerald-400/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-300">
-                  Positive
-                </span>
-              </div>
-              <p className="mt-2.5 text-sm text-zinc-200">
-                Love the new dashboard, everything is so much clearer.
-              </p>
-            </Chip>
+            {/* social proof */}
+            <div className="mt-8 flex flex-col items-center justify-center gap-2 text-xs text-zinc-500 sm:flex-row sm:gap-3">
+              <span className="flex gap-0.5 text-amber-300">
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <AiOutlineStar key={i} size={14} className="fill-current" />
+                ))}
+              </span>
+              <span>
+                <span className="font-semibold text-zinc-300">4.9/5</span> from
+                30+ active teams
+              </span>
+              <span className="hidden text-zinc-700 sm:inline">•</span>
+              <span>14‑day free trial • No credit card required</span>
+            </div>
 
-            <Chip className="-right-6 top-1/3 w-60 text-left xl:-right-16" delay="-2s">
-              <div className="flex items-center gap-2 text-xs font-semibold text-indigo-300">
-                <LuBrain size={16} />
-                AI insight
-              </div>
-              <p className="mt-2 text-sm text-zinc-200">
-                3 themes found across your newest responses.
-              </p>
-              <div className="mt-3 flex gap-1.5">
-                <span className="h-1.5 flex-[3] rounded-full bg-indigo-400" />
-                <span className="h-1.5 flex-[2] rounded-full bg-violet-400" />
-                <span className="h-1.5 flex-1 rounded-full bg-amber-400" />
-              </div>
-            </Chip>
+            {/* product frame */}
+            <div className="relative mx-auto mt-16 max-w-5xl [perspective:1800px]">
+              <div aria-hidden className="absolute inset-x-12 top-12 h-3/4 rounded-[3rem] bg-indigo-500/10 blur-3xl" />
 
-            <Chip className="-left-6 bottom-12 w-60 text-left xl:-left-14" delay="-4s">
-              <div className="flex items-center justify-between">
-                <span className="flex items-center gap-2 text-xs font-semibold text-rose-300">
-                  <span className="relative flex h-2 w-2">
-                    
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-rose-400" />
+              <div className="[mask-image:linear-gradient(to_bottom,black_58%,transparent_100%)]">
+                <div ref={frameRef} className="fsh-frame relative">
+                  <div className="rounded-[22px] bg-gradient-to-b from-white/30 via-white/10 to-white/[0.04] p-px">
+                    <div className="relative overflow-hidden rounded-[21px] bg-[#111113]">
+                      <div className="absolute inset-x-16 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+                      <div className="flex items-center gap-2 border-b border-white/[0.07] px-4 py-3">
+                        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+                        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+                        <span className="mx-auto hidden rounded-md bg-white/[0.05] px-10 py-1 text-xs text-zinc-500 sm:block">
+                          feedsenseai.vercel.app/dashboard
+                        </span>
+                      </div>
+                      <Image
+                        src={img1}
+                        alt="FeedSenseAI dashboard"
+                        width={1000}
+                        height={550}
+                        className="h-auto w-full"
+                        priority
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <Chip className="-left-10 top-24 w-64 text-left xl:-left-20" depth={14}>
+                <div className="flex items-center justify-between">
+                  <span className="flex gap-0.5 text-amber-300">
+                    {[0, 1, 2, 3, 4].map((i) => (
+                      <AiOutlineStar key={i} size={14} className="fill-current" />
+                    ))}
                   </span>
-                  Alert
-                </span>
-                <span className="text-[10px] text-zinc-500">just now</span>
-              </div>
-              <p className="mt-2 text-sm text-zinc-200">
-                Checkout feels confusing. High priority bug report.
-              </p>
-            </Chip>
+                  <span className="rounded-full bg-emerald-400/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-300">
+                    Positive
+                  </span>
+                </div>
+                <p className="mt-2.5 text-sm text-zinc-200">
+                  Love the new dashboard, everything is so much clearer.
+                </p>
+              </Chip>
+
+              <Chip className="-right-6 top-1/3 w-60 text-left xl:-right-16" depth={-18}>
+                <div className="flex items-center gap-2 text-xs font-semibold text-indigo-300">
+                  <LuBrain size={16} />
+                  AI insight
+                </div>
+                <p className="mt-2 text-sm text-zinc-200">
+                  3 themes found across your newest responses.
+                </p>
+                <div className="mt-3 flex gap-1.5">
+                  <span className="h-1.5 flex-[3] rounded-full bg-indigo-400" />
+                  <span className="h-1.5 flex-[2] rounded-full bg-violet-400" />
+                  <span className="h-1.5 flex-1 rounded-full bg-amber-400" />
+                </div>
+              </Chip>
+
+              <Chip className="-left-6 bottom-24 w-60 text-left xl:-left-14" depth={10}>
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center gap-2 text-xs font-semibold text-rose-300">
+                    <span className="h-2 w-2 rounded-full bg-rose-400" />
+                    Alert
+                  </span>
+                  <span className="text-[10px] text-zinc-500">just now</span>
+                </div>
+                <p className="mt-2 text-sm text-zinc-200">
+                  Checkout feels confusing. High priority bug report.
+                </p>
+              </Chip>
+            </div>
           </div>
         </section>
 
