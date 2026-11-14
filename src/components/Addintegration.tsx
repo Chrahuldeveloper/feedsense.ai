@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { CiGlobe, CiMenuFries } from "react-icons/ci";
 import MobileSideBar from "./MobileSideBar";
-import hljs from "highlight.js/lib/core";
-import html from "highlight.js/lib/languages/xml";
 import dbService from "../firebase/utils/db";
 import useAuth from "@/hooks/CurrentUser";
 import Loader from "./Loader";
@@ -95,6 +93,177 @@ const avatarGradients = [
   "from-amber-500 to-amber-600",
 ];
 
+/* ---------- Widget gallery ----------
+   Each widget is plain HTML + scoped CSS. The preview renders it as-is and
+   "Copy code" turns the same markup into a dependency-free React snippet. */
+interface Widget {
+  id: string;
+  name: string;
+  desc: string;
+  color: string;
+  css: string;
+  html: string;
+}
+
+const CHAT = (size = 18, c = "#fff") =>
+  `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.2 3.6c-.5.4-1.3.1-1.3-.6V16A2.5 2.5 0 0 1 4 13.5z"/><path d="M12 6.6l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z" fill="${c}" stroke="none"/></svg>`;
+
+const ARROW = (c: string) =>
+  `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
+
+/* shared: isolation from the host site, entrance animation, reduced motion */
+const base = (p: string, pos: string) => `@keyframes ${p}-in{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+.${p}{all:initial;position:fixed;${pos};z-index:2147483000;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;animation:${p}-in .7s cubic-bezier(.22,1,.36,1) .5s both}
+.${p} *,.${p} *::before,.${p} *::after{box-sizing:border-box}
+.${p} a{text-decoration:none;color:inherit;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.${p},.${p} *{animation:none!important;transition:none!important}}`;
+
+const A = (cls: string, label = "Open feedback form") =>
+  `<a href="__URL__" target="_blank" rel="noopener noreferrer" class="${cls}" aria-label="${label}">`;
+
+const WIDGETS: Widget[] = [
+  {
+    id: "glass",
+    name: "Glass pill",
+    desc: "Frosted dark pill with an indigo accent",
+    color: "#818cf8",
+    css:
+      base("fwa", "right:24px;bottom:24px") +
+      `
+.fwa-btn{position:relative;display:flex;align-items:center;gap:10px;height:48px;padding:0 16px 0 8px;border-radius:999px;color:#fff;background:linear-gradient(180deg,rgba(32,32,38,.82),rgba(17,17,19,.82));backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);border:1px solid rgba(255,255,255,.12);box-shadow:0 12px 32px -10px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s,border-color .35s}
+.fwa-btn:hover{transform:translateY(-2px);border-color:rgba(129,140,248,.55);box-shadow:0 18px 40px -12px rgba(0,0,0,.6),0 0 0 4px rgba(129,140,248,.14),inset 0 1px 0 rgba(255,255,255,.16)}
+.fwa-btn:active{transform:scale(.97)}
+.fwa-btn:focus-visible{outline:2px solid #818cf8;outline-offset:3px}
+.fwa-ico{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#a5b4fc,#6366f1 60%,#4f46e5);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 4px 12px -2px rgba(99,102,241,.7)}
+.fwa-ico svg{display:block;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.fwa-btn:hover .fwa-ico svg{transform:rotate(-12deg) scale(1.08)}
+.fwa-label{font-size:14px;font-weight:600;letter-spacing:-.01em;line-height:1}
+@media (max-width:640px){.fwa-label{display:none}.fwa-btn{width:52px;height:52px;padding:0;justify-content:center}}`,
+    html: `<div class="fwa">${A("fwa-btn")}<span class="fwa-ico">${CHAT()}</span><span class="fwa-label">Feedback</span></a></div>`,
+  },
+  {
+    id: "orb",
+    name: "Pulse orb",
+    desc: "Compact round button with a soft violet pulse",
+    color: "#a78bfa",
+    css:
+      base("fwb", "right:24px;bottom:24px") +
+      `
+@keyframes fwb-ping{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.7);opacity:0}}
+.fwb-btn{position:relative;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;color:#fff;background:linear-gradient(135deg,#c4b5fd,#7c3aed 55%,#c026d3);box-shadow:0 12px 32px -8px rgba(124,58,237,.75),inset 0 1px 0 rgba(255,255,255,.4);transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s}
+.fwb-btn::before{content:"";position:absolute;inset:0;border-radius:50%;background:#8b5cf6;z-index:-1;animation:fwb-ping 2.6s ease-out infinite}
+.fwb-btn:hover{transform:scale(1.08) rotate(-6deg);box-shadow:0 18px 40px -8px rgba(124,58,237,.9),inset 0 1px 0 rgba(255,255,255,.5)}
+.fwb-btn:active{transform:scale(.95)}
+.fwb-btn:focus-visible{outline:2px solid #c4b5fd;outline-offset:4px}
+.fwb-btn svg{display:block}
+.fwb-tip{position:absolute;right:calc(100% + 12px);top:50%;transform:translateY(-50%) translateX(6px);opacity:0;padding:7px 12px;border-radius:10px;background:#18181b;border:1px solid rgba(255,255,255,.1);color:#fff;font-size:12.5px;font-weight:600;white-space:nowrap;pointer-events:none;transition:opacity .25s,transform .3s cubic-bezier(.22,1,.36,1)}
+.fwb-btn:hover .fwb-tip,.fwb-btn:focus-visible .fwb-tip{opacity:1;transform:translateY(-50%)}`,
+    html: `<div class="fwb">${A("fwb-btn")}<span class="fwb-tip">Feedback</span>${CHAT(24)}</a></div>`,
+  },
+  {
+    id: "tab",
+    name: "Edge tab",
+    desc: "Slim vertical tab that hugs the right edge",
+    color: "#34d399",
+    css:
+      base("fwc", "right:0;top:calc(50% - 60px)") +
+      `
+.fwc-tab{display:flex;flex-direction:column;align-items:center;gap:10px;width:42px;padding:16px 0;border-radius:14px 0 0 14px;color:#04130d;background:linear-gradient(180deg,#6ee7b7,#10b981);box-shadow:-8px 10px 28px -10px rgba(16,185,129,.7),inset 1px 1px 0 rgba(255,255,255,.4);transition:width .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
+.fwc-tab:hover{width:50px;box-shadow:-12px 12px 34px -10px rgba(16,185,129,.9),inset 1px 1px 0 rgba(255,255,255,.5)}
+.fwc-tab:focus-visible{outline:2px solid #34d399;outline-offset:3px}
+.fwc-ico{display:grid;place-items:center}
+.fwc-txt{writing-mode:vertical-rl;transform:rotate(180deg);font-size:13px;font-weight:700;letter-spacing:.06em;line-height:1}`,
+    html: `<div class="fwc">${A("fwc-tab")}<span class="fwc-ico">${CHAT(16, "#04130d")}</span><span class="fwc-txt">Feedback</span></a></div>`,
+  },
+  {
+    id: "light",
+    name: "Clean light",
+    desc: "Crisp white pill that pops on dark sites",
+    color: "#e4e4e7",
+    css:
+      base("fwd", "left:24px;bottom:24px") +
+      `
+.fwd-btn{display:flex;align-items:center;gap:10px;height:48px;padding:0 18px 0 8px;border-radius:999px;color:#0a0a0a;background:#fff;border:1px solid rgba(0,0,0,.06);box-shadow:0 12px 30px -10px rgba(0,0,0,.4),0 2px 6px rgba(0,0,0,.14);font-size:14px;font-weight:600;letter-spacing:-.01em;line-height:1;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
+.fwd-btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -12px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.16)}
+.fwd-btn:active{transform:scale(.97)}
+.fwd-btn:focus-visible{outline:2px solid #0a0a0a;outline-offset:3px}
+.fwd-ico{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#0a0a0a}
+.fwd-ico svg{display:block;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.fwd-btn:hover .fwd-ico svg{transform:rotate(-12deg) scale(1.08)}`,
+    html: `<div class="fwd">${A("fwd-btn")}<span class="fwd-ico">${CHAT(17)}</span>Give feedback</a></div>`,
+  },
+  {
+    id: "bar",
+    name: "Prompt bar",
+    desc: "Centered bar with a clear call to action",
+    color: "#fbbf24",
+    css:
+      base("fwe", "bottom:24px;left:0;right:0;margin:0 auto;width:max-content;max-width:calc(100vw - 32px)") +
+      `
+.fwe-bar{display:flex;align-items:center;gap:12px;padding:6px 6px 6px 16px;border-radius:999px;background:rgba(24,24,27,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 36px -12px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08)}
+.fwe-dot{width:8px;height:8px;border-radius:50%;background:#fbbf24;box-shadow:0 0 10px #fbbf24}
+.fwe-txt{font-size:13px;font-weight:500;color:#e4e4e7;white-space:nowrap}
+.fwe-btn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:999px;color:#1a1203;background:linear-gradient(135deg,#fde68a,#f59e0b);font-size:13px;font-weight:700;white-space:nowrap;box-shadow:0 6px 16px -6px rgba(245,158,11,.7);transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s}
+.fwe-btn svg{display:block;transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.fwe-btn:hover{transform:translateY(-1px);box-shadow:0 10px 22px -6px rgba(245,158,11,.9)}
+.fwe-btn:hover svg{transform:translateX(3px)}
+.fwe-btn:focus-visible{outline:2px solid #fbbf24;outline-offset:3px}`,
+    html: `<div class="fwe"><div class="fwe-bar"><span class="fwe-dot"></span><span class="fwe-txt">Got feedback?</span>${A("fwe-btn")}Share it${ARROW("#1a1203")}</a></div></div>`,
+  },
+  {
+    id: "react",
+    name: "Quick reactions",
+    desc: "One-tap emoji row with a rose accent",
+    color: "#fb7185",
+    css:
+      base("fwf", "left:24px;bottom:24px") +
+      `
+.fwf-bar{display:flex;align-items:center;gap:6px;padding:7px 8px 7px 16px;border-radius:999px;background:rgba(24,24,27,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(251,113,133,.3);box-shadow:0 14px 36px -12px rgba(0,0,0,.6),0 0 0 4px rgba(251,113,133,.06),inset 0 1px 0 rgba(255,255,255,.08)}
+.fwf-txt{margin-right:6px;font-size:13px;font-weight:600;color:#fafafa;white-space:nowrap;letter-spacing:-.01em}
+.fwf-e{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.06);font-size:18px;line-height:1;transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .25s}
+.fwf-e:hover{transform:scale(1.22) translateY(-2px);background:rgba(251,113,133,.22)}
+.fwf-e:focus-visible{outline:2px solid #fb7185;outline-offset:2px}`,
+    html: `<div class="fwf"><div class="fwf-bar"><span class="fwf-txt">How was it?</span>${A("fwf-e", "Loved it")}😍</a>${A("fwf-e", "It was okay")}🙂</a>${A("fwf-e", "Not great")}😕</a></div></div>`,
+  },
+];
+
+/* turn the widget's HTML into a dependency-free React snippet */
+const buildSnippet = (w: Widget, url: string) => {
+  const jsx = w.html
+    .replace(/__URL__/g, url)
+    .replace(/\bclass=/g, "className=")
+    .replace(/stroke-width=/g, "strokeWidth=")
+    .replace(/stroke-linecap=/g, "strokeLinecap=")
+    .replace(/stroke-linejoin=/g, "strokeLinejoin=");
+  return `// FeedSenseAI widget: ${w.name}. No dependencies. Paste it anywhere in your React / Next.js layout.
+<>
+  <style>{\`${w.css}\`}</style>
+  ${jsx}
+</>`;
+};
+
+/* tiny wireframe of a website, so every widget is previewed in context */
+const FakeSite = () => (
+  <div aria-hidden className="absolute inset-0 p-4">
+    <div className="flex items-center justify-between">
+      <span className="h-2.5 w-14 rounded bg-white/10" />
+      <span className="flex gap-2">
+        <span className="h-1.5 w-8 rounded bg-white/[0.07]" />
+        <span className="h-1.5 w-8 rounded bg-white/[0.07]" />
+        <span className="h-1.5 w-8 rounded bg-white/[0.07]" />
+      </span>
+    </div>
+    <span className="mt-6 block h-3 w-2/5 rounded bg-white/[0.12]" />
+    <span className="mt-2.5 block h-2 w-3/5 rounded bg-white/[0.06]" />
+    <span className="mt-1.5 block h-2 w-1/2 rounded bg-white/[0.06]" />
+    <div className="mt-5 grid grid-cols-3 gap-2.5">
+      {[0, 1, 2].map((i) => (
+        <span key={i} className="h-10 rounded-lg bg-white/[0.04]" />
+      ))}
+    </div>
+  </div>
+);
+
 const AddIntegration: React.FC = () => {
   const [toggle, setToggle] = useState(false);
   const [websitedata, setWebsiteData] = useState<Website[]>([]);
@@ -111,7 +280,9 @@ const AddIntegration: React.FC = () => {
     url: "",
     type: "",
   });
+  /* non-empty once a website has been saved: unlocks the widget gallery */
   const [highlightedCode1, setHighlightedCode1] = useState("");
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const [lastWebsiteId, setLastWebsiteId] = useState<string | null>(null);
 
@@ -132,27 +303,9 @@ const AddIntegration: React.FC = () => {
     fetchWebsites();
   }, [userLoading, user, db]);
 
-  hljs.registerLanguage("html", html);
-
   const codeToCopy = (websiteId: string) => {
-    const code = `
-  <!-- Make sure you have Tailwind CSS & react-icons set up to use these utility classes for styling -->
-  <div className="fixed bottom-10 right-10">
-    <Link href="https://feedsenseai.vercel.app/integrate/${
-      user!.uid
-    }/${websiteId}">
-      <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
-        <MdSettingsSuggest
-          size={47}
-          color="white"
-          className=" rounded-full p-3 bg-indigo-500"
-        />
-      </button>
-    </Link>
-  </div>
-`;
-    const highlighted = hljs.highlight(code, { language: "html" }).value;
-    setHighlightedCode1(highlighted);
+    console.log(websiteId);
+    setHighlightedCode1("ready");
     setShowCode(true);
   };
 
@@ -208,27 +361,17 @@ const AddIntegration: React.FC = () => {
     }
   };
 
-  const copyCode = async () => {
+  const copyCode = async (w: Widget) => {
     try {
-
-
       if (lastWebsiteId) {
         await navigator.clipboard.writeText(
-          `     <!-- Make sure you have Tailwind CSS & react-icons set up to use these utility classes for styling -->
-  <div className="fixed bottom-10 right-10">
-    <Link href="https://feedsenseai.vercel.app/integrate/${
-      user!.uid
-    }/${lastWebsiteId}">
-      <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
-        <MdSettingsSuggest
-          size={47}
-          color="white"
-          className=" rounded-full p-3 bg-indigo-500"
-        />
-      </button>
-    </Link>
-  </div>`
+          buildSnippet(
+            w,
+            `https://feedsenseai.vercel.app/integrate/${user!.uid}/${lastWebsiteId}`
+          )
         );
+        setCopiedId(w.id);
+        setTimeout(() => setCopiedId(null), 2000);
         toast("Code Copied!");
       } else {
         alert("No website ID available to copy.");
@@ -478,7 +621,7 @@ const AddIntegration: React.FC = () => {
                   </div>
                 </div>
 
-                {/* code side */}
+                {/* widget side */}
                 <div className="relative flex flex-col border-t border-white/[0.07] bg-[#09090b] p-6 sm:p-10 lg:border-l lg:border-t-0">
                   
                   <div className="relative flex items-center gap-4">
@@ -487,40 +630,74 @@ const AddIntegration: React.FC = () => {
                     </span>
                     <div>
                       <h2 className="text-xl font-bold text-white">
-                        Integration Code
+                        Choose your widget
                       </h2>
                       <p className="text-sm text-zinc-500">
-                        Copy and paste to your website
+                        Pick a style, copy its code, paste it into your site
                       </p>
                     </div>
                   </div>
 
                   <div className="relative mt-9 flex flex-1 flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#111113] ">
                     {highlightedCode1.length != 0 ? (
-                      <>
-                        <div className="flex items-center justify-between border-b border-white/[0.07] px-4 py-3">
-                          <div className="flex items-center gap-2">
-                            <span className="h-3 w-3 rounded-full bg-red-400/80" />
-                            <span className="h-3 w-3 rounded-full bg-amber-400/80" />
-                            <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
-                            <span className="ml-3 text-xs text-zinc-500">
-                              feedback-button.tsx
-                            </span>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={copyCode}
-                            className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-semibold text-zinc-200 transition hover:border-indigo-400/40 hover:bg-indigo-400/10 hover:text-indigo-200"
+                      <div className="max-h-[36rem] flex-1 space-y-4 overflow-y-auto p-4 [scrollbar-color:#27272a_transparent] [scrollbar-width:thin]">
+                        <style>{WIDGETS.map((w) => w.css).join("\n")}</style>
+                        {WIDGETS.map((w) => (
+                          <div
+                            key={w.id}
+                            className="overflow-hidden rounded-2xl border border-white/10 bg-[#0e0e11] transition-colors hover:border-white/20"
                           >
-                            <FaRegCopy size={13} />
-                            Copy
-                          </button>
-                        </div>
-                        <pre
-                          className="max-h-80 min-h-[14rem] flex-1 overflow-auto px-5 py-5 text-left text-xs leading-relaxed text-zinc-200 [scrollbar-color:#27272a_transparent] [scrollbar-width:thin]"
-                          dangerouslySetInnerHTML={{ __html: highlightedCode1 }}
-                        ></pre>
-                      </>
+                            {/* live preview on a mini website */}
+                            <div className="relative h-44 overflow-hidden bg-[#0b0b0e]">
+                              <FakeSite />
+                              <div
+                                className="absolute inset-0"
+                                style={{ transform: "translateZ(0)" }}
+                                onClick={(e) => e.preventDefault()}
+                                dangerouslySetInnerHTML={{
+                                  __html: w.html.replace(/__URL__/g, "#"),
+                                }}
+                              />
+                            </div>
+
+                            <div className="flex items-center justify-between gap-3 border-t border-white/[0.07] px-4 py-3">
+                              <div className="flex min-w-0 items-center gap-3">
+                                <span
+                                  className="h-2.5 w-2.5 shrink-0 rounded-full"
+                                  style={{
+                                    background: w.color,
+                                    boxShadow: `0 0 10px ${w.color}`,
+                                  }}
+                                />
+                                <div className="min-w-0">
+                                  <p className="truncate text-sm font-semibold text-white">
+                                    {w.name}
+                                  </p>
+                                  <p className="truncate text-xs text-zinc-500">
+                                    {w.desc}
+                                  </p>
+                                </div>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => copyCode(w)}
+                                className={`inline-flex shrink-0 items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-semibold transition ${
+                                  copiedId === w.id
+                                    ? "border-emerald-400/40 bg-emerald-400/10 text-emerald-300"
+                                    : "border-white/10 bg-white/[0.05] text-zinc-200 hover:border-indigo-400/40 hover:bg-indigo-400/10 hover:text-indigo-200"
+                                }`}
+                              >
+                                {copiedId === w.id ? (
+                                  <FiCheck size={13} />
+                                ) : (
+                                  <FaRegCopy size={13} />
+                                )}
+                                {copiedId === w.id ? "Copied" : "Copy code"}
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     ) : (
                       <div className="flex flex-1 flex-col items-center justify-center px-8 py-16 text-center">
                         <span className="grid h-14 w-14 place-items-center rounded-2xl bg-white/[0.05] text-zinc-400 ring-1 ring-inset ring-white/10">
