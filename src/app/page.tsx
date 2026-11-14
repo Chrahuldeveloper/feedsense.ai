@@ -1343,6 +1343,19 @@ const Page = () => {
           </div>
         </section>
 
+             <!-- Make sure you have Tailwind CSS & react-icons set up to use these utility classes for styling -->
+  <div className="fixed bottom-10 right-10">
+    <Link href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/feedsenseai">
+      <button className="text-white cursor-pointer hover:scale-110 duration-500 ease-in-out">
+        <MdSettingsSuggest
+          size={47}
+          color="white"
+          className=" rounded-full p-3 bg-indigo-500"
+        />
+      </button>
+    </Link>
+  </div>
+
         <Footer />
       </div>
     </div>
