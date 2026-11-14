@@ -7,8 +7,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import Cookies from "js-cookie";
 import "react-toastify/dist/ReactToastify.css";
-import img1 from "../asserts/img1.png";
-import Image from "next/image";
 import { FiMessageSquare } from "react-icons/fi";
 import { SlGraph } from "react-icons/sl";
 import { VscGraph } from "react-icons/vsc";
@@ -40,6 +38,14 @@ const Theme = () => (
 @keyframes fsh-draw{from{stroke-dashoffset:300}to{stroke-dashoffset:0}}
 @keyframes fsh-spin{to{transform:rotate(360deg)}}
 .fsh-spin{animation:fsh-spin 5s linear infinite}
+@keyframes fsh-enter{from{opacity:0;transform:translateY(-30px) scale(.97)}}
+@keyframes fsh-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@keyframes fsh-fade{from{opacity:0;transform:translateY(6px)}}
+@keyframes fsh-blink{0%,100%{opacity:1}50%{opacity:.35}}
+.fsh-enter{animation:fsh-enter .75s cubic-bezier(.22,1,.36,1) both}
+.fsh-shimmer{background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.14),rgba(255,255,255,.05));background-size:200% 100%;animation:fsh-shimmer 1.4s linear infinite}
+.fsh-fade{animation:fsh-fade .6s cubic-bezier(.22,1,.36,1) both}
+.fsh-blink{animation:fsh-blink 1.8s ease-in-out infinite}
 .fsh-a{animation:fsh-drift-a 16s ease-in-out infinite}
 .fsh-b{animation:fsh-drift-b 20s ease-in-out infinite}
 .fsh-float{animation:fsh-float 6s ease-in-out infinite}
@@ -50,7 +56,7 @@ const Theme = () => (
 .fsh-ping{animation:fsh-pulse 2s ease-out infinite}
 .fsh-line{stroke-dasharray:300;animation:fsh-draw 2.4s ease forwards}
 .fsh-frame{transform-style:preserve-3d;transform-origin:50% 0%;will-change:transform}
-@media (prefers-reduced-motion:reduce){.fsh-spin,.fsh-a,.fsh-b,.fsh-float,.fsh-marquee,.fsh-sheen,.fsh-btn:hover,.fsh-ping,.fsh-line{animation:none!important}}
+@media (prefers-reduced-motion:reduce){.fsh-enter,.fsh-shimmer,.fsh-fade,.fsh-blink,.fsh-spin,.fsh-a,.fsh-b,.fsh-float,.fsh-marquee,.fsh-sheen,.fsh-btn:hover,.fsh-ping,.fsh-line{animation:none!important}}
 `}</style>
 );
 
@@ -125,26 +131,285 @@ const SpotCard = ({
   </div>
 );
 
-const Chip = ({
-  className,
-  depth,
-  children,
-}: {
-  className: string;
-  depth: number;
-  children: React.ReactNode;
-}) => (
-  <div className={`absolute z-20 hidden lg:block ${className}`}>
-    <div
-      className="rounded-2xl border border-white/10 bg-[#141416]/85 p-4 shadow-2xl shadow-black/50 backdrop-blur-xl transition-transform duration-300 ease-out"
-      style={{
-        transform: `translate3d(calc(var(--px,0) * ${depth}px), calc(var(--py,0) * ${depth * 0.7}px), 0)`,
-      }}
-    >
-      {children}
+/* ---------- live product demo (built in code, streams feedback) ---------- */
+type Sent = "Positive" | "Neutral" | "Negative";
+interface FeedItem {
+  id: number;
+  who: string;
+  t: string;
+  s: Sent;
+  tag: string;
+  pri?: string;
+  analyzed: boolean;
+}
+
+const STREAM: Omit<FeedItem, "id" | "analyzed">[] = [
+  { who: "Priya S.", t: "Love the new dashboard, everything is so much clearer.", s: "Positive", tag: "Dashboard" },
+  { who: "Daniel R.", t: "Checkout feels confusing. I couldn't find where to enter my promo code.", s: "Negative", tag: "Checkout", pri: "High" },
+  { who: "Aisha K.", t: "Please add a dark mode, my eyes hurt when I use it at night.", s: "Neutral", tag: "Feature request" },
+  { who: "Marco L.", t: "The app crashes every time I open settings on iOS.", s: "Negative", tag: "Bug", pri: "High" },
+  { who: "Hannah W.", t: "Support replied within minutes. Genuinely impressed.", s: "Positive", tag: "Support" },
+  { who: "Ken T.", t: "Search gets a bit slow on larger projects.", s: "Neutral", tag: "Performance" },
+];
+
+const INSIGHTS: Record<string, string> = {
+  Dashboard: "Users love the new dashboard. Satisfaction is trending up this week.",
+  Checkout: "Checkout friction is rising. Several users can't find the promo code.",
+  "Feature request": "Dark mode is your most requested feature this week.",
+  Bug: "Crashes on iOS settings need attention. Marked high priority.",
+  Support: "Fast support replies are a clear strength. Keep it up.",
+  Performance: "Search speed on large projects is slowing users down.",
+};
+
+const sentStyle: Record<Sent, string> = {
+  Positive: "bg-emerald-400/10 text-emerald-300 ring-emerald-400/25",
+  Neutral: "bg-amber-400/10 text-amber-300 ring-amber-400/25",
+  Negative: "bg-rose-400/10 text-rose-300 ring-rose-400/25",
+};
+
+const ROW_H = 108;
+
+const LiveDemo = () => {
+  const [items, setItems] = useState<FeedItem[]>(() =>
+    [2, 1, 0].map((k) => ({
+      ...STREAM[k],
+      id: k,
+      analyzed: true,
+    }))
+  );
+  const [today, setToday] = useState(128);
+  const [issues, setIssues] = useState(12);
+  const [mix, setMix] = useState<Record<Sent, number>>({
+    Positive: 68,
+    Neutral: 21,
+    Negative: 11,
+  });
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let n = 3;
+    let analyze: ReturnType<typeof setTimeout> | undefined;
+    const id = setInterval(() => {
+      if (document.hidden) return;
+      const base = STREAM[n % STREAM.length];
+      const item: FeedItem = { ...base, id: n, analyzed: false };
+      n += 1;
+      setItems((prev) => [item, ...prev].slice(0, 5));
+      setToday((c) => c + 1);
+      if (base.s === "Negative") setIssues((c) => c + 1);
+      setMix((m) => ({ ...m, [base.s]: m[base.s] + 1 }));
+      analyze = setTimeout(() => {
+        setItems((prev) =>
+          prev.map((p) => (p.id === item.id ? { ...p, analyzed: true } : p))
+        );
+      }, 1100);
+    }, 3200);
+    return () => {
+      clearInterval(id);
+      if (analyze) clearTimeout(analyze);
+    };
+  }, []);
+
+  const totalMix = mix.Positive + mix.Neutral + mix.Negative;
+  const latest = items.find((i) => i.analyzed) ?? items[0];
+  const bars = [38, 52, 46, 61, 55, 72, 58 + (today % 9) * 4];
+
+  const age = (i: number) => (i === 0 ? "just now" : `${i * 3}s ago`);
+
+  return (
+    <div className="overflow-hidden rounded-[21px] bg-[#0e0e11] text-left">
+      {/* window chrome */}
+      <div className="relative flex items-center gap-2 border-b border-white/[0.07] px-4 py-3">
+        <div className="absolute inset-x-16 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+        <span className="mx-auto hidden rounded-md bg-white/[0.05] px-10 py-1 text-xs text-zinc-500 sm:block">
+          feedsenseai.vercel.app/dashboard
+        </span>
+        <span className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-2.5 py-1 text-[11px] font-medium text-emerald-300 ring-1 ring-inset ring-emerald-400/25 sm:ml-0">
+          <span className="fsh-blink h-1.5 w-1.5 rounded-full bg-emerald-400" />
+          Live demo
+        </span>
+      </div>
+
+      <div className="grid lg:grid-cols-[176px_minmax(0,1fr)_300px]">
+        {/* sidebar */}
+        <aside className="hidden border-r border-white/[0.06] p-4 lg:block">
+          <div className="flex items-center gap-2.5 px-1.5">
+            <span className="grid h-7 w-7 place-items-center rounded-lg bg-indigo-500 text-white">
+              <HiOutlineSparkles size={15} />
+            </span>
+            <span className="text-sm font-semibold text-white">
+              FeedSense<span className="text-indigo-400">AI</span>
+            </span>
+          </div>
+          <ul className="mt-7 space-y-1 text-[13px]">
+            {["Overview", "Feedback", "Insights", "Websites", "Integrate"].map((x, i) => (
+              <li
+                key={x}
+                className={`flex items-center gap-2.5 rounded-lg px-2.5 py-2 ${
+                  i === 0
+                    ? "bg-indigo-400/[0.12] font-medium text-white"
+                    : "text-zinc-500"
+                }`}
+              >
+                <span
+                  className={`h-1.5 w-1.5 rounded-full ${
+                    i === 0 ? "bg-indigo-400" : "bg-zinc-700"
+                  }`}
+                />
+                {x}
+              </li>
+            ))}
+          </ul>
+        </aside>
+
+        {/* main: KPIs + live feed */}
+        <div className="min-w-0 p-4 sm:p-5">
+          <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
+            {[
+              { l: "Feedback today", v: String(today), d: "+12%", c: "text-emerald-300" },
+              { l: "Satisfaction", v: "4.6", d: "+0.3", c: "text-emerald-300" },
+              { l: "Open issues", v: String(issues), d: "needs review", c: "text-amber-300" },
+            ].map((k) => (
+              <div
+                key={k.l}
+                className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-3 sm:p-4"
+              >
+                <p className="truncate text-[10px] font-medium uppercase tracking-[0.12em] text-zinc-500 sm:text-[11px]">
+                  {k.l}
+                </p>
+                <p className="mt-2 text-xl font-semibold tabular-nums text-white sm:text-2xl">
+                  {k.v}
+                </p>
+                <p className={`mt-1 hidden text-[11px] sm:block ${k.c}`}>{k.d}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-5 flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-white">Live feedback</h3>
+            <span className="text-xs text-zinc-500">Streaming from your website</span>
+          </div>
+
+          <div className="relative mt-3 overflow-hidden" style={{ height: ROW_H * 4 - 10 }}>
+            {items.map((it, i) => (
+              <div
+                key={it.id}
+                className="fsh-enter absolute inset-x-0 top-0 transition-[transform,opacity] duration-[800ms] ease-[cubic-bezier(.22,1,.36,1)]"
+                style={{
+                  height: ROW_H - 10,
+                  transform: `translateY(${i * ROW_H}px)`,
+                  opacity: i >= 4 ? 0 : 1 - i * 0.06,
+                }}
+              >
+                <div className="flex h-full gap-3 rounded-xl border border-white/[0.07] bg-[#131316] p-3.5">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/[0.07] text-xs font-semibold text-zinc-300">
+                    {it.who.charAt(0)}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="truncate text-xs font-medium text-zinc-300">
+                        {it.who}
+                      </span>
+                      <span className="shrink-0 text-[11px] text-zinc-600">
+                        {age(i)}
+                      </span>
+                    </div>
+                    <p className="mt-1 line-clamp-2 text-[13px] leading-5 text-zinc-400">
+                      {it.t}
+                    </p>
+                    <div className="mt-2 flex h-5 items-center gap-1.5">
+                      {it.analyzed ? (
+                        <>
+                          <span
+                            className={`fsh-fade rounded-full px-2 py-0.5 text-[10px] font-semibold ring-1 ring-inset ${sentStyle[it.s]}`}
+                          >
+                            {it.s}
+                          </span>
+                          <span className="fsh-fade rounded-full bg-white/[0.06] px-2 py-0.5 text-[10px] font-medium text-zinc-300 ring-1 ring-inset ring-white/10">
+                            {it.tag}
+                          </span>
+                          {it.pri && (
+                            <span className="fsh-fade rounded-full bg-rose-500/10 px-2 py-0.5 text-[10px] font-semibold text-rose-300">
+                              {it.pri}
+                            </span>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <LuBrain size={12} className="text-indigo-300" />
+                          <span className="fsh-shimmer h-3.5 w-20 rounded-full" />
+                          <span className="fsh-shimmer h-3.5 w-14 rounded-full" />
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* insights */}
+        <div className="border-t border-white/[0.06] p-4 sm:p-5 lg:border-l lg:border-t-0">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-white">Sentiment</h3>
+            <span className="text-xs tabular-nums text-zinc-500">{totalMix} responses</span>
+          </div>
+          <div className="mt-4 space-y-3.5">
+            {(["Positive", "Neutral", "Negative"] as Sent[]).map((k) => {
+              const pct = Math.round((mix[k] / totalMix) * 100);
+              const bar =
+                k === "Positive" ? "bg-emerald-400" : k === "Neutral" ? "bg-amber-400" : "bg-rose-400";
+              return (
+                <div key={k} className="flex items-center gap-3 text-xs">
+                  <span className="w-14 text-zinc-400">{k}</span>
+                  <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.07]">
+                    <div
+                      className={`h-full rounded-full ${bar} transition-[width] duration-[900ms] ease-out`}
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                  <span className="w-8 text-right tabular-nums text-zinc-300">{pct}%</span>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-6 rounded-xl border border-indigo-400/20 bg-indigo-400/[0.06] p-4">
+            <div className="flex items-center gap-2 text-xs font-semibold text-indigo-300">
+              <LuBrain size={15} />
+              AI insight
+            </div>
+            <p key={latest?.tag} className="fsh-fade mt-2.5 text-[13px] leading-5 text-zinc-200">
+              {INSIGHTS[latest?.tag ?? "Dashboard"]}
+            </p>
+          </div>
+
+          <div className="mt-6">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-medium text-zinc-300">This week</span>
+              <span className="text-zinc-600">Feedback volume</span>
+            </div>
+            <div className="mt-3 flex h-20 items-end gap-1.5">
+              {bars.map((h, i) => (
+                <div
+                  key={i}
+                  className={`flex-1 rounded-t-md transition-[height] duration-700 ease-out ${
+                    i === bars.length - 1 ? "bg-indigo-400" : "bg-white/[0.12]"
+                  }`}
+                  style={{ height: `${Math.min(100, h)}%` }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const Page = () => {
   useEffect(() => {
@@ -308,6 +573,7 @@ const Page = () => {
                 backgroundSize: "64px 64px",
               }}
             />
+            <div className="absolute left-1/2 top-[52%] h-[30rem] w-[84rem] -translate-x-1/2 rounded-[100%] bg-indigo-500/[0.07] blur-3xl" />
             <div
               className="absolute inset-0 hidden lg:block"
               style={{
@@ -416,79 +682,17 @@ const Page = () => {
               <span>14‑day free trial • No credit card required</span>
             </div>
 
-            {/* product frame */}
-            <div className="relative mx-auto mt-16 max-w-5xl [perspective:1800px]">
-              <div aria-hidden className="absolute inset-x-12 top-12 h-3/4 rounded-[3rem] bg-indigo-500/10 blur-3xl" />
+            {/* live product stage */}
+            <div className="relative mx-auto mt-16 max-w-6xl [perspective:1800px]">
+              <div aria-hidden className="absolute inset-x-8 top-10 h-4/5 rounded-[3rem] bg-indigo-500/[0.12] blur-3xl" />
 
-              <div className="[mask-image:linear-gradient(to_bottom,black_58%,transparent_100%)]">
+              <div className="[mask-image:linear-gradient(to_bottom,black_62%,transparent_100%)]">
                 <div ref={frameRef} className="fsh-frame relative">
-                  <div className="rounded-[22px] bg-gradient-to-b from-white/30 via-white/10 to-white/[0.04] p-px">
-                    <div className="relative overflow-hidden rounded-[21px] bg-[#111113]">
-                      <div className="absolute inset-x-16 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
-                      <div className="flex items-center gap-2 border-b border-white/[0.07] px-4 py-3">
-                        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                        <span className="mx-auto hidden rounded-md bg-white/[0.05] px-10 py-1 text-xs text-zinc-500 sm:block">
-                          feedsenseai.vercel.app/dashboard
-                        </span>
-                      </div>
-                      <Image
-                        src={img1}
-                        alt="FeedSenseAI dashboard"
-                        width={1000}
-                        height={550}
-                        className="h-auto w-full"
-                        priority
-                      />
-                    </div>
+                  <div className="rounded-[22px] bg-gradient-to-b from-white/30 via-white/10 to-white/[0.04] p-px shadow-2xl shadow-black/60">
+                    <LiveDemo />
                   </div>
                 </div>
               </div>
-
-              <Chip className="-left-10 top-24 w-64 text-left xl:-left-20" depth={14}>
-                <div className="flex items-center justify-between">
-                  <span className="flex gap-0.5 text-amber-300">
-                    {[0, 1, 2, 3, 4].map((i) => (
-                      <AiOutlineStar key={i} size={14} className="fill-current" />
-                    ))}
-                  </span>
-                  <span className="rounded-full bg-emerald-400/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-300">
-                    Positive
-                  </span>
-                </div>
-                <p className="mt-2.5 text-sm text-zinc-200">
-                  Love the new dashboard, everything is so much clearer.
-                </p>
-              </Chip>
-
-              <Chip className="-right-6 top-1/3 w-60 text-left xl:-right-16" depth={-18}>
-                <div className="flex items-center gap-2 text-xs font-semibold text-indigo-300">
-                  <LuBrain size={16} />
-                  AI insight
-                </div>
-                <p className="mt-2 text-sm text-zinc-200">
-                  3 themes found across your newest responses.
-                </p>
-                <div className="mt-3 flex gap-1.5">
-                  <span className="h-1.5 flex-[3] rounded-full bg-indigo-400" />
-                  <span className="h-1.5 flex-[2] rounded-full bg-violet-400" />
-                  <span className="h-1.5 flex-1 rounded-full bg-amber-400" />
-                </div>
-              </Chip>
-
-              <Chip className="-left-6 bottom-24 w-60 text-left xl:-left-14" depth={10}>
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center gap-2 text-xs font-semibold text-rose-300">
-                    <span className="h-2 w-2 rounded-full bg-rose-400" />
-                    Alert
-                  </span>
-                  <span className="text-[10px] text-zinc-500">just now</span>
-                </div>
-                <p className="mt-2 text-sm text-zinc-200">
-                  Checkout feels confusing. High priority bug report.
-                </p>
-              </Chip>
             </div>
           </div>
         </section>
