@@ -344,8 +344,8 @@ const LiveDemo = () => {
                 <div
                   key={label}
                   className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all ${active
-                      ? "bg-indigo-400/20 text-white ring-1 ring-inset ring-indigo-400/20"
-                      : "text-zinc-400 hover:bg-white/[0.05] hover:text-white"
+                    ? "bg-indigo-400/20 text-white ring-1 ring-inset ring-indigo-400/20"
+                    : "text-zinc-400 hover:bg-white/[0.05] hover:text-white"
                     }`}
                 >
                   {active && (
@@ -353,8 +353,8 @@ const LiveDemo = () => {
                   )}
                   <span
                     className={`grid h-8 w-8 place-items-center rounded-lg ${active
-                        ? "bg-indigo-400/20 text-indigo-300"
-                        : "bg-white/[0.04] text-zinc-400"
+                      ? "bg-indigo-400/20 text-indigo-300"
+                      : "bg-white/[0.04] text-zinc-400"
                       }`}
                   >
                     <Icon size={20} />
@@ -964,12 +964,12 @@ const Page = () => {
                   <span
                     key={c}
                     className={`grid h-8 w-8 place-items-center rounded-full text-[11px] font-semibold text-white ring-2 ring-[#09090b] ${[
-                        "bg-indigo-500",
-                        "bg-violet-500",
-                        "bg-emerald-500",
-                        "bg-amber-500",
-                        "bg-rose-500",
-                      ][i]
+                      "bg-indigo-500",
+                      "bg-violet-500",
+                      "bg-emerald-500",
+                      "bg-amber-500",
+                      "bg-rose-500",
+                    ][i]
                       }`}
                   >
                     {c}
@@ -1338,21 +1338,20 @@ const Page = () => {
             </div>
           </div>
         </section>
-  <style>{`@keyframes fwb-in{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
-.fwb{all:initial;position:fixed;right:24px;bottom:24px;z-index:2147483000;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;animation:fwb-in .7s cubic-bezier(.22,1,.36,1) .5s both}
-.fwb *,.fwb *::before,.fwb *::after{box-sizing:border-box}
-.fwb a{text-decoration:none;color:inherit;cursor:pointer}
-@media (prefers-reduced-motion:reduce){.fwb,.fwb *{animation:none!important;transition:none!important}}
-@keyframes fwb-ping{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.7);opacity:0}}
-.fwb-btn{position:relative;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;color:#fff;background:linear-gradient(135deg,#c4b5fd,#7c3aed 55%,#c026d3);box-shadow:0 12px 32px -8px rgba(124,58,237,.75),inset 0 1px 0 rgba(255,255,255,.4);transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s}
-.fwb-btn::before{content:"";position:absolute;inset:0;border-radius:50%;background:#8b5cf6;z-index:-1;animation:fwb-ping 2.6s ease-out infinite}
-.fwb-btn:hover{transform:scale(1.08) rotate(-6deg);box-shadow:0 18px 40px -8px rgba(124,58,237,.9),inset 0 1px 0 rgba(255,255,255,.5)}
-.fwb-btn:active{transform:scale(.95)}
-.fwb-btn:focus-visible{outline:2px solid #c4b5fd;outline-offset:4px}
-.fwb-btn svg{display:block}
-.fwb-tip{position:absolute;right:calc(100% + 12px);top:50%;transform:translateY(-50%) translateX(6px);opacity:0;padding:7px 12px;border-radius:10px;background:#18181b;border:1px solid rgba(255,255,255,.1);color:#fff;font-size:12.5px;font-weight:600;white-space:nowrap;pointer-events:none;transition:opacity .25s,transform .3s cubic-bezier(.22,1,.36,1)}
-.fwb-btn:hover .fwb-tip,.fwb-btn:focus-visible .fwb-tip{opacity:1;transform:translateY(-50%)}`}</style>
-  <div className="fwb"><a href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/X" target="_blank" rel="noopener noreferrer" className="fwb-btn" aria-label="Open feedback form"><span className="fwb-tip">Feedback</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.2 3.6c-.5.4-1.3.1-1.3-.6V16A2.5 2.5 0 0 1 4 13.5z"/><path d="M12 6.6l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z" fill="#fff" stroke="none"/></svg></a></div>
+        <style>{`@keyframes fwg-in{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+.fwg{all:initial;position:fixed;bottom:24px;left:0;right:0;margin:0 auto;width:max-content;max-width:calc(100vw - 32px);--fw:#6366f1;--fw2:#9ea0f6;--fw-dark:#4345a4;--fw-deep:#363885;--fw3:rgba(99,102,241,.5);--fw-soft:rgba(99,102,241,.22);--fw-line:rgba(99,102,241,.3);--fw-bg:#101027;--fw-bg2:#1a1b3f;--fw-bga:rgba(16,16,39,.9);--fw-ink:#ffffff;color:#fff;z-index:2147483000;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;animation:fwg-in .7s cubic-bezier(.22,1,.36,1) .4s both}
+.fwg *,.fwg *::before,.fwg *::after{box-sizing:border-box}
+.fwg :where(a){text-decoration:none;color:inherit;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.fwg,.fwg *,.fwg *::before,.fwg *::after{animation:none!important;transition:none!important}}
+.fwg-bar{display:flex;align-items:center;gap:14px;padding:6px 6px 6px 18px;border-radius:999px;background:var(--fw-bga);backdrop-filter:blur(18px) saturate(1.5);-webkit-backdrop-filter:blur(18px) saturate(1.5);border:1px solid var(--fw-line);box-shadow:0 18px 40px -14px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.08)}
+.fwg-dot{width:8px;height:8px;border-radius:50%;background:var(--fw);box-shadow:0 0 12px var(--fw)}
+.fwg-txt{font-size:13.5px;font-weight:500;color:#fff;white-space:nowrap;letter-spacing:-.005em}
+.fwg-btn{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 16px;border-radius:999px;color:var(--fw-ink);background:linear-gradient(135deg,var(--fw2),var(--fw));font-size:13px;font-weight:700;white-space:nowrap;box-shadow:0 8px 18px -8px var(--fw3),inset 0 1px 0 rgba(255,255,255,.35);transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
+.fwg-btn svg{display:block;transition:transform .35s cubic-bezier(.22,1,.36,1)}
+.fwg-btn:hover{transform:translateY(-1px);box-shadow:0 12px 24px -8px var(--fw3),inset 0 1px 0 rgba(255,255,255,.45)}
+.fwg-btn:hover svg{transform:translateX(3px)}
+.fwg-btn:focus-visible{outline:2px solid var(--fw);outline-offset:3px}`}</style>
+        <div className="fwg"><div className="fwg-bar"><span className="fwg-dot"></span><span className="fwg-txt">Got feedback?</span><a href="https://feedsenseai.vercel.app/integrate/9vd5wxinC8TnqN4uF1AIegjb4db2/X" target="_blank" rel="noopener noreferrer" className="fwg-btn" aria-label="Open feedback form">Share it<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a></div></div>
         <Footer />
       </div>
     </div>
